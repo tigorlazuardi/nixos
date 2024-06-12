@@ -6,6 +6,12 @@
 
   profile = {
     hostname = "fort";
+    user = {
+      name = "tigor";
+      fullName = "Tigor Hutasuhut";
+    };
+    system.stateVersion = "23.11";
+
     hyprland = {
       enable = true;
       settings = {
@@ -41,5 +47,6 @@
 
     brightnessctl.enable = true;
     keyboard.language.japanese = true;
+
   };
 }

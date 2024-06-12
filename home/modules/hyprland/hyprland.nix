@@ -21,6 +21,8 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [
       inputs.hyprland-contrib.packages.${pkgs.system}.grimblast
+      pkgs.wl-clipboard
+      pkgs.kcalc
     ];
     sops.secrets."gnome-keyring/${config.home.username}" = { };
     wayland.windowManager.hyprland = {
@@ -223,7 +225,6 @@ in
         exec-once=pasystray
         exec-once=pypr
         exec-once=dunst
-        exec-once=fcitx5 -d
 
         source=${config.home.homeDirectory}/.cache/wallust/hyprland.conf
         exec-once=sleep 0.2 && swww img ${config.home.homeDirectory}/.cache/wallpaper/current

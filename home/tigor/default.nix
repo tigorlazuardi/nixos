@@ -1,4 +1,8 @@
-{ pkgs, profile-path, ... }:
+{ config, profile-path, ... }:
+let
+  user = config.profile.user;
+  stateVersion = config.profile.system.stateVersion;
+in
 {
   imports = [
     profile-path
@@ -15,15 +19,14 @@
   ];
 
   home = {
-    username = "tigor";
-    homeDirectory = "/home/tigor";
-    stateVersion = "23.11";
+    username = user.name;
+    homeDirectory = "/home/${user.name}";
+    stateVersion = stateVersion;
   };
-
-
+  programs.home-manager.enable = true;
   systemd.user.sessionVariables = {
-    XDG_CONFIG_HOME = "/home/tigor/.config";
+    XDG_CONFIG_HOME = "/home/${user.name}/.config";
   };
 
-  services.mpris-proxy.enable = true;
+  services.mpris-proxy.enable = config.profile.mpris-proxy.enable;
 }

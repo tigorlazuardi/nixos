@@ -9,17 +9,7 @@
     ./keyboard.nix
   ];
 
-  security.sudo =
-    let
-      cfg = config.profile.security.sudo;
-    in
-    {
-      wheelNeedsPassword = cfg.wheelNeedsPassword;
-      extraConfig = ''
-        Defaults timestamp_timeout=30
-        Defaults timestamp_type=global
-      '';
-    };
+  security.sudo.wheelNeedsPassword = config.profile.security.sudo.wheelNeedsPassword;
   networking.hostName = config.profile.hostname;
 
 
@@ -59,7 +49,7 @@
     mandoc.enable = true;
   };
 
-  system.stateVersion = "23.11"; # Did you read the comment?
+  system.stateVersion = config.profile.system.stateVersion;
 
   systemd.services.decrypt-sops = {
     wantedBy = [ "multi-user.target" ];

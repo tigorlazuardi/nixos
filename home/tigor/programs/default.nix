@@ -1,21 +1,26 @@
 { pkgs, unstable, ... }:
 {
   imports = [
-    ./autostart.nix
+    ./bitwarden.nix
+    ./chromium.nix
+    ./discord.nix
     ./git.nix
+    ./github.nix
+    ./go.nix
     ./mpv.nix
+    ./neovide.nix
+    ./nnn.nix
     ./node.nix
+    ./slack.nix
+    ./spotify.nix
     ./starship.nix
     ./tofi.nix
+    ./variety.nix
     ./vscode.nix
-    ./zsh.nix
-    ./discord.nix
-    ./neovide.nix
-    ./slack.nix
     ./whatsapp.nix
+    ./zsh.nix
+    ./dbeaver.nix
   ];
-
-  programs.home-manager.enable = true;
 
   programs.fzf = {
     enable = true;
@@ -29,76 +34,11 @@
     enableZshIntegration = true;
   };
   programs.ripgrep.enable = true;
-
-  programs.go = {
-    enable = true;
-    goPrivate = [
-      "gitlab.bareksa.com"
-    ];
-    package = unstable.go_1_22;
-  };
-
-  programs.chromium = {
-    enable = true;
-    extensions = [
-      { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock origin
-      { id = "jinjaccalgkegednnccohejagnlnfdag"; } # violent monkey
-      { id = "nngceckbapebfimnlniiiahkandclblb"; } # bitwarden
-      { id = "mnjggcdmjocbbbhaepdhchncahnbgone"; } # sponsor block
-      { id = "pkehgijcmpdhfbdbbnkijodmdjhbjlgp"; } # privacy badger
-      { id = "fhcgjolkccmbidfldomjliifgaodjagh"; } # cookie auto delete
-      { id = "cimiefiiaegbelhefglklhhakcgmhkai"; } # Plasma Integration
-    ];
-    commandLineArgs = [
-      "--enable-features=UseOzonePlatform"
-      "--ozone-platform=wayland"
-    ];
-  };
-
-  programs.nnn = {
-    enable = true;
-  };
-
   programs.htop.enable = true;
 
-  programs.mpv.enable = true;
-
   home.packages = with pkgs; [
-    unstable.gh # github cli
-    wget
-    curl
-    openssl
-    zig
-    unzip
-    libcap
-    gcc
-    cargo
-    nixpkgs-fmt
-    fd
-    wl-clipboard
-    unstable.dbeaver-bin
     unstable.jellyfin-media-player
-    stylua
-    luarocks
-    du-dust
-    just
-    modd
-    lefthook
-    spotify
-    # seafile-client
-    lsof
-    # scrcpy
-    masterpdfeditor4
-    watchexec
-    kcalc
-    pdfarranger
     unstable.microsoft-edge
-    # (floorp.override {
-    #   nativeMessagingHosts = with pkgs; [
-    #     plasma5Packages.plasma-browser-integration
-    #   ];
-    # })
     nextcloud-client
-    # qownnotes
   ];
 }

@@ -3,12 +3,41 @@
   imports = [
     ./programs.nix
     ./hyprland.nix
+    ./podman.nix
   ];
   options.profile = {
+
+    #### Required Options ####
+
     hostname = lib.mkOption {
       type = lib.types.str;
     };
 
+    user = {
+      name = lib.mkOption {
+        type = lib.types.str;
+      };
+      fullName = lib.mkOption {
+        type = lib.types.str;
+      };
+
+      getty.autoLogin = lib.mkEnableOption "auto-login to getty";
+    };
+
+    system.stateVersion = lib.mkOption {
+      type = lib.types.str;
+    };
+
+    #### Optionals ####
+
+    grub.enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+    };
+    audio.enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+    };
     android.enable = lib.mkEnableOption "android";
     avahi.enable = lib.mkEnableOption "avahi";
     bluetooth.enable = lib.mkEnableOption "bluetooth";
@@ -47,9 +76,7 @@
     };
 
     keyboard.language.japanese = lib.mkEnableOption "Japanese keyboard input";
-
-    firefox.enable = lib.mkEnableOption "firefox";
-
     brightnessctl.enable = lib.mkEnableOption "brightnessctl";
+    openssh.enable = lib.mkEnableOption "openssh";
   };
 }

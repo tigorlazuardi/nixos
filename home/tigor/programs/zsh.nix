@@ -45,6 +45,10 @@
           (cat "$_ZSH_COLOR_SCHEME_FILE" &)
       fi
     '';
+    initExtra = ''
+      bindkey              '^I'         menu-complete
+      bindkey "$terminfo[kcbt]" reverse-menu-complete
+    '';
     antidote = {
       enable = true;
       plugins = [

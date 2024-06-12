@@ -19,6 +19,12 @@
     gnumake
     sqlite
     nurl
+    lsof
+    unzip
+    openssl
+    libcap
+    fd
+    du-dust
   ];
 
   environment.sessionVariables = {

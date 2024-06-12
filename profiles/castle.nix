@@ -10,6 +10,10 @@ in
 
   profile = {
     hostname = "castle";
+    user = {
+      name = "tigor";
+      fullName = "Tigor Hutasuhut";
+    };
 
     hyprland = {
       enable = true;
@@ -55,5 +59,19 @@ in
     security.sudo.wheelNeedsPassword = false;
 
     keyboard.language.japanese = true;
+
+    system.stateVersion = "23.11";
+
+    mpris-proxy.enable = true;
+    kitty.enable = true;
+    neovide.enable = true;
+    spotify.enable = true;
+    vscode.enable = true;
+    jellyfin.enable = true;
+    mpv.enable = true;
+    go.enable = true;
+    chromium.enable = true;
+    bitwarden.enable = true;
+    dbeaver.enable = true;
   };
 }

@@ -1,13 +1,13 @@
-{ pkgs, ... }:
+{ pkgs, config, lib, ... }:
 let
-  user = "tigor";
-  fullName = "Tigor Hutasuhut";
+  user = config.profile.user.name;
+  fullName = config.profile.user.fullName;
 in
 {
   users.users.${user} = {
     isNormalUser = true;
     description = fullName;
-    extraGroups = [ "networkmanager" "wheel" "docker" "adbusers" "scanner" "lp" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "adbusers" "scanner" "lp" "podman" ];
     shell = pkgs.zsh;
   };
 
@@ -18,4 +18,5 @@ in
   };
 
   nix.settings.trusted-users = [ user ];
+  services.getty.autologinUser = lib.mkIf config.profile.user.getty.autoLogin user;
 }

@@ -1,13 +1,17 @@
-{ pkgs, ... }:
-
+{ config, lib, pkgs, ... }:
+let
+  cfg = config.profile.mpv;
+in
 {
-  programs.mpv = {
-    enable = true;
-    scripts = with pkgs.mpvScripts; [
-      uosc
-      mpris
-      thumbnail
-      sponsorblock
-    ];
+  config = lib.mkIf cfg.enable {
+    programs.mpv = {
+      enable = true;
+      scripts = with pkgs.mpvScripts; [
+        uosc
+        mpris
+        thumbnail
+        sponsorblock
+      ];
+    };
   };
 }

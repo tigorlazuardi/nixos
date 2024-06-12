@@ -109,6 +109,23 @@
               ] ++ commonModules;
               specialArgs = specialArgs;
             };
+          homeserver =
+            let
+              profile-path = ./profiles/homeserver.nix;
+              hardware-configuration = ./hardware-configuration/homeserver.nix;
+              specialArgs = { inherit inputs unstable profile-path hardware-configuration; };
+            in
+            nixpkgs.lib.nixosSystem {
+              system = "x86_64-linux";
+              modules = [
+                ./system
+                {
+                  home-manager.extraSpecialArgs = specialArgs;
+                  home-manager.users.tigor = import ./home/tigor;
+                }
+              ] ++ commonModules;
+              specialArgs = specialArgs;
+            };
         };
     };
 }
