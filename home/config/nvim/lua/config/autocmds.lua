@@ -25,3 +25,16 @@ vim.filetype.add {
         templ = "templ",
     },
 }
+
+require("lspconfig").nil_ls.setup {
+    settings = {
+        ["nil"] = {
+            nix = {
+                flake = {
+                    autoArchive = true,
+                    autoEvalInputs = vim.fn.getenv "NIL_LS_NIX_AUTO_EVAL_INPUTS" ~= vim.NIL,
+                },
+            },
+        },
+    },
+}

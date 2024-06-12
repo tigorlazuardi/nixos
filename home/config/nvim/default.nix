@@ -11,6 +11,8 @@
   };
 
   home.packages = with pkgs; [
+    stylua
+    lua-language-server
     docker-compose-language-service
     emmet-ls
     silicon # For code screenshots
@@ -20,6 +22,9 @@
     gotests
     iferr
     curl
+    cargo
+    nixpkgs-fmt
+    nil
 
     gcc
     python3
