@@ -6,5 +6,6 @@
       type = lib.types.bool;
       default = true;
     };
+    kavita.enable = lib.mkEnableOption "kavita docker";
   };
 }

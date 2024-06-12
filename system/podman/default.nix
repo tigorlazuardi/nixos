@@ -4,6 +4,7 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
+    services.caddy.enable = true;
     environment.systemPackages = with pkgs; [
       dive # look into docker image layers
       podman-tui # status of containers in the terminal
@@ -28,5 +29,6 @@ in
 
   imports = [
     ./caddy.nix
+    ./kavita.nix
   ];
 }

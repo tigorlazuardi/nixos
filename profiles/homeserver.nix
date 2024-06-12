@@ -17,17 +17,20 @@
     audio.enable = false;
     security.sudo.wheelNeedsPassword = false;
 
-    podman = {
-      enable = false;
-    };
     openssh.enable = true;
     go.enable = true;
     networking.firewall.enable = true;
     networking.firewall.allowedTCPPorts = [ 80 443 ];
-    cockpit.enable = false;
+    cockpit.enable = true;
     docker = {
+      enable = false;
+      caddy.enable = false;
+      kavita.enable = false;
+    };
+    podman = {
       enable = true;
-      caddy.enable = true;
+      caddy.enable = false;
+      kavita.enable = true;
     };
   };
 }

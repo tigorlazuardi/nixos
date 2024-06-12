@@ -31,10 +31,6 @@ in
         extraOptions = [
           "--network=caddy"
         ];
-        labels = {
-          "caddy" = "cockpit.tigor.web.id";
-          "caddy.reverse_proxy" = "hosts.container.internal:9090";
-        };
       };
     };
   };
