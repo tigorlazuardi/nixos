@@ -1,7 +1,7 @@
 { config, ... }:
 {
   sops = {
-    defaultSopsFile = ../../secrets/secrets.yaml;
+    defaultSopsFile = ../secrets/secrets.yaml;
     defaultSopsFormat = "yaml";
     age.keyFile = "/home/${config.home.username}/.config/sops/age/keys.txt";
 

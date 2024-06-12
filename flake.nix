@@ -87,7 +87,7 @@
                     ./system
                     {
                       home-manager.extraSpecialArgs = specialArgs;
-                      home-manager.users.tigor = import ./home/tigor;
+                      home-manager.users.tigor = import ./home;
                     }
                   ] ++ commonModules;
                 specialArgs = specialArgs;
@@ -104,7 +104,7 @@
                 ./system
                 {
                   home-manager.extraSpecialArgs = specialArgs;
-                  home-manager.users.tigor = import ./home/tigor;
+                  home-manager.users.tigor = import ./home;
                 }
               ] ++ commonModules;
               specialArgs = specialArgs;
@@ -121,7 +121,7 @@
                 ./system
                 {
                   home-manager.extraSpecialArgs = specialArgs;
-                  home-manager.users.tigor = import ./home/tigor;
+                  home-manager.users.tigor = import ./home;
                 }
               ] ++ commonModules;
               specialArgs = specialArgs;

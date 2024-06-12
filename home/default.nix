@@ -8,7 +8,7 @@ in
     profile-path
 
     ./programs
-    ../modules
+    ./modules
 
     ./config/wezterm
     ./config/nvim
