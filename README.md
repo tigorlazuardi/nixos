@@ -1,0 +1,2 @@
+# nixos
+Nixos Configuration Repository
