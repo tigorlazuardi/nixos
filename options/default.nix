@@ -45,7 +45,13 @@
     flatpak.enable = lib.mkEnableOption "flatpak";
     gnome.enable = lib.mkEnableOption "gnome";
     kde.enable = lib.mkEnableOption "kde";
-    networking.firewall.enable = lib.mkEnableOption "firewall";
+    networking.firewall = {
+      enable = lib.mkEnableOption "firewall";
+      allowedTCPPorts = lib.mkOption {
+        type = lib.types.listOf lib.types.int;
+        default = [ ];
+      };
+    };
     printing.enable = lib.mkEnableOption "printing";
     scanner.enable = lib.mkEnableOption "scanner";
     steam.enable = lib.mkEnableOption "steam";
