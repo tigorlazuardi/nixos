@@ -4,6 +4,7 @@
     profile-path
     hardware-configuration
     ./modules
+    ./podman
     ./programs.nix
     ./user.nix
     ./keyboard.nix

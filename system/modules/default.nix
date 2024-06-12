@@ -15,7 +15,6 @@
     ./kde.nix
     ./networking.nix
     ./openssh.nix
-    ./podman.nix
     ./printing.nix
     ./scanner.nix
     ./sops.nix
