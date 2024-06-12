@@ -1,9 +1,13 @@
-{ pkgs, unstable, ... }:
+{ config, pkgs, unstable, ... }:
 
 {
   home.file.".config/nvim" = {
     source = ./.;
     recursive = true;
+  };
+
+  sops.secrets."copilot" = {
+    path = "${config.home.homeDirectory}/.config/github-copilot/hosts.json";
   };
 
   home.packages = with pkgs; [
