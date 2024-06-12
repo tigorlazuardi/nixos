@@ -10,7 +10,6 @@
     docker-compose-language-service
     emmet-ls
     # golangci-lint-langserver
-    mongodb-compass
     silicon # For code screenshots
 
     ###### Golang development tools ######

@@ -121,7 +121,7 @@
                 ./system
                 {
                   home-manager.extraSpecialArgs = specialArgs;
-                  home-manager.users.tigor = import ./home;
+                  home-manager.users.homeserver = import ./home;
                 }
               ] ++ commonModules;
               specialArgs = specialArgs;
