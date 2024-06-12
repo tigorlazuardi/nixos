@@ -3,6 +3,7 @@
   imports = [
     ./programs.nix
     ./hyprland.nix
+    ./docker.nix
     ./podman.nix
   ];
   options.profile = {
@@ -49,7 +50,6 @@
     android.enable = lib.mkEnableOption "android";
     avahi.enable = lib.mkEnableOption "avahi";
     bluetooth.enable = lib.mkEnableOption "bluetooth";
-    docker.enable = lib.mkEnableOption "docker";
     flatpak.enable = lib.mkEnableOption "flatpak";
     gnome.enable = lib.mkEnableOption "gnome";
     kde.enable = lib.mkEnableOption "kde";

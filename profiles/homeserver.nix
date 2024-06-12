@@ -18,12 +18,16 @@
     security.sudo.wheelNeedsPassword = false;
 
     podman = {
-      enable = true;
+      enable = false;
     };
     openssh.enable = true;
     go.enable = true;
     networking.firewall.enable = true;
     networking.firewall.allowedTCPPorts = [ 80 443 ];
-    cockpit.enable = true;
+    cockpit.enable = false;
+    docker = {
+      enable = true;
+      caddy.enable = true;
+    };
   };
 }
