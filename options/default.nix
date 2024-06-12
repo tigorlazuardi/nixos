@@ -20,6 +20,14 @@
       fullName = lib.mkOption {
         type = lib.types.str;
       };
+      uid = lib.mkOption {
+        type = lib.types.int;
+        default = 1000;
+      };
+      gid = lib.mkOption {
+        type = lib.types.int;
+        default = 100;
+      };
 
       getty.autoLogin = lib.mkEnableOption "auto-login to getty";
     };

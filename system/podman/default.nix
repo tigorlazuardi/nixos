@@ -10,11 +10,23 @@ in
       podman-compose # start group of containers for dev
     ];
 
+    virtualisation.containers.enable = true;
+    virtualisation.oci-containers.backend = "podman";
     virtualisation.podman = {
       enable = true;
       dockerSocket.enable = true;
       autoPrune.enable = true; # Default weekly
       dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true;
+    };
+    # https://madison-technologies.com/take-your-nixos-container-config-and-shove-it/
+    networking.firewall.interfaces.podman1 = {
+      allowedUDPPorts = [ 53 ]; # this needs to be there so that containers can look eachother's names up over DNS
     };
   };
+
+
+  imports = [
+    ./caddy.nix
+  ];
 }
