@@ -7,6 +7,7 @@ in
     environment.systemPackages = lib.mkIf config.profile.podman.enable [
       (pkgs.callPackage ../packages/cockpit-podman.nix { })
     ];
+    services.udisks2.enable = true;
     services.cockpit = {
       enable = true;
       openFirewall = true;
