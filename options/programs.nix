@@ -67,5 +67,8 @@
     # For server option, see podman.nix.
     jellyfin.enable = lib.mkEnableOption "jellyfin";
     dbeaver.enable = lib.mkEnableOption "dbeaver";
+
+    microsoft-edge.enable = lib.mkEnableOption "microsoft-edge";
+    nextcloud.enable = lib.mkEnableOption "nextcloud";
   };
 }

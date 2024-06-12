@@ -73,5 +73,8 @@ in
     chromium.enable = true;
     bitwarden.enable = true;
     dbeaver.enable = true;
+
+    microsoft-edge.enable = true;
+    nextcloud.enable = true;
   };
 }

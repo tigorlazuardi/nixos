@@ -3,12 +3,15 @@
   imports = [
     ./bitwarden.nix
     ./chromium.nix
+    ./dbeaver.nix
     ./discord.nix
     ./git.nix
     ./github.nix
     ./go.nix
+    ./microsoft-edge.nix
     ./mpv.nix
     ./neovide.nix
+    ./nextcloud.nix
     ./nnn.nix
     ./node.nix
     ./slack.nix
@@ -19,7 +22,6 @@
     ./vscode.nix
     ./whatsapp.nix
     ./zsh.nix
-    ./dbeaver.nix
   ];
 
   programs.fzf = {
@@ -35,10 +37,4 @@
   };
   programs.ripgrep.enable = true;
   programs.htop.enable = true;
-
-  home.packages = with pkgs; [
-    unstable.jellyfin-media-player
-    unstable.microsoft-edge
-    nextcloud-client
-  ];
 }
