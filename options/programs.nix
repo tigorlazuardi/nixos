@@ -70,5 +70,7 @@
 
     microsoft-edge.enable = lib.mkEnableOption "microsoft-edge";
     nextcloud.enable = lib.mkEnableOption "nextcloud";
+
+    cockpit.enable = lib.mkEnableOption "cockpit";
   };
 }

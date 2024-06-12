@@ -24,5 +24,6 @@
     go.enable = true;
     networking.firewall.enable = true;
     networking.firewall.allowedTCPPorts = [ 80 443 ];
+    cockpit.enable = true;
   };
 }

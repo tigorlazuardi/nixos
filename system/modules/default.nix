@@ -7,6 +7,7 @@
     ./bluetooth.nix
     ./boot_loader.nix
     ./brightnessctl.nix
+    ./cockpit.nix
     ./docker.nix
     ./flatpak.nix
     ./font.nix
