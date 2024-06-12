@@ -13,7 +13,6 @@
   home.packages = with pkgs; [
     docker-compose-language-service
     emmet-ls
-    # golangci-lint-langserver
     silicon # For code screenshots
 
     ###### Golang development tools ######
@@ -22,6 +21,7 @@
     iferr
     curl
 
-    unstable.lua-language-server
+    gcc
+    python3
   ];
 }

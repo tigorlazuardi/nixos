@@ -21,5 +21,6 @@
       enable = true;
     };
     openssh.enable = true;
+    go.enable = true;
   };
 }
