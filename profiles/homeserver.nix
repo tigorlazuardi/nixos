@@ -32,5 +32,10 @@
       caddy.enable = false;
       kavita.enable = true;
     };
+
+    services = {
+      caddy.enable = true;
+      cockpit.enable = true;
+    };
   };
 }

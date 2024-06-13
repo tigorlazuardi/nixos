@@ -1,10 +1,9 @@
 { config, lib, pkgs, ... }:
 let
   cfg = config.profile.services.cockpit;
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
 in
 {
-  options.profile.services.cockpit.enable = mkEnableOption "cockpit";
   config = mkIf cfg.enable {
     environment.systemPackages = mkIf config.profile.podman.enable [
       (pkgs.callPackage ../packages/cockpit-podman.nix { })
@@ -12,6 +11,7 @@ in
     sops.secrets."cockpit" = {
       sopsFile = ../../secrets/caddy_reverse_proxy.yaml;
       path = "/etc/caddy/sites-enabled/cockpit";
+      mode = "0440";
     };
     services.cockpit = {
       enable = true;

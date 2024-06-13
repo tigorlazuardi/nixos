@@ -5,6 +5,7 @@
     ./hyprland.nix
     ./docker.nix
     ./podman.nix
+    ./services.nix
   ];
   options.profile = {
 
