@@ -8,11 +8,9 @@ in
     environment.systemPackages = mkIf config.profile.podman.enable [
       (pkgs.callPackage ../packages/cockpit-podman.nix { })
     ];
-    sops.secrets."cockpit" = {
-      sopsFile = ../../secrets/caddy_reverse_proxy.yaml;
-      path = "/etc/caddy/sites-enabled/cockpit";
-      mode = "0440";
-    };
+    services.caddy.virtualHosts."cockpit.tigor.web.id".extraConfig = ''
+      reverse_proxy 0.0.0.0:9090
+    '';
     services.cockpit = {
       enable = true;
       openFirewall = true;
