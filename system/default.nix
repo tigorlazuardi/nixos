@@ -4,6 +4,7 @@
     profile-path
     hardware-configuration
     ./modules
+    ./services
     ./podman
     ./docker
     ./programs.nix
