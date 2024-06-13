@@ -36,6 +36,9 @@
     services = {
       caddy.enable = true;
       cockpit.enable = true;
+      forgejo.enable = true;
+      kavita.enable = true;
+      samba.enable = true;
     };
   };
 }
