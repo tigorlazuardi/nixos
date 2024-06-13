@@ -18,11 +18,11 @@ in
     services.forgejo = {
       enable = true;
       settings = {
-        server = {
+        server = rec {
           PROTOCOL = "http+unix";
           DOMAIN = "git.tigor.web.id";
           HTTP_PORT = 443;
-          ROOT_URL = "https://${config.services.forgejo.settings.server.DOMAIN}:${toString config.services.forgejo.settings.server.HTTP_PORT}";
+          ROOT_URL = "https://${DOMAIN}:${toString HTTP_PORT}";
         };
         service = {
           DISABLE_REGISTRATION = true;
