@@ -6,6 +6,11 @@ in
 {
   config = mkIf cfg.enable {
     services.caddy.virtualHosts."git.tigor.web.id".extraConfig = ''
+      @home_not_login {
+            not header_regexp Cookie gitea_incredible
+            path /
+      }
+      redir @home_not_login /Tigor
       reverse_proxy * unix//run/forgejo/forgejo.sock
     '';
 
