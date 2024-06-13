@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 let
-  owner = "tigor";
+  owner = config.profile.user.name;
 in
 {
   environment.systemPackages = with pkgs; [
