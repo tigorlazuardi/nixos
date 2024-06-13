@@ -1,7 +1,7 @@
 { config, lib, ... }:
 let
   cfg = config.profile.services.samba;
-  user = config.profile.user;
+  # user = config.profile.user;
   inherit (lib) mkIf;
 in
 {
@@ -24,8 +24,6 @@ in
           "guest ok" = "yes";
           "create mask" = "0777";
           "directory mask" = "0777";
-          "force user" = user.name;
-          "force group" = user.name;
         };
       };
     };
