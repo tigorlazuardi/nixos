@@ -7,7 +7,7 @@
     ];
 
   sops.secrets."smb/secrets" = {
-    owner = config.users.users.tigor.name;
+    owner = config.profile.user.name;
   };
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
@@ -15,10 +15,10 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  system.fsPackages = [ pkgs.bindfs ];
+  system.fsPackages = [ pkgs.bindfs pkgs.cifs-utils ];
   fileSystems."/nas" =
     {
-      device = "//192.168.100.5/wd_red_1";
+      device = "//192.168.100.5/nas";
       fsType = "cifs";
       options = [
         "_netdev"
@@ -27,8 +27,8 @@
         "x-systemd.idle-timeout=60"
         "x-systemd.device-timeout=5s"
         "x-systemd.mount-timeout=5s"
-        "uid=1000"
-        "gid=100"
+        "uid=${toString config.profile.user.uid}"
+        "gid=${toString config.profile.user.gid}"
         "credentials=${config.sops.secrets."smb/secrets".path}"
       ];
     };
