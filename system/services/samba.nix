@@ -1,7 +1,7 @@
 { config, lib, ... }:
 let
   cfg = config.profile.services.samba;
-  # user = config.profile.user;
+  user = config.profile.user;
   inherit (lib) mkIf;
 in
 {
@@ -15,6 +15,7 @@ in
         server string = smbnix
         netbios name = smbnix
         security = user 
+        guest account = ${user.name}
       '';
       shares = {
         nas = {
