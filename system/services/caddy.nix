@@ -11,5 +11,11 @@ in
         import /etc/caddy/sites-enabled/*
       '';
     };
+
+    sops.secrets."router" = {
+      sopsFile = ../../secrets/caddy_reverse_proxy.yaml;
+      path = "/etc/caddy/sites-enabled/router";
+      mode = "0444";
+    };
   };
 }
