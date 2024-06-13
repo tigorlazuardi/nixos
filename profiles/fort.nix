@@ -48,5 +48,19 @@
     brightnessctl.enable = true;
     keyboard.language.japanese = true;
 
+    mpris-proxy.enable = true;
+    kitty.enable = true;
+    neovide.enable = true;
+    spotify.enable = true;
+    vscode.enable = true;
+    jellyfin.enable = false;
+    mpv.enable = true;
+    go.enable = true;
+    chromium.enable = true;
+    bitwarden.enable = true;
+    dbeaver.enable = true;
+
+    microsoft-edge.enable = true;
+    nextcloud.enable = false;
   };
 }
