@@ -9,5 +9,6 @@ in
     forgejo.enable = mkEnableOption "forgejo";
     kavita.enable = mkEnableOption "kavita";
     samba.enable = mkEnableOption "samba";
+    nextcloud.enable = mkEnableOption "nextcloud";
   };
 }

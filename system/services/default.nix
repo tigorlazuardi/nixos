@@ -5,5 +5,6 @@
     ./cockpit.nix
     ./forgejo.nix
     ./samba.nix
+    ./nextcloud.nix
   ];
 }

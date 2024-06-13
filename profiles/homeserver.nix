@@ -33,6 +33,7 @@
       forgejo.enable = true;
       kavita.enable = true;
       samba.enable = true;
+      nextcloud.enable = true;
     };
   };
 }
