@@ -1,6 +1,6 @@
 { lib, ... }:
 let
-  inherit (lib) mkEnableOption;
+  inherit (lib) mkEnableOption mkOption types;
 in
 {
   options.profile.services = {
@@ -10,5 +10,6 @@ in
     kavita.enable = mkEnableOption "kavita";
     samba.enable = mkEnableOption "samba";
     nextcloud.enable = mkEnableOption "nextcloud";
+    syncthing.enable = mkEnableOption "syncthing";
   };
 }

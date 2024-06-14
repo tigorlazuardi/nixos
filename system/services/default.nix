@@ -6,5 +6,6 @@
     ./forgejo.nix
     ./samba.nix
     ./nextcloud.nix
+    ./syncthing.nix
   ];
 }

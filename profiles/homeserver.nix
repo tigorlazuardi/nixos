@@ -34,6 +34,7 @@
       kavita.enable = true;
       samba.enable = true;
       nextcloud.enable = true;
+      syncthing.enable = true;
     };
   };
 }
