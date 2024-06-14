@@ -21,6 +21,9 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = [ pkgs.openvpn ]; # To generate keys with openvpn --genkey --secret <name>.key
 
+    # Enable IP forwarding to allow the VPN to act as a gateway.
+    boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+
     networking.nat = {
       enable = true;
       inherit externalInterface;
