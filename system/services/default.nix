@@ -7,5 +7,6 @@
     ./samba.nix
     ./nextcloud.nix
     ./syncthing.nix
+    ./kavita.nix
   ];
 }

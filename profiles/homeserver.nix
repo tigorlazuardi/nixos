@@ -23,8 +23,6 @@
     networking.firewall.allowedTCPPorts = [ 80 443 ];
     podman = {
       enable = true;
-      caddy.enable = false;
-      kavita.enable = true;
     };
 
     services = {
