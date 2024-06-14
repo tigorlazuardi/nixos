@@ -1,19 +1,11 @@
-# It's a pain setting up Certificate Authority, Public Key Infrastructure, etc. for OpenVPN.
-# Instead setup multiple openvpn servers with multiple ports, with each server having one client.
-#
-# Does not scale well, but it's good enough for personal use.
-#
-# TODO: Create CA, and ROOTCA, and use them to sign the keys, then store in sops-nix secrets.
-
+# Guide on how to create client ovpn files, and server config: https://wiki.archlinux.org/title/OpenVPN/Checklist_guide
 
 { config, lib, pkgs, ... }:
 let
   cfg = config.profile.services.openvpn;
   domain = "vpn.tigor.web.id";
-  portLaptop = 1194;
-  portPhone = 1195;
-  vpn-dev-laptop = "tun0";
-  vpn-dev-phone = "tun1";
+  port = 1194;
+  vpn-dev = "tun0";
   externalInterface = config.profile.networking.externalInterface;
   inherit (lib) mkIf;
 in
@@ -27,11 +19,11 @@ in
     networking.nat = {
       enable = true;
       inherit externalInterface;
-      internalInterfaces = [ vpn-dev-laptop vpn-dev-phone ];
+      internalInterfaces = [ vpn-dev ];
     };
 
-    networking.firewall.trustedInterfaces = [ vpn-dev-laptop vpn-dev-phone ];
-    networking.firewall.allowedUDPPorts = [ portLaptop portPhone ];
+    networking.firewall.trustedInterfaces = [ vpn-dev ];
+    networking.firewall.allowedUDPPorts = [ port ];
 
     sops = {
       # Activate the secrets.
@@ -43,41 +35,50 @@ in
         in
         {
           "openvpn/server/ip" = opts;
-          "openvpn/key/phone" = opts;
-          "openvpn/key/laptop" = opts;
+          "openvpn/server/ca" = opts;
+          "openvpn/server/cert" = opts;
+          "openvpn/server/key" = opts;
+          "openvpn/server/tls-auth" = opts;
+          "openvpn/server/dh" = opts;
+          "openvpn/clients/phone" = opts;
+          "openvpn/clients/laptop" = opts;
         };
 
       # This section creates .ovpn files for the clients in /etc/openvpn folder. These should be shared with the clients.
       templates =
         let
-          template = { secretPlaceholder, port, ifConfig }: ''
+          # secretPlaceholder is a generated inline file from easyrsa build-client-full.
+          # it contains <cert>, <key>, <ca> sections.
+          template = { secretPlaceholder, ifConfig }: ''
+            client
+
             dev tun
-            remote "${config.sops.placeholder."openvpn/server/ip"}"
+            remote "${domain}"
             port ${toString port}
-            ifconfig ${ifConfig}
             redirect-gateway def1
 
             cipher AES-256-CBC
             auth-nocache
 
-            comp-lzo
             keepalive 10 60
             resolv-retry infinite
             nobind
             persist-key
             persist-tun
-            secret [inline]
+            key-direction 1
 
-            <secret>
+            tls-client
+            <tls-auth>
+            ${config.sops.placeholder."openvpn/server/tls-auth"}
+            </tls-auth>
+
             ${secretPlaceholder}
-            </secret>
           '';
         in
         {
           "openvpn/key/phone" = {
             content = template {
-              secretPlaceholder = config.sops.placeholder."openvpn/key/phone";
-              port = portPhone;
+              secretPlaceholder = config.sops.placeholder."openvpn/clients/phone";
               ifConfig = "10.8.1.1 10.8.1.2";
             };
             path = "/etc/openvpn/phone.ovpn";
@@ -85,8 +86,7 @@ in
           };
           "openvpn/key/laptop" = {
             content = template {
-              secretPlaceholder = config.sops.placeholder."openvpn/key/laptop";
-              port = portLaptop;
+              secretPlaceholder = config.sops.placeholder."openvpn/clients/laptop";
               ifConfig = "10.8.2.1 10.8.2.2";
             };
             path = "/etc/openvpn/laptop.ovpn";
@@ -94,34 +94,31 @@ in
           };
         };
     };
-    services.openvpn.servers =
-      let
-        configTemplate = { secretFile, port, dev }: ''
-          dev ${dev}
-          proto udp
-          secret ${secretFile}
-          port ${toString port}
+    services.openvpn.servers.homeserver = {
+      config = ''
+        dev ${vpn-dev}
+        proto udp
 
-          cipher AES-256-CBC
-          auth-nocache
+        tls-server
+        cipher AES-256-CBC
+        tls-cipher TLS-DHE-RSA-WITH-AES-256-CBC-SHA
 
-          comp-lzo
-          keepalive 10 60
-          ping-timer-rem
-          persist-tun
-          persist-key
-        '';
-      in
-      {
-        phone = {
-          config = configTemplate { secretFile = config.sops.secrets."openvpn/key/phone".path; port = portPhone; dev = vpn-dev-phone; };
-          autoStart = true;
-        };
-        laptop = {
-          config = configTemplate { secretFile = config.sops.secrets."openvpn/key/laptop".path; port = portLaptop; dev = vpn-dev-laptop; };
-          autoStart = true;
-        };
-      };
+        server 10.10.10.0 255.255.255.0
+
+        allow-compression no
+        ca ${config.sops.secrets."openvpn/server/ca".path}
+        cert ${config.sops.secrets."openvpn/server/cert".path}
+        key ${config.sops.secrets."openvpn/server/key".path}
+        dh ${config.sops.secrets."openvpn/server/dh".path}
+        tls-auth ${config.sops.secrets."openvpn/server/tls-auth".path} 0
+
+        keepalive 10 60
+        ping-timer-rem
+        persist-tun
+        persist-key
+      '';
+      autoStart = true;
+    };
   };
 }
 
