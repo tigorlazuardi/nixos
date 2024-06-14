@@ -5,12 +5,18 @@ let
 in
 {
   config = mkIf cfg.enable {
+    networking.resolvconf.useLocalResolver = true;
     services.stubby = {
       enable = true;
       settings = pkgs.stubby.passthru.settingsExample // {
+        listen_addresses = [
+          "0.0.0.0@53"
+          "0::0"
+        ];
         upstream_recursive_servers = [
           {
             address_data = "1.1.1.1";
+            tls_port = 853;
             tls_auth_name = "cloudflare-dns.com";
           }
         ];
