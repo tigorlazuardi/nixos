@@ -39,6 +39,7 @@ in
           };
         in
         {
+          "openvpn/server/ip" = opts;
           "openvpn/key/phone" = opts;
           "openvpn/key/laptop" = opts;
         };
@@ -46,9 +47,9 @@ in
       # This section creates .ovpn files for the clients in /etc/openvpn folder. These should be shared with the clients.
       templates =
         let
-          template = { placeholder, port, ifConfig }: ''
+          template = { secretPlaceholder, port, ifConfig }: ''
             dev tun
-            remote "${domain}"
+            remote "${config.sops.placeholder."openvpn/server/ip"}"
             port ${toString port}
             ifconfig ${ifConfig}
             redirect-gateway def1
@@ -65,14 +66,14 @@ in
             secret [inline]
 
             <secret>
-            ${placeholder}
+            ${secretPlaceholder}
             </secret>
           '';
         in
         {
           "openvpn/key/phone" = {
             content = template {
-              placeholder = config.sops.placeholder."openvpn/key/phone";
+              secretPlaceholder = config.sops.placeholder."openvpn/key/phone";
               port = portPhone;
               ifConfig = "10.8.1.1 10.8.1.2";
             };
@@ -81,7 +82,7 @@ in
           };
           "openvpn/key/laptop" = {
             content = template {
-              placeholder = config.sops.placeholder."openvpn/key/laptop";
+              secretPlaceholder = config.sops.placeholder."openvpn/key/laptop";
               port = portLaptop;
               ifConfig = "10.8.2.1 10.8.2.2";
             };
