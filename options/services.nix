@@ -12,5 +12,6 @@ in
     nextcloud.enable = mkEnableOption "nextcloud";
     syncthing.enable = mkEnableOption "syncthing";
     openvpn.enable = mkEnableOption "openvpn";
+    stubby.enable = mkEnableOption "stubby";
   };
 }

@@ -9,5 +9,6 @@
     ./syncthing.nix
     ./kavita.nix
     ./openvpn.nix
+    ./stubby.nix
   ];
 }

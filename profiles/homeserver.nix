@@ -35,6 +35,7 @@
       nextcloud.enable = true;
       syncthing.enable = true;
       openvpn.enable = true;
+      stubby.enable = true;
     };
   };
 }
