@@ -6,6 +6,7 @@
 
   profile = {
     hostname = "homeserver";
+    networking.externalInterface = "enp9s0";
     user = {
       name = "homeserver";
       fullName = "Homeserver";
@@ -33,6 +34,7 @@
       samba.enable = true;
       nextcloud.enable = true;
       syncthing.enable = true;
+      openvpn.enable = true;
     };
   };
 }

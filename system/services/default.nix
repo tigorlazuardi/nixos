@@ -8,5 +8,6 @@
     ./nextcloud.nix
     ./syncthing.nix
     ./kavita.nix
+    ./openvpn.nix
   ];
 }

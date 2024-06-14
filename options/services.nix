@@ -11,5 +11,6 @@ in
     samba.enable = mkEnableOption "samba";
     nextcloud.enable = mkEnableOption "nextcloud";
     syncthing.enable = mkEnableOption "syncthing";
+    openvpn.enable = mkEnableOption "openvpn";
   };
 }

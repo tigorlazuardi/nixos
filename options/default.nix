@@ -14,6 +14,10 @@
     hostname = lib.mkOption {
       type = lib.types.str;
     };
+    networking.externalInterface = lib.mkOption {
+      type = lib.types.str;
+      default = "eth0";
+    };
 
     user = {
       name = lib.mkOption {
