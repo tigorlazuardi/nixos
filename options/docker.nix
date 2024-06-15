@@ -1,11 +1,11 @@
 { lib, ... }:
+let
+  inherit (lib) mkEnableOption;
+in
 {
   options.profile.docker = {
     enable = lib.mkEnableOption "docker";
-    caddy.enable = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-    };
+    caddy.enable = mkEnableOption "caddy docker";
     kavita.enable = lib.mkEnableOption "kavita docker";
   };
 }

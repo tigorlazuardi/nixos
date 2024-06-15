@@ -31,7 +31,7 @@ in
       };
     };
 
-    sops.secrets."runner_token" = {
+    sops.secrets."forgejo/runners/global" = {
       sopsFile = ../../secrets/forgejo.yaml;
     };
 
@@ -42,8 +42,15 @@ in
           enable = true;
           name = config.networking.hostName;
           url = config.services.forgejo.settings.server.ROOT_URL;
-          tokenFile = config.sops.secrets."runner_token".path;
+          tokenFile = config.sops.secrets."forgejo/runners/global".path;
           settings = {
+            runner = {
+              capacity = 2;
+              timeout = "1h";
+            };
+            cache = {
+              enabled = true;
+            };
             container = {
               privileged = true;
               # docker_host = "unix:///var/run/docker.sock";

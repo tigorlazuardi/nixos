@@ -23,6 +23,10 @@
     networking.firewall.enable = true;
     networking.firewall.allowedTCPPorts = [ 80 443 ];
     podman = {
+      enable = false;
+    };
+
+    docker = {
       enable = true;
     };
 
