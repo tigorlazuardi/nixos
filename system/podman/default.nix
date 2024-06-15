@@ -1,9 +1,11 @@
 { config, lib, pkgs, ... }:
 let
   cfg = config.profile.podman;
+  username = config.profile.user.name;
 in
 {
   config = lib.mkIf cfg.enable {
+    users.users.${username}.extraGroups = [ "podman" ];
     # services.caddy.enable = true;
     environment.systemPackages = with pkgs; [
       dive # look into docker image layers
@@ -21,7 +23,7 @@ in
       defaultNetwork.settings.dns_enabled = true;
     };
     # https://madison-technologies.com/take-your-nixos-container-config-and-shove-it/
-    networking.firewall.interfaces.podman1 = {
+    networking.firewall.interfaces."podman[0-9]+" = {
       allowedUDPPorts = [ 53 ]; # this needs to be there so that containers can look eachother's names up over DNS
     };
   };

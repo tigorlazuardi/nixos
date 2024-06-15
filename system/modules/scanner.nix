@@ -1,9 +1,11 @@
 { config, lib, pkgs, ... }:
 let
   cfg = config.profile.scanner;
+  username = config.profile.user.name;
 in
 {
   config = lib.mkIf cfg.enable {
+    users.users.${username}.extraGroups = [ "scanner" ];
     environment.systemPackages = with pkgs; [
       skanlite
     ];
