@@ -37,6 +37,7 @@ in
       environment = {
         TZ = "Asia/Jakarta";
         PIHOLE_DNS_ = "192.168.100.5";
+        DHCP_ACTIVE = "true";
         DHCP_START = "192.168.100.20";
         DHCP_END = "192.168.100.254";
         DHCP_ROUTER = "192.168.100.1";
