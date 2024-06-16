@@ -5,13 +5,13 @@ let
 in
 {
   config = mkIf cfg.enable {
-    networking.resolvconf.useLocalResolver = true;
+    networking.resolvconf.useLocalResolver = false;
+    networking.nameservers = [ "192.168.100.5" ];
     services.stubby = {
       enable = true;
       settings = pkgs.stubby.passthru.settingsExample // {
         listen_addresses = [
-          "0.0.0.0@53"
-          "0::0"
+          "192.168.100.5"
         ];
         upstream_recursive_servers = [
           {

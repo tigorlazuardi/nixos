@@ -9,7 +9,9 @@
       cfg = config.profile.networking.firewall;
     in
     {
-      enable = cfg.enable;
+      # enable = cfg.enable;
+      enable = true;
       allowedTCPPorts = cfg.allowedTCPPorts;
+      allowedUDPPorts = [ 53 ];
     };
 }

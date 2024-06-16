@@ -32,5 +32,6 @@ in
   imports = [
     ./caddy.nix
     ./kavita.nix
+    ./pihole.nix
   ];
 }

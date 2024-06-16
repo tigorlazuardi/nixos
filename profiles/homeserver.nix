@@ -23,11 +23,12 @@
     networking.firewall.enable = true;
     networking.firewall.allowedTCPPorts = [ 80 443 ];
     podman = {
-      enable = false;
+      enable = true;
+      pihole.enable = true;
     };
 
     docker = {
-      enable = true;
+      enable = false;
     };
 
     services = {
