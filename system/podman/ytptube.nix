@@ -32,7 +32,7 @@ in
 
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${volume}
-      chown -R ${uid}:${gid} /nas/mediaserver
+      chown -R ${uid}:${gid} ${volume}
     '';
 
     environment.etc."podman/${name}/ytdlp.json" = {

@@ -13,5 +13,6 @@ in
     syncthing.enable = mkEnableOption "syncthing";
     openvpn.enable = mkEnableOption "openvpn";
     stubby.enable = mkEnableOption "stubby";
+    jellyfin.enable = mkEnableOption "jellyfin";
   };
 }

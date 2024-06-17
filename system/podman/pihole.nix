@@ -3,7 +3,7 @@ let
   name = "pihole";
   podman = config.profile.podman;
   pihole = podman.pihole;
-  inherit (lib) mkIf lists;
+  inherit (lib) mkIf strings attrsets;
   gateway = "10.1.1.1";
   subnet = "10.1.1.0/30";
   ip = "10.1.1.2";
@@ -36,8 +36,11 @@ in
     };
 
     # We have refresh the custom.list dns list when caddy virtual hosts changes,
-    # the easiest way to do so is to restart the pihole container
-    systemd.services."podman-${name}".partOf = lists.optional (config.services.caddy.enable) "caddy.service";
+    # the easiest way to do so is to restart the pihole container.
+    #
+    # This works by collecting all the virtual hosts defined in caddy
+    # and check if the length of the list changes, if it does, we restart the pihole container.
+    systemd.services."podman-${name}".restartTriggers = attrsets.mapAttrsToList (name: _: name) config.services.caddy.virtualHosts;
     environment.etc."pihole/custom.list" = {
       # Copy file instead of symlink
       mode = "0444";

@@ -10,5 +10,6 @@
     ./kavita.nix
     ./openvpn.nix
     ./stubby.nix
+    ./jellyfin.nix
   ];
 }
