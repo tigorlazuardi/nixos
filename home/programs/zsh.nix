@@ -27,8 +27,9 @@
       uptest = "sudo nixos-rebuild test --flake $HOME/dotfiles";
       dry = "sudo nixos-rebuild dry-activate --flake $HOME/dotfiles";
       jq = "gojq";
-      n = "neovide --fork";
+      n = "neovide";
       v = "nvim";
+      cd = "z";
     };
     dotDir = ".config/zsh";
     history = {
