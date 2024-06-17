@@ -32,6 +32,26 @@ in
       script = ''${pkgs.podman}/bin/podman network exists ${name} || ${pkgs.podman}/bin/podman network create --gateway=${gateway} --subnet=${subnet} --ip-range=${ip-range} ${name}'';
     };
 
+    environment.etc."pihole/custom.list" = {
+      # Copy file instead of symlink
+      mode = "0400";
+
+      # Creates a pihole custom.list file with the following pattern:
+      #
+      # custom.list:
+      # 192.168.100.5 {domain_name_1}
+      # 192.168.100.5 {domain_name_2}
+      #
+      # For each domain defined in services.caddy.virtualHosts
+      text =
+        let
+          inherit (lib) strings attrsets;
+        in
+        ''${strings.concatStringsSep "\n" (
+          attrsets.mapAttrsToList (name: _: "192.168.100.5 ${strings.removePrefix "https://" name}") config.services.caddy.virtualHosts
+        )}
+        '';
+    };
     virtualisation.oci-containers.containers.pihole = {
       inherit image;
       environment = {
@@ -41,6 +61,8 @@ in
         DHCP_START = "192.168.100.20";
         DHCP_END = "192.168.100.254";
         DHCP_ROUTER = "192.168.100.1";
+        DNS_BOGUS_PRIV = "false";
+        DNS_FQDN_REQUIRED = "false";
       };
       ports = [
         "192.168.100.4:53:53/udp"
@@ -49,6 +71,7 @@ in
       volumes = [
         "pihole-etc:/etc/pihole"
         "pihole-dnsmasq:/etc/dnsmasq.d"
+        "/etc/pihole/custom.list:/etc/pihole/custom.list"
       ];
       environmentFiles = [
         config.sops.secrets."pihole/env".path
