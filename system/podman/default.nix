@@ -13,6 +13,7 @@ in
       podman-compose # start group of containers for dev
     ];
 
+    systemd.timers."podman-auto-update".enable = true;
     virtualisation.containers.enable = true;
     virtualisation.oci-containers.backend = "podman";
     virtualisation.podman = {
