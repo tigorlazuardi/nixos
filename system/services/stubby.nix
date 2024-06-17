@@ -1,12 +1,12 @@
 { config, lib, pkgs, ... }:
 let
   cfg = config.profile.services.stubby;
-  inherit (lib) mkIf;
+  inherit (lib) mkIf lists;
 in
 {
   config = mkIf cfg.enable {
     networking.resolvconf.useLocalResolver = false;
-    networking.nameservers = [ "192.168.100.5" ];
+    networking.nameservers = lists.optional (!config.profile.podman.pihole.enable) "192.168.100.5";
     services.stubby = {
       enable = true;
       settings = pkgs.stubby.passthru.settingsExample // {

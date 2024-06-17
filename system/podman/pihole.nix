@@ -23,19 +23,21 @@ in
       sopsFile = ../../secrets/pihole.yaml;
     };
 
+    networking.nameservers = [ piholeDNSIPBind ];
 
-    systemd.services.create-kavita-network = {
+
+    systemd.services."create-${name}-network" = {
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
       };
-      wantedBy = [ "podman-pihole.service" ];
+      wantedBy = [ "podman-${name}.service" ];
       script = ''${pkgs.podman}/bin/podman network exists ${name} || ${pkgs.podman}/bin/podman network create --gateway=${gateway} --subnet=${subnet} --ip-range=${ip-range} ${name}'';
     };
 
     environment.etc."pihole/custom.list" = {
       # Copy file instead of symlink
-      mode = "0400";
+      mode = "0444";
 
       # Creates a pihole custom.list file with the following pattern:
       #
@@ -53,7 +55,7 @@ in
         )}
         '';
     };
-    virtualisation.oci-containers.containers.pihole = {
+    virtualisation.oci-containers.containers.${name} = {
       inherit image;
       environment = {
         TZ = "Asia/Jakarta";
