@@ -10,7 +10,6 @@ in
     environment.systemPackages = with pkgs; [
       dive # look into docker image layers
       podman-tui # status of containers in the terminal
-      podman-compose # start group of containers for dev
     ];
 
     systemd.timers."podman-auto-update".enable = true;
@@ -33,12 +32,13 @@ in
   # Taken IP-Range Subnets
   #
   # 10.1.1.0-4 -> Pihole
-  # 10.1.1.4-8 -> 
+  # 10.1.1.4-8 -> ytptube
   # 10.1.1.8-12 -> Suwayomi
   # 10.1.1.12-16 -> Suwayomi
   imports = [
     ./caddy.nix
     ./pihole.nix
     ./suwayomi.nix
+    ./ytptube.nix
   ];
 }

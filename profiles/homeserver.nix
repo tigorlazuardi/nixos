@@ -27,6 +27,7 @@
       enable = true;
       pihole.enable = true;
       suwayomi.enable = true;
+      ytptube.enable = true;
     };
 
     docker = {
