@@ -29,6 +29,8 @@ in
               exit 0;
             fi
 
+            mkdir -p ${nvimCloneDir}
+
             until ${ping} -c 1 ${host}; do
               ${sleep} 1;
             done
