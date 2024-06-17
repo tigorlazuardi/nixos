@@ -19,6 +19,11 @@
       default = "eth0";
     };
 
+    neovim.enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+    };
+
     user = {
       name = lib.mkOption {
         type = lib.types.str;
