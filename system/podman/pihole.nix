@@ -5,10 +5,11 @@ let
   pihole = podman.pihole;
   inherit (lib) mkIf;
   gateway = "10.1.1.1";
-  subnet = "10.1.1.0/29";
-  ip = "10.1.1.3";
-  ip-range = "10.1.1.3/29";
+  subnet = "10.1.1.0/30";
+  ip = "10.1.1.2";
+  ip-range = "10.1.1.2/30";
   image = "pihole/pihole:latest";
+  piholeDNSIPBind = "192.168.100.3";
 in
 {
   config = mkIf (podman.enable && pihole.enable) {
@@ -65,7 +66,7 @@ in
         DNS_FQDN_REQUIRED = "false";
       };
       ports = [
-        "192.168.100.4:53:53/udp"
+        "${piholeDNSIPBind}:53:53/udp"
         "67:67/udp"
       ];
       volumes = [
