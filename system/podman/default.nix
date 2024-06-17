@@ -12,7 +12,10 @@ in
       podman-tui # status of containers in the terminal
     ];
 
-    systemd.timers."podman-auto-update".enable = true;
+    systemd.timers."podman-auto-update" = {
+      enable = true;
+      wantedBy = [ "multi-user.target" ];
+    };
     virtualisation.containers.enable = true;
     virtualisation.oci-containers.backend = "podman";
     virtualisation.podman = {
