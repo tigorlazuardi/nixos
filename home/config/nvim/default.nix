@@ -3,7 +3,7 @@ let
   cfg = config.profile.neovim;
   inherit (lib) mkIf;
   repository = "git@github.com:tigorlazuardi/nvim.git";
-  nvimCloneDir = "${config.home.homeDirectory}/nvim";
+  nvimCloneDir = "${config.home.homeDirectory}/.config/nvim";
 in
 {
   config = mkIf cfg.enable {
@@ -23,12 +23,11 @@ in
           host = "github.com";
           sleep = "${pkgs.coreutils}/bin/sleep";
           script = pkgs.writeScriptBin "clone-nvim.sh" ''
-            #${bash}
+	    #!${bash}
 
             if [ -d "${nvimCloneDir}" ]; then
               exit 0;
             fi
-
 
             until ${ping} -c 1 ${host}; do
               ${sleep} 1;
@@ -42,18 +41,13 @@ in
         in
         {
           Type = "simple";
-          ExecStart = path;
+          ExecStart = "${bash} ${path}";
           Restart = "on-failure";
           RemainAfterExit = "yes";
         };
       Install = {
         WantedBy = [ "default.target" ];
       };
-    };
-
-    xdg.configFile.nvim = {
-      source = config.lib.file.mkOutOfStoreSymlink nvimCloneDir;
-      recursive = true;
     };
 
     sops.secrets."copilot" = {
