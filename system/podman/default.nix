@@ -30,9 +30,14 @@ in
   };
 
 
+  # Taken IP-Range Subnets
+  #
+  # 10.1.1.0-4 -> Pihole
+  # 10.1.1.4-8 -> 
+  # 10.1.1.8-12 -> Suwayomi
+  # 10.1.1.12-16 -> Suwayomi
   imports = [
     ./caddy.nix
-    ./kavita.nix
     ./pihole.nix
     ./suwayomi.nix
   ];
