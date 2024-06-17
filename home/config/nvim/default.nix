@@ -29,11 +29,12 @@ in
               exit 0;
             fi
 
-            mkdir -p ${nvimCloneDir}
 
             until ${ping} -c 1 ${host}; do
               ${sleep} 1;
             done
+
+            mkdir -p ${nvimCloneDir}
 
             ${git} clone ${repository} ${nvimCloneDir}
           '';
@@ -51,7 +52,7 @@ in
     };
 
     xdg.configFile.nvim = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nvim";
+      source = config.lib.file.mkOutOfStoreSymlink nvimCloneDir;
       recursive = true;
     };
 
