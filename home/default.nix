@@ -11,7 +11,6 @@ in
     ./modules
 
     ./config/wezterm
-    ./config/nvim
     ./direnv.nix
     ./config/kitty
     ./config/ideavim

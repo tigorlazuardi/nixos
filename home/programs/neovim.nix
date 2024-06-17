@@ -1,4 +1,4 @@
-{ config, pkgs, lib, unstable, ... }:
+{ config, pkgs, lib, ... }:
 let
   cfg = config.profile.neovim;
   inherit (lib) mkIf;
@@ -23,14 +23,14 @@ in
           host = "github.com";
           sleep = "${pkgs.coreutils}/bin/sleep";
           script = pkgs.writeScriptBin "clone-nvim.sh" ''
-	    #!${bash}
+            #!${bash}
 
             if [ -d "${nvimCloneDir}" ]; then
-              exit 0;
+                exit 0;
             fi
 
             until ${ping} -c 1 ${host}; do
-              ${sleep} 1;
+                ${sleep} 1;
             done
 
             mkdir -p ${nvimCloneDir}
@@ -44,6 +44,9 @@ in
           ExecStart = "${bash} ${path}";
           Restart = "on-failure";
           RemainAfterExit = "yes";
+          Environment = [
+            ''GIT_SSH_COMMAND=${pkgs.openssh}/bin/ssh -i ${config.sops.secrets."ssh/id_ed25519/private".path}''
+          ];
         };
       Install = {
         WantedBy = [ "default.target" ];

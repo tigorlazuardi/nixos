@@ -11,6 +11,7 @@
     ./microsoft-edge.nix
     ./mpv.nix
     ./neovide.nix
+    ./neovim.nix
     ./nextcloud.nix
     ./nnn.nix
     ./node.nix
