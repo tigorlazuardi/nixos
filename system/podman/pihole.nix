@@ -3,7 +3,7 @@ let
   name = "pihole";
   podman = config.profile.podman;
   pihole = podman.pihole;
-  inherit (lib) mkIf;
+  inherit (lib) mkIf lists;
   gateway = "10.1.1.1";
   subnet = "10.1.1.0/30";
   ip = "10.1.1.2";
@@ -35,6 +35,9 @@ in
       script = ''${pkgs.podman}/bin/podman network exists ${name} || ${pkgs.podman}/bin/podman network create --gateway=${gateway} --subnet=${subnet} --ip-range=${ip-range} ${name}'';
     };
 
+    # We have refresh the custom.list dns list when caddy virtual hosts changes,
+    # the easiest way to do so is to restart the pihole container
+    systemd.services."podman-${name}".partOf = lists.optional (config.services.caddy.enable) "caddy.service";
     environment.etc."pihole/custom.list" = {
       # Copy file instead of symlink
       mode = "0444";
