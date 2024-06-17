@@ -34,5 +34,6 @@ in
     ./caddy.nix
     ./kavita.nix
     ./pihole.nix
+    ./suwayomi.nix
   ];
 }

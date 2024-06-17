@@ -25,6 +25,7 @@
     podman = {
       enable = true;
       pihole.enable = true;
+      suwayomi.enable = true;
     };
 
     docker = {
