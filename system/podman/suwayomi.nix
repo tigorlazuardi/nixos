@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 let
   name = "suwayomi";
   name-flaresolverr = "${name}-flaresolverr";
@@ -6,11 +6,8 @@ let
   podman = config.profile.podman;
   suwayomi = podman.suwayomi;
   inherit (lib) mkIf;
-  subnet = "10.1.1.8/29";
-  gateway = "10.1.1.9";
-  ip = "10.1.1.10";
-  ip-flaresolverr = "10.1.1.11";
-  ip-range = "10.1.1.10/29";
+  ip = "10.88.0.5";
+  ip-flaresolverr = "10.88.0.6";
   image = "ghcr.io/suwayomi/tachidesk:latest";
   image-flaresolverr = "ghcr.io/flaresolverr/flaresolverr:latest";
   volume = "/nas/podman/suwayomi";
@@ -23,15 +20,6 @@ in
     services.caddy.virtualHosts.${domain}.extraConfig = ''
       reverse_proxy ${ip}:4567
     '';
-
-    systemd.services."create-${name}-network" = {
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-      };
-      wantedBy = [ "podman-${name}.service" ];
-      script = ''${pkgs.podman}/bin/podman network exists ${name} || ${pkgs.podman}/bin/podman network create --gateway=${gateway} --subnet=${subnet} --ip-range=${ip-range} ${name}'';
-    };
 
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${volume}
@@ -61,7 +49,7 @@ in
       ];
       extraOptions = [
         "--ip=${ip}"
-        "--network=${name}"
+        "--network=podman"
       ];
       dependsOn = [ "${name}-flaresolverr" ];
     };
@@ -74,7 +62,7 @@ in
       };
       extraOptions = [
         "--ip=${ip-flaresolverr}"
-        "--network=${name}"
+        "--network=podman"
       ];
     };
   };

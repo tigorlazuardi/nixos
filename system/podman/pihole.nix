@@ -1,13 +1,10 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 let
   name = "pihole";
   podman = config.profile.podman;
   pihole = podman.pihole;
-  inherit (lib) mkIf strings attrsets;
-  gateway = "10.1.1.1";
-  subnet = "10.1.1.0/30";
-  ip = "10.1.1.2";
-  ip-range = "10.1.1.2/30";
+  inherit (lib) mkIf attrsets;
+  ip = "10.88.1.1";
   image = "pihole/pihole:latest";
   piholeDNSIPBind = "192.168.100.3";
 in
@@ -24,16 +21,6 @@ in
     };
 
     networking.nameservers = [ piholeDNSIPBind ];
-
-
-    systemd.services."create-${name}-network" = {
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-      };
-      wantedBy = [ "podman-${name}.service" ];
-      script = ''${pkgs.podman}/bin/podman network exists ${name} || ${pkgs.podman}/bin/podman network create --gateway=${gateway} --subnet=${subnet} --ip-range=${ip-range} ${name}'';
-    };
 
     # We have refresh the custom.list dns list when caddy virtual hosts changes,
     # the easiest way to do so is to restart the pihole container.
@@ -63,6 +50,7 @@ in
     };
     virtualisation.oci-containers.containers.${name} = {
       inherit image;
+      hostname = name;
       environment = {
         TZ = "Asia/Jakarta";
         PIHOLE_DNS_ = "192.168.100.5";
@@ -87,7 +75,7 @@ in
       ];
       extraOptions = [
         "--ip=${ip}"
-        "--network=${name}"
+        "--network=podman"
         "--cap-add=NET_ADMIN"
         "--cap-add=NET_BIND_SERVICE"
         "--cap-add=NET_RAW"

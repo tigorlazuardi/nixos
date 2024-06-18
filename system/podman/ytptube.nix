@@ -3,10 +3,7 @@ let
   name = "ytptube";
   podman = config.profile.podman;
   inherit (lib) mkIf;
-  gateway = "10.1.1.5";
-  subnet = "10.1.1.4/30";
-  ip = "10.1.1.6";
-  ip-range = "10.1.1.6/30";
+  ip = "10.88.0.4";
   image = "ghcr.io/arabcoders/${name}:latest";
   volume = "/nas/mediaserver/${name}";
   domain = "${name}.tigor.web.id";
@@ -19,17 +16,6 @@ in
     services.caddy.virtualHosts.${domain}.extraConfig = ''
       reverse_proxy ${ip}:8081
     '';
-
-    systemd.services."create-${name}-network" = {
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-      };
-      wantedBy = [ "podman-${name}.service" ];
-      script = ''${pkgs.podman}/bin/podman network exists ${name} || ${pkgs.podman}/bin/podman network create --gateway=${gateway} --subnet=${subnet} --ip-range=${ip-range} ${name}'';
-    };
-
-
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${volume}
       chown -R ${uid}:${gid} ${volume}
@@ -87,7 +73,7 @@ in
       ];
       extraOptions = [
         "--ip=${ip}"
-        "--network=${name}"
+        "--network=podman"
       ];
     };
   };
