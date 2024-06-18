@@ -4,7 +4,7 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    home.packages = lib.mkIf cfg.client.enable [
+    home.packages = [
       unstable.jellyfin-media-player
     ];
   };

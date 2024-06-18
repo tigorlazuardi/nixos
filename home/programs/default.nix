@@ -8,6 +8,7 @@
     ./git.nix
     ./github.nix
     ./go.nix
+    ./jellyfin.nix
     ./microsoft-edge.nix
     ./mpv.nix
     ./neovide.nix
