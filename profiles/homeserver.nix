@@ -28,6 +28,8 @@
       pihole.enable = true;
       suwayomi.enable = true;
       ytptube.enable = true;
+      redmage.enable = true;
+      redmage-demo.enable = true;
     };
 
     docker = {

@@ -34,14 +34,18 @@ in
 
   # Taken IP-Range Subnets
   #
-  # 10.1.1.0-4 -> Pihole
-  # 10.1.1.4-8 -> ytptube
-  # 10.1.1.8-12 -> Suwayomi
-  # 10.1.1.12-16 -> Suwayomi
+  # 10.1.1.0-3 -> Pihole
+  # 10.1.1.4-7 -> ytptube
+  # 10.1.1.8-11 -> Suwayomi
+  # 10.1.1.12-15 -> Suwayomi
+  # 10.1.1.16-19 -> Redmage
+  # 10.1.1.20-23 -> Redmage Demo
   imports = [
     ./caddy.nix
     ./pihole.nix
     ./suwayomi.nix
     ./ytptube.nix
+    ./redmage.nix
+    ./redmage-demo.nix
   ];
 }
