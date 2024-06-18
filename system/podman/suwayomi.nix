@@ -23,7 +23,7 @@ in
 
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${volume}
-      chown -R ${uid}:${gid} ${volume}
+      chown ${uid}:${gid} ${volume}
     '';
 
     virtualisation.oci-containers.containers.${name} = {
