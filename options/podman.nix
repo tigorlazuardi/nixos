@@ -8,5 +8,6 @@
     ytptube.enable = lib.mkEnableOption "metube podman";
     redmage.enable = lib.mkEnableOption "redmage podman";
     redmage-demo.enable = lib.mkEnableOption "redmage-demo podman";
+    qbittorrent.enable = lib.mkEnableOption "qbittorrent podman";
   };
 }

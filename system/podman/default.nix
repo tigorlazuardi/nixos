@@ -44,6 +44,7 @@ in
     ./pihole.nix
     ./redmage-demo.nix
     ./redmage.nix
+    ./qbittorrent.nix
     ./suwayomi.nix
     ./ytptube.nix
   ];

@@ -30,6 +30,7 @@
       ytptube.enable = true;
       redmage.enable = true;
       redmage-demo.enable = true;
+      qbittorrent.enable = true;
     };
 
     docker = {
