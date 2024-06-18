@@ -41,11 +41,10 @@ in
   # 10.88.0.6 -> Suwayomi Flaresolverr
   # 10.88.1.1 -> Pihole
   imports = [
-    ./caddy.nix
     ./pihole.nix
+    ./redmage-demo.nix
+    ./redmage.nix
     ./suwayomi.nix
     ./ytptube.nix
-    ./redmage.nix
-    ./redmage-demo.nix
   ];
 }
