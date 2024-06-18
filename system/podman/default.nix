@@ -34,12 +34,12 @@ in
 
   # Taken IP-Range Subnets
   #
-  # 10.88.1.1 -> Pihole
+  # 10.88.0.2 -> Redmage
+  # 10.88.0.3 -> Redmage Demo
   # 10.88.0.4 -> ytptube
   # 10.88.0.5 -> Suwayomi
   # 10.88.0.6 -> Suwayomi Flaresolverr
-  # 10.88.0.2 -> Redmage
-  # 10.88.0.3 -> Redmage Demo
+  # 10.88.1.1 -> Pihole
   imports = [
     ./caddy.nix
     ./pihole.nix
