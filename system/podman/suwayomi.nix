@@ -28,6 +28,7 @@ in
 
     virtualisation.oci-containers.containers.${name} = {
       inherit image;
+      hostname = name;
       autoStart = true;
       user = "${uid}:${gid}";
       environment = {
@@ -56,6 +57,7 @@ in
 
     virtualisation.oci-containers.containers.${name-flaresolverr} = {
       image = image-flaresolverr;
+      hostname = name-flaresolverr;
       autoStart = true;
       environment = {
         TZ = "Asia/Jakarta";

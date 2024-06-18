@@ -62,6 +62,7 @@ in
 
     virtualisation.oci-containers.containers.${name} = {
       inherit image;
+      hostname = name;
       autoStart = true;
       user = "${uid}:${gid}";
       environment = {

@@ -42,9 +42,9 @@ in
   # 10.88.1.1 -> Pihole
   imports = [
     ./pihole.nix
+    ./qbittorrent.nix
     ./redmage-demo.nix
     ./redmage.nix
-    ./qbittorrent.nix
     ./suwayomi.nix
     ./ytptube.nix
   ];

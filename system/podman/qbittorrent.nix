@@ -19,12 +19,13 @@ in
     '';
 
     system.activationScripts."podman-${name}" = ''
-      mkdir -p ${volume}/{config,downloads,progress,auto}
-      chown ${uid}:${gid} ${volume} ${volume}/{config,downloads,progress,auto}
+      mkdir -p ${volume}/{config,downloads,progress,watch}
+      chown ${uid}:${gid} ${volume} ${volume}/{config,downloads,progress,watch}
     '';
 
     virtualisation.oci-containers.containers.${name} = {
       inherit image;
+      hostname = name;
       autoStart = true;
       environment = {
         PUID = uid;
@@ -37,7 +38,7 @@ in
         "${volume}/config:/config"
         "${volume}/downloads:/downloads"
         "${volume}/progress:/progress"
-        "${volume}/auto:/auto"
+        "${volume}/watch:/watch"
       ];
       ports = [
         "6881:6881"
