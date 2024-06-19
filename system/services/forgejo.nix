@@ -59,6 +59,7 @@ in
           };
           labels = [
             "docker:docker://ghcr.io/catthehacker/ubuntu:act-22.04"
+            "ubuntu:docker://ghcr.io/catthehacker/ubuntu:act-22.04"
             "native:host"
           ];
         };
