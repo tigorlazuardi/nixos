@@ -1,4 +1,4 @@
-{ pkgs, unstable, ... }:
+{ ... }:
 {
   imports = [
     ./bitwarden.nix
@@ -24,6 +24,7 @@
     ./vscode.nix
     ./whatsapp.nix
     ./zsh.nix
+    ./zathura.nix
   ];
 
   programs.fzf = {

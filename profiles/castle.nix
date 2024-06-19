@@ -76,5 +76,9 @@ in
 
     microsoft-edge.enable = true;
     nextcloud.enable = true;
+
+    home.programs = {
+      zathura.enable = true;
+    };
   };
 }

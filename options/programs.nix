@@ -72,5 +72,9 @@
     nextcloud.enable = lib.mkEnableOption "nextcloud";
 
     cockpit.enable = lib.mkEnableOption "cockpit";
+    home.programs = {
+      zathura.enable = lib.mkEnableOption "zathura";
+      floorp.enable = lib.mkEnableOption "floorp";
+    };
   };
 }
