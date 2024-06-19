@@ -5,7 +5,7 @@ let
   pihole = podman.pihole;
   inherit (lib) mkIf attrsets;
   ip = "10.88.1.1";
-  image = "pihole/pihole:latest";
+  image = "docker.io/pihole/pihole:latest";
   piholeDNSIPBind = "192.168.100.3";
 in
 {
@@ -82,6 +82,9 @@ in
         "--cap-add=SYS_NICE"
         "--cap-add=CHOWN"
       ];
+      labels = {
+        "io.containers.autoupdate" = "registry";
+      };
     };
   };
 }

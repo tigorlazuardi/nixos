@@ -66,6 +66,9 @@ in
         "--ip=${ip-flaresolverr}"
         "--network=podman"
       ];
+      labels = {
+        "io.containers.autoupdate" = "registry";
+      };
     };
   };
 }

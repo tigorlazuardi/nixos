@@ -48,6 +48,9 @@ in
         "--ip=${ip}"
         "--network=podman"
       ];
+      labels = {
+        "io.containers.autoupdate" = "registry";
+      };
     };
   };
 }
