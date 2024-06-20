@@ -34,6 +34,9 @@ in
           "/nas/redmage/images/windows" = {
             label = "Redmage/Windows";
             id = "Redmage/Windows";
+            devices = [
+              "windows"
+            ];
           };
           "/nas/redmage/images/laptop-kerja" = {
             label = "Redmage/Laptop-Kerja";
@@ -52,6 +55,7 @@ in
             devices = [
               "s20fe"
               "onyx"
+              "windows"
             ];
           };
           "/nas/kavita/library/light-novels" = {
@@ -71,6 +75,11 @@ in
           onyx = {
             name = "Onyx Note Air 3";
             id = "FZMFBD5-5PS566H-XJGV3FO-NQVSMX5-3VHPS7V-SUT27WA-MXHFBYT-BDSS6AW";
+            autoAcceptFolders = true;
+          };
+          windows = {
+            name = "Windows";
+            id = "FSTIYS6-REFXIJX-KPLYC4L-QSZO46L-RV3VTPZ-VWVTE7O-Y663OZN-RTKP3QI";
             autoAcceptFolders = true;
           };
         };
