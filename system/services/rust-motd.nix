@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   cfg = config.profile.services.rust-motd;
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) mkIf;
 in
 {
   config = mkIf cfg.enable {
@@ -15,12 +15,6 @@ in
           color = "white";
           command = "${pkgs.fortune-kind}/bin/fortune-kind | ${pkgs.neo-cowsay}/bin/cowsay --random";
         };
-        service_status = mkMerge [
-          { }
-          (mkIf config.profile.podman.pihole.enable { Pihole = "podman-pihole"; })
-          (mkIf config.profile.podman.qbittorrent.enable { QBittorrent = "podman-qbittorrent"; })
-          (mkIf config.profile.services.forgejo.enable { Forgejo = "forgejo"; })
-        ];
         uptime = {
           prefix = "Up";
         };
@@ -41,7 +35,6 @@ in
         "last_login"
         "uptime"
         "memory"
-        "service_status"
         "filesystems"
         "last_run"
       ];
