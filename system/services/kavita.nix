@@ -11,6 +11,9 @@ in
       fsType = "none";
       options = [ "bind" ];
     };
+    system.activationScripts.ensure-kativa-permission = ''
+      chmod -R 0775 /nas/kavita
+    '';
     users.groups.kavita.members = [ user.name ];
     users.groups.${user.name}.members = [ "kavita" ]; # Allow kavita to read users's files copied to /var/lib/kavita via NAS
     sops.secrets."kavita/token" = {
