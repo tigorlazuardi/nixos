@@ -43,6 +43,17 @@ in
           name = config.networking.hostName;
           url = config.services.forgejo.settings.server.ROOT_URL;
           tokenFile = config.sops.secrets."forgejo/runners/global".path;
+          hostPackages = with pkgs; [
+            bash
+            coreutils
+            curl
+            gawk
+            gitMinimal
+            gnused
+            nodejs
+            wget
+            typst
+          ];
           settings = {
             runner = {
               capacity = 2;
