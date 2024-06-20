@@ -4,12 +4,13 @@
     ./caddy.nix
     ./cockpit.nix
     ./forgejo.nix
-    ./samba.nix
-    ./nextcloud.nix
-    ./syncthing.nix
-    ./kavita.nix
-    ./openvpn.nix
-    ./stubby.nix
     ./jellyfin.nix
+    ./kavita.nix
+    ./nextcloud.nix
+    ./openvpn.nix
+    ./rust-motd.nix
+    ./samba.nix
+    ./stubby.nix
+    ./syncthing.nix
   ];
 }

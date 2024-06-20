@@ -14,5 +14,6 @@ in
     openvpn.enable = mkEnableOption "openvpn";
     stubby.enable = mkEnableOption "stubby";
     jellyfin.enable = mkEnableOption "jellyfin";
+    rust-motd.enable = mkEnableOption "rust-motd";
   };
 }

@@ -48,6 +48,7 @@
       openvpn.enable = true;
       stubby.enable = true;
       jellyfin.enable = true;
+      rust-motd.enable = true;
     };
   };
 }
