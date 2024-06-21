@@ -41,6 +41,9 @@ in
           "/nas/redmage/images/laptop-kerja" = {
             label = "Redmage/Laptop-Kerja";
             id = "Redmage/Laptop-Kerja";
+            devices = [
+              "work-laptop"
+            ];
           };
           "/nas/redmage/images/s20fe-sfw" = {
             label = "Redmage/S20FE";
@@ -65,6 +68,11 @@ in
               "onyx"
             ];
           };
+          "/nas/Syncthing/Sync/VPN" = {
+            label = "OpenVPN";
+            id = "OpenVPN";
+            devices = lib.attrsets.mapAttrsToList (key: _value: key) config.services.syncthing.settings.devices;
+          };
         };
         devices = {
           s20fe = {
@@ -80,6 +88,11 @@ in
           windows = {
             name = "Windows";
             id = "FSTIYS6-REFXIJX-KPLYC4L-QSZO46L-RV3VTPZ-VWVTE7O-Y663OZN-RTKP3QI";
+            autoAcceptFolders = true;
+          };
+          work-laptop = {
+            name = "Work Laptop";
+            id = "BOU76IK-5AE7ARF-ZQDFOTX-KWUQL22-SAGXBYG-B75JRZA-L4MCYPU-OYTY5AU";
             autoAcceptFolders = true;
           };
         };
