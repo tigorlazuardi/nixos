@@ -81,7 +81,7 @@ in
               secretPlaceholder = config.sops.placeholder."openvpn/clients/phone";
               ifConfig = "10.8.1.1 10.8.1.2";
             };
-            path = "/etc/openvpn/phone.ovpn";
+            path = "/nas/Syncthing/Sync/VPN/phone.ovpn";
             owner = config.profile.user.name;
           };
           "openvpn/key/laptop" = {
@@ -89,7 +89,7 @@ in
               secretPlaceholder = config.sops.placeholder."openvpn/clients/laptop";
               ifConfig = "10.8.2.1 10.8.2.2";
             };
-            path = "/etc/openvpn/laptop.ovpn";
+            path = "/nas/Syncthing/Sync/VPN/laptop.ovpn";
             owner = config.profile.user.name;
           };
         };
@@ -98,6 +98,9 @@ in
       config = ''
         dev ${vpn-dev}
         proto udp
+        status /tmp/openvpn-status.log
+
+        comp-lzo no
 
         tls-server
         cipher AES-256-CBC
@@ -105,7 +108,6 @@ in
 
         server 10.10.10.0 255.255.255.0
 
-        allow-compression no
         ca ${config.sops.secrets."openvpn/server/ca".path}
         cert ${config.sops.secrets."openvpn/server/cert".path}
         key ${config.sops.secrets."openvpn/server/key".path}
@@ -116,6 +118,10 @@ in
         ping-timer-rem
         persist-tun
         persist-key
+
+        push "block-outside-dns"
+        push "dhcp-option 192.168.100.3"
+        push "comp-lzo no"
       '';
       autoStart = true;
     };
