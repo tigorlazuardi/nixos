@@ -33,17 +33,6 @@ in
     sops.templates =
       let
         template = { privateKey, ip }:
-          # ''
-          #   [Interface]
-          #   Address = ${ip}/32
-          #   PrivateKey = ${privateKey}
-          #   DNS = 192.168.100.3
-          #
-          #   [Peer]
-          #   PublicKey = ${serverPublicKey}
-          #   Endpoint = vpn.tigor.web.id:51820
-          #   AllowedIPs = 0.0.0.0/0, ::/0
-          # '';
           generators.toINI ({ }) {
             Interface = {
               Address = "${ip}/32";
