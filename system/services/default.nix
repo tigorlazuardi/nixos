@@ -13,5 +13,6 @@
     ./stubby.nix
     ./syncthing.nix
     ./wireguard.nix
+    ./photoprism.nix
   ];
 }

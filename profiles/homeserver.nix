@@ -50,6 +50,7 @@
       jellyfin.enable = true;
       rust-motd.enable = true;
       wireguard.enable = true;
+      photoprism.enable = true;
     };
   };
 }

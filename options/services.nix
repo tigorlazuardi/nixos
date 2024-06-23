@@ -16,5 +16,6 @@ in
     jellyfin.enable = mkEnableOption "jellyfin";
     rust-motd.enable = mkEnableOption "rust-motd";
     wireguard.enable = mkEnableOption "wireguard";
+    photoprism.enable = mkEnableOption "photoprism";
   };
 }
