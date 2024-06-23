@@ -83,22 +83,22 @@ in
           s20fe = {
             name = "Samsung S20FE";
             id = "ASH4PGY-H2ANIMX-RJJRODR-AD6KH5X-632CAG2-5NCDSGN-I27XNAC-EMVL6A7";
-            autoAcceptFolders = true;
           };
           onyx = {
             name = "Onyx Note Air 3";
             id = "FZMFBD5-5PS566H-XJGV3FO-NQVSMX5-3VHPS7V-SUT27WA-MXHFBYT-BDSS6AW";
-            autoAcceptFolders = true;
           };
           windows = {
             name = "Windows";
             id = "FSTIYS6-REFXIJX-KPLYC4L-QSZO46L-RV3VTPZ-VWVTE7O-Y663OZN-RTKP3QI";
-            autoAcceptFolders = true;
           };
           work-laptop = {
             name = "Work Laptop";
             id = "BOU76IK-5AE7ARF-ZQDFOTX-KWUQL22-SAGXBYG-B75JRZA-L4MCYPU-OYTY5AU";
-            autoAcceptFolders = true;
+          };
+          samsung-s22-mama = {
+            name = "Samsung S22 Mama";
+            id = "5G2Q7XE-HILUI46-GWTE6P6-NJHAG3A-HSZKMAU-K5PBOKR-QN3IFQO-GX7KTQU";
           };
         };
       };
