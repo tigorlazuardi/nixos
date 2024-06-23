@@ -15,5 +15,6 @@ in
     stubby.enable = mkEnableOption "stubby";
     jellyfin.enable = mkEnableOption "jellyfin";
     rust-motd.enable = mkEnableOption "rust-motd";
+    wireguard.enable = mkEnableOption "wireguard";
   };
 }

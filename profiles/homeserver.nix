@@ -45,10 +45,11 @@
       samba.enable = true;
       nextcloud.enable = true;
       syncthing.enable = true;
-      openvpn.enable = true;
+      openvpn.enable = false;
       stubby.enable = true;
       jellyfin.enable = true;
       rust-motd.enable = true;
+      wireguard.enable = true;
     };
   };
 }

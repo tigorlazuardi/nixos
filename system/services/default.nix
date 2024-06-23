@@ -12,5 +12,6 @@
     ./samba.nix
     ./stubby.nix
     ./syncthing.nix
+    ./wireguard.nix
   ];
 }
