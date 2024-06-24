@@ -33,12 +33,21 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = inputs @ { self, nur, nixpkgs, home-manager, sops-nix, neovim-nightly-overlay, ... }:
+  outputs = inputs @ { self, nur, nixpkgs, home-manager, sops-nix, neovim-nightly-overlay, nix-index-database, ... }:
     let
       commonModules = [
         nur.nixosModules.nur
         home-manager.nixosModules.home-manager
+        nix-index-database.nixosModules.nix-index
+        {
+          programs.command-not-found.enable = false;
+          programs.nix-index-database.comma.enable = true;
+        }
         {
           nixpkgs.overlays = [
             neovim-nightly-overlay.overlays.default
@@ -61,7 +70,9 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.sharedModules = [
+            nix-index-database.hmModules.nix-index
             inputs.sops-nix.homeManagerModules.sops
+
           ];
         }
       ];
