@@ -6,5 +6,6 @@
     ./sonarr.nix
     ./prowlarr.nix
     ./bazarr.nix
+    ./radarr.nix
   ];
 }

@@ -27,7 +27,7 @@ in
         type = types.bool;
         default = config.profile.podman.servarr.enable;
       };
-      radar.enable = mkOption {
+      radarr.enable = mkOption {
         type = types.bool;
         default = config.profile.podman.servarr.enable;
       };
