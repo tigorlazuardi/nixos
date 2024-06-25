@@ -75,7 +75,7 @@ in
     dbeaver.enable = true;
 
     microsoft-edge.enable = true;
-    nextcloud.enable = true;
+    nextcloud.enable = false;
 
     home.programs = {
       zathura.enable = true;
