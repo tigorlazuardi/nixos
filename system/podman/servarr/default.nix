@@ -5,5 +5,6 @@
     ./qbittorrent.nix
     ./sonarr.nix
     ./prowlarr.nix
+    ./bazarr.nix
   ];
 }
