@@ -47,5 +47,6 @@ in
     ./redmage.nix
     ./suwayomi.nix
     ./ytptube.nix
+    ./servarr
   ];
 }

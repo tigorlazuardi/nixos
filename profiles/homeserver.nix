@@ -31,6 +31,7 @@
       redmage.enable = true;
       redmage-demo.enable = true;
       qbittorrent.enable = true;
+      servarr.enable = true;
     };
 
     docker = {
