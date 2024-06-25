@@ -30,6 +30,11 @@ in
       passwordFile = config.sops.secrets."photoprism/admin_password".path;
       settings = {
         PHOTOPRISM_ADMIN_USER = "hutasuhut";
+        PHOTOPRISM_INDEX_SCHEDULE = "0 */6 * * *";
+        PHOTOPRISM_DEFAULT_TIMEZONE = "Asia/Jakarta";
+        PHOTOPRISM_SITE_AUTHOR = "Tigor Hutasuhut";
+
+        PHOTOPRISM_FACE_CLUSTER_CORE = "3";
       };
     };
   };
