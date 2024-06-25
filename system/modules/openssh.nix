@@ -11,6 +11,7 @@ in
       enable = true;
       settings = {
         PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
         UseDns = true;
         X11Forwarding = false;
         PermitRootLogin = "no";
