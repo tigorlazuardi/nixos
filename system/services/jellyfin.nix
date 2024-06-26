@@ -3,6 +3,7 @@ let
   cfg = config.profile.services.jellyfin;
   dataDir = "/nas/mediaserver/jellyfin";
   domain = "jellyfin.tigor.web.id";
+  domain-jellyseerr = "media.tigor.web.id";
   inherit (lib) mkIf;
   username = config.profile.user.name;
 in
@@ -17,9 +18,18 @@ in
     services.caddy.virtualHosts.${domain}.extraConfig = ''
       reverse_proxy 0.0.0.0:8096
     '';
+    services.caddy.virtualHosts.${domain-jellyseerr} = mkIf cfg.jellyseerr.enable {
+      extraConfig = ''
+        reverse_proxy 0.0.0.0:5055
+      '';
+    };
     services.jellyfin = {
       enable = true;
       inherit dataDir;
+    };
+
+    services.jellyseerr = mkIf cfg.jellyseerr.enable {
+      enable = true;
     };
   };
 }

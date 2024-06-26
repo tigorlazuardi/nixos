@@ -1,6 +1,6 @@
-{ lib, ... }:
+{ config, lib, ... }:
 let
-  inherit (lib) mkEnableOption;
+  inherit (lib) mkEnableOption mkOption types;
 in
 {
   options.profile.services = {
@@ -14,6 +14,10 @@ in
     openvpn.enable = mkEnableOption "openvpn";
     stubby.enable = mkEnableOption "stubby";
     jellyfin.enable = mkEnableOption "jellyfin";
+    jellyfin.jellyseerr.enable = mkOption {
+      type = types.bool;
+      default = config.profile.services.jellyfin.enable;
+    };
     rust-motd.enable = mkEnableOption "rust-motd";
     wireguard.enable = mkEnableOption "wireguard";
     photoprism.enable = mkEnableOption "photoprism";
