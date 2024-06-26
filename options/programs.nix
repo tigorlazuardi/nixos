@@ -76,5 +76,12 @@
       zathura.enable = lib.mkEnableOption "zathura";
       floorp.enable = lib.mkEnableOption "floorp";
     };
+
+    programs = {
+      yazi.enable = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+      };
+    };
   };
 }

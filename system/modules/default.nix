@@ -20,5 +20,6 @@
     ./steam.nix
     ./sudo.nix
     ./vial.nix
+    ./yazi.nix
   ];
 }
