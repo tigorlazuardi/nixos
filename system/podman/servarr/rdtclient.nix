@@ -1,14 +1,13 @@
 { config, lib, ... }:
 let
   podman = config.profile.podman;
-  name = "real-debrid-manager";
-  real-debrid-manager = podman.servarr.${name};
-  ip = "10.88.2.99";
-  image = "docker.io/hyperbunny77/realdebridmanager:2022.06.27";
+  name = "rdtclient";
+  cfg = podman.servarr.${name};
+  ip = "10.88.2.1";
+  image = "docker.io/rogerfar/rdtclient:latest";
   root = "/nas/mediaserver/servarr";
-  configVolume = "${root}/real-debrid-manager";
+  volumeConfig = "${root}/${name}";
   mediaVolume = "${root}/data/torrents";
-  watchVolume = "${mediaVolume}/watch";
   domain = "${name}.tigor.web.id";
   user = config.profile.user;
   uid = toString user.uid;
@@ -16,29 +15,29 @@ let
   inherit (lib) mkIf;
 in
 {
-  config = mkIf (podman.enable && real-debrid-manager.enable) {
+  config = mkIf (podman.enable && cfg.enable) {
     services.caddy.virtualHosts.${domain}.extraConfig = ''
-      reverse_proxy ${ip}:5000
+      reverse_proxy ${ip}:6500
     '';
 
     system.activationScripts."podman-${name}" = ''
-      mkdir -p ${configVolume} ${mediaVolume} ${watchVolume}
-      chown ${uid}:${gid} ${configVolume} ${mediaVolume} ${watchVolume}
+      mkdir -p ${volumeConfig} ${mediaVolume}
+      chown ${uid}:${gid} ${volumeConfig} ${mediaVolume}
     '';
 
     virtualisation.oci-containers.containers.${name} = {
       inherit image;
       hostname = name;
       autoStart = true;
-      user = "${uid}:${gid}";
+      # user = "${uid}:${gid}";
       environment = {
         TZ = "Asia/Jakarta";
-        rdmport = "5000";
+        PUID = uid;
+        PGID = gid;
       };
       volumes = [
-        "${configVolume}:/config"
+        "${volumeConfig}:/data/db"
         "${mediaVolume}:/data/torrents"
-        "${watchVolume}:/watch"
       ];
       extraOptions = [
         "--network=podman"

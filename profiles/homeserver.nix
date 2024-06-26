@@ -33,6 +33,8 @@
       qbittorrent.enable = true;
       servarr.enable = true;
       servarr.recyclarr.enable = false;
+      servarr.real-debrid-manager.enable = false;
+      servarr.rdtclient.enable = true;
     };
 
     docker = {

@@ -43,6 +43,10 @@ in
         type = types.bool;
         default = config.profile.podman.servarr.enable;
       };
+      rdtclient.enable = mkOption {
+        type = types.bool;
+        default = config.profile.podman.servarr.enable;
+      };
     };
   };
 }
