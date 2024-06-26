@@ -39,6 +39,10 @@ in
         type = types.bool;
         default = config.profile.podman.servarr.enable;
       };
+      recyclarr.enable = mkOption {
+        type = types.bool;
+        default = config.profile.podman.servarr.enable;
+      };
     };
   };
 }
