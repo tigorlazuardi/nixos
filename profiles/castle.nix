@@ -40,7 +40,7 @@ in
         DP-2 = [ 8 9 10 ];
       };
       pyprland.wallpaper-dirs = [ "/nas/redmage/images/windows" ];
-      wallust.alpha = 80;
+      wallust.alpha = 90;
       swayosd.display = "DP-1";
       dunst.monitor = "1";
     };
