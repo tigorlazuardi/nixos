@@ -7,6 +7,7 @@
   profile = {
     hostname = "homeserver";
     networking.externalInterface = "enp9s0";
+    networking.disableWaitOnline = true;
     user = {
       name = "homeserver";
       fullName = "Homeserver";

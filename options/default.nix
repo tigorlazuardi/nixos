@@ -14,6 +14,7 @@
     hostname = lib.mkOption {
       type = lib.types.str;
     };
+    networking.disableWaitOnline = lib.mkEnableOption "disable waiting for network";
     networking.externalInterface = lib.mkOption {
       type = lib.types.str;
       default = "eth0";

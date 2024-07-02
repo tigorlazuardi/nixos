@@ -14,6 +14,7 @@
 
   security.sudo.wheelNeedsPassword = config.profile.security.sudo.wheelNeedsPassword;
   networking.hostName = config.profile.hostname;
+  systemd.services.NetworkManager-wait-online.enable = !config.profile.networking.disableWaitOnline;
 
 
   nixpkgs.config.allowUnfree = true;
