@@ -40,13 +40,13 @@
       save = 40000;
       size = 40000;
     };
-    initExtraFirst = ''
+    initExtraFirst = /*bash*/ ''
       _ZSH_COLOR_SCHEME_FILE=$HOME/.cache/wallust/sequences
       if [ -f "$_ZSH_COLOR_SCHEME_FILE" ]; then
           (cat "$_ZSH_COLOR_SCHEME_FILE" &)
       fi
     '';
-    initExtra = ''
+    initExtra = /*bash*/ ''
       bindkey              '^I'         menu-complete
       bindkey "$terminfo[kcbt]" reverse-menu-complete
     '';
@@ -57,7 +57,7 @@
         "zsh-users/zsh-autosuggestions kind:defer"
         "zsh-users/zsh-history-substring-search kind:defer"
         "zsh-users/zsh-completions"
-        "marlonrichert/zsh-autocomplete"
+        # "marlonrichert/zsh-autocomplete"
       ];
     };
   };
