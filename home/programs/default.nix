@@ -5,6 +5,7 @@
     ./chromium.nix
     ./dbeaver.nix
     ./discord.nix
+    ./easyeffects.nix
     ./git.nix
     ./github.nix
     ./go.nix
@@ -23,8 +24,8 @@
     ./variety.nix
     ./vscode.nix
     ./whatsapp.nix
-    ./zsh.nix
     ./zathura.nix
+    ./zsh.nix
   ];
 
   programs.fzf = {

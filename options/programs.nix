@@ -82,6 +82,7 @@
         type = lib.types.bool;
         default = true;
       };
+      easyeffects.enable = lib.mkEnableOption "easyeffects";
     };
   };
 }

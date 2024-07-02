@@ -80,5 +80,6 @@ in
     home.programs = {
       zathura.enable = true;
     };
+    programs.easyeffects.enable = true;
   };
 }
