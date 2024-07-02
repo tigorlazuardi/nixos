@@ -102,8 +102,8 @@ in
           };
         };
       };
-      overrideFolders = true;
-      overrideDevices = true;
+      overrideFolders = false;
+      overrideDevices = false;
       openDefaultPorts = true;
       guiAddress = "0.0.0.0:8384";
       user = user.name;
