@@ -22,7 +22,7 @@ in
           ping = "${pkgs.unixtools.ping}/bin/ping";
           host = "github.com";
           sleep = "${pkgs.coreutils}/bin/sleep";
-          script = pkgs.writeScriptBin "clone-nvim.sh" ''
+          script = pkgs.writeScriptBin "clone-nvim.sh" /*bash*/ ''
             #!${bash}
 
             if [ -d "${nvimCloneDir}" ]; then
