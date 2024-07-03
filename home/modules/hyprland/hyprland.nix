@@ -44,9 +44,9 @@ in
           force_split = 2;
         };
 
-        master = {
-          new_is_master = true;
-        };
+        # master = {
+        #   new_is_master = true;
+        # };
 
         gestures = {
           workspace_swipe = true;
