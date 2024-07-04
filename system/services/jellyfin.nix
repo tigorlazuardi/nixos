@@ -3,7 +3,7 @@ let
   cfg = config.profile.services.jellyfin;
   dataDir = "/nas/mediaserver/jellyfin";
   domain = "jellyfin.tigor.web.id";
-  domain-jellyseerr = "media.tigor.web.id";
+  domain-jellyseerr = "jellyseerr.tigor.web.id";
   inherit (lib) mkIf;
   username = config.profile.user.name;
 in
