@@ -78,6 +78,22 @@ in
             id = "WireGuard";
             devices = lib.attrsets.mapAttrsToList (key: _value: key) config.services.syncthing.settings.devices;
           };
+          "/nas/photos/mama" = {
+            label = "Camera Mama";
+            id = "sm-s906e_8dch-photos";
+            devices = [ "samsung-s22-mama" ];
+          };
+          "/nas/photos/tigor" = {
+            label = "Camera Tigor";
+            id = "sm-g780f_yjwa-photos";
+            devices = [ "s20fe" ];
+          };
+          # TODO: Move this folder path to NAS based later.
+          "~/Onyx-Notes" = {
+            label = "Onyx Notes";
+            id = "Onyx-Notes";
+            devices = [ "onyx" ];
+          };
         };
         devices = {
           s20fe = {
