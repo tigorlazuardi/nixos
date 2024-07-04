@@ -62,5 +62,7 @@
 
     microsoft-edge.enable = true;
     nextcloud.enable = false;
+
+    programs.easyeffects.enable = true;
   };
 }
