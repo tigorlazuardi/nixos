@@ -33,7 +33,7 @@
       redmage-demo.enable = true;
       qbittorrent.enable = true;
       servarr.enable = true;
-      servarr.recyclarr.enable = false;
+      servarr.recyclarr.enable = true;
       servarr.real-debrid-manager.enable = false;
       servarr.rdtclient.enable = true;
     };

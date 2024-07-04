@@ -8,5 +8,6 @@
     ./bazarr.nix
     ./radarr.nix
     ./rdtclient.nix
+    ./recyclarr.nix
   ];
 }
