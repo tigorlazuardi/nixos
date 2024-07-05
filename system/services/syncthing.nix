@@ -94,6 +94,14 @@ in
             id = "Onyx-Notes";
             devices = [ "onyx" ];
           };
+          "/nas/Syncthing/Sync/Japanese-Learning-Materials" = {
+            label = "Japanese Learning Materials";
+            id = "Japanese-Learning-Materials";
+            devices = [
+              "s20fe"
+              "work-laptop"
+            ];
+          };
         };
         devices = {
           s20fe = {
