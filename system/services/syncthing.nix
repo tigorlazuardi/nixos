@@ -88,8 +88,7 @@ in
             id = "sm-g780f_yjwa-photos";
             devices = [ "s20fe" ];
           };
-          # TODO: Move this folder path to NAS based later.
-          "~/Onyx-Notes" = {
+          "/nas/Syncthing/Sync/Onyx-Notes" = {
             label = "Onyx Notes";
             id = "Onyx-Notes";
             devices = [ "onyx" ];
