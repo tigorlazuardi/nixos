@@ -111,27 +111,6 @@ in
         src = pkgs.zsh-history-substring-search;
         file = "share/zsh-history-substring-search/zsh-history-substring-search.zsh";
       }
-      {
-        name = "golang-autocomplete";
-        src = pkgs.oh-my-zsh;
-        file = "share/oh-my-zsh/plugins/golang/golang.plugin.zsh";
-      }
-    ]
-      # ++ optional (config.profile.podman.enable) {
-      #   name = "podman";
-      #   src = pkgs.oh-my-zsh;
-      #   file = "share/oh-my-zsh/plugins/podman/podman.plugin.zsh";
-      # }
-    ;
-
-    # Antidote should only be used for loading completions
-    # antidote = {
-    #   enable = true;
-    #   plugins = [
-    #     "ohmyzsh/ohmyzsh path:plugins/golang"
-    #   ]
-    #   ++ optional (config.profile.podman.enable) "ohmyzsh/ohmyzsh path:plugins/podman"
-    #   ;
-    # };
+    ];
   };
 }
