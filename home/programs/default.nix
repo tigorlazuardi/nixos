@@ -19,7 +19,7 @@
     ./node.nix
     ./slack.nix
     ./spotify.nix
-    ./starship.nix
+    # ./starship.nix
     ./tofi.nix
     ./variety.nix
     ./vscode.nix

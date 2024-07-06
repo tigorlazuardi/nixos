@@ -7,6 +7,7 @@ in
     eza
     bat
     gojq
+    nix-zsh-completions
   ];
   programs.zsh = {
     enable = true;
@@ -43,13 +44,23 @@ in
       save = 40000;
       size = 40000;
     };
+    syntaxHighlighting.enable = true;
     initExtraFirst = /*bash*/ ''
+      export ZSH_CACHE_DIR=$HOME/.cache/zsh
+
+      if [ -f $HOME/.config/zsh/.p10k.zsh ]; then
+          source $HOME/.config/zsh/.p10k.zsh
+      fi 
+
       _ZSH_COLOR_SCHEME_FILE=$HOME/.cache/wallust/sequences
       if [ -f "$_ZSH_COLOR_SCHEME_FILE" ]; then
           (cat "$_ZSH_COLOR_SCHEME_FILE" &)
       fi
     '';
     initExtra = /*bash*/ ''
+      packfiles() {
+        find $(nix build "nixpkgs#$1" --no-link --print-out-paths) 
+      }
 
       # Completion settings
       ## Case insensitive completion
@@ -73,19 +84,54 @@ in
       # Preview fzf
       zstyle ':fzf-tab:*' fzf-preview 'eza -1 --color=always $realpath'
     '';
-    antidote = {
-      enable = true;
-      plugins = [
-        "zdharma-continuum/fast-syntax-highlighting kind:defer"
-        "zsh-users/zsh-autosuggestions kind:defer"
-        "zsh-users/zsh-history-substring-search kind:defer"
-        "zsh-users/zsh-completions"
-        "Aloxaf/fzf-tab"
 
-        "ohmyzsh/ohmyzsh path:plugins/golang"
-      ]
-      ++ optional (config.profile.podman.enable) "ohmyzsh/ohmyzsh path:plugins/podman"
-      ;
-    };
+    plugins = [
+      {
+        name = "fzf-tab";
+        src = pkgs.zsh-fzf-tab;
+        file = "share/fzf-tab/fzf-tab.plugin.zsh";
+      }
+      {
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
+      {
+        name = "auto-suggestions";
+        src = pkgs.zsh-autosuggestions;
+        file = "share/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh";
+      }
+      {
+        name = "zsh-nix-shell";
+        src = pkgs.zsh-nix-shell;
+        file = "share/zsh-nix-shell/nix-shell.plugin.zsh";
+      }
+      {
+        name = "zsh-history-substring-search";
+        src = pkgs.zsh-history-substring-search;
+        file = "share/zsh-history-substring-search/zsh-history-substring-search.zsh";
+      }
+      {
+        name = "golang-autocomplete";
+        src = pkgs.oh-my-zsh;
+        file = "share/oh-my-zsh/plugins/golang/golang.plugin.zsh";
+      }
+    ]
+      # ++ optional (config.profile.podman.enable) {
+      #   name = "podman";
+      #   src = pkgs.oh-my-zsh;
+      #   file = "share/oh-my-zsh/plugins/podman/podman.plugin.zsh";
+      # }
+    ;
+
+    # Antidote should only be used for loading completions
+    # antidote = {
+    #   enable = true;
+    #   plugins = [
+    #     "ohmyzsh/ohmyzsh path:plugins/golang"
+    #   ]
+    #   ++ optional (config.profile.podman.enable) "ohmyzsh/ohmyzsh path:plugins/podman"
+    #   ;
+    # };
   };
 }
