@@ -11,6 +11,7 @@ in
     services.caddy.virtualHosts."cockpit.tigor.web.id".extraConfig = ''
       reverse_proxy 0.0.0.0:9090
     '';
+    services.udisks2.enable = true;
     services.cockpit = {
       enable = true;
       openFirewall = true;
