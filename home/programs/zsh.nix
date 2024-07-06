@@ -1,5 +1,7 @@
-{ pkgs, ... }:
-
+{ pkgs, lib, config, ... }:
+let
+  inherit (lib.lists) optional;
+in
 {
   home.packages = with pkgs; [
     eza
@@ -9,7 +11,7 @@
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
-    enableCompletion = false;
+    enableCompletion = true;
     defaultKeymap = "emacs";
     dirHashes = {
       docs = "$HOME/Documents";
@@ -36,6 +38,7 @@
       expireDuplicatesFirst = true;
       extended = true;
       ignoreAllDups = true;
+      ignoreSpace = true;
       path = "$HOME/.local/share/zsh/zsh_history";
       save = 40000;
       size = 40000;
@@ -47,18 +50,42 @@
       fi
     '';
     initExtra = /*bash*/ ''
-      bindkey              '^I'         menu-complete
-      bindkey "$terminfo[kcbt]" reverse-menu-complete
+
+      # Completion settings
+      ## Case insensitive completion
+      zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+      # FZF Tab configurations
+      #
+      # disable sort when completing `git checkout`
+      zstyle ':completion:*:git-checkout:*' sort false
+      # set descriptions format to enable group support
+      # NOTE: don't use escape sequences here, fzf-tab will ignore them
+      zstyle ':completion:*:descriptions' format '[%d]'
+      # set list-colors to enable filename colorizing
+      zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
+      # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+      zstyle ':completion:*' menu no
+      # preview directory's content with eza when completing cd
+      zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+      # switch group using `<` and `>`
+      zstyle ':fzf-tab:*' switch-group '<' '>'
+      # Preview fzf
+      zstyle ':fzf-tab:*' fzf-preview 'eza -1 --color=always $realpath'
     '';
     antidote = {
       enable = true;
       plugins = [
-        # "zdharma-continuum/fast-syntax-highlighting kind:defer"
+        "zdharma-continuum/fast-syntax-highlighting kind:defer"
         "zsh-users/zsh-autosuggestions kind:defer"
         "zsh-users/zsh-history-substring-search kind:defer"
         "zsh-users/zsh-completions"
-        # "marlonrichert/zsh-autocomplete"
-      ];
+        "Aloxaf/fzf-tab"
+
+        "ohmyzsh/ohmyzsh path:plugins/golang"
+      ]
+      ++ optional (config.profile.podman.enable) "ohmyzsh/ohmyzsh path:plugins/podman"
+      ;
     };
   };
 }
