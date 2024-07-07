@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }:
 let
-  inherit (lib.lists) optional;
+  inherit (lib.strings) optionalString concatStrings;
 in
 {
   home.packages = with pkgs; [
@@ -47,6 +47,7 @@ in
     syntaxHighlighting.enable = true;
     initExtraFirst = /*bash*/ ''
       export ZSH_CACHE_DIR=$HOME/.cache/zsh
+      mkdir -p $ZSH_CACHE_DIR/completions
 
       if [ -f $HOME/.config/zsh/.p10k.zsh ]; then
           source $HOME/.config/zsh/.p10k.zsh
@@ -57,33 +58,39 @@ in
           (cat "$_ZSH_COLOR_SCHEME_FILE" &)
       fi
     '';
-    initExtra = /*bash*/ ''
-      packfiles() {
-        find $(nix build "nixpkgs#$1" --no-link --print-out-paths) 
-      }
+    initExtra = concatStrings [
+      /*bash*/
+      ''
+        packfiles() {
+          find $(nix build "nixpkgs#$1" --no-link --print-out-paths) 
+        }
 
-      # Completion settings
-      ## Case insensitive completion
-      zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+        # Completion settings
+        ## Case insensitive completion
+        zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
-      # FZF Tab configurations
-      #
-      # disable sort when completing `git checkout`
-      zstyle ':completion:*:git-checkout:*' sort false
-      # set descriptions format to enable group support
-      # NOTE: don't use escape sequences here, fzf-tab will ignore them
-      zstyle ':completion:*:descriptions' format '[%d]'
-      # set list-colors to enable filename colorizing
-      zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
-      # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
-      zstyle ':completion:*' menu no
-      # preview directory's content with eza when completing cd
-      zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-      # switch group using `<` and `>`
-      zstyle ':fzf-tab:*' switch-group '<' '>'
-      # Preview fzf
-      zstyle ':fzf-tab:*' fzf-preview 'eza -1 --color=always $realpath'
-    '';
+        # FZF Tab configurations
+        #
+        # disable sort when completing `git checkout`
+        zstyle ':completion:*:git-checkout:*' sort false
+        # set descriptions format to enable group support
+        # NOTE: don't use escape sequences here, fzf-tab will ignore them
+        zstyle ':completion:*:descriptions' format '[%d]'
+        # set list-colors to enable filename colorizing
+        zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
+        # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+        zstyle ':completion:*' menu no
+        # preview directory's content with eza when completing cd
+        zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+        # switch group using `<` and `>`
+        zstyle ':fzf-tab:*' switch-group '<' '>'
+        # Preview fzf
+        zstyle ':fzf-tab:*' fzf-preview 'eza -1 --color=always $realpath'
+      ''
+      (optionalString config.profile.podman.enable /*bash*/ ''
+        zsh-defer source <(podman completion zsh)
+      '')
+    ];
 
     plugins = [
       {
@@ -110,6 +117,11 @@ in
         name = "zsh-history-substring-search";
         src = pkgs.zsh-history-substring-search;
         file = "share/zsh-history-substring-search/zsh-history-substring-search.zsh";
+      }
+      {
+        name = "zsh-defer";
+        src = pkgs.zsh-defer;
+        file = "share/zsh-defer/zsh-defer.plugin.zsh";
       }
     ];
   };
