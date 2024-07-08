@@ -11,6 +11,13 @@ in
   ];
   programs.zsh = {
     enable = true;
+    envExtra = /*bash*/ ''
+      # Disable loading global RC files in /etc/zsh/*
+      # Mostly because they are unneeded
+      # and global rc files has to be small for security reasons (no plugins)
+      # thus making them saver for Root account to load them.
+      unsetopt GLOBAL_RCS
+    '';
     autosuggestion.enable = true;
     enableCompletion = true;
     defaultKeymap = "emacs";
@@ -47,11 +54,11 @@ in
     syntaxHighlighting.enable = true;
     initExtraFirst = /*bash*/ ''
       export ZSH_CACHE_DIR=$HOME/.cache/zsh
-      mkdir -p $ZSH_CACHE_DIR/completions
+      fpath+=${pkgs.zsh-completions}/share/zsh/site-functions
 
       if [ -f $HOME/.config/zsh/.p10k.zsh ]; then
           source $HOME/.config/zsh/.p10k.zsh
-      fi 
+      fi
 
       _ZSH_COLOR_SCHEME_FILE=$HOME/.cache/wallust/sequences
       if [ -f "$_ZSH_COLOR_SCHEME_FILE" ]; then
