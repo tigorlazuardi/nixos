@@ -47,6 +47,7 @@
 
   time.timeZone = "Asia/Jakarta";
 
+  documentation.enable = true;
   documentation.man = {
     man-db.enable = false;
     generateCaches = true;
