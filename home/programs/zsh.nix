@@ -89,10 +89,10 @@ in
         zstyle ':completion:*' menu no
         # preview directory's content with eza when completing cd
         zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+        # preview directory's content with eza when completing z
+        zstyle ':fzf-tab:complete:z:*' fzf-preview 'eza -1 --color=always $realpath'
         # switch group using `<` and `>`
         zstyle ':fzf-tab:*' switch-group '<' '>'
-        # Preview fzf
-        zstyle ':fzf-tab:*' fzf-preview 'eza -1 --color=always $realpath'
       ''
       (optionalString config.profile.podman.enable /*bash*/ ''
         zsh-defer source <(podman completion zsh)
