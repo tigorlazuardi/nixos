@@ -51,10 +51,27 @@ in
       save = 40000;
       size = 40000;
     };
+    completionInit = lib.mkOrder 9999 (concatStrings [
+      /* bash */
+      ''
+        mkdir -p $ZSH_CACHE_DIR/completions
+        fpath+=$ZSH_CACHE_DIR/completions
+        fpath+=${pkgs.zsh-completions}/share/zsh/site-functions
+      ''
+      (optionalString config.profile.podman.enable /*bash*/ ''
+        if [ ! -f $ZSH_CACHE_DIR/completions/_podman ]; then
+            podman completion zsh > $ZSH_CACHE_DIR/completions/_podman
+        fi
+      '')
+      # Value below must be always last in the completionInit
+      /* bash */
+      ''
+        autoload -U compinit && compinit
+      ''
+    ]);
     syntaxHighlighting.enable = true;
     initExtraFirst = /*bash*/ ''
       export ZSH_CACHE_DIR=$HOME/.cache/zsh
-      fpath+=${pkgs.zsh-completions}/share/zsh/site-functions
 
       if [ -f $HOME/.config/zsh/.p10k.zsh ]; then
           source $HOME/.config/zsh/.p10k.zsh
