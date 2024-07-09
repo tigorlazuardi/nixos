@@ -53,7 +53,7 @@
     neovide.enable = true;
     spotify.enable = true;
     vscode.enable = true;
-    jellyfin.enable = false;
+    jellyfin.enable = true;
     mpv.enable = true;
     go.enable = true;
     chromium.enable = true;
@@ -64,5 +64,6 @@
     nextcloud.enable = false;
 
     programs.easyeffects.enable = true;
+    steam.enable = true;
   };
 }
