@@ -1,4 +1,4 @@
-{ pkgs, lib, config, unstable, ... }:
+{ pkgs, lib, config, ... }:
 let
   cfg = config.profile.hyprland;
 in
@@ -21,14 +21,13 @@ in
   ];
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      unstable.cosmic-term
       cliphist
       qalculate-gtk
       pavucontrol
       pasystray
 
       graphicsmagick
-      unstable.swayosd
+      pkgs.swayosd
       image-roll # image viewer
     ];
 
