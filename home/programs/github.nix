@@ -1,9 +1,9 @@
-{ config, lib, unstable, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.profile.gh;
 in
 {
   config = lib.mkIf cfg.enable {
-    home.packages = [ unstable.gh ];
+    home.packages = [ pkgs.gh ];
   };
 }
