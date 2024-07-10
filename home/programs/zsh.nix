@@ -73,9 +73,9 @@ in
     initExtraFirst = /*bash*/ ''
       export ZSH_CACHE_DIR=$HOME/.cache/zsh
 
-      if [ -f $HOME/.config/zsh/.p10k.zsh ]; then
-          source $HOME/.config/zsh/.p10k.zsh
-      fi
+      # if [ -f $HOME/.config/zsh/.p10k.zsh ]; then
+      #     source $HOME/.config/zsh/.p10k.zsh
+      # fi
 
       _ZSH_COLOR_SCHEME_FILE=$HOME/.cache/wallust/sequences
       if [ -f "$_ZSH_COLOR_SCHEME_FILE" ]; then
@@ -119,11 +119,11 @@ in
         src = pkgs.zsh-fzf-tab;
         file = "share/fzf-tab/fzf-tab.plugin.zsh";
       }
-      {
-        name = "powerlevel10k";
-        src = pkgs.zsh-powerlevel10k;
-        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-      }
+      # {
+      #   name = "powerlevel10k";
+      #   src = pkgs.zsh-powerlevel10k;
+      #   file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      # }
       {
         name = "auto-suggestions";
         src = pkgs.zsh-autosuggestions;
