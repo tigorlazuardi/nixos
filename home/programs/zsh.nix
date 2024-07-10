@@ -111,9 +111,6 @@ in
         # switch group using `<` and `>`
         zstyle ':fzf-tab:*' switch-group '<' '>'
       ''
-      (optionalString config.profile.podman.enable /*bash*/ ''
-        zsh-defer source <(podman completion zsh)
-      '')
     ];
 
     plugins = [
@@ -142,11 +139,11 @@ in
         src = pkgs.zsh-history-substring-search;
         file = "share/zsh-history-substring-search/zsh-history-substring-search.zsh";
       }
-      {
-        name = "zsh-defer";
-        src = pkgs.zsh-defer;
-        file = "share/zsh-defer/zsh-defer.plugin.zsh";
-      }
+      # {
+      #   name = "zsh-defer";
+      #   src = pkgs.zsh-defer;
+      #   file = "share/zsh-defer/zsh-defer.plugin.zsh";
+      # }
     ];
   };
 }
