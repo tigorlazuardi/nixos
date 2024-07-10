@@ -1,10 +1,10 @@
-{ lib, config, pkgs, unstable, ... }:
+{ lib, config, pkgs, ... }:
 let
   cfg = config.profile.whatsapp;
 in
 {
   config = lib.mkIf cfg.enable {
-    home.packages = [ unstable.whatsapp-for-linux ];
+    home.packages = [ pkgs.whatsapp-for-linux ];
 
     systemd.user = lib.mkIf cfg.autostart {
       services.whatsapp = {
@@ -21,7 +21,7 @@ in
             ping = "${pkgs.unixtools.ping}/bin/ping";
             host = "web.whatsapp.com";
             sleep = "${pkgs.coreutils}/bin/sleep";
-            whatsapp = "${unstable.whatsapp-for-linux}/bin/whatsapp-for-linux";
+            whatsapp = "${pkgs.whatsapp-for-linux}/bin/whatsapp-for-linux";
             exec = ''${bash} -c "until ${ping} -c 1 ${host}; do ${sleep} 1; done; ${whatsapp}"'';
           in
           {
