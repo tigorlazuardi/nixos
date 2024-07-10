@@ -8,7 +8,18 @@ in
       enable = true;
       enableZshIntegration = true;
       enableBashIntegration = true;
+
+      extraConfig = /*lua*/ ''
+        -- take config from ./base_config.lua
+        local config = require('base_config')
+
+        -- and override settings for nixos specific things here.
+        config.window_background_opacity = ${toString cfg.config.window_background_opacity};
+
+        return config
+      '';
     };
+
 
     home.file.".config/wezterm" = {
       source = ./.;

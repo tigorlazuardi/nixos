@@ -83,6 +83,10 @@
       };
       easyeffects.enable = lib.mkEnableOption "easyeffects";
       wezterm.enable = lib.mkEnableOption "wezterm";
+      wezterm.config.window_background_opacity = lib.mkOption {
+        type = lib.types.float;
+        default = 0.8;
+      };
     };
   };
 }

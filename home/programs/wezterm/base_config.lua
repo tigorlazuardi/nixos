@@ -38,7 +38,6 @@ return {
 	leader = shortcuts.leader,
 	keys = shortcuts.keys,
 	key_tables = shortcuts.key_tables,
-	window_background_opacity = 1,
 	text_background_opacity = 1,
 	hyperlink_rules = {
 		-- Linkify things that look like URLs and the host has a TLD name.
