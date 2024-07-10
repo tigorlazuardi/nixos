@@ -1,6 +1,6 @@
 { config, lib, ... }:
 let
-  cfg = config.profile.wezterm;
+  cfg = config.profile.programs.wezterm;
 in
 {
   config = lib.mkIf cfg.enable {

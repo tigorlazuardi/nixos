@@ -3,6 +3,7 @@ local wezterm = require('wezterm')
 local shortcuts = require('keys')
 
 return {
+	enable_wayland = false,
 	font = wezterm.font_with_fallback({
 		-- 'Comic Code Ligatures',
 		'JetBrainsMono Nerd Font Mono',
@@ -21,8 +22,8 @@ return {
 	ssh_domains = {
 		{
 			name = 'home',
-			remote_address = 'home',
-			username = 'tigor',
+			remote_address = 'vpn.tigor.web.id',
+			username = 'homeserver',
 			ssh_option = {
 				identityfile = wezterm.home_dir .. '/.ssh/id_ed25519.pub',
 			},

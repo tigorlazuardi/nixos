@@ -26,6 +26,8 @@
     ./whatsapp.nix
     ./zathura.nix
     ./zsh.nix
+
+    ./wezterm
   ];
 
   programs.fzf = {

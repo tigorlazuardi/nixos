@@ -81,5 +81,6 @@ in
       zathura.enable = true;
     };
     programs.easyeffects.enable = true;
+    programs.wezterm.enable = true;
   };
 }

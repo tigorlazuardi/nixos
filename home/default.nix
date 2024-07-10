@@ -10,7 +10,6 @@ in
     ./programs
     ./modules
 
-    ./config/wezterm
     ./direnv.nix
     ./config/kitty
     ./config/ideavim

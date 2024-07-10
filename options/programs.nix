@@ -32,7 +32,6 @@
 
     obs.enable = lib.mkEnableOption "obs";
 
-    wezterm.enable = lib.mkEnableOption "wezterm";
     neovide.enable = lib.mkEnableOption "neovide";
     ideavim.enable = lib.mkEnableOption "ideavim";
     kitty.enable = lib.mkEnableOption "kitty";
@@ -83,6 +82,7 @@
         default = true;
       };
       easyeffects.enable = lib.mkEnableOption "easyeffects";
+      wezterm.enable = lib.mkEnableOption "wezterm";
     };
   };
 }
