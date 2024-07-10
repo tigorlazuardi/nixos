@@ -37,8 +37,22 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = inputs @ { self, nur, nixpkgs, home-manager, sops-nix, neovim-nightly-overlay, nix-index-database, ... }:
+  outputs =
+    inputs @ { self
+    , nur
+    , nixpkgs
+    , home-manager
+    , sops-nix
+    , neovim-nightly-overlay
+    , nix-index-database
+    , rust-overlay
+    , ...
+    }:
     let
       commonModules = [
         nur.nixosModules.nur
@@ -52,6 +66,7 @@
           nixpkgs.overlays = [
             neovim-nightly-overlay.overlays.default
             nur.overlay
+            rust-overlay.overlays.default
           ];
         }
         {
@@ -72,7 +87,6 @@
           home-manager.sharedModules = [
             nix-index-database.hmModules.nix-index
             inputs.sops-nix.homeManagerModules.sops
-
           ];
         }
       ];

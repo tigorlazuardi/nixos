@@ -8,7 +8,7 @@ in
     home.packages = [
       pkgs.imagemagick
       # unstable.wallust
-      (pkgs.callPackage ./wallust-build.nix { inherit unstable; })
+      (pkgs.callPackage ./wallust-build.nix { })
     ];
 
     home. file.".config/wallust/templates" = {

@@ -4,7 +4,7 @@
 , nix-update-script
 , imagemagick
 , makeWrapper
-, unstable
+, pkgs
 }:
 let
   version = "3.0.0-beta";
@@ -23,7 +23,7 @@ rustPlatform.buildRustPackage {
 
   cargoHash = "sha256-dkHS8EOzmn5VLiKP3SMT0ZGAsk2wzvQeioG7NuGGUzA=";
 
-  nativeBuildInputs = [ makeWrapper unstable.rustc ];
+  nativeBuildInputs = [ makeWrapper pkgs.rust-bin.stable."1.77.2".default ];
 
   postFixup = ''
     wrapProgram $out/bin/wallust \
