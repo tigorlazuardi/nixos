@@ -65,5 +65,6 @@
 
     programs.easyeffects.enable = true;
     steam.enable = true;
+    programs.wezterm.enable = true;
   };
 }

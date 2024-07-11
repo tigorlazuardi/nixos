@@ -55,7 +55,6 @@ in
     };
 
     fonts.packages = with pkgs; [
-      nerdfonts
       meslo-lgs-nf
       font-awesome
       roboto
