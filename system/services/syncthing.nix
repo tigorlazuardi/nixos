@@ -101,6 +101,13 @@ in
               "work-laptop"
             ];
           };
+          "/nas/EmuDeck" = {
+            label = "EmuDeck";
+            id = "EmuDeck";
+            devices = [
+              "steam-deck"
+            ];
+          };
         };
         devices = {
           s20fe = {
@@ -122,6 +129,10 @@ in
           samsung-s22-mama = {
             name = "Samsung S22 Mama";
             id = "5G2Q7XE-HILUI46-GWTE6P6-NJHAG3A-HSZKMAU-K5PBOKR-QN3IFQO-GX7KTQU";
+          };
+          steam-deck = {
+            name = "Steam Deck";
+            id = "6SOR4SU-MVT2XIS-4J6IGVP-LITFLDB-ZH6LA7T-PUSQK26-P6RVWZ7-YB7P4AX";
           };
         };
       };
