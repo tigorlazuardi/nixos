@@ -82,7 +82,11 @@ in
         # https://wiki.hyprland.org/Configuring/Binds
         bind = [
           # Programs
-          "$mod, RETURN, exec, kitty"
+          (
+            if config.profile.programs.wezterm.enable
+            then "$mod, RETURN, exec, wezterm-gui"
+            else "$mod, RETURN, exec, kitty"
+          )
           "$mod, E, exec, thunar"
           "$mod, B, exec, microsoft-edge"
           "$mod, D, exec, rofi -show drun -replace -i"
