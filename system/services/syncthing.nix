@@ -68,15 +68,14 @@ in
               "onyx"
             ];
           };
-          "/nas/Syncthing/Sync/VPN" = {
-            label = "OpenVPN";
-            id = "OpenVPN";
-            devices = lib.attrsets.mapAttrsToList (key: _value: key) config.services.syncthing.settings.devices;
-          };
           "/nas/Syncthing/Sync/WireGuard" = {
             label = "WireGuard";
             id = "WireGuard";
-            devices = lib.attrsets.mapAttrsToList (key: _value: key) config.services.syncthing.settings.devices;
+            # devices = lib.attrsets.mapAttrsToList (key: _value: key) config.services.syncthing.settings.devices;
+            devices = [
+              "s20fe"
+              "work-laptop"
+            ];
           };
           "/nas/photos/mama" = {
             label = "Camera Mama";
