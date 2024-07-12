@@ -7,5 +7,6 @@
     ./syncthing.nix
     ./obs.nix
     ./firefox.nix
+    ./bareksa.nix
   ];
 }
