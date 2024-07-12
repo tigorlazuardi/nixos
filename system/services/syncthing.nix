@@ -68,6 +68,14 @@ in
               "onyx"
             ];
           };
+          "/nas/Syncthing/Sync/VPN" = {
+            label = "OpenVPN";
+            id = "OpenVPN";
+            devices = [
+              "s20fe"
+              "work-laptop"
+            ];
+          };
           "/nas/Syncthing/Sync/WireGuard" = {
             label = "WireGuard";
             id = "WireGuard";
