@@ -8,10 +8,11 @@ in
     services.xserver.enable = true;
 
     services.xserver.desktopManager.plasma5.enable = true;
-    services.xserver.displayManager = {
+    services.displayManager = {
       sddm.enable = true;
-      defaultSession = "plasmawayland";
     };
+
+    services.greetd.enable = lib.mkForce false;
 
     environment.systemPackages = with pkgs; [
       catppuccin-kde
@@ -28,8 +29,10 @@ in
 
     # Configure keymap in X11
     services.xserver = {
-      layout = "us";
-      xkbVariant = "";
+      xkb = {
+        layout = "us";
+        variant = "";
+      };
     };
 
     programs.kdeconnect.enable = true;

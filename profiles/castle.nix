@@ -73,6 +73,7 @@ in
     chromium.enable = true;
     bitwarden.enable = true;
     dbeaver.enable = true;
+    kde.enable = false;
 
     microsoft-edge.enable = true;
     nextcloud.enable = false;
