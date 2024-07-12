@@ -1,6 +1,7 @@
 local wezterm = require('wezterm')
 
 local shortcuts = require('keys')
+require('event_config')
 
 return {
 	enable_wayland = false,
