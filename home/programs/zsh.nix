@@ -28,16 +28,16 @@ in
       pictures = "$HOME/Pictures";
     };
     shellAliases = {
-      ls = "eza -lah";
-      cat = "bat";
+      ls = "${pkgs.eza}/bin/eza -lah";
+      cat = "${pkgs.bat}/bin/bat";
       update = "sudo nixos-rebuild switch --flake $HOME/dotfiles";
       superupdate = "(cd $HOME/dotfiles && nix flake update && sudo nixos-rebuild switch --flake $HOME/dotfiles)";
-      lg = "lazygit";
-      du = "dust -H";
+      lg = "${pkgs.lazygit}/bin/lazygit";
+      du = "${pkgs.dust}/bin/dust";
       uptest = "sudo nixos-rebuild test --flake $HOME/dotfiles";
       dry = "sudo nixos-rebuild dry-activate --flake $HOME/dotfiles";
-      jq = "gojq";
-      n = "neovide";
+      jq = "${pkgs.gojq}/bin/gojq";
+      n = lib.mkIf config.profile.neovide.enable "neovide";
       v = "nvim";
       cd = "z";
     };
