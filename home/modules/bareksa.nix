@@ -3,8 +3,10 @@ let
   sopsFile = ../../secrets/bareksa.yaml;
 in
 {
-  sops.secrets."bareksa/openvpn" = {
-    inherit sopsFile;
+  sops.secrets = {
+    "bareksa/openvpn" = {
+      inherit sopsFile;
+    };
   };
 
   programs.zsh.shellAliases = {
