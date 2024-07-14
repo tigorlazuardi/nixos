@@ -29,7 +29,6 @@ in
       key = config.sops.secrets."syncthing/server/key.pem".path;
       cert = config.sops.secrets."syncthing/server/cert.pem".path;
       settings = {
-        options.urAccepted = 1; # Allow anonymous usage reporting.
         folders = {
           "/nas/redmage/images/windows" = {
             label = "Redmage/Windows";
@@ -113,6 +112,8 @@ in
             id = "EmuDeck";
             devices = [
               "steam-deck"
+              "windows"
+              "living-room-system"
             ];
           };
         };
@@ -140,6 +141,10 @@ in
           steam-deck = {
             name = "Steam Deck";
             id = "6SOR4SU-MVT2XIS-4J6IGVP-LITFLDB-ZH6LA7T-PUSQK26-P6RVWZ7-YB7P4AX";
+          };
+          living-room-system = {
+            name = "Living Room System";
+            id = "63W5VTT-X6R6WOC-LMQEXM7-6PCUYLX-UONPYFB-UYM2OGN-2TJ47HG-66TSCQC";
           };
         };
       };
