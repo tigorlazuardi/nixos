@@ -36,6 +36,7 @@
       servarr.recyclarr.enable = true;
       servarr.real-debrid-manager.enable = false;
       servarr.rdtclient.enable = true;
+      openobserve.enable = true;
     };
 
     docker = {

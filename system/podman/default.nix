@@ -41,12 +41,13 @@ in
   # 10.88.0.6 -> Suwayomi Flaresolverr
   # 10.88.1.1 -> Pihole
   imports = [
+    ./openobserve.nix
     ./pihole.nix
     ./qbittorrent.nix
     ./redmage-demo.nix
     ./redmage.nix
+    ./servarr
     ./suwayomi.nix
     ./ytptube.nix
-    ./servarr
   ];
 }

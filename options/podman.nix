@@ -12,6 +12,7 @@ in
     redmage.enable = lib.mkEnableOption "redmage podman";
     redmage-demo.enable = lib.mkEnableOption "redmage-demo podman";
     qbittorrent.enable = lib.mkEnableOption "qbittorrent podman";
+    openobserve.enable = lib.mkEnableOption "openobserve podman";
 
     servarr = {
       enable = mkEnableOption "servarr group";
