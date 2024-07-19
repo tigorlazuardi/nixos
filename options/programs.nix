@@ -77,6 +77,7 @@
     };
 
     programs = {
+      mongodb-compass.enable = lib.mkEnableOption "mongodb-compass";
       yazi.enable = lib.mkOption {
         type = lib.types.bool;
         default = true;

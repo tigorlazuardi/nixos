@@ -66,6 +66,7 @@
     programs.easyeffects.enable = true;
     steam.enable = true;
     programs.wezterm.enable = true;
+    programs.mongodb-compass.enable = true;
 
     podman.enable = true;
   };

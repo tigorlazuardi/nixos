@@ -11,6 +11,7 @@
     ./go.nix
     ./jellyfin.nix
     ./microsoft-edge.nix
+    ./mongodb-compass.nix
     ./mpv.nix
     ./neovide.nix
     ./neovim.nix
