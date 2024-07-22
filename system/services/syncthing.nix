@@ -107,6 +107,14 @@ in
               "work-laptop"
             ];
           };
+          "/nas/Syncthing/Sync/Memes" = {
+            label = "Memes";
+            id = "Memes";
+            devices = [
+              "s20fe"
+              "work-laptop"
+            ];
+          };
           "/nas/EmuDeck" = {
             label = "EmuDeck";
             id = "EmuDeck";
