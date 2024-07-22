@@ -87,7 +87,6 @@ in
           "$mod, B, exec, microsoft-edge"
           "$mod, D, exec, rofi -show drun -replace -i"
           "$mod, BackSpace, exec, wlogout"
-          "$mod, S, exec, pypr toggle term"
           ''$mod, F, exec, ${select-window.path}''
           "$mod, W, exec, pypr wall next"
 
