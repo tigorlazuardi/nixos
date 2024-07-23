@@ -3,6 +3,7 @@
   networking.networkmanager.enable = true;
   networking.extraHosts = ''
     192.168.50.217 gitlab.bareksa.com
+    192.168.50.205 tools.bareksa.local
   '';
   networking.firewall =
     let
