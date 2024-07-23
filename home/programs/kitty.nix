@@ -4,7 +4,7 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    programs.zsh.initExtra = ''
+    programs.zsh.initExtra = /*bash*/ ''
       if [[ "$TERM" == "xterm-kitty" ]]; then
           alias ssh="kitty +kitten ssh"
       fi
@@ -25,16 +25,18 @@ in
         tab_bar_style = "slant";
         background_blur = 40;
         background_opacity = toString 0.90;
+        cursor_blink_interval = toString 0.5;
       };
       keybindings = {
-        "ctrl+a>enter" = "launch --location=hsplit --cwd=current";
-        "ctrl+a>backspace" = "launch --location=vsplit --cwd=current";
+        "ctrl+a>enter" = "launch --location=vsplit --cwd=current";
+        "ctrl+a>backspace" = "launch --location=hsplit --cwd=current";
         "ctrl+a>h" = "neighboring_window left";
         "ctrl+a>j" = "neighboring_window down";
         "ctrl+a>k" = "neighboring_window up";
         "ctrl+a>l" = "neighboring_window right";
         "ctrl+a>t" = "new_tab_with_cwd";
         "ctrl+a>w" = "close_window";
+        "ctrl+a>r" = "start_resizing_window";
       };
       font = {
         name = "JetBrainsMono Nerd Font Mono";
@@ -43,11 +45,6 @@ in
       extraConfig = ''
         globinclude kitty.d/**/*.conf
       '';
-    };
-
-    home.file.".config/kitty" = {
-      source = ./.;
-      recursive = true;
     };
   };
 }

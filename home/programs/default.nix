@@ -10,6 +10,7 @@
     ./github.nix
     ./go.nix
     ./jellyfin.nix
+    ./kitty.nix
     ./microsoft-edge.nix
     ./mongodb-compass.nix
     ./mpv.nix

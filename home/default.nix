@@ -11,7 +11,6 @@ in
     ./modules
 
     ./direnv.nix
-    ./config/kitty
     ./config/ideavim
     ./secrets.nix
   ];
