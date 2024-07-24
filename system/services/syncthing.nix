@@ -124,6 +124,15 @@ in
               "living-room-system"
             ];
           };
+          "/nas/Syncthing/Sync/sops" = {
+            label = "Sops";
+            id = "Sops";
+            devices = [
+              "s20fe"
+              "work-laptop"
+              "windows"
+            ];
+          };
         };
         devices = {
           s20fe = {
