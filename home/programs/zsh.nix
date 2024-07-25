@@ -89,6 +89,10 @@ in
           find $(nix build "nixpkgs#$1" --no-link --print-out-paths) 
         }
 
+        build() {
+            nix build --impure --expr "with import <nixpkgs> {}; callPackage $1 {}"
+        }
+
         # Completion settings
         ## Case insensitive completion
         zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
