@@ -44,6 +44,11 @@
       enable = false;
     };
 
+    home.programs.zellij = {
+      enable = true;
+      autoAttach = true;
+    };
+
     services = {
       caddy.enable = true;
       cockpit.enable = true;

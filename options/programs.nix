@@ -74,6 +74,23 @@
     home.programs = {
       zathura.enable = lib.mkEnableOption "zathura";
       floorp.enable = lib.mkEnableOption "floorp";
+      zellij = {
+        enable = lib.mkEnableOption "zellij";
+
+        # Wether to enable auto attach to zellij sessions.
+        #
+        # Best used for servers when you want to auto attach to a session when ssh
+        # into a server.
+        #
+        # Desktop usage is not recommended since uses typically have multiple
+        # terminal windows open and it can be confusing to have a terminal
+        # window auto attach to a zellij session.
+        #
+        # Also, there is resurrections features that zellij offers.
+        # So desktop user can just resurrect the session if they want to.
+        autoAttach = lib.mkEnableOption "zellij autoAttach";
+      };
+
     };
 
     programs = {
