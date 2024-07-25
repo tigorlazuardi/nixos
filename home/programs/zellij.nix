@@ -19,7 +19,7 @@ in
       ZELLIJ_AUTO_ATTACH=${lib.boolToString cfg.autoAttach}
       if [[ -z "$ZELLIJ" ]]; then
           if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
-              zellij attach --index 0 -c
+              zellij attach -c default
           else
               zellij
           fi
@@ -48,7 +48,7 @@ in
             bind "Ctrl a" "Ctrl c" "Esc" { SwitchToMode "Normal"; }
             bind "w" { SwitchToMode "Resize"; }
             bind "e" { SwitchToMode "Scroll"; }
-            bind "s" { SwitchToMode "Session"; }
+            bind "S" { SwitchToMode "Session"; }
             bind "r" { SwitchToMode "RenamePane"; PaneNameInput 0; }
             bind "R" { SwitchToMode "RenameTab"; TabNameInput 0; }
             bind "/" { SwitchToMode "EnterSearch"; SearchInput 0; }
@@ -81,6 +81,15 @@ in
             bind "7" { GoToTab 7; SwitchToMode "Normal"; }
             bind "8" { GoToTab 8; SwitchToMode "Normal"; }
             bind "9" { GoToTab 9; SwitchToMode "Normal"; }
+
+            // Session management
+            bind "s" {
+                LaunchOrFocusPlugin "session-manager" {
+                    floating true
+                    move_to_focused_tab true
+                };
+                SwitchToMode "Normal"
+            }
         }
 
         resize {
@@ -135,7 +144,7 @@ in
         session {
             bind "Ctrl c" "Esc" { SwitchToMode "Normal"; }
             bind "d" { Detach; }
-            bind "s" {
+            bind "S" {
                 LaunchOrFocusPlugin "session-manager" {
                     floating true
                     move_to_focused_tab true
