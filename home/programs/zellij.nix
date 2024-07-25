@@ -6,11 +6,28 @@ in
   config = lib.mkIf cfg.enable {
     programs.zellij.enable = true;
 
-    programs.zsh.initExtraFirst = lib.mkOrder 20000 (
+    # Uses initExtraFirst instead of initExtra
+    # to avoid loading of zsh plugins before zellij loads.
+    #
+    # Let zsh inside zellij that loads zsh plugins.
+    #
+    # The lib.mkOrder is used to ensure zellij is
+    # autoloaded first after zshenv.
+    programs.zsh.initExtraFirst = lib.mkOrder 50 (
       /*bash*/ ''
       ZELLIJ_AUTO_EXIT=true
-      ZELLIJ_AUTO_ATTACH=${toString cfg.autoAttach}
-      eval "$(zellij setup --generate-auto-start zsh)"
+      ZELLIJ_AUTO_ATTACH=${lib.boolToString cfg.autoAttach}
+      if [[ -z "$ZELLIJ" ]]; then
+          if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
+              zellij attach --index 0 -c
+          else
+              zellij
+          fi
+
+          if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
+              exit
+          fi
+      fi
     ''
     );
 
