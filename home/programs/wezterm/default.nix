@@ -4,10 +4,6 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    wayland.windowManager.hyprland.settings.bind = [
-      "$mod, S, exec, wezterm ssh homeserver@vpn.tigor.web.id"
-    ];
-
     programs.wezterm = {
       enable = true;
       enableZshIntegration = true;

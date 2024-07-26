@@ -91,6 +91,7 @@ in
           "$mod, BackSpace, exec, wlogout"
           ''$mod, F, exec, ${select-window.path}''
           "$mod, W, exec, pypr wall next"
+          "$mod, S, exec, foot ssh homeserver@vpn.tigor.web.id"
 
           # Workspaces
           "$mod, 1, workspace, 1"

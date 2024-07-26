@@ -43,9 +43,11 @@ in
         let
           inherit (lib) strings attrsets;
         in
-        ''${strings.concatStringsSep "\n" (
-          attrsets.mapAttrsToList (name: _: "192.168.100.5 ${strings.removePrefix "https://" name}") config.services.caddy.virtualHosts
-        )}
+        ''
+          192.168.100.5 vpn.tigor.web.id
+          ${strings.concatStringsSep "\n" (
+            attrsets.mapAttrsToList (name: _: "192.168.100.5 ${strings.removePrefix "https://" name}") config.services.caddy.virtualHosts
+          )}
         '';
     };
     virtualisation.oci-containers.containers.${name} = {
