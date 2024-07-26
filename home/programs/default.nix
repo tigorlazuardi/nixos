@@ -6,6 +6,7 @@
     ./dbeaver.nix
     ./discord.nix
     ./easyeffects.nix
+    ./foot.nix
     ./git.nix
     ./github.nix
     ./go.nix

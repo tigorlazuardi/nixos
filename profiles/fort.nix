@@ -69,5 +69,7 @@
     programs.mongodb-compass.enable = true;
 
     podman.enable = true;
+
+    home.programs.foot.enable = true;
   };
 }

@@ -19,6 +19,8 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
+    profile.home.programs.foot.enable = lib.mkForce true;
+
     home.packages = [
       inputs.hyprland-contrib.packages.${pkgs.system}.grimblast
       pkgs.wl-clipboard
@@ -82,7 +84,7 @@ in
         # https://wiki.hyprland.org/Configuring/Binds
         bind = [
           # Programs
-          "$mod, RETURN, exec, kitty"
+          "$mod, RETURN, exec, foot"
           "$mod, E, exec, thunar"
           "$mod, B, exec, microsoft-edge"
           "$mod, D, exec, rofi -show drun -replace -i"
@@ -180,7 +182,7 @@ in
           disable_splash_rendering = true;
           focus_on_activate = true;
           enable_swallow = true;
-          swallow_regex = "^(Alacritty|kitty|footclient|org\.wezfurlong\.wezterm)$";
+          swallow_regex = "^(Alacritty|kitty|footclient|org\.wezfurlong\.wezterm|foot|footclient)$";
         };
 
         animations = {

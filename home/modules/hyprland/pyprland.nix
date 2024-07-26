@@ -23,8 +23,8 @@ in
         ];
         scratchpads.term = {
           animation = "fromTop";
-          command = "kitty --class kitty-dropterm";
-          class = "kitty-dropterm";
+          command = "foot --app-id foot-scratchpad";
+          class = "foot-scratchpad";
           size = "75% 75%";
         };
         wallpapers = {

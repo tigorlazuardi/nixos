@@ -90,7 +90,7 @@
         # So desktop user can just resurrect the session if they want to.
         autoAttach = lib.mkEnableOption "zellij autoAttach";
       };
-
+      foot.enable = lib.mkEnableOption "foot";
     };
 
     programs = {

@@ -94,6 +94,10 @@ in
                 template = "templates/alacritty.toml";
                 target = out + "/alacritty.toml";
               };
+              foot = {
+                template = "templates/foot.ini";
+                target = "${config.home.homeDirectory}/.config/foot/colors.ini";
+              };
             };
         };
   };
