@@ -56,7 +56,7 @@ in
       }
 
       keybinds clear-defaults=true {
-        shared_except "locked" {
+        shared_except "locked" "normal" {
             bind "Ctrl q" {
                 LaunchOrFocusPlugin "zj-quit" {
                     floating true
