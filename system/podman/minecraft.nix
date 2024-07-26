@@ -16,6 +16,10 @@ let
       username = "CrowFX7414";
       xuid = "2533274941938385";
     }
+    {
+      username = "cherlyxroblox";
+      xuid = "2535436320975546";
+    }
   ];
 in
 {
