@@ -18,10 +18,17 @@ in
       ZELLIJ_AUTO_EXIT=true
       ZELLIJ_AUTO_ATTACH=${lib.boolToString cfg.autoAttach}
       if [[ -z "$ZELLIJ" ]]; then
-          if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
-              zellij attach -c default
+          ZJ_SESSIONS=$(zellij list-sessions --no-formatting)
+          NO_SESSIONS=$(echo "$ZJ_SESSIONS" | wc -l)
+          if [ "$NO_SESSIONS" -ge 2 ]; then
+              SELECTED_SESSION=$(echo "$ZJ_SESSIONS" | ${pkgs.skim}/bin/sk | awk '{print $1}')
+              if [[ -n "''${SELECTED_SESSION// /}" ]]; then
+                  zellij attach -c "$SELECTED_SESSION"
+              else
+                  zellij attach -c --index 0
+              fi
           else
-              zellij
+              zellij attach -c
           fi
 
           if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
@@ -88,7 +95,7 @@ in
                     floating true
                     move_to_focused_tab true
                 };
-                SwitchToMode "Normal"
+                SwitchToMode "Normal";
             }
         }
 
