@@ -4,6 +4,8 @@
   networking.extraHosts = ''
     192.168.50.217 gitlab.bareksa.com
     192.168.50.205 tools.bareksa.local
+    192.168.3.50 kafka.dev.bareksa.local
+    192.168.3.109 redpanda.dev.bareksa.local kafka-console.dev.bareksa.local
   '';
   networking.firewall =
     let
