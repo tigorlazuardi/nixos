@@ -1,6 +1,16 @@
 { config, lib, pkgs, ... }:
 let
   cfg = config.profile.home.programs.zellij;
+  plugins = {
+    zj-quit = pkgs.fetchurl {
+      url = "https://github.com/cristiand391/zj-quit/releases/download/0.3.0/zj-quit.wasm";
+      hash = "sha256-f1D3cDuLRZ5IqY3IGq6UYSEu1VK54TwmkmwWaxVQD2A=";
+    };
+    zstatus = pkgs.fetchurl {
+      url = "https://github.com/dj95/zjstatus/releases/download/v0.17.0/zjstatus.wasm";
+      hash = "sha256-IgTfSl24Eap+0zhfiwTvmdVy/dryPxfEF7LhVNVXe+U";
+    };
+  };
 in
 {
   config = lib.mkIf cfg.enable {
@@ -41,7 +51,19 @@ in
     home.file.".config/zellij/config.kdl".text = /*kdl*/ ''
       theme "catppuccin-mocha";
 
+      plugins {
+          zj-quit location="file:${plugins.zj-quit}";
+      }
+
       keybinds clear-defaults=true {
+        shared_except "locked" {
+            bind "Ctrl q" {
+                LaunchOrFocusPlugin "zj-quit" {
+                    floating true
+                };
+            }
+        }
+
         normal {
             bind "Ctrl a" { SwitchToMode "tmux"; }
         }
@@ -187,50 +209,42 @@ in
       }
     '';
 
-    home.file.".config/zellij/layouts/default.kdl".text =
-      let
-        version = "0.17.0";
-        zstatus = pkgs.fetchurl {
-          url = "https://github.com/dj95/zjstatus/releases/download/v${version}/zjstatus.wasm";
-          hash = "sha256-IgTfSl24Eap+0zhfiwTvmdVy/dryPxfEF7LhVNVXe+U";
-        };
-      in
-        /*kdl*/ ''
-        layout {
-            default_tab_template {
-                children
-                pane size=1 borderless=true {
-                    plugin location="file:${zstatus}" {
-                        format_left   "{mode} #[fg=#89B4FA,bold]{session}"
-                        format_center "{tabs}"
-                        format_right  "{command_git_branch} {datetime}"
-                        format_space  ""
+    home.file.".config/zellij/layouts/default.kdl".text = /*kdl*/ ''
+      layout {
+          default_tab_template {
+              children
+              pane size=1 borderless=true {
+                  plugin location="file:${plugins.zstatus}" {
+                      format_left   "{mode} #[fg=#89B4FA,bold]{session}"
+                      format_center "{tabs}"
+                      format_right  "{command_git_branch} {datetime}"
+                      format_space  ""
 
-                        border_enabled  "false"
-                        border_char     "─"
-                        border_format   "#[fg=#6C7086]{char}"
-                        border_position "top"
+                      border_enabled  "false"
+                      border_char     "─"
+                      border_format   "#[fg=#6C7086]{char}"
+                      border_position "top"
 
-                        hide_frame_for_single_pane "true"
+                      hide_frame_for_single_pane "true"
 
-                        mode_normal  "#[bg=blue] "
-                        mode_tmux    "#[bg=#ffc387] "
+                      mode_normal  "#[bg=blue] "
+                      mode_tmux    "#[bg=#ffc387] "
 
-                        tab_normal   "#[fg=#6C7086] {name} "
-                        tab_active   "#[fg=#9399B2,bold,italic] {name} "
+                      tab_normal   "#[fg=#6C7086] {name} "
+                      tab_active   "#[fg=#9399B2,bold,italic] {name} "
 
-                        command_git_branch_command     "git rev-parse --abbrev-ref HEAD"
-                        command_git_branch_format      "#[fg=blue] {stdout} "
-                        command_git_branch_interval    "10"
-                        command_git_branch_rendermode  "static"
+                      command_git_branch_command     "git rev-parse --abbrev-ref HEAD"
+                      command_git_branch_format      "#[fg=blue] {stdout} "
+                      command_git_branch_interval    "10"
+                      command_git_branch_rendermode  "static"
 
-                        datetime        "#[fg=#6C7086,bold] {format} "
-                        datetime_format "%A, %d %b %Y %H:%M"
-                        datetime_timezone "Europe/Berlin"
-                    }
-                }
-            }
-        }
-      '';
+                      datetime        "#[fg=#6C7086,bold] {format} "
+                      datetime_format "%A, %d %b %Y %H:%M"
+                      datetime_timezone "Europe/Berlin"
+                  }
+              }
+          }
+      }
+    '';
   };
 }
