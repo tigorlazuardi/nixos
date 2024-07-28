@@ -14,6 +14,7 @@ in
     qbittorrent.enable = lib.mkEnableOption "qbittorrent podman";
     openobserve.enable = lib.mkEnableOption "openobserve podman";
     minecraft.enable = mkEnableOption "minecraft server podman";
+    memos.enable = mkEnableOption "memos podman";
 
     servarr = {
       enable = mkEnableOption "servarr group";

@@ -41,6 +41,7 @@ in
   # 10.88.0.6 -> Suwayomi Flaresolverr
   # 10.88.1.1 -> Pihole
   imports = [
+    ./memos.nix
     ./minecraft.nix
     ./openobserve.nix
     ./pihole.nix

@@ -38,6 +38,7 @@
       servarr.rdtclient.enable = true;
       openobserve.enable = true;
       minecraft.enable = true;
+      memos.enable = true;
     };
 
     docker = {
