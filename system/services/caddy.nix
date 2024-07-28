@@ -7,15 +7,14 @@ in
   config = mkIf cfg.enable {
     services.caddy = {
       enable = true;
-      extraConfig = ''
-        import /etc/caddy/sites-enabled/*
-      '';
     };
 
-    sops.secrets."router" = {
-      sopsFile = ../../secrets/caddy_reverse_proxy.yaml;
-      path = "/etc/caddy/sites-enabled/router";
-      mode = "0444";
-    };
+    services.caddy.virtualHosts."router.tigor.web.id".extraConfig = ''
+      @denied not remote_ip private_ranges 
+
+      respond @denied "Access denied" 403
+
+      reverse_proxy 192.168.100.1
+    '';
   };
 }
