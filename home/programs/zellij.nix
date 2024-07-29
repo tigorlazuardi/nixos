@@ -24,28 +24,32 @@ in
     # The lib.mkOrder is used to ensure zellij is
     # autoloaded first after zshenv.
     programs.zsh.initExtraFirst = lib.mkOrder 50 (
-      /*bash*/ ''
-      ZELLIJ_AUTO_EXIT=true
-      ZELLIJ_AUTO_ATTACH=${lib.boolToString cfg.autoAttach}
-      if [[ -z "$ZELLIJ" ]]; then
-          ZJ_SESSIONS=$(zellij list-sessions --no-formatting)
-          NO_SESSIONS=$(echo "$ZJ_SESSIONS" | wc -l)
-          if [ "$NO_SESSIONS" -ge 2 ]; then
-              SELECTED_SESSION=$(echo "$ZJ_SESSIONS" | ${pkgs.skim}/bin/sk | awk '{print $1}')
-              if [[ -n "''${SELECTED_SESSION// /}" ]]; then
-                  zellij attach -c "$SELECTED_SESSION"
+      if cfg.autoAttach then
+      /*bash*/
+        ''
+          if [[ -z "$ZELLIJ" ]]; then
+              ZJ_SESSIONS=$(zellij list-sessions --no-formatting)
+              NO_SESSIONS=$(echo "$ZJ_SESSIONS" | wc -l)
+              if [ "$NO_SESSIONS" -ge 2 ]; then
+                  SELECTED_SESSION=$(echo "$ZJ_SESSIONS" | ${pkgs.skim}/bin/sk | awk '{print $1}')
+                  if [[ -n "''${SELECTED_SESSION// /}" ]]; then
+                      zellij attach -c "$SELECTED_SESSION"
+                  else
+                      zellij attach -c --index 0
+                  fi
               else
-                  zellij attach -c --index 0
+                  zellij attach -c
               fi
-          else
-              zellij attach -c
-          fi
-
-          if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
               exit
           fi
-      fi
-    ''
+        ''
+      else
+      /*bash*/ ''
+        if [[ -z "$ZELLIJ" ]]; then
+          zellij attach -c default
+          exit
+        fi
+      ''
     );
 
     home.file.".config/zellij/config.kdl".text = /*kdl*/ ''
