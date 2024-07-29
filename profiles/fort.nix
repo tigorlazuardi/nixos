@@ -71,5 +71,7 @@
     podman.enable = true;
 
     home.programs.foot.enable = true;
+
+    home.programs.zellij.enable = true;
   };
 }
