@@ -83,5 +83,6 @@ in
     };
     programs.easyeffects.enable = true;
     programs.wezterm.enable = true;
+    home.programs.zellij.enable = true;
   };
 }
