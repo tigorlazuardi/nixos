@@ -11,6 +11,8 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  boot.kernelParams = [ "snd-intel-dspcfg.dsp_driver=1" ];
+
   fileSystems."/" =
     {
       device = "/dev/disk/by-label/NIXROOT";
