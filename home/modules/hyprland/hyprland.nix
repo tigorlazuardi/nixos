@@ -130,6 +130,9 @@ in
           "$mod SHIFT, k, movewindow, u"
           "$mod SHIFT, l, movewindow, r"
 
+          # Language Input
+          "$mod, I, exec, fcitx5-remote -t"
+
           "$mod, PRINT, exec, grimblast --notify copysave output"
           ", PRINT, exec, grimblast --notify copysave area"
           "SHIFT, PRINT, exec, grimblast --notify save area - | swappy -f -"
