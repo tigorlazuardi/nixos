@@ -17,16 +17,16 @@ in
       tomlFormat.generate "pyprland.toml" {
         # https://github.com/hyprland-community/pyprland/wiki/Getting-started#configuring
         pyprland.plugins = [
-          "scratchpads"
-          "fetch_client_menu"
+          # "scratchpads"
+          # "fetch_client_menu"
           "wallpapers"
         ];
-        scratchpads.term = {
-          animation = "fromTop";
-          command = "foot --app-id foot-scratchpad";
-          class = "foot-scratchpad";
-          size = "75% 75%";
-        };
+        # scratchpads.term = {
+        #   animation = "fromTop";
+        #   command = "foot --app-id foot-scratchpad";
+        #   class = "foot-scratchpad";
+        #   size = "75% 75%";
+        # };
         wallpapers = {
           path = cfg.pyprland.wallpaper-dirs;
           unique = false;
