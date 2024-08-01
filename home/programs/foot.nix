@@ -14,6 +14,10 @@ in
         mouse = {
           hide-when-typing = "yes";
         };
+        cursor = {
+          style = "beam";
+          blink = "yes";
+        };
       };
     };
   };
