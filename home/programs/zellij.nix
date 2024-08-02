@@ -78,7 +78,7 @@ in
 
         tmux {
             // Switching modes
-            bind "Ctrl a" "Ctrl c" "Esc" { SwitchToMode "Normal"; }
+            bind "Ctrl c" "Esc" { SwitchToMode "Normal"; }
             bind "w" { SwitchToMode "Resize"; }
             bind "e" { SwitchToMode "Scroll"; }
             bind "S" { SwitchToMode "Session"; }
