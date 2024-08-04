@@ -48,6 +48,7 @@
     home.programs.zellij = {
       enable = true;
       autoAttach = true;
+      mod = "Ctrl b";
     };
 
     services = {
