@@ -89,6 +89,11 @@
         # Also, there is resurrections features that zellij offers.
         # So desktop user can just resurrect the session if they want to.
         autoAttach = lib.mkEnableOption "zellij autoAttach";
+        mod = lib.mkOption {
+          type = lib.types.str;
+          default = "Ctrl a";
+          description = "Mod key to use for zellij to enter tmux mode and exits locked mode.";
+        };
       };
       foot.enable = lib.mkEnableOption "foot";
     };
