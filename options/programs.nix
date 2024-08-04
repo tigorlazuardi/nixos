@@ -94,10 +94,17 @@
           default = "Ctrl a";
           description = "Mod key to use for zellij to enter tmux mode and exits locked mode.";
         };
-        zjstatus.theme = lib.mkOption {
-          type = lib.types.path;
-          default = ../home/programs/zellij/themes/zjstatus/catppuccin-mocha.nix;
-          description = "Default zellij status theme";
+        zjstatus = {
+          theme = lib.mkOption {
+            type = lib.types.path;
+            default = ../home/programs/zellij/themes/zjstatus/catppuccin-mocha.nix;
+            description = "Default zellij status theme";
+          };
+          timezone = lib.mkOption {
+            type = lib.types.str;
+            default = "Asia/Jakarta";
+            description = "Timezone to use for zellij status";
+          };
         };
       };
       foot.enable = lib.mkEnableOption "foot";

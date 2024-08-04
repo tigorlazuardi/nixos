@@ -217,6 +217,9 @@ in
         }
       '';
 
-    home.file.".config/zellij/layouts/default.kdl".text = import cfg.zjstatus.theme { inherit plugins; };
+    home.file.".config/zellij/layouts/default.kdl".text = import cfg.zjstatus.theme {
+      inherit plugins;
+      timezone = cfg.zjstatus.timezone;
+    };
   };
 }

@@ -1,4 +1,4 @@
-{ plugins, ... }:
+{ plugins, timezone, ... }:
 /*kdl*/ ''
   layout {
       pane split_direction="vertical" {
@@ -92,7 +92,7 @@
 
               datetime          "{format}"
               datetime_format   "%Y-%m-%d 󰅐 %H:%M"
-              datetime_timezone "Europe/Stockholm"
+              datetime_timezone "${timezone}"
           }
       }
   }
