@@ -49,6 +49,7 @@
       enable = true;
       autoAttach = true;
       mod = "Ctrl b";
+      zjstatus.theme = ../home/programs/zellij/themes/zjstatus/gruvbox-dark.nix;
     };
 
     services = {
