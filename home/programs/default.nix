@@ -28,10 +28,10 @@
     ./vscode.nix
     ./whatsapp.nix
     ./zathura.nix
-    ./zellij.nix
     ./zsh.nix
 
     ./wezterm
+    ./zellij
   ];
 
   programs.fzf = {
