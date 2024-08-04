@@ -4,9 +4,9 @@ let
   podman = config.profile.podman;
   inherit (lib) mkIf strings;
   ip = "10.88.200.1";
-  # image = "docker.io/05jchambers/legendary-minecraft-purpur-geyser:latest";
-  image = "docker.io/itzg/minecraft-bedrock-server:latest";
-  rootVolume = "/nas/podman/minecraft/hutasuhut";
+  image = "docker.io/05jchambers/legendary-minecraft-purpur-geyser:latest";
+  # image = "docker.io/itzg/minecraft-bedrock-server:latest";
+  rootVolume = "/nas/podman/minecraft/hutasuhut-geyser";
   domain = "${name}.tigor.web.id";
   user = config.profile.user;
   uid = toString user.uid;
@@ -39,7 +39,8 @@ in
                   Please contact the server owner for more info.
                 </h2>
                 <p>Server Address: <b>${domain}</b></p>
-                <p>Server Port: <b>19132</b></p>
+                <p>Bedrock Server Port: <b>19132</b></p>
+                <p>Java Server Port: <b>25565</b></p>
               </body>
           </html>
           EOF 200 
@@ -56,28 +57,28 @@ in
       autoStart = true;
       user = "${uid}:${gid}";
       environment = {
-        UID = uid;
-        GID = gid;
-        EULA = "TRUE";
-        TZ = "Asia/Jakarta";
-        SERVER_NAME = "Hutasuhut";
-        DEFAULT_PLAYER_PERMISSION_LEVEL = "operator";
-        LEVEL_NAME = "Hutasuhut";
-        MAX_THREADS = "0"; # Use as many as possible
-        ALLOW_LIST_USERS = strings.concatStringsSep "," (
-          map (user: "${user.username}:${user.xuid}") users
-        );
+        # UID = uid;
+        # GID = gid;
+        # EULA = "TRUE";
+        # TZ = "Asia/Jakarta";
+        # SERVER_NAME = "Hutasuhut";
+        # DEFAULT_PLAYER_PERMISSION_LEVEL = "operator";
+        # LEVEL_NAME = "Hutasuhut";
+        # MAX_THREADS = "0"; # Use as many as possible
+        # ALLOW_LIST_USERS = strings.concatStringsSep "," (
+        #   map (user: "${user.username}:${user.xuid}") users
+        # );
       };
       ports = [
         # Java Edition Ports
-        # "25565:25565/udp"
-        # "25565:25565"
+        "25565:25565/udp"
+        "25565:25565"
         # Bedrock Edition Ports
         "19132:19132/udp"
         "19132:19132"
       ];
       volumes = [
-        "${rootVolume}:/data"
+        "${rootVolume}:/minecraft"
       ];
       extraOptions = [
         "--network=podman"
