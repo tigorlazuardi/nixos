@@ -6,6 +6,7 @@
     ./docker.nix
     ./podman.nix
     ./services.nix
+    ./games.nix
   ];
   options.profile = {
 

@@ -73,5 +73,7 @@
     home.programs.foot.enable = true;
 
     home.programs.zellij.enable = true;
+
+    games.minecraft.enable = true;
   };
 }

@@ -9,6 +9,7 @@ in
 
     ./programs
     ./modules
+    ./games
 
     ./direnv.nix
     ./config/ideavim
