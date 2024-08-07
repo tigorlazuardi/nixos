@@ -1,4 +1,4 @@
-{ config, profile-path, ... }:
+{ config, profile-path, pkgs, ... }:
 let
   user = config.profile.user;
   stateVersion = config.profile.system.stateVersion;
@@ -20,6 +20,9 @@ in
     username = user.name;
     homeDirectory = "/home/${user.name}";
     stateVersion = stateVersion;
+    packages = with pkgs; [
+      gopls
+    ];
   };
   programs.home-manager.enable = true;
   systemd.user.sessionVariables = {
