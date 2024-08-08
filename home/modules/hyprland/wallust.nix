@@ -66,36 +66,36 @@ in
             in
             {
               waybar = {
-                template = "templates/waybar.css";
+                template = "waybar.css";
                 # target = out + "/waybar.css";
                 target = "${config.home.homeDirectory}/.config/waybar/style.css";
               };
               wlogout = {
-                template = "templates/wlogout.css";
+                template = "wlogout.css";
                 target = out + "/wlogout.css";
               };
               hyprland = {
-                template = "templates/hyprland.conf";
+                template = "hyprland.conf";
                 target = out + "/hyprland.conf";
               };
               kitty = {
-                template = "templates/kitty.conf";
+                template = "kitty.conf";
                 target = "${config.home.homeDirectory}/.config/kitty/kitty.d/99-colors.conf";
               };
               base16-nvim = {
-                template = "templates/base16-nvim.lua";
+                template = "base16-nvim.lua";
                 target = out + "/base16-nvim.lua";
               };
               rofi = {
-                template = "templates/rofi.rasi";
+                template = "rofi.rasi";
                 target = out + "/rofi.rasi";
               };
               alacritty = {
-                template = "templates/alacritty.toml";
+                template = "alacritty.toml";
                 target = out + "/alacritty.toml";
               };
               foot = {
-                template = "templates/foot.ini";
+                template = "foot.ini";
                 target = "${config.home.homeDirectory}/.config/foot/colors.ini";
               };
             };

@@ -6,24 +6,21 @@
 , makeWrapper
 , pkgs
 }:
-let
-  version = "3.0.0-beta";
-in
-rustPlatform.buildRustPackage {
+rustPlatform.buildRustPackage rec {
   pname = "wallust";
-  inherit version;
+  version = "3.0.0";
 
   src = fetchFromGitea {
     domain = "codeberg.org";
     owner = "explosion-mental";
     repo = "wallust";
     rev = version;
-    hash = "sha256-gGyxRdv2I/3TQWrTbUjlJGsaRv4SaNE+4Zo9LMWmxk8=";
+    hash = "sha256-vZTHlonepK1cyxHhGu3bVBuOmExPtRFrAnYp71Jfs8c=";
   };
 
-  cargoHash = "sha256-dkHS8EOzmn5VLiKP3SMT0ZGAsk2wzvQeioG7NuGGUzA=";
+  cargoHash = "sha256-o6VRekazqbKTef6SLjHqs9/z/Q70auvunP+yFDkclpg=";
 
-  nativeBuildInputs = [ makeWrapper pkgs.rust-bin.stable."1.77.2".default ];
+  nativeBuildInputs = [ makeWrapper pkgs.rust-bin.stable."1.79.0".default ];
 
   postFixup = ''
     wrapProgram $out/bin/wallust \
