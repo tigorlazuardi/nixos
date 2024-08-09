@@ -15,6 +15,7 @@ in
         UseDns = false;
         X11Forwarding = false;
         PermitRootLogin = "no";
+        GSSAPIAuthentication = false;
       };
     };
     services.fail2ban = {
