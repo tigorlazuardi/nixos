@@ -15,6 +15,7 @@ in
     openobserve.enable = lib.mkEnableOption "openobserve podman";
     minecraft.enable = mkEnableOption "minecraft server podman";
     memos.enable = mkEnableOption "memos podman";
+    morphos.enable = mkEnableOption "morphos podman";
 
     servarr = {
       enable = mkEnableOption "servarr group";

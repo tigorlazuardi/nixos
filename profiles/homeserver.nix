@@ -39,6 +39,7 @@
       openobserve.enable = true;
       minecraft.enable = true;
       memos.enable = true;
+      morphos.enable = true;
     };
 
     docker = {

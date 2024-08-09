@@ -43,6 +43,7 @@ in
   imports = [
     ./memos.nix
     ./minecraft.nix
+    ./morphos.nix
     ./openobserve.nix
     ./pihole.nix
     ./qbittorrent.nix
