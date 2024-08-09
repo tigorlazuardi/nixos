@@ -12,7 +12,7 @@ in
       settings = {
         PasswordAuthentication = false;
         KbdInteractiveAuthentication = false;
-        UseDns = true;
+        UseDns = false;
         X11Forwarding = false;
         PermitRootLogin = "no";
       };
