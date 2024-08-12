@@ -59,7 +59,6 @@ in
 
     home.packages = with pkgs; [
       stylua
-      lua-language-server
       docker-compose-language-service
       emmet-ls
       silicon # For code screenshots
