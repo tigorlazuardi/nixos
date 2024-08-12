@@ -108,6 +108,7 @@
         };
       };
       foot.enable = lib.mkEnableOption "foot";
+      bruno.enable = lib.mkEnableOption "bruno";
     };
 
     programs = {

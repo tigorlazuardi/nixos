@@ -70,9 +70,11 @@
 
     podman.enable = true;
 
-    home.programs.foot.enable = true;
-
-    home.programs.zellij.enable = true;
+    home.programs = {
+      foot.enable = true;
+      zellij.enable = true;
+      bruno.enable = true;
+    };
 
     games.minecraft.enable = true;
   };

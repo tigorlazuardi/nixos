@@ -2,6 +2,7 @@
 {
   imports = [
     ./bitwarden.nix
+    ./bruno.nix
     ./chromium.nix
     ./dbeaver.nix
     ./discord.nix
