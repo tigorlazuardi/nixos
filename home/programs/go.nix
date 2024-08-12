@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.profile.go;
 in
@@ -10,5 +10,13 @@ in
         "gitlab.bareksa.com"
       ];
     };
+    home.packages = with pkgs; [
+      gotools
+
+      ###### Golang development tools ######
+      gomodifytags
+      gotests
+      iferr
+    ];
   };
 }

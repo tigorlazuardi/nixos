@@ -62,11 +62,8 @@ in
       docker-compose-language-service
       emmet-ls
       silicon # For code screenshots
+      lua-language-server
 
-      ###### Golang development tools ######
-      gomodifytags
-      gotests
-      iferr
       curl
       cargo
       nixpkgs-fmt
