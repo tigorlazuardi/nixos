@@ -63,6 +63,7 @@ in
       emmet-ls
       silicon # For code screenshots
       lua-language-server
+      taplo
 
       curl
       cargo
