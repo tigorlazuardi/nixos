@@ -32,7 +32,10 @@ local process_icons = {
 }
 
 local function get_current_working_dir(tab)
-	local current_dir = tab.active_pane and tab.active_pane.current_working_dir() or { file_path = '' }
+	local current_dir = tab.active_pane
+			and tab.active_pane.current_working_dir
+			and tab.active_pane.current_working_dir()
+		or { file_path = '' }
 	local HOME_DIR = os.getenv('HOME')
 
 	return current_dir.file_path == HOME_DIR and '~' or string.gsub(current_dir.file_path, '(.*[/\\])(.*)', '%2')
