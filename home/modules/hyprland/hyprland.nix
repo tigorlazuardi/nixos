@@ -40,6 +40,11 @@ in
           layout = "dwindle";
         };
 
+        master = {
+          mfact = 0.75;
+          new_status = "inherit";
+        };
+
         dwindle = {
           pseudotile = true;
           preserve_split = true;
@@ -84,12 +89,7 @@ in
         # https://wiki.hyprland.org/Configuring/Binds
         bind = [
           # Programs
-          (
-            if config.profile.home.programs.zellij.enable then
-              ''$mod, RETURN, exec, foot''
-            else
-              ''$mod, RETURN, exec, wezterm''
-          )
+          ''$mod, RETURN, exec, foot''
           "$mod, E, exec, thunar"
           "$mod, B, exec, microsoft-edge"
           "$mod, D, exec, rofi -show drun -replace -i"
@@ -220,6 +220,10 @@ in
           config.profile.whatsapp.window_rule
           ''opaque,title:(.*)(- YouTube)(.*)$''
           ''opaque,class:^(mpv)$''
+          ''float,class:^(lazygit)$''
+          ''center,class:^(lazygit)$''
+          ''size 90% 90%,class:^(lazygit)$''
+          ''stayfocused,class:^(lazygit)$''
         ];
       };
       extraConfig = /*hyprlang*/ ''
