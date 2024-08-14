@@ -20,6 +20,11 @@ in
       '';
     };
 
+    programs.zsh.initExtra = /*bash*/ ''
+      if [ -n "$WEZTERM_PANE" ]; then
+          alias ssh="wezterm ssh"
+      fi
+    '';
 
     home.file.".config/wezterm" = {
       source = ./.;

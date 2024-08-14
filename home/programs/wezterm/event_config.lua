@@ -32,7 +32,7 @@ local process_icons = {
 }
 
 local function get_current_working_dir(tab)
-	local current_dir = tab.active_pane and tab.active_pane.current_working_dir or { file_path = '' }
+	local current_dir = tab.active_pane and tab.active_pane.current_working_dir() or { file_path = '' }
 	local HOME_DIR = os.getenv('HOME')
 
 	return current_dir.file_path == HOME_DIR and '~' or string.gsub(current_dir.file_path, '(.*[/\\])(.*)', '%2')
@@ -50,6 +50,16 @@ local function get_process(tab)
 
 	return process_icons[process_name] or string.format('[%s]', process_name)
 end
+
+wezterm.on('format-window-title', function(tab, tabs, panes, config)
+	local cwd = wezterm.format({
+		{ Text = get_current_working_dir(tab) },
+	})
+
+	local process = get_process(tab)
+	local title = process and string.format(' %s (%s) ', process, cwd) or ' [?] '
+	return title
+end)
 
 wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
 	local has_unseen_output = false
