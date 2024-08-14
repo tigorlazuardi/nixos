@@ -218,6 +218,8 @@ in
           config.profile.discord.window_rule
           config.profile.slack.window_rule
           config.profile.whatsapp.window_rule
+          ''opaque,title:(.*)(- YouTube)(.*)$''
+          ''opaque,class:^(mpv)$''
         ];
       };
       extraConfig = /*hyprlang*/ ''
