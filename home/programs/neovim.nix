@@ -64,6 +64,8 @@ in
       silicon # For code screenshots
       lua-language-server
       taplo
+      yaml-language-server
+      vscode-langservers-extracted
 
       curl
       cargo
@@ -72,6 +74,11 @@ in
 
       gcc
       python3
+
+      # Docker tools
+      dockerfile-language-server-nodejs
+      hadolint
+
     ];
   };
 }

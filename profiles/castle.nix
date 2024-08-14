@@ -80,9 +80,10 @@ in
 
     home.programs = {
       zathura.enable = true;
+      bruno.enable = true;
     };
     programs.easyeffects.enable = true;
     programs.wezterm.enable = true;
-    home.programs.zellij.enable = false;
+    podman.enable = true;
   };
 }
