@@ -84,7 +84,12 @@ in
         # https://wiki.hyprland.org/Configuring/Binds
         bind = [
           # Programs
-          "$mod, RETURN, exec, foot"
+          (
+            if config.profile.home.programs.zellij.enable then
+              ''$mod, RETURN, exec, foot''
+            else
+              ''$mod, RETURN, exec, wezterm''
+          )
           "$mod, E, exec, thunar"
           "$mod, B, exec, microsoft-edge"
           "$mod, D, exec, rofi -show drun -replace -i"
