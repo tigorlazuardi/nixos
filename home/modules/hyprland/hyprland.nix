@@ -229,6 +229,7 @@ in
       extraConfig = /*hyprlang*/ ''
         exec-once=dbus-update-activation-enviroment --all
         exec-once=${gnome-keyring.path} ${config.sops.secrets."gnome-keyring/${config.home.username}".path}
+        exec-once=foot --server
 
         exec-once=${init-wallpaper.path} ${./wallpaper.jpeg}
         exec-once=wallust run ${config.home.homeDirectory}/.cache/wallpaper/current
