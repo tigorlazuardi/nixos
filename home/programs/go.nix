@@ -31,6 +31,7 @@ in
       gopls
       gofumpt
       impl
+      golangci-lint
     ];
 
     # Some toolings will lookup for $GOROOT env.
