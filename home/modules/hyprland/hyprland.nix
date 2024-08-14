@@ -192,7 +192,6 @@ in
           focus_on_activate = true;
           enable_swallow = true;
           swallow_regex = "^(foot|footclient)$";
-          swallow_exception_regex = "^(foot)$";
         };
 
         animations = {
