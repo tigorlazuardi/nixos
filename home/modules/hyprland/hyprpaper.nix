@@ -12,6 +12,7 @@ in
       let
         recent_wallpaper = "${config.home.homeDirectory}/.cache/wallpaper/current";
       in
+        /*hyprlang*/
       ''
         preload = ${recent_wallpaper}
         wallpaper = ,${recent_wallpaper}

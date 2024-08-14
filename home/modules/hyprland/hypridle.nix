@@ -6,7 +6,7 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [ unstable.hypridle ];
 
-    home.file.".config/hypr/hypridle.conf".text = ''
+    home.file.".config/hypr/hypridle.conf".text = /*hyprlang*/ ''
       general {
         lock_cmd = "pidof hyprlock || hyprlock"
         before_sleep_cmd = "hyprlock"

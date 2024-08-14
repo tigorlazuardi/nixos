@@ -220,7 +220,7 @@ in
           config.profile.whatsapp.window_rule
         ];
       };
-      extraConfig = ''
+      extraConfig = /*hyprlang*/ ''
         exec-once=dbus-update-activation-enviroment --all
         exec-once=${gnome-keyring.path} ${config.sops.secrets."gnome-keyring/${config.home.username}".path}
 

@@ -12,6 +12,7 @@ in
       let
         blurred_image = "${config.home.homeDirectory}/.cache/wallpaper/blurred.png";
       in
+        /*hyprlang*/
       ''
         background {
             monitor =
@@ -54,7 +55,7 @@ in
             color = rgba(200, 200, 200, 1.0)
             font_size = 55
             font_family = Fira Semibold
-            position = -100, -40
+            position = -100, 25
             halign = right
             valign = bottom
             shadow_passes = 5
