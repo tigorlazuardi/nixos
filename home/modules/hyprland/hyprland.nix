@@ -191,7 +191,7 @@ in
           disable_splash_rendering = true;
           focus_on_activate = true;
           enable_swallow = true;
-          swallow_regex = "^(Alacritty|kitty|footclient|org\.wezfurlong\.wezterm|foot)$";
+          swallow_regex = "^(Alacritty|kitty|footclient|org\.wezfurlong\.wezterm|foot|neovide)$";
         };
 
         animations = {
