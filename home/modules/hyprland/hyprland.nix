@@ -89,7 +89,7 @@ in
         # https://wiki.hyprland.org/Configuring/Binds
         bind = [
           # Programs
-          ''$mod, RETURN, exec, foot''
+          ''$mod, RETURN, exec, footclient''
           "$mod, E, exec, thunar"
           "$mod, B, exec, microsoft-edge"
           "$mod, D, exec, rofi -show drun -replace -i"
@@ -191,7 +191,8 @@ in
           disable_splash_rendering = true;
           focus_on_activate = true;
           enable_swallow = true;
-          swallow_regex = "^(Alacritty|kitty|footclient|org\.wezfurlong\.wezterm|foot)$";
+          swallow_regex = "^(foot|footclient)$";
+          swallow_exception_regex = "^(foot)$";
         };
 
         animations = {
