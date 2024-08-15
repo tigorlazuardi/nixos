@@ -29,6 +29,7 @@
     ./vscode.nix
     ./whatsapp.nix
     ./zathura.nix
+    ./zoom.nix
     ./zsh.nix
 
     ./wezterm

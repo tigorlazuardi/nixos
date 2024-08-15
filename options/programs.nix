@@ -109,6 +109,7 @@
       };
       foot.enable = lib.mkEnableOption "foot";
       bruno.enable = lib.mkEnableOption "bruno";
+      zoom.enable = lib.mkEnableOption "zoom";
     };
 
     programs = {

@@ -81,6 +81,7 @@ in
     home.programs = {
       zathura.enable = true;
       bruno.enable = true;
+      zoom.enable = true;
     };
     programs.easyeffects.enable = true;
     programs.wezterm.enable = true;
