@@ -72,7 +72,7 @@
 
     home.programs = {
       foot.enable = true;
-      zellij.enable = true;
+      zellij.enable = false;
       bruno.enable = true;
     };
 
