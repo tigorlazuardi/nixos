@@ -58,6 +58,23 @@
     ];
   };
 
+  services.caddy.virtualHosts."public.tigor.web.id".extraConfig = /*caddy*/ ''
+    file_server browse
+    root * /nas/public
+  '';
+
+  systemd.tmpfiles.settings = {
+    "100-nas-public-dir" = {
+      "/nas/public" = {
+        d = {
+          group = config.profile.user.name;
+          mode = "0777";
+          user = config.profile.user.name;
+        };
+      };
+    };
+  };
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.opengl = {
