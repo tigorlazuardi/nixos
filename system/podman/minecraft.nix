@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   name = "minecraft";
   podman = config.profile.podman;
@@ -46,29 +46,37 @@ in
           EOF 200 
     '';
 
-    system.activationScripts."podman-${name}" = ''
-      mkdir -p ${rootVolume}
-      chown ${uid}:${gid} ${rootVolume}
-    '';
+    systemd =
+      let serviceName = "podman-${name}"; in
+      {
+        tmpfiles.settings."${serviceName}-mount".${rootVolume}.d = {
+          group = config.profile.user.name;
+          mode = "0755";
+          user = config.profile.user.name;
+        };
+
+        services."${serviceName}-autorestart" = {
+          description = "Podman container ${name} autorestart";
+          serviceConfig = {
+            Type = "oneshot";
+            ExecStart = "${pkgs.podman}/bin/podman restart podman-${name}";
+          };
+        };
+
+        timers."${serviceName}-autorestart" = {
+          description = "Podman container ${name} autorestart";
+          timerConfig = {
+            OnCalendar = "*-*-* 04:00:00";
+          };
+          wantedBy = [ "timers.target" ];
+        };
+      };
 
     virtualisation.oci-containers.containers.${name} = {
       inherit image;
       hostname = name;
       autoStart = true;
       user = "${uid}:${gid}";
-      environment = {
-        # UID = uid;
-        # GID = gid;
-        # EULA = "TRUE";
-        # TZ = "Asia/Jakarta";
-        # SERVER_NAME = "Hutasuhut";
-        # DEFAULT_PLAYER_PERMISSION_LEVEL = "operator";
-        # LEVEL_NAME = "Hutasuhut";
-        # MAX_THREADS = "0"; # Use as many as possible
-        # ALLOW_LIST_USERS = strings.concatStringsSep "," (
-        #   map (user: "${user.username}:${user.xuid}") users
-        # );
-      };
       ports = [
         # Java Edition Ports
         "25565:25565/udp"
