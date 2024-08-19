@@ -38,6 +38,7 @@ in
             reddit-enhancement-suite
             vimium-c
             violentmonkey
+            sidebery
           ];
           settings = {
             "extensions.autoDisableScopes" = 0;

@@ -79,6 +79,16 @@ in
       dockerfile-language-server-nodejs
       hadolint
 
+      # For Peek markdown viewer
+      deno
+
+      # Golang debuggers
+      delve
+      gdlv
+
+      luajitPackages.tiktoken_core # For copilot chat
+      luajitPackages.luarocks
+      lua51Packages.lua
     ];
   };
 }
