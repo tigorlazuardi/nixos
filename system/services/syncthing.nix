@@ -133,6 +133,16 @@ in
               "windows"
             ];
           };
+          "/nas/Syncthing/Sync/Music" = {
+            label = "Music";
+            id = "Music";
+            devices = [
+              "s20fe"
+              "work-laptop"
+              "windows"
+              "living-room-system"
+            ];
+          };
         };
         devices = {
           s20fe = {
