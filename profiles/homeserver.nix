@@ -40,6 +40,7 @@
       minecraft.enable = true;
       memos.enable = true;
       morphos.enable = true;
+      soulseek.enable = true;
     };
 
     docker = {
@@ -67,6 +68,7 @@
       rust-motd.enable = true;
       wireguard.enable = true;
       photoprism.enable = true;
+      navidrome.enable = true;
     };
   };
 }

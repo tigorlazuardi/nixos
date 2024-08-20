@@ -6,6 +6,7 @@
     ./forgejo.nix
     ./jellyfin.nix
     ./kavita.nix
+    ./navidrome.nix
     ./nextcloud.nix
     ./openvpn.nix
     ./rust-motd.nix

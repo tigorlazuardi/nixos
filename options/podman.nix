@@ -16,6 +16,7 @@ in
     minecraft.enable = mkEnableOption "minecraft server podman";
     memos.enable = mkEnableOption "memos podman";
     morphos.enable = mkEnableOption "morphos podman";
+    soulseek.enable = mkEnableOption "soulseek podman";
 
     servarr = {
       enable = mkEnableOption "servarr group";

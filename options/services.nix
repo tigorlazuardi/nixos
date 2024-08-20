@@ -21,5 +21,6 @@ in
     rust-motd.enable = mkEnableOption "rust-motd";
     wireguard.enable = mkEnableOption "wireguard";
     photoprism.enable = mkEnableOption "photoprism";
+    navidrome.enable = mkEnableOption "navidrome";
   };
 }

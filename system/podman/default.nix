@@ -50,6 +50,7 @@ in
     ./redmage-demo.nix
     ./redmage.nix
     ./servarr
+    ./soulseek.nix
     ./suwayomi.nix
     ./ytptube.nix
   ];
