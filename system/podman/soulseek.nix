@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   name = "soulseek";
   podman = config.profile.podman;
@@ -22,6 +22,32 @@ in
       mkdir -p ${rootVolume}/{config,downloads,incomplete}
       chown ${uid}:${gid} ${rootVolume} ${rootVolume}/{config,downloads,incomplete}
     '';
+
+
+    # Soulseek only autoscans on startup
+    #
+    # Once a day at 4am, restart the container to trigger a rescan
+    systemd =
+      let
+        serviceName = "podman-${name}-autorestart";
+      in
+      {
+        services.${serviceName} = {
+          description = "Podman container ${name} autorestart";
+          serviceConfig = {
+            Type = "oneshot";
+            ExecStart = "${pkgs.podman}/bin/podman restart ${name}";
+          };
+        };
+        timers.${serviceName} = {
+          description = "Podman container ${name} autorestart";
+          timerConfig = {
+            OnCalendar = "*-*-* 04:00:00";
+          };
+          wantedBy = [ "timers.target" ];
+        };
+      };
+
 
     virtualisation.oci-containers.containers.${name} = {
       inherit image;

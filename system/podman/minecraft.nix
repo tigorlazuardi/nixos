@@ -46,6 +46,9 @@ in
           EOF 200 
     '';
 
+    # Minecraft only autoupdates at startup
+    #
+    # To keep up with the update, restart the server at 4am everyday.
     systemd =
       let serviceName = "podman-${name}"; in
       {
