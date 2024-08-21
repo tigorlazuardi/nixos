@@ -59,7 +59,7 @@ in
           description = "Podman container ${name} autorestart";
           serviceConfig = {
             Type = "oneshot";
-            ExecStart = "${pkgs.podman}/bin/podman restart podman-${name}";
+            ExecStart = "${pkgs.podman}/bin/podman restart ${name}";
           };
         };
 
