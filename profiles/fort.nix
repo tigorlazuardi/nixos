@@ -74,6 +74,7 @@
       foot.enable = true;
       zellij.enable = false;
       bruno.enable = true;
+      elisa.enable = true;
     };
 
     home.environments = {
