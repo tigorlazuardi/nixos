@@ -1,4 +1,4 @@
-{ config, profile-path, pkgs, ... }:
+{ config, profile-path, ... }:
 let
   user = config.profile.user;
   stateVersion = config.profile.system.stateVersion;
@@ -10,6 +10,7 @@ in
     ./programs
     ./modules
     ./games
+    ./environments
 
     ./direnv.nix
     ./config/ideavim
@@ -41,6 +42,11 @@ in
       "ssh/id_ed25519/private" = {
         inherit sopsFile;
         path = "${config.home.homeDirectory}/.ssh/id_ed25519";
+        mode = "0400";
+      };
+      "netrc" = {
+        sopsFile = ../secrets/netrc.yaml;
+        path = "${config.home.homeDirectory}/.netrc";
         mode = "0400";
       };
     };

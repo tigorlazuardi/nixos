@@ -7,6 +7,7 @@
     ./podman.nix
     ./services.nix
     ./games.nix
+    ./environments.nix
   ];
   options.profile = {
 

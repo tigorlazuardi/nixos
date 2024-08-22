@@ -76,6 +76,10 @@
       bruno.enable = true;
     };
 
+    home.environments = {
+      protobuf.enable = true;
+    };
+
     games.minecraft.enable = true;
   };
 }
