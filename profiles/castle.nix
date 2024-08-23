@@ -82,6 +82,7 @@ in
       zathura.enable = true;
       bruno.enable = true;
       zoom.enable = true;
+      elisa.enable = true;
     };
     programs.easyeffects.enable = true;
     programs.wezterm.enable = true;
