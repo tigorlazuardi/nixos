@@ -15,8 +15,6 @@ in
           Description = "Automatically start Discord on Login";
           # Only runs on sessions with a graphical target like X11 or Wayland.
           Wants = [ "graphical.target" ];
-          # Only run after the network is online.
-          After = [ "nss-lookup.target" ];
           StartLimitIntervalSec = 300;
           StartLimitBurst = 10;
         };

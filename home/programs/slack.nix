@@ -17,14 +17,13 @@ in
           OnCalendar = "Mon..Fri 09..18:*:*";
         };
         Install = {
-          WantedBy = [ "default.target" ];
+          WantedBy = [ "timers.target" ];
         };
       };
       services.slack = {
         Unit = {
           Description = "Slack Desktop Client";
           Wants = [ "graphical.target" ];
-          After = [ "nss-lookup.target" ];
           StartLimitIntervalSec = 300;
           StartLimitBurst = 10;
         };
