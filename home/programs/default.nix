@@ -29,6 +29,7 @@
     ./variety.nix
     ./vscode.nix
     ./whatsapp.nix
+    ./yazi.nix
     ./zathura.nix
     ./zoom.nix
     ./zsh.nix
