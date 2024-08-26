@@ -31,6 +31,16 @@
     device = "/dev/disk/by-label/WD_RED_4T_1";
     fsType = "ext4";
   };
+  fileSystems."/nas/public/Music" = {
+    device = "/nas/Syncthing/Sync/Music";
+    fsType = "auto";
+    options = [
+      "defaults"
+      "nofail"
+      "nobootwait"
+      "bind"
+    ];
+  };
 
   swapDevices = [ ];
 
