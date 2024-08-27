@@ -38,6 +38,7 @@ in
     home.sessionVariables = {
       GOROOT = "${pkgs.go}/share/go";
       GOPATH = "${config.home.homeDirectory}/go";
+      GOEXPERIMENT = "rangefunc";
     };
   };
 }
