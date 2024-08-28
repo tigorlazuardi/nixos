@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, unstable, ... }:
 let
   cfg = config.profile.go;
   impl = pkgs.buildGoModule rec {
@@ -20,6 +20,7 @@ in
       goPrivate = [
         "gitlab.bareksa.com"
       ];
+      package = unstable.go_1_23;
     };
     home.packages = with pkgs; [
       gotools
@@ -28,7 +29,7 @@ in
       gomodifytags
       gotests
       iferr
-      gopls
+      unstable.gopls
       gofumpt
       impl
       golangci-lint
