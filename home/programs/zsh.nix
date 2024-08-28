@@ -30,13 +30,11 @@ in
     shellAliases = {
       ls = "${pkgs.eza}/bin/eza -lah";
       cat = "${pkgs.bat}/bin/bat";
-      # update = "sudo nixos-rebuild switch --flake $HOME/dotfiles";
       update = "nh os switch";
-      # superupdate = "(cd $HOME/dotfiles && nix flake update && sudo nixos-rebuild switch --flake $HOME/dotfiles)";
       superupdate = "nh os switch --update";
+      uptest = "nh os test";
       lg = "${pkgs.lazygit}/bin/lazygit";
       du = "${pkgs.dust}/bin/dust";
-      uptest = "sudo nixos-rebuild test --flake $HOME/dotfiles";
       dry = "sudo nixos-rebuild dry-activate --flake $HOME/dotfiles";
       jq = "${pkgs.gojq}/bin/gojq";
       n = lib.mkIf config.profile.neovide.enable "neovide";
