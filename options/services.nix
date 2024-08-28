@@ -22,5 +22,29 @@ in
     wireguard.enable = mkEnableOption "wireguard";
     photoprism.enable = mkEnableOption "photoprism";
     navidrome.enable = mkEnableOption "navidrome";
+
+    telemetry = {
+      enable = mkEnableOption "telemetry";
+      grafana.enable = mkOption {
+        type = types.bool;
+        default = config.profile.services.telemetry.enable;
+      };
+      loki.enable = mkOption {
+        type = types.bool;
+        default = config.profile.services.telemetry.enable;
+      };
+      promtail.enable = mkOption {
+        type = types.bool;
+        default = config.profile.services.telemetry.enable;
+      };
+      tempo.enable = mkOption {
+        type = types.bool;
+        default = config.profile.services.telemetry.enable;
+      };
+      minio.enable = mkOption {
+        type = types.bool;
+        default = config.profile.services.telemetry.enable;
+      };
+    };
   };
 }

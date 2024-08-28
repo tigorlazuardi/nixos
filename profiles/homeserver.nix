@@ -69,6 +69,7 @@
       wireguard.enable = true;
       photoprism.enable = true;
       navidrome.enable = true;
+      telemetry.enable = true;
     };
   };
 }

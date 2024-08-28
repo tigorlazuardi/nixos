@@ -15,5 +15,6 @@
     ./syncthing.nix
     ./wireguard.nix
     ./photoprism.nix
+    ./telemetry.nix
   ];
 }
