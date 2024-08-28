@@ -30,8 +30,10 @@ in
     shellAliases = {
       ls = "${pkgs.eza}/bin/eza -lah";
       cat = "${pkgs.bat}/bin/bat";
-      update = "sudo nixos-rebuild switch --flake $HOME/dotfiles";
-      superupdate = "(cd $HOME/dotfiles && nix flake update && sudo nixos-rebuild switch --flake $HOME/dotfiles)";
+      # update = "sudo nixos-rebuild switch --flake $HOME/dotfiles";
+      update = "nh os switch";
+      # superupdate = "(cd $HOME/dotfiles && nix flake update && sudo nixos-rebuild switch --flake $HOME/dotfiles)";
+      superupdate = "nh os switch --update";
       lg = "${pkgs.lazygit}/bin/lazygit";
       du = "${pkgs.dust}/bin/dust";
       uptest = "sudo nixos-rebuild test --flake $HOME/dotfiles";
