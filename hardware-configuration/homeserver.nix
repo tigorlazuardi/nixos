@@ -41,6 +41,16 @@
       "bind"
     ];
   };
+  fileSystems."/nas/public/Public" = {
+    device = "/nas/Syncthing/Sync/Public";
+    fsType = "auto";
+    options = [
+      "defaults"
+      "nofail"
+      "nobootwait"
+      "bind"
+    ];
+  };
 
   swapDevices = [ ];
 
@@ -86,6 +96,7 @@
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.enableAllFirmware = true;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.opengl = {
     enable = true;

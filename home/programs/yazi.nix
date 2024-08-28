@@ -5,32 +5,31 @@ let
 in
 {
   config = mkIf cfg.enable {
-
     programs.yazi = {
       enable = true;
       enableZshIntegration = true;
       keymap = {
         manager.prepend_keymap = [
-          {
-            on = [ "m" ];
-            run = "plugin bookmarks --args=save";
-            desc = "Save current position as a bookmark";
-          }
-          {
-            on = [ "'" ];
-            run = "plugin bookmarks --args=jump";
-            desc = "Jump to a bookmark";
-          }
-          {
-            on = [ "b" "d" ];
-            run = "plugin bookmarks --args=delete";
-            desc = "Delete a bookmark";
-          }
-          {
-            on = [ "b" "D" ];
-            run = "plugin bookmarks --args=delete_all";
-            desc = "Delete all bookmarks";
-          }
+          # {
+          #   on = [ "m" ];
+          #   run = "plugin bookmarks --args=save";
+          #   desc = "Save current position as a bookmark";
+          # }
+          # {
+          #   on = [ "'" ];
+          #   run = "plugin bookmarks --args=jump";
+          #   desc = "Jump to a bookmark";
+          # }
+          # {
+          #   on = [ "b" "d" ];
+          #   run = "plugin bookmarks --args=delete";
+          #   desc = "Delete a bookmark";
+          # }
+          # {
+          #   on = [ "b" "D" ];
+          #   run = "plugin bookmarks --args=delete_all";
+          #   desc = "Delete all bookmarks";
+          # }
         ];
       };
       settings = {
@@ -80,6 +79,12 @@ in
             { name = "*"; use = "open"; }
           ];
         };
+        plugin = {
+          prepend_previewers = [
+            { mime = "{image,audio,video}/*"; run = "mediainfo"; }
+            { mime = "application/x-subrip"; run = "mediainfo"; }
+          ];
+        };
       };
     };
     home.file = {
@@ -92,22 +97,31 @@ in
           sha256 = "sha256-TSmZwy9jhf0D+6l4KbNQ6BjHbL0Vfo/yL3wt8bjo/EM=";
         };
       };
-      ".config/yazi/init.lua".text = /*lua*/ ''
-        require("bookmarks"):setup({
-            last_directory = { enable = false, persist = false },
-            persist = "none",
-            desc_format = "full",
-            notify = {
-                enable = false,
-                timeout = 1,
-                message = {
-                    new = "New bookmark '<key>' -> '<folder>'",
-                    delete = "Deleted bookmark in '<key>'",
-                    delete_all = "Deleted all bookmarks",
-                },
-            },
-        })
-      '';
+      ".config/yazi/plugins/mediainfo.yazi" = {
+        recursive = true;
+        source = pkgs.fetchFromGitHub {
+          owner = "Ape";
+          repo = "mediainfo.yazi";
+          rev = "c69314e80f5b45fe87a0e06a10d064ed54110439";
+          hash = "sha256-8xdBPdKSiwB7iRU8DJdTHY+BjfR9D3FtyVtDL9tNiy4=";
+        };
+      };
+      # ".config/yazi/init.lua".text = /*lua*/ ''
+      #   require("bookmarks"):setup({
+      #       last_directory = { enable = false, persist = false },
+      #       persist = "none",
+      #       desc_format = "full",
+      #       notify = {
+      #           enable = false,
+      #           timeout = 1,
+      #           message = {
+      #               new = "New bookmark '<key>' -> '<folder>'",
+      #               delete = "Deleted bookmark in '<key>'",
+      #               delete_all = "Deleted all bookmarks",
+      #           },
+      #       },
+      #   })
+      # '';
     };
   };
 }

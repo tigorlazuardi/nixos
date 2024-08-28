@@ -1,10 +1,14 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.profile.programs.yazi;
   inherit (lib) mkIf;
 in
 {
   config = mkIf cfg.enable {
+    environment.systemPackages = with pkgs; [
+      mediainfo
+      ffmpegthumbnailer
+    ];
     programs.yazi = {
       enable = true;
       settings = {

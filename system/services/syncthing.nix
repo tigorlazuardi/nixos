@@ -143,6 +143,26 @@ in
               "living-room-system"
             ];
           };
+          "/nas/Syncthing/Sync/General" = {
+            label = "General";
+            id = "General";
+            devices = [
+              "s20fe"
+              "work-laptop"
+              "windows"
+              "living-room-system"
+            ];
+          };
+          "/nas/Syncthing/Sync/Public" = {
+            label = "Public";
+            id = "Public";
+            devices = [
+              "s20fe"
+              "work-laptop"
+              "windows"
+              "living-room-system"
+            ];
+          };
         };
         devices = {
           s20fe = {
