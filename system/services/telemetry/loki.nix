@@ -2,9 +2,43 @@
 let
   cfg = config.profile.services.telemetry.loki;
   inherit (lib) mkIf;
+  lokiDomain = "loki.tigor.web.id";
 in
 {
   config = mkIf cfg.enable {
+
+    sops =
+      let
+        usernameKey = "loki/caddy/basic_auth/username";
+        passwordKey = "loki/caddy/basic_auth/password";
+      in
+      {
+        secrets =
+          let
+            opts = { sopsFile = ../../../secrets/telemetry.yaml; owner = "grafana"; };
+          in
+          {
+            ${usernameKey} = opts;
+            ${passwordKey} = opts;
+          };
+        templates = {
+          "loki/caddy/basic_auth".content = /*sh*/ ''
+            LOKI_USERNAME=${config.sops.placeholder.${usernameKey}}
+            LOKI_PASSWORD=${config.sops.placeholder.${passwordKey}}
+          '';
+        };
+      };
+
+    systemd.services."caddy".serviceConfig = {
+      EnvironmentFile = config.sops.templates."loki/caddy/basic_auth".path;
+    };
+    services.caddy.virtualHosts.${lokiDomain}.extraConfig = /*caddy*/ ''
+      basicauth {
+        {$LOKI_USERNAME} {$LOKI_PASSWORD}
+      }
+      reverse_proxy ${config.services.loki.configuration.server.http_listen_address}:${toString config.services.loki.configuration.server.http_listen_port}
+    '';
+
     services.loki =
       let
         dataDir = config.services.loki.dataDir;
@@ -13,7 +47,7 @@ in
         enable = true;
         configuration = {
           # https://grafana.com/docs/loki/latest/configure/examples/configuration-examples/
-          auth_enabled = false; # Loki will not be exposed to the public internet
+          auth_enabled = false;
           server = {
             http_listen_address = "0.0.0.0";
             http_listen_port = 3100;
@@ -58,9 +92,14 @@ in
         type = "loki";
         access = "proxy";
         url = "http://${config.services.loki.configuration.server.http_listen_address}:${toString config.services.loki.configuration.server.http_listen_port}";
+        basicAuth = true;
+        basicAuthUser = "$__file{${config.sops.secrets."loki/caddy/basic_auth/username".path}}";
         jsonData = {
           timeout = 60;
           maxLines = 1000;
+        };
+        secureJsonData = {
+          basicAuthPassword = "$__file{${config.sops.secrets."loki/caddy/basic_auth/password".path}}";
         };
       }
     ];
