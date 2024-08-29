@@ -30,7 +30,7 @@ in
       };
 
     systemd.services."caddy".serviceConfig = {
-      EnvironmentFile = config.sops.templates."loki/caddy/basic_auth".path;
+      EnvironmentFile = [ config.sops.templates."loki/caddy/basic_auth".path ];
     };
     services.caddy.virtualHosts.${lokiDomain}.extraConfig = /*caddy*/ ''
       basicauth {
