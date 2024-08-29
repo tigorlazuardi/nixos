@@ -1,6 +1,8 @@
 { ... }:
 {
   imports = [
+    ./telemetry
+
     ./caddy.nix
     ./cockpit.nix
     ./forgejo.nix
@@ -15,6 +17,5 @@
     ./syncthing.nix
     ./wireguard.nix
     ./photoprism.nix
-    ./telemetry.nix
   ];
 }

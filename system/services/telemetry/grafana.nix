@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.profile.services.telemetry;
+  cfg = config.profile.services.telemetry.grafana;
   inherit (lib) mkIf;
   grafanaDomain = "grafana.tigor.web.id";
 in
@@ -8,20 +8,23 @@ in
   config = mkIf cfg.enable {
     sops.secrets =
       let
-        opts = { sopsFile = ../../secrets/telemetry.yaml; owner = "grafana"; };
+        opts = {
+          sopsFile = ../../../secrets/telemetry.yaml;
+          owner = "grafana";
+        };
       in
-      mkIf cfg.grafana.enable {
+      {
         "grafana/admin_user" = opts;
         "grafana/admin_password" = opts;
         "grafana/admin_email" = opts;
         "grafana/secret_key" = opts;
       };
 
-    services.caddy.virtualHosts.${grafanaDomain}.extraConfig = mkIf cfg.grafana.enable ''
+    services.caddy.virtualHosts.${grafanaDomain}.extraConfig = ''
       reverse_proxy ${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}
     '';
 
-    services.grafana = mkIf cfg.grafana.enable {
+    services.grafana = {
       enable = true;
       package = pkgs.grafana;
       settings = {
