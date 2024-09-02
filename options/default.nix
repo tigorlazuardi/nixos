@@ -8,6 +8,7 @@
     ./services.nix
     ./games.nix
     ./environments.nix
+    ./flatpak.nix
   ];
   options.profile = {
 
@@ -63,7 +64,6 @@
     android.enable = lib.mkEnableOption "android";
     avahi.enable = lib.mkEnableOption "avahi";
     bluetooth.enable = lib.mkEnableOption "bluetooth";
-    flatpak.enable = lib.mkEnableOption "flatpak";
     gnome.enable = lib.mkEnableOption "gnome";
     kde.enable = lib.mkEnableOption "kde";
     networking.firewall = {

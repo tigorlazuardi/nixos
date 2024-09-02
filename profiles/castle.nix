@@ -75,6 +75,11 @@ in
     dbeaver.enable = true;
     kde.enable = false;
 
+    flatpak = {
+      enable = true;
+      zen-browser.enable = true;
+    };
+
     microsoft-edge.enable = true;
     nextcloud.enable = false;
 

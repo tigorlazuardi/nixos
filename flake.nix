@@ -18,6 +18,7 @@
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
     };
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
     hyprland-contrib = {
       url = "github:hyprwm/contrib";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -51,11 +52,13 @@
     , neovim-nightly-overlay
     , nix-index-database
     , rust-overlay
+    , nix-flatpak
     , ...
     }:
     let
       commonModules = [
         nur.nixosModules.nur
+        nix-flatpak.nixosModules.nix-flatpak
         home-manager.nixosModules.home-manager
         nix-index-database.nixosModules.nix-index
         {

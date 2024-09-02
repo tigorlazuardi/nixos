@@ -3,6 +3,7 @@
   imports = [
     profile-path
     hardware-configuration
+    ./flatpak
     ./modules
     ./services
     ./podman
