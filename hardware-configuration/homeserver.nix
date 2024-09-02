@@ -73,6 +73,17 @@
           "bind"
         ];
       };
+
+      "/nas/telemetry/tempo" = lib.mkIf config.profile.services.telemetry.tempo.enable {
+        device = "/var/lib/tempo";
+        fsType = "auto";
+        options = [
+          "defaults"
+          "nofail"
+          "nobootwait"
+          "bind"
+        ];
+      };
     };
 
     swapDevices = [ ];

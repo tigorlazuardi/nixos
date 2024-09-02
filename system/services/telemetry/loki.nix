@@ -3,10 +3,10 @@ let
   cfg = config.profile.services.telemetry.loki;
   inherit (lib) mkIf;
   lokiDomain = "loki.tigor.web.id";
+  server = config.services.loki.configuration.server;
 in
 {
   config = mkIf cfg.enable {
-
     sops =
       let
         usernameKey = "loki/caddy/basic_auth/username";
@@ -36,7 +36,7 @@ in
       basicauth {
         {$LOKI_USERNAME} {$LOKI_PASSWORD}
       }
-      reverse_proxy ${config.services.loki.configuration.server.http_listen_address}:${toString config.services.loki.configuration.server.http_listen_port}
+      reverse_proxy ${server.http_listen_address}:${toString server.http_listen_port}
     '';
 
     services.loki =
@@ -90,16 +90,13 @@ in
       {
         name = "Loki";
         type = "loki";
+        uid = "loki";
         access = "proxy";
-        url = "http://${config.services.loki.configuration.server.http_listen_address}:${toString config.services.loki.configuration.server.http_listen_port}";
-        basicAuth = true;
-        basicAuthUser = "$__file{${config.sops.secrets."loki/caddy/basic_auth/username".path}}";
+        url = "http://${server.http_listen_address}:${toString server.http_listen_port}";
+        basicAuth = false;
         jsonData = {
           timeout = 60;
           maxLines = 1000;
-        };
-        secureJsonData = {
-          basicAuthPassword = "$__file{${config.sops.secrets."loki/caddy/basic_auth/password".path}}";
         };
       }
     ];
