@@ -91,7 +91,12 @@ in
           # Programs
           ''$mod, RETURN, exec, footclient''
           "$mod, E, exec, thunar"
-          "$mod, B, exec, microsoft-edge"
+          (if config.profile.flatpak.zen-browser.enable
+          then
+            "$mod, B, exec, flatpak run io.github.zen_browser.zen"
+          else
+            "$mod, B, exec, microsoft-edge"
+          )
           "$mod, D, exec, rofi -show drun -replace -i"
           "$mod, BackSpace, exec, wlogout"
           ''$mod, F, exec, ${select-window.path}''
