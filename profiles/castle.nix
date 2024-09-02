@@ -43,6 +43,10 @@ in
       wallust.alpha = 80;
       swayosd.display = "DP-1";
       dunst.monitor = "1";
+      hypridle = {
+        lockTimeout = 3600;
+        suspendTimeout = 7200;
+      };
     };
     discord.enable = true;
     slack.enable = true;
