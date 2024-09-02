@@ -14,18 +14,18 @@ in
       }
 
       listener {
-        timeout = 600
+        timeout = ${toString cfg.hypridle.lockTimeout}
         on-timeout = "hyprlock"
       }
 
       listener {
-        timeout = 660
+        timeout = ${toString cfg.hypridle.dpmsTimeout}
         on-timeout = hyprctl dispatch dpms off
         on-resume = hyprctl dispatch dpms on
       }
 
       listener {
-        timeout = 1800
+        timeout = ${toString cfg.hypridle.suspendTimeout}
         on-timeout = systemctl suspend
       }
     '';

@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, config, ... }:
 let
   types = lib.types;
 in
@@ -46,6 +46,24 @@ in
         type = with types; listOf str;
         default = [ ];
         description = ''List of directories to search for wallpapers'';
+      };
+    };
+
+    hypridle = {
+      lockTimeout = lib.mkOption {
+        type = lib.types.int;
+        default = 600;
+        description = ''Time in seconds before the screen locks'';
+      };
+      dpmsTimeout = lib.mkOption {
+        type = lib.types.int;
+        default = config.profile.hyprland.hypridle.lockTimeout + 60;
+        description = ''Time in seconds before the screen turns off. default is lockTimeout + 60'';
+      };
+      suspendTimeout = lib.mkOption {
+        type = lib.types.int;
+        default = 1800;
+        description = ''Time in seconds before the system suspends. default is 30 minutes (1800 seconds)'';
       };
     };
 
