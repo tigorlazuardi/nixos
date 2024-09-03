@@ -82,5 +82,10 @@
     };
 
     games.minecraft.enable = true;
+
+    flatpak = {
+      enable = true;
+      zen-browser.enable = true;
+    };
   };
 }
