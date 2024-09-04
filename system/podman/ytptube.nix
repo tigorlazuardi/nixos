@@ -10,16 +10,47 @@ let
   user = config.profile.user;
   uid = toString user.uid;
   gid = toString user.gid;
+  basic_auth = {
+    username = "caddy/basic_auth/username";
+    password = "caddy/basic_auth/password";
+    template = "caddy/basic_auth";
+  };
 in
 {
   config = mkIf (podman.enable && podman.${name}.enable) {
+    sops = {
+      secrets =
+        let
+          opts = { };
+        in
+        {
+          ${basic_auth.username} = opts;
+          ${basic_auth.password} = opts;
+        };
+      templates = {
+        ${basic_auth.template}.content = /*sh*/ ''
+          YTPTUBE_USERNAME=${config.sops.placeholder.${basic_auth.username}}
+          YTPTUBE_PASSWORD=${config.sops.placeholder.${basic_auth.password}}
+        '';
+      };
+    };
     services.caddy.virtualHosts.${domain}.extraConfig = ''
+      @require_auth not remote_ip private_ranges 
+
+      basicauth @require_auth {
+        {$YTPTUBE_USERNAME} {$YTPTUBE_PASSWORD}
+      }
+
       reverse_proxy ${ip}:8081
     '';
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${volume}
       chown -R ${uid}:${gid} ${volume}
     '';
+
+    systemd.services."caddy".serviceConfig = {
+      EnvironmentFile = [ config.sops.templates.${basic_auth.template}.path ];
+    };
 
     environment.etc."podman/${name}/ytdlp.json" = {
       # https://github.com/arabcoders/ytptube?tab=readme-ov-file#ytdlpjson-file
