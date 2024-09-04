@@ -62,6 +62,7 @@
       git.paging = {
         colorArg = "always";
         pager = "delta --dark --paging=never";
+        externalDiffCommand = "difft --color=always --display=inline --syntax-highlight=on --tab-width=2";
       };
       keybinding = {
         files = {
