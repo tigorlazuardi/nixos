@@ -14,6 +14,31 @@ in
       ntfy-sh
     ];
 
+    sops = {
+      secrets =
+        let
+          opts = { sopsFile = ../../secrets/ntfy.yaml; };
+        in
+        {
+          "ntfy/default/user" = opts;
+          "ntfy/default/password" = opts;
+        };
+
+      templates =
+        let filename = "ntfy-client.yaml"; in
+        {
+          ${filename} = {
+            content = builtins.readFile ((pkgs.formats.yaml { }).generate filename {
+              default-host = "https://${domain}";
+              default-user = config.sops.placeholder."ntfy/default/user";
+              default-password = config.sops.placeholder."ntfy/default/password";
+            });
+            path = "/etc/ntfy/client.yml";
+            owner = config.profile.user.name;
+          };
+        };
+    };
+
     services.ntfy-sh = {
       enable = true;
       settings =
