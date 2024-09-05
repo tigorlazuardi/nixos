@@ -14,6 +14,10 @@ in
       ntfy-sh
     ];
 
+    environment.sessionVariables = {
+      NTFY_CONFIG = "/etc/ntfy/client.yml";
+    };
+
     sops = {
       secrets =
         let
