@@ -11,7 +11,7 @@
     user = {
       name = "homeserver";
       fullName = "Homeserver";
-      getty.autoLogin = true;
+      getty.autoLogin = false;
     };
     system.stateVersion = "24.05";
 

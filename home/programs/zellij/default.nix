@@ -27,27 +27,31 @@ in
       if cfg.autoAttach then
       /*bash*/
         ''
-          if [[ -z "$ZELLIJ" ]]; then
-              ZJ_SESSIONS=$(zellij list-sessions --no-formatting)
-              NO_SESSIONS=$(echo "$ZJ_SESSIONS" | wc -l)
-              if [ "$NO_SESSIONS" -ge 2 ]; then
-                  SELECTED_SESSION=$(echo "$ZJ_SESSIONS" | ${pkgs.skim}/bin/sk | awk '{print $1}')
-                  if [[ -n "''${SELECTED_SESSION// /}" ]]; then
-                      zellij attach -c "$SELECTED_SESSION"
-                  else
-                      zellij attach -c --index 0
-                  fi
-              else
-                  zellij attach -c
-              fi
-              exit
+          if [[ ! -z "$SSH_CLIENT" ]]; then
+            if [[ -z "$ZELLIJ" ]]; then
+                ZJ_SESSIONS=$(zellij list-sessions --no-formatting)
+                NO_SESSIONS=$(echo "$ZJ_SESSIONS" | wc -l)
+                if [ "$NO_SESSIONS" -ge 2 ]; then
+                    SELECTED_SESSION=$(echo "$ZJ_SESSIONS" | ${pkgs.skim}/bin/sk | awk '{print $1}')
+                    if [[ -n "''${SELECTED_SESSION// /}" ]]; then
+                        zellij attach -c "$SELECTED_SESSION"
+                    else
+                        zellij attach -c --index 0
+                    fi
+                else
+                    zellij attach -c
+                fi
+                exit
+            fi
           fi
         ''
       else
       /*bash*/ ''
-        if [[ -z "$ZELLIJ" ]]; then
-          zellij attach -c default
-          exit
+        if [[ ! -z "$SSH_CLIENT" ]]; then
+            if [[ -z "$ZELLIJ" ]]; then
+                zellij attach -c default
+                exit
+            fi
         fi
       ''
     );
