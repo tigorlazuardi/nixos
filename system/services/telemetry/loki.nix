@@ -39,6 +39,74 @@ in
       reverse_proxy ${server.http_listen_address}:${toString server.http_listen_port}
     '';
 
+
+    systemd.tmpfiles.settings = {
+      "promtail-dir" = {
+        "/var/lib/promtail" = {
+          d = {
+            group = "promtail";
+            mode = "0755";
+            user = "promtail";
+          };
+        };
+      };
+    };
+
+    services.promtail = {
+      enable = true;
+      configuration = {
+        server = {
+          http_listen_port = 3031;
+          grpc_listen_port = 0;
+        };
+        clients = [
+          {
+            url = "http://${server.http_listen_address}:${toString server.http_listen_port}/loki/api/v1/push";
+          }
+        ];
+        positions = {
+          filename = "/var/lib/promtail/positions.yaml";
+        };
+        scrape_configs = [
+          {
+            job_name = "systemd-journal";
+            relabel_configs = [
+              {
+                source_labels = [ "__journal__hostname" ];
+                target_label = "host";
+              }
+              {
+                source_labels = [ "__journal__systemd_unit" ];
+                target_label = "systemd_unit";
+                regex = ''(.+)'';
+              }
+              {
+                source_labels = [ "__journal__systemd_user_unit" ];
+                target_label = "systemd_user_unit";
+                regex = ''(.+)'';
+              }
+              {
+                source_labels = [ "__journal__transport" ];
+                target_label = "transport";
+                regex = ''(.+)'';
+              }
+              {
+                source_labels = [ "__journal_priority_keyword" ];
+                target_label = "severity";
+                regex = ''(.+)'';
+              }
+            ];
+            journal = {
+              labels = {
+                job = "systemd-journal";
+              };
+              path = "/var/log/journal";
+            };
+          }
+        ];
+      };
+    };
+
     services.loki =
       let
         dataDir = config.services.loki.dataDir;
