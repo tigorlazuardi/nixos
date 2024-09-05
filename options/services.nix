@@ -24,6 +24,10 @@ in
     navidrome.enable = mkEnableOption "navidrome";
 
     ntfy-sh.enable = mkEnableOption "ntfy-sh";
+    ntfy-sh.client.enable = mkOption {
+      type = types.bool;
+      default = config.profile.services.ntfy-sh.enable;
+    };
 
     telemetry = {
       enable = mkEnableOption "telemetry";
