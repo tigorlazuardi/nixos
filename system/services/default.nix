@@ -17,5 +17,6 @@
     ./syncthing.nix
     ./wireguard.nix
     ./photoprism.nix
+    ./ntfy-sh.nix
   ];
 }

@@ -17,7 +17,7 @@ in
       reverse_proxy 192.168.100.1
     '';
 
-    services.caddy.virtualHosts."tigor.web.id".extraConfig =
+    services.caddy.virtualHosts."hosts.tigor.web.id".extraConfig =
       let
         domains = attrsets.mapAttrsToList (name: _: strings.removePrefix "https://" name) config.services.caddy.virtualHosts;
         sortedDomains = lists.sort (a: b: a < b) domains;

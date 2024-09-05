@@ -70,6 +70,7 @@
       photoprism.enable = true;
       navidrome.enable = true;
       telemetry.enable = true;
+      ntfy-sh.enable = true;
     };
   };
 }

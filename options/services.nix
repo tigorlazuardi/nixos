@@ -23,6 +23,8 @@ in
     photoprism.enable = mkEnableOption "photoprism";
     navidrome.enable = mkEnableOption "navidrome";
 
+    ntfy-sh.enable = mkEnableOption "ntfy-sh";
+
     telemetry = {
       enable = mkEnableOption "telemetry";
       grafana.enable = mkOption {
