@@ -46,10 +46,6 @@ in
       };
     };
 
-    # systemd.services."caddy".serviceConfig = {
-    #   EnvironmentFile = [ config.sops.templates.${basic_auth.template}.path ];
-    # };
-
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${rootVolume}/{config,downloads,incomplete}
       chown ${uid}:${gid} ${rootVolume} ${rootVolume}/{config,downloads,incomplete}
