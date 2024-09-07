@@ -34,11 +34,13 @@ in
     };
 
     services.caddy.virtualHosts.${domain}.extraConfig = ''
-      basicauth {
+      @require_auth not remote_ip private_ranges 
+
+      basicauth @require_auth {
           {$TEMPO_USERNAME} {$TEMPO_PASSWORD}
       }
 
-      reverse_proxy ${server.http_listen_address}:${toString server.http_listen_port}
+      reverse_proxy ${server.http_listen_address}:3200
     '';
 
     services.tempo = {
