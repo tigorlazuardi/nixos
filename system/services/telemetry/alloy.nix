@@ -57,6 +57,7 @@ in
       let
         lokiConfig = config.services.loki.configuration;
         tempoServer = config.services.tempo.settings.server;
+        mimirServer = config.services.mimir.configuration.server;
       in
         /*hcl*/ ''
         otelcol.receiver.otlp "homeserver" {
@@ -69,7 +70,7 @@ in
             }
 
             output {
-                // metrics = [otelcol.processor.batch.default.input]
+                metrics = [otelcol.processor.batch.default.input]
                 logs    = [otelcol.processor.batch.default.input]
                 traces  = [otelcol.processor.batch.default.input]
             }
@@ -77,7 +78,7 @@ in
 
         otelcol.processor.batch "default" {
             output {
-                // metrics = [otelcol.exporter.loki.default.input]
+                metrics = [otelcol.exporter.prometheus.mimir.input]
                 logs    = [otelcol.exporter.loki.default.input]
                 traces  = [otelcol.exporter.otlp.tempo.input]
             }
@@ -85,6 +86,10 @@ in
 
         otelcol.exporter.loki "default" {
             forward_to = [loki.write.default.receiver]
+        }
+
+        otelcol.exporter.prometheus "mimir" {
+            forward_to = [prometheus.remote_write.mimir.receiver]
         }
 
         loki.write "default" {
@@ -96,6 +101,12 @@ in
         otelcol.exporter.otlp "tempo" {
             client {
                 endpoint = "${tempoServer.http_listen_address}:${toString tempoServer.http_listen_port}"
+            }
+        }
+
+        prometheus.remote_write "mimir" {
+            endpoint {
+                url = "http://${mimirServer.http_listen_address}:${toString mimirServer.http_listen_port}"
             }
         }
       '';

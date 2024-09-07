@@ -96,5 +96,25 @@ in
         store_gateway.sharding_ring.replication_factor = 1;
       };
     };
+
+    services.grafana.provision.datasources.settings.datasources =
+      let
+        server = config.services.mimir.configuration.server;
+      in
+      [
+        {
+          name = "Mimir";
+          type = "prometheus";
+          uid = "mimir";
+          access = "proxy";
+          url = "http://${server.http_listen_address}:${toString server.http_listen_port}";
+          basicAuth = false;
+          jsonData = {
+            httpMethod = "POST";
+            prometheusType = "Mimir";
+            timeout = 30;
+          };
+        }
+      ];
   };
 }
