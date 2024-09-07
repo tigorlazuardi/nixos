@@ -47,7 +47,7 @@ in
         type = types.bool;
         default = config.profile.services.telemetry.enable;
       };
-      minio.enable = mkOption {
+      mimir.enable = mkOption {
         type = types.bool;
         default = config.profile.services.telemetry.enable;
       };

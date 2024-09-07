@@ -84,6 +84,17 @@
           "bind"
         ];
       };
+
+      "/nas/telemetry/mimir" = lib.mkIf config.profile.services.telemetry.mimir.enable {
+        device = "/var/lib/mimir";
+        fsType = "auto";
+        options = [
+          "defaults"
+          "nofail"
+          "nobootwait"
+          "bind"
+        ];
+      };
     };
 
     swapDevices = [ ];
