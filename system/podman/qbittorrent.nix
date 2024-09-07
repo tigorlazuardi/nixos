@@ -53,7 +53,7 @@ in
           # $7 = %C  | Number of files
           # $8 = %Z  | Torrent Size
           # $9 = %T  | Current Tracker
-          # $10 = %I  | Info Hash v1
+          # $10 = %I | Info Hash v1
           # $11 = %J | Info Hash v2
           # $12 = %K | Torrent ID
 
@@ -62,7 +62,16 @@ in
             -H "X-Title: $1" \
             -H "X-Tags: white_check_mark,$2" \
             -d "Number of Files: $7, Size: $8" \
-            https://ntfy.tigor.web.id/qbittorrent-finish
+            https://ntfy.tigor.web.id/qbittorrent
+        '');
+        start-notify-script = pkgs.writeScriptBin "notify-start.sh" (optionalString config.services.ntfy-sh.enable /*sh*/ ''
+          #!/bin/bash
+          curl -X POST \
+            -H "Authorization: Bearer $NTFY_TOKEN" \
+            -H "X-Title: $1" \
+            -H "X-Tags: rocket,$2" \
+            -d "Number of Files: $7, Size: $8" \
+            https://ntfy.tigor.web.id/qbittorrent
         '');
       in
       {
@@ -82,6 +91,7 @@ in
           "${volume}/progress:/progress"
           "${volume}/watch:/watch"
           "${finish-notify-script}/bin/notify-finish.sh:/bin/notify-finish"
+          "${start-notify-script}/bin/notify-start.sh:/bin/notify-start"
         ];
         ports = [
           "6881:6881"
