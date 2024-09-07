@@ -3,6 +3,7 @@ let
   cfg = config.profile.services.telemetry.alloy;
   webguiListenAddress = "0.0.0.0:5319";
   domain = "alloy.tigor.web.id";
+  inherit (lib.strings) optionalString;
 in
 {
   imports = [
@@ -55,6 +56,7 @@ in
     environment.etc."alloy/config.alloy".text =
       let
         lokiConfig = config.services.loki.configuration;
+        tempoServer = config.services.tempo.settings.server;
       in
         /*hcl*/ ''
         otelcol.receiver.otlp "homeserver" {
@@ -69,7 +71,7 @@ in
             output {
                 // metrics = [otelcol.processor.batch.default.input]
                 logs    = [otelcol.processor.batch.default.input]
-                // traces  = [otelcol.processor.batch.default.input]
+                traces  = [otelcol.processor.batch.default.input]
             }
         }
 
@@ -77,7 +79,7 @@ in
             output {
                 // metrics = [otelcol.exporter.loki.default.input]
                 logs    = [otelcol.exporter.loki.default.input]
-                // traces  = [otelcol.exporter.otlp.default.input]
+                traces  = [otelcol.exporter.otlp.tempo.input]
             }
         }
 
@@ -89,6 +91,12 @@ in
           endpoint {
             url = "http://${lokiConfig.server.http_listen_address}:${toString lokiConfig.server.http_listen_port}"
           }
+        }
+
+        otelcol.exporter.otlp "tempo" {
+            client {
+                endpoint = "${tempoServer.http_listen_address}:${toString tempoServer.http_listen_port}"
+            }
         }
       '';
   };
