@@ -23,7 +23,7 @@ in
         sortedDomains = lists.sort (a: b: a < b) domains;
         list = map
           (domain: /*html*/ ''
-            <div class="col col-sm-6 col-md-4 col-lg-3 text-center align-middle">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 text-center align-middle">
                 <a href="https://${domain}">${domain}</a>
             </div>'')
           sortedDomains;
