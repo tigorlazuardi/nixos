@@ -59,7 +59,7 @@ in
 
           curl -X POST \
             -H "Authorization: Bearer $NTFY_TOKEN" \
-            -H "X-Title: '$1' finished downloading" \
+            -H "X-Title: $1" \
             -H "X-Tags: white_check_mark,$2" \
             -d "Number of Files: $7, Size: $8" \
             https://ntfy.tigor.web.id/qbittorrent-finish
