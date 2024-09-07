@@ -1,10 +1,11 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   name = "qbittorrent";
   domain = "${name}.tigor.web.id";
   podman = config.profile.podman;
   qbittorrent = podman.qbittorrent;
   inherit (lib) mkIf;
+  inherit (lib.strings) optionalString;
   ip = "10.88.0.7";
   image = "lscr.io/linuxserver/qbittorrent:latest";
   volume = "/nas/torrents";
@@ -23,35 +24,80 @@ in
       chown ${uid}:${gid} ${volume} ${volume}/{config,downloads,progress,watch}
     '';
 
-    virtualisation.oci-containers.containers.${name} = {
-      inherit image;
-      hostname = name;
-      autoStart = true;
-      environment = {
-        PUID = uid;
-        PGID = gid;
-        TZ = "Asia/Jakarta";
-        WEBUI_PORT = "8080";
-        TORRENTING_PORT = "6881";
-      };
-      volumes = [
-        "${volume}/config:/config"
-        "${volume}/downloads:/downloads"
-        "${volume}/progress:/progress"
-        "${volume}/watch:/watch"
-      ];
-      ports = [
-        "6881:6881"
-        "6881:6881/udp"
-      ];
-      extraOptions = [
-        "--ip=${ip}"
-        "--network=podman"
-      ];
-      labels = {
-        "io.containers.autoupdate" = "registry";
+
+    sops = {
+      secrets =
+        let
+          opts = { sopsFile = ../../secrets/ntfy.yaml; };
+        in
+        {
+          "ntfy/tokens/homeserver" = opts;
+        };
+      templates = {
+        "qbittorrent-ntfy-env".content = /*sh*/ ''
+          NTFY_TOKEN=${config.sops.placeholder."ntfy/tokens/homeserver"}
+        '';
       };
     };
+
+    virtualisation.oci-containers.containers.${name} =
+      let
+        finish-notify-script = pkgs.writeScriptBin "notify-finish.sh" (optionalString config.services.ntfy-sh.enable /*sh*/ ''
+          #!/bin/bash
+          # $1 = %N  | Torrent Name
+          # $2 = %L  | Category
+          # $3 = %G  | Tags
+          # $4 = %F  | Content Path
+          # $5 = %R  | Root Path
+          # $6 = %D  | Save Path
+          # $7 = %C  | Number of files
+          # $8 = %Z  | Torrent Size
+          # $9 = %T  | Current Tracker
+          # $10 = %I  | Info Hash v1
+          # $11 = %J | Info Hash v2
+          # $12 = %K | Torrent ID
+
+          curl -X POST \
+            -H "Authorization: Bearer $NTFY_TOKEN" \
+            -H "X-Title: '$1' finished downloading" \
+            -H "X-Tags: white_check_mark,$2" \
+            -d "Number of Files: $7, Size: $8" \
+            https://ntfy.tigor.web.id/qbittorrent-finish
+        '');
+      in
+      {
+        inherit image;
+        hostname = name;
+        autoStart = true;
+        environment = {
+          PUID = uid;
+          PGID = gid;
+          TZ = "Asia/Jakarta";
+          WEBUI_PORT = "8080";
+          TORRENTING_PORT = "6881";
+        };
+        volumes = [
+          "${volume}/config:/config"
+          "${volume}/downloads:/downloads"
+          "${volume}/progress:/progress"
+          "${volume}/watch:/watch"
+          "${finish-notify-script}/bin/notify-finish.sh:/bin/notify-finish"
+        ];
+        ports = [
+          "6881:6881"
+          "6881:6881/udp"
+        ];
+        extraOptions = [
+          "--ip=${ip}"
+          "--network=podman"
+        ];
+        environmentFiles = [
+          config.sops.templates."qbittorrent-ntfy-env".path
+        ];
+        labels = {
+          "io.containers.autoupdate" = "registry";
+        };
+      };
   };
 }
 
