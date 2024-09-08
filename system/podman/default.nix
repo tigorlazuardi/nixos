@@ -15,6 +15,9 @@ in
     systemd.timers."podman-auto-update" = {
       enable = true;
       wantedBy = [ "multi-user.target" ];
+      timerConfig = {
+        OnCalendar = "*-*-* 04:00:00";
+      };
     };
     virtualisation.containers.enable = true;
     virtualisation.oci-containers.backend = "podman";
