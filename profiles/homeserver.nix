@@ -37,10 +37,11 @@
       servarr.real-debrid-manager.enable = false;
       servarr.rdtclient.enable = true;
       openobserve.enable = true;
-      minecraft.enable = true;
+      minecraft.enable = false;
       memos.enable = true;
       morphos.enable = true;
       soulseek.enable = true;
+      valheim.enable = true;
     };
 
     docker = {

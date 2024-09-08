@@ -17,6 +17,7 @@ in
     memos.enable = mkEnableOption "memos podman";
     morphos.enable = mkEnableOption "morphos podman";
     soulseek.enable = mkEnableOption "soulseek podman";
+    valheim.enable = mkEnableOption "valheim";
 
     servarr = {
       enable = mkEnableOption "servarr group";

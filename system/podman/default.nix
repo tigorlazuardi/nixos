@@ -53,5 +53,6 @@ in
     ./soulseek.nix
     ./suwayomi.nix
     ./ytptube.nix
+    ./valheim.nix
   ];
 }
