@@ -107,7 +107,7 @@ in
           type = "prometheus";
           uid = "mimir";
           access = "proxy";
-          url = "http://${server.http_listen_address}:${toString server.http_listen_port}";
+          url = "http://${server.http_listen_address}:${toString server.http_listen_port}/prometheus";
           basicAuth = false;
           jsonData = {
             httpMethod = "POST";
