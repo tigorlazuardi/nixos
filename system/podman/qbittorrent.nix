@@ -57,11 +57,12 @@ in
           # $11 = %J | Info Hash v2
           # $12 = %K | Torrent ID
 
+          size=$(echo $8 | numfmt --to=iec)
           curl -X POST \
             -H "Authorization: Bearer $NTFY_TOKEN" \
             -H "X-Title: $1" \
             -H "X-Tags: white_check_mark,$2" \
-            -d "Number of Files: $7, Size: $8" \
+            -d "Number of Files: $7, Size: $size" \
             https://ntfy.tigor.web.id/qbittorrent
         '');
         start-notify-script = pkgs.writeScriptBin "notify-start.sh" (optionalString config.services.ntfy-sh.enable /*sh*/ ''
@@ -70,7 +71,7 @@ in
             -H "Authorization: Bearer $NTFY_TOKEN" \
             -H "X-Title: $1" \
             -H "X-Tags: rocket,$2" \
-            -d "Number of Files: $7, Size: $8" \
+            -d "Starts downloading" \
             https://ntfy.tigor.web.id/qbittorrent
         '');
       in
