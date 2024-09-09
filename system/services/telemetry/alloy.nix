@@ -94,8 +94,41 @@ in
 
         loki.write "default" {
           endpoint {
-            url = "http://${lokiConfig.server.http_listen_address}:${toString lokiConfig.server.http_listen_port}"
+            url = "http://${lokiConfig.server.http_listen_address}:${toString lokiConfig.server.http_listen_port}/loki/api/v1/push"
           }
+        }
+
+        loki.relabel "journal" {
+            forward_to = []
+            rule {
+                source_labels = ["__journal__systemd_unit"]
+                target_label  = "unit"
+            }
+            rule {
+                source_labels = ["__journal__hostname"]
+                target_label  = "host"
+            }
+            rule {
+                source_labels = [ "__journal__systemd_user_unit" ]
+                target_label = "user_unit"
+            }
+            rule {
+                source_labels = [ "__journal__transport" ]
+                target_label = "transport"
+            }
+            rule {
+                source_labels = [ "__journal_priority_keyword" ]
+                target_label = "severity"
+            }
+        }
+
+        loki.source.journal "read" {
+            forward_to = [loki.write.default.receiver]
+            relabel_rules = loki.relabel.journal.rules
+            labels = {
+                job = "systemd-journal",
+                component = "loki.source.journal",
+            }
         }
 
         otelcol.exporter.otlp "tempo" {
@@ -104,9 +137,16 @@ in
             }
         }
 
+        prometheus.exporter.unix "system" {}
+
+        prometheus.scrape "system" {
+            targets     = prometheus.exporter.unix.system.targets
+            forward_to  = [prometheus.remote_write.mimir.receiver]
+        }
+
         prometheus.remote_write "mimir" {
             endpoint {
-                url = "http://${mimirServer.http_listen_address}:${toString mimirServer.http_listen_port}"
+                url = "http://${mimirServer.http_listen_address}:${toString mimirServer.http_listen_port}/api/v1/push"
             }
         }
       '';
