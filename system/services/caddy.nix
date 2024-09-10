@@ -9,6 +9,12 @@ in
       enable = true;
     };
 
+    services.caddy.globalConfig = /*caddy*/ ''
+      servers {
+          metrics
+      } 
+    '';
+
     services.caddy.virtualHosts."router.tigor.web.id".extraConfig = ''
       @denied not remote_ip private_ranges 
 
