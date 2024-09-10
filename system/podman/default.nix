@@ -57,5 +57,7 @@ in
     ./suwayomi.nix
     ./ytptube.nix
     ./valheim.nix
+
+    ./metrics.nix
   ];
 }
