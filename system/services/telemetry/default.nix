@@ -6,5 +6,6 @@
     ./tempo.nix
     ./alloy.nix
     ./mimir.nix
+    ./prometheus.nix
   ];
 }

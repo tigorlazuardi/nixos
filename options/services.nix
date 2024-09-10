@@ -55,6 +55,10 @@ in
         type = types.bool;
         default = config.profile.services.telemetry.enable;
       };
+      prometheus.enable = mkOption {
+        type = types.bool;
+        default = config.profile.services.telemetry.enable;
+      };
     };
   };
 }

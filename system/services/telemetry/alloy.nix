@@ -3,7 +3,6 @@ let
   cfg = config.profile.services.telemetry.alloy;
   webguiListenAddress = "0.0.0.0:5319";
   domain = "alloy.tigor.web.id";
-  inherit (lib.strings) optionalString;
 in
 {
   imports = [
