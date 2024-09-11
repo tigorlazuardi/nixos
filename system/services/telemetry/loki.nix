@@ -78,6 +78,16 @@ in
             ];
           };
 
+          compactor = {
+            working_directory = "${dataDir}/retention";
+            retention_enabled = true;
+            delete_request_store = "filesystem";
+          };
+
+          limits_config = {
+            retention_period = "90d";
+          };
+
           storage_config = {
             filesystem = {
               directory = "${dataDir}/chunks";
