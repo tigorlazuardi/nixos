@@ -6,7 +6,7 @@ in
 {
   config = mkIf cfg.enable {
     services.prometheus = {
-      enable = false;
+      enable = true;
       port = 0; # Random
       enableAgentMode = true;
       globalConfig = {

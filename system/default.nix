@@ -81,4 +81,6 @@
     nix-output-monitor
     nvd
   ];
+
+  services.dbus.implementation = "broker";
 }
