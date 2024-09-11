@@ -73,6 +73,10 @@ in
           sharding_ring.kvstore.store = "memberlist";
         };
 
+        limits = {
+          compactor_blocks_retention_period = "90d";
+        };
+
         distributor = {
           ring = {
             instance_addr = "127.0.0.1";
