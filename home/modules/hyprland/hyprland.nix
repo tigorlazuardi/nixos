@@ -218,7 +218,8 @@ in
           config.profile.discord.window_rule
           config.profile.slack.window_rule
           config.profile.whatsapp.window_rule
-          ''opaque,title:(.*)(- YouTube)(.*)$''
+          ''opaque,title:(.*)(- YouTube)(.*)$'' # Youtube
+          ''opaque,title:^Meet - (.*)$'' # Google Meet
           ''opaque,class:^(mpv)$''
           ''float,class:^(lazygit)$''
           ''center,class:^(lazygit)$''
