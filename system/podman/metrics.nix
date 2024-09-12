@@ -23,10 +23,8 @@ in
     labels = {
       "io.containers.autoupdate" = "registry";
     };
-
-
   };
-  environment.etc."alloy/config.alloy".text = lib.mkIf config.services.alloy.enable /*hcl*/ ''
+  environment.etc."alloy/config.alloy".text = /*hcl*/ ''
     prometheus.scrape "podman" {
       targets = [{__address__ = "${ip}:9882"}]
 
