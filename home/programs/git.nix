@@ -2,7 +2,7 @@
 {
   home.packages = with pkgs; [
     delta
-    difftastic
+    # difftastic
   ];
   programs.git = {
     enable = true;
@@ -62,7 +62,7 @@
       git.paging = {
         colorArg = "always";
         pager = "delta --dark --paging=never";
-        externalDiffCommand = "difft --color=always --display=inline --syntax-highlight=on --tab-width=2";
+        # externalDiffCommand = "difft --color=always --display=inline --syntax-highlight=on --tab-width=2";
       };
       keybinding = {
         files = {
