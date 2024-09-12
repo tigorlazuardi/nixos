@@ -78,6 +78,17 @@ in
             ];
           };
 
+          ruler = {
+            external_url = "https://grafana.tigor.web.id";
+            storage = {
+              type = "local";
+              local = {
+                directory = "${dataDir}/rules";
+              };
+            };
+            rule_path = "/tmp/loki/rules"; # Temporary rule_path
+          };
+
           compactor = {
             working_directory = "${dataDir}/retention";
             retention_enabled = true;
