@@ -51,6 +51,10 @@ in
       config.sops.templates."alloy-basic-auth".path
     ];
 
+    systemd.services.alloy.serviceConfig = {
+      User = "root";
+    };
+
 
     environment.etc."alloy/config.alloy".text =
       let

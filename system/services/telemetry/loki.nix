@@ -97,6 +97,8 @@ in
 
           limits_config = {
             retention_period = "90d";
+            ingestion_burst_size_mb = 64;
+            ingestion_rate_mb = 32;
           };
 
           storage_config = {
