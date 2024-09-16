@@ -94,6 +94,7 @@ in
                   host = "request.host",
                   method = "request.method",
                   proto = "request.proto",
+                  ts = "",
               }
           }
 
@@ -114,6 +115,11 @@ in
             values = {
                 job = "caddy_access_log",
             }
+          }
+
+          stage.timestamp {
+            source = "ts"
+            format = "unix"
           }
       }
     '';
