@@ -16,7 +16,26 @@ in
       chmod -R 0777 /nas/mediaserver
     '';
     services.caddy.virtualHosts.${domain}.extraConfig = ''
-      reverse_proxy 0.0.0.0:8096
+      @public not remote_ip private_ranges
+
+      handle_path /metrics {
+        respond @public <<HTML
+            <!DOCTYPE html>
+            <html>
+                <head>
+                    <title>Access Denied</title>
+                </head>
+                <body>
+                    <h1>Access Denied</h1>
+                </body>
+            </html>
+            HTML 403
+        reverse_proxy 0.0.0.0:8096
+      }
+
+      handle {
+        reverse_proxy 0.0.0.0:8096
+      }
     '';
     services.caddy.virtualHosts.${domain-jellyseerr} = mkIf cfg.jellyseerr.enable {
       extraConfig = ''
@@ -31,5 +50,13 @@ in
     services.jellyseerr = mkIf cfg.jellyseerr.enable {
       enable = true;
     };
+
+    environment.etc."alloy/config.alloy".text = /*hcl*/ ''
+      prometheus.scrape "jellyfin" {
+        targets = [{__address__ = "0.0.0.0:8096"}]
+        job_name = "jellyfin"
+        forward_to = [prometheus.remote_write.mimir.receiver]
+      }
+    '';
   };
 }
