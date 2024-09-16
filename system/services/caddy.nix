@@ -15,15 +15,7 @@ in
       } 
     '';
 
-    services.caddy.virtualHosts."router.tigor.web.id".extraConfig = ''
-      @denied not remote_ip private_ranges 
-
-      respond @denied "Access denied" 403
-
-      reverse_proxy 192.168.100.1
-    '';
-
-    services.caddy.virtualHosts."tigor.web.id".extraConfig =
+    services.caddy.virtualHosts =
       let
         domains = attrsets.mapAttrsToList (name: _: strings.removePrefix "https://" name) config.services.caddy.virtualHosts;
         sortedDomains = lists.sort (a: b: a < b) domains;
@@ -53,11 +45,29 @@ in
                 </body>
             </html>'';
       in
-      ''
-        header Content-Type text/html
-        respond <<EOF
-            ${html}
-            EOF 200
-      '';
+      {
+        "router.tigor.web.id".extraConfig = ''
+          @denied not remote_ip private_ranges 
+
+          respond @denied "Access denied" 403
+
+          reverse_proxy 192.168.100.1
+        '';
+        "tigor.web.id".extraConfig =
+          ''
+            header Content-Type text/html
+            respond <<EOF
+                ${html}
+                EOF 200
+          '';
+        "crowfx.web.id".extraConfig =
+          ''
+            header Content-Type text/html
+            respond <<EOF
+                ${html}
+                EOF 200
+          '';
+      };
+
   };
 }
