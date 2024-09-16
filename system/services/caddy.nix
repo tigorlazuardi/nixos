@@ -77,7 +77,7 @@ in
                   "__path__" = "/var/log/caddy/*.log",
               },
           ]
-          sync_period = "5s"
+          sync_period = "30s"
       }
 
       loki.source.file "caddy_access_log" {
