@@ -19,6 +19,7 @@ in
       @public not remote_ip private_ranges
 
       handle_path /metrics {
+        header @public Content-Type text/html
         respond @public <<HTML
             <!DOCTYPE html>
             <html>
