@@ -126,11 +126,27 @@ in
         }
 
         loki.source.journal "read" {
-            forward_to = [loki.write.default.receiver]
+            forward_to = [loki.process.general_json_pipeline.receiver]
             relabel_rules = loki.relabel.journal.rules
             labels = {
                 job = "systemd-journal",
                 component = "loki.source.journal",
+            }
+        }
+
+        loki.process "general_json_pipeline" {
+            forward_to = [loki.write.default.receiver]
+
+            stage.json {
+                expressions = {
+                    level = "level",
+                }
+            }
+
+            stage.labels {
+                values = {
+                    level = "",
+                }
             }
         }
 
