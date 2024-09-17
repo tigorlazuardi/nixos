@@ -139,8 +139,10 @@ in
           "$mod, I, exec, fcitx5-remote -t"
 
           "$mod, PRINT, exec, grimblast --notify copysave output"
+          "$mod SHIFT, PRINT, exec, grimblast --notify save output - | swappy -f -"
           ", PRINT, exec, grimblast --notify copysave area"
           "SHIFT, PRINT, exec, grimblast --notify save area - | swappy -f -"
+          "ALT, PRINT, exec, grimblast --wait 1 --notify save area - | swappy -f -"
         ];
 
         binde = [
