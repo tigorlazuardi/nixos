@@ -26,12 +26,31 @@ in
         {
           ${basic_auth.username} = opts;
           ${basic_auth.password} = opts;
+          "ntfy/tokens/homeserver" = { sopsFile = ../../secrets/ntfy.yaml; };
         };
       templates = {
         ${basic_auth.template}.content = /*sh*/ ''
           YTPTUBE_USERNAME=${config.sops.placeholder.${basic_auth.username}}
           YTPTUBE_PASSWORD=${config.sops.placeholder.${basic_auth.password}}
         '';
+        "ytptube/webhooks.json" = mkIf config.services.ntfy-sh.enable {
+          content = builtins.readFile ((pkgs.formats.json { }).generate "webhooks.json" [
+            {
+              name = "NTFY Webhook";
+              on = [ "added" "completed" "error" "not_live" ];
+              request = {
+                url = "https://ntfy.tigor.web.id/ytptube?tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20%7B%7B%20.status%20%7D%7D&Click=https%3A%2F%2F%7B%7B.url%7D%7D";
+                type = "json";
+                method = "POST";
+                headers = {
+                  Authorization = ''Bearer ${config.sops.placeholder."ntfy/tokens/homeserver"}'';
+                };
+              };
+            }
+          ]);
+          path = "/etc/podman/${name}/webhooks.json";
+          owner = config.profile.user.name;
+        };
       };
     };
     services.caddy.virtualHosts.${domain}.extraConfig = ''
