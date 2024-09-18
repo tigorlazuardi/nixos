@@ -7,7 +7,6 @@
     ./modules
     ./services
     ./podman
-    ./docker
     ./programs.nix
     ./user.nix
     ./keyboard.nix

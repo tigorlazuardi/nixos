@@ -44,10 +44,6 @@
       valheim.enable = true;
     };
 
-    docker = {
-      enable = false;
-    };
-
     home.programs.zellij = {
       enable = true;
       autoAttach = true;

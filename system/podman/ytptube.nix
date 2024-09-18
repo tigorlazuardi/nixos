@@ -45,7 +45,7 @@ in
     '';
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${volume}
-      chown -R ${uid}:${gid} ${volume}
+      chown -R ${uid}:${gid} ${volume} /etc/podman/${name}
     '';
 
     systemd.services."caddy".serviceConfig = {
@@ -101,7 +101,7 @@ in
       };
       volumes = [
         "${volume}:/downloads"
-        "/etc/podman/${name}/ytdlp.json:/config/ytdlp.json"
+        "/etc/podman/${name}:/config"
       ];
       extraOptions = [
         "--ip=${ip}"
