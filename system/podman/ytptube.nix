@@ -15,6 +15,20 @@ let
     password = "caddy/basic_auth/password";
     template = "caddy/basic_auth";
   };
+  webhook = builtins.readFile ((pkgs.formats.json { }).generate "webhooks.json" [
+    {
+      name = "NTFY Webhook";
+      on = [ "added" "completed" "error" "not_live" ];
+      request = {
+        url = "https://ntfy.tigor.web.id/ytptube?tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20%7B%7B%20.status%20%7D%7D";
+        type = "json";
+        method = "POST";
+        headers = {
+          Authorization = ''Bearer ${config.sops.placeholder."ntfy/tokens/homeserver"}'';
+        };
+      };
+    }
+  ]);
 in
 {
   config = mkIf (podman.enable && podman.${name}.enable) {
@@ -34,20 +48,7 @@ in
           YTPTUBE_PASSWORD=${config.sops.placeholder.${basic_auth.password}}
         '';
         "ytptube/webhooks.json" = mkIf config.services.ntfy-sh.enable {
-          content = builtins.readFile ((pkgs.formats.json { }).generate "webhooks.json" [
-            {
-              name = "NTFY Webhook";
-              on = [ "added" "completed" "error" "not_live" ];
-              request = {
-                url = "https://ntfy.tigor.web.id/ytptube?tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20%7B%7B%20.status%20%7D%7D&Click=https%3A%2F%2F%7B%7B.url%7D%7D";
-                type = "json";
-                method = "POST";
-                headers = {
-                  Authorization = ''Bearer ${config.sops.placeholder."ntfy/tokens/homeserver"}'';
-                };
-              };
-            }
-          ]);
+          content = webhook;
           path = "/etc/podman/${name}/webhooks.json";
           owner = config.profile.user.name;
         };
@@ -70,6 +71,8 @@ in
     systemd.services."caddy".serviceConfig = {
       EnvironmentFile = [ config.sops.templates.${basic_auth.template}.path ];
     };
+
+    systemd.services."podman-${name}".restartTriggers = [ webhook ];
 
     environment.etc."podman/${name}/ytdlp.json" = {
       # https://github.com/arabcoders/ytptube?tab=readme-ov-file#ytdlpjson-file
