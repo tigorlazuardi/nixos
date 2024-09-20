@@ -17,14 +17,43 @@ let
   };
   webhook = builtins.readFile ((pkgs.formats.json { }).generate "webhooks.json" [
     {
-      name = "NTFY Webhook";
-      on = [ "added" "completed" "error" "not_live" ];
+      name = "NTFY Webhook Added";
+      on = [ "added" ];
+      request = {
+        url = "https://ntfy.tigor.web.id/ytptube?tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20added.";
+        type = "json";
+        method = "POST";
+        headers = {
+          Authorization = ''Bearer ${config.sops.placeholder."ntfy/tokens/homeserver"}'';
+          X-Tags = "rocket";
+        };
+      };
+    }
+    {
+      name = "NTFY Webhook Completed";
+      on = [ "completed" ];
       request = {
         url = "https://ntfy.tigor.web.id/ytptube?tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20%7B%7B%20.status%20%7D%7D";
         type = "json";
         method = "POST";
         headers = {
           Authorization = ''Bearer ${config.sops.placeholder."ntfy/tokens/homeserver"}'';
+          X-Tags = "heavy_check_mark";
+          X-Priority = "4";
+        };
+      };
+    }
+    {
+      name = "NTFY Webhook Error";
+      on = [ "error" ];
+      request = {
+        url = "https://ntfy.tigor.web.id/ytptube?tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20%7B%7B%20.status%20%7D%7D";
+        type = "json";
+        method = "POST";
+        headers = {
+          Authorization = ''Bearer ${config.sops.placeholder."ntfy/tokens/homeserver"}'';
+          X-Priority = "4";
+          X-Tags = "x";
         };
       };
     }

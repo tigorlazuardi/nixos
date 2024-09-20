@@ -63,7 +63,7 @@ in
             -H "X-Title: $1" \
             -H "X-Tags: white_check_mark,$2" \
             -d "Number of Files: $7, Size: $size" \
-            https://ntfy.tigor.web.id/qbittorrent
+            https://ntfy.tigor.web.id/qbittorrent?priority=4
         '');
         start-notify-script = pkgs.writeScriptBin "notify-start.sh" (optionalString config.services.ntfy-sh.enable /*sh*/ ''
           #!/bin/bash
