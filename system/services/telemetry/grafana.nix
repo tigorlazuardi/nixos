@@ -33,7 +33,6 @@ in
           protocol = "http"; # served behind caddy
           http_addr = "0.0.0.0";
           http_port = 44518;
-          domain = grafanaDomain;
           root_url = "https://${grafanaDomain}";
           enable_gzip = true;
         };
