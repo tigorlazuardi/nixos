@@ -29,6 +29,8 @@ in
       default = config.profile.services.ntfy-sh.enable;
     };
 
+    couchdb.enable = mkEnableOption "couchdb";
+
     telemetry = {
       enable = mkEnableOption "telemetry";
       grafana.enable = mkOption {

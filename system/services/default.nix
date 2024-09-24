@@ -5,6 +5,7 @@
 
     ./caddy.nix
     ./cockpit.nix
+    ./couchdb.nix
     ./forgejo.nix
     ./jellyfin.nix
     ./kavita.nix
