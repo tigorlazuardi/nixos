@@ -1,9 +1,11 @@
 { config, lib, ... }:
 let
   ip = "10.88.222.222";
+  cfg = config.profile.podman;
+  inherit (lib) mkIf;
 in
 {
-  virtualisation.oci-containers.containers."metrics" = {
+  virtualisation.oci-containers.containers."metrics" = mkIf (cfg.enable && config.profile.services.telemetry.enable) {
     image = "quay.io/navidys/prometheus-podman-exporter";
     hostname = "metrics";
     autoStart = true;
