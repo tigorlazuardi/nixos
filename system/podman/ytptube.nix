@@ -20,7 +20,7 @@ let
       name = "NTFY Webhook Added";
       on = [ "added" ];
       request = {
-        url = "https://ntfy.tigor.web.id/ytptube?tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20added.";
+        url = "https://ntfy.tigor.web.id/ytptube?click=https%3A%2F%2F${domain}&tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20added.";
         type = "json";
         method = "POST";
         headers = {
@@ -33,7 +33,7 @@ let
       name = "NTFY Webhook Completed";
       on = [ "completed" ];
       request = {
-        url = "https://ntfy.tigor.web.id/ytptube?tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20%7B%7B%20.status%20%7D%7D";
+        url = "https://ntfy.tigor.web.id/ytptube?click=https%3A%2F%2F${domain}&tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20%7B%7B%20.status%20%7D%7D";
         type = "json";
         method = "POST";
         headers = {
@@ -47,7 +47,7 @@ let
       name = "NTFY Webhook Error";
       on = [ "error" ];
       request = {
-        url = "https://ntfy.tigor.web.id/ytptube?tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20%7B%7B%20.status%20%7D%7D";
+        url = "https://ntfy.tigor.web.id/ytptube?click=https%3A%2F%2F${domain}&tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20%7B%7B%20.status%20%7D%7D";
         type = "json";
         method = "POST";
         headers = {
@@ -113,7 +113,7 @@ in
         writeautomaticsub = false;
         merge_output_format = "mkv";
         live_from_start = true;
-        format_sort = [ "codec:abc:m4a" ];
+        format_sort = [ "codec:avc:m4a" ];
         subtitleslangs = [ "en" ];
         postprocessors = [
           # this processor convert the downloaded thumbnail to jpg.
@@ -149,6 +149,7 @@ in
       user = "${uid}:${gid}";
       environment = {
         TZ = "Asia/Jakarta";
+        YTP_MAX_WORKERS = "4";
       };
       volumes = [
         "${volume}:/downloads"
