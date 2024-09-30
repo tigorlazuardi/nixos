@@ -22,6 +22,7 @@
     ./nextcloud.nix
     ./nnn.nix
     ./node.nix
+    ./obsidian.nix
     ./slack.nix
     ./spotify.nix
     ./starship.nix

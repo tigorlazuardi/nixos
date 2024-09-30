@@ -92,6 +92,7 @@ in
       bruno.enable = true;
       zoom.enable = true;
       elisa.enable = true;
+      obsidian.enable = true;
     };
     programs.easyeffects.enable = true;
     programs.wezterm.enable = true;
