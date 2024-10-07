@@ -75,6 +75,7 @@
       zellij.enable = false;
       bruno.enable = true;
       elisa.enable = true;
+      obsidian.enable = true;
     };
 
     home.environments = {
