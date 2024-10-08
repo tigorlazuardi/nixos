@@ -76,6 +76,7 @@
       bruno.enable = true;
       elisa.enable = true;
       obsidian.enable = true;
+      zoom.enable = true;
     };
 
     home.environments = {

@@ -2,37 +2,21 @@
 let
   cfg = config.profile.programs.yazi;
   inherit (lib) mkIf;
+  catppuccin-theme = pkgs.fetchFromGitHub {
+    owner = "catppuccin";
+    repo = "yazi";
+    rev = "37dec9bf1f7e52e0d593c225827b9dbc71ce504c";
+    hash = "sha256-oJo52hMSK7mr5f0DtnyaN1FVOSKKUOHWCT80V1qfyrU=";
+  };
+  mochaTheme = "${catppuccin-theme}/themes/mocha.toml";
 in
 {
   config = mkIf cfg.enable {
     programs.yazi = {
       enable = true;
       enableZshIntegration = true;
-      keymap = {
-        manager.prepend_keymap = [
-          # {
-          #   on = [ "m" ];
-          #   run = "plugin bookmarks --args=save";
-          #   desc = "Save current position as a bookmark";
-          # }
-          # {
-          #   on = [ "'" ];
-          #   run = "plugin bookmarks --args=jump";
-          #   desc = "Jump to a bookmark";
-          # }
-          # {
-          #   on = [ "b" "d" ];
-          #   run = "plugin bookmarks --args=delete";
-          #   desc = "Delete a bookmark";
-          # }
-          # {
-          #   on = [ "b" "D" ];
-          #   run = "plugin bookmarks --args=delete_all";
-          #   desc = "Delete all bookmarks";
-          # }
-        ];
-      };
       settings = {
+        theme = lib.modules.importToml mochaTheme;
         manager = {
           # 1/8 width for parent, 4/8 width for current, 3/8 width for preview
           ratio = [ 1 4 3 ];
