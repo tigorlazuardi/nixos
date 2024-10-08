@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, unstable, ... }:
 let
   cfg = config.profile.neovim;
   inherit (lib) mkIf;
@@ -83,7 +83,7 @@ in
       deno
 
       # Golang debuggers
-      delve
+      unstable.delve
       gdlv
 
       luajitPackages.tiktoken_core # For copilot chat
