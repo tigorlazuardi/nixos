@@ -16,7 +16,7 @@ in
       enable = true;
       enableZshIntegration = true;
       settings = {
-        theme = lib.modules.importToml mochaTheme;
+        theme = lib.modules.importTOML mochaTheme;
         manager = {
           # 1/8 width for parent, 4/8 width for current, 3/8 width for preview
           ratio = [ 1 4 3 ];
