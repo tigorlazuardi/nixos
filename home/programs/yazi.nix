@@ -2,13 +2,6 @@
 let
   cfg = config.profile.programs.yazi;
   inherit (lib) mkIf;
-  catppuccin-theme = pkgs.fetchFromGitHub {
-    owner = "catppuccin";
-    repo = "yazi";
-    rev = "37dec9bf1f7e52e0d593c225827b9dbc71ce504c";
-    hash = "sha256-oJo52hMSK7mr5f0DtnyaN1FVOSKKUOHWCT80V1qfyrU=";
-  };
-  mochaTheme = "${catppuccin-theme}/themes/mocha.toml";
 in
 {
   config = mkIf cfg.enable {
@@ -16,7 +9,6 @@ in
       enable = true;
       enableZshIntegration = true;
       settings = {
-        theme = lib.modules.importTOML mochaTheme;
         manager = {
           # 1/8 width for parent, 4/8 width for current, 3/8 width for preview
           ratio = [ 1 4 3 ];
@@ -90,6 +82,16 @@ in
           hash = "sha256-8xdBPdKSiwB7iRU8DJdTHY+BjfR9D3FtyVtDL9tNiy4=";
         };
       };
+      ".config/yazi/theme.toml".source =
+        let
+          catppuccin-theme = pkgs.fetchFromGitHub {
+            owner = "catppuccin";
+            repo = "yazi";
+            rev = "37dec9bf1f7e52e0d593c225827b9dbc71ce504c";
+            hash = "sha256-oJo52hMSK7mr5f0DtnyaN1FVOSKKUOHWCT80V1qfyrU=";
+          };
+        in
+        "${catppuccin-theme}/themes/mocha.toml";
       # ".config/yazi/init.lua".text = /*lua*/ ''
       #   require("bookmarks"):setup({
       #       last_directory = { enable = false, persist = false },
