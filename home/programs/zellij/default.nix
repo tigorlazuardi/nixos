@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, unstable, ... }:
 let
   cfg = config.profile.home.programs.zellij;
   plugins = {
@@ -15,6 +15,7 @@ in
 {
   config = lib.mkIf cfg.enable {
     programs.zellij.enable = true;
+    programs.zellij.package = unstable.zellij;
 
     # Uses initExtraFirst instead of initExtra
     # to avoid loading of zsh plugins before zellij loads.
