@@ -13,8 +13,8 @@ let
   uid = toString user.uid;
   gid = toString user.gid;
 in
-{
-  config = mkIf (podman.enable && qbittorrent.enable) {
+lib.mkMerge [
+  (mkIf (podman.enable && qbittorrent.enable) {
     services.caddy.virtualHosts.${domain}.extraConfig = ''
       reverse_proxy ${ip}:8080
     '';
@@ -109,6 +109,12 @@ in
           "io.containers.autoupdate" = "registry";
         };
       };
-  };
-}
-
+  })
+  {
+    profile.services.ntfy-sh.client.settings.subscribe = [
+      {
+        topic = "qbittorrent";
+      }
+    ];
+  }
+]

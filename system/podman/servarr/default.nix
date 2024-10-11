@@ -10,4 +10,10 @@
     ./rdtclient.nix
     ./recyclarr.nix
   ];
+
+  profile.services.ntfy-sh.client.settings.subscribe = [
+    {
+      topic = "servarr";
+    }
+  ];
 }
