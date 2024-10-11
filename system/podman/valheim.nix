@@ -1,15 +1,17 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 let
   name = "valheim";
   podman = config.profile.podman;
   inherit (lib) mkIf strings;
   ip = "10.88.200.10";
+  ip-hutasuhut = "10.88.200.11";
   image = "docker.io/lloesche/valheim-server";
   domain = "${name}.tigor.web.id";
   user = config.profile.user;
   uid = toString user.uid;
   gid = toString user.gid;
   base_dir = "/var/lib/${name}";
+  base_dir_hutasuhut = "/var/lib/${name}_hutasuhut";
 in
 lib.mkMerge [
   (mkIf (podman.${name}.enable) {
@@ -39,11 +41,23 @@ lib.mkMerge [
           '';
       };
 
-    systemd.tmpfiles.settings."podman-${name}".${base_dir}.d = {
-      group = config.profile.user.name;
-      mode = "0755";
-      user = config.profile.user.name;
+    systemd.tmpfiles.settings."podman-${name}" = {
+      ${base_dir}.d = {
+        group = config.profile.user.name;
+        mode = "0755";
+        user = config.profile.user.name;
+      };
     };
+
+    systemd.tmpfiles.settings."podman-${name}-hutasuhut" = {
+      ${base_dir_hutasuhut}.d = {
+        group = config.profile.user.name;
+        mode = "0755";
+        user = config.profile.user.name;
+      };
+    };
+
+
 
     virtualisation.oci-containers.containers.${name} =
       {
@@ -52,7 +66,6 @@ lib.mkMerge [
         autoStart = true;
         ports = [
           "2456:2456/udp"
-          "2457:2457/udp"
         ];
         volumes = [
           "${base_dir}/config:/config"
@@ -78,11 +91,50 @@ lib.mkMerge [
           "io.containers.autoupdate" = "registry";
         };
       };
+    virtualisation.oci-containers.containers."${name}-hutasuhut" =
+      {
+        inherit image;
+        hostname = name;
+        autoStart = true;
+        ports = [
+          "2457:2457/udp"
+        ];
+        volumes = [
+          "${base_dir_hutasuhut}/config:/config"
+          "${base_dir_hutasuhut}/data:/opt/valheim"
+        ];
+        environment = {
+          TZ = "Asia/Jakarta";
+          SERVER_NAME = "Hutasuhut";
+          WORLD_NAME = "Hutasuhut";
+          STATUS_HTTP = "true";
+          PUID = uid;
+          PGID = gid;
+        };
+        extraOptions = [
+          "--network=podman"
+          "--ip=${ip-hutasuhut}"
+          "--cap-add=sys_nice"
+        ];
+        environmentFiles = [
+          config.sops.templates."valheim-env".path
+        ];
+        labels = {
+          "io.containers.autoupdate" = "registry";
+        };
+      };
   })
   {
     profile.services.ntfy-sh.client.settings.subscribe = [
       {
         topic = "valheim";
+      }
+    ];
+  }
+  {
+    profile.services.ntfy-sh.client.settings.subscribe = [
+      {
+        topic = "valheim-hutasuhut";
       }
     ];
   }
