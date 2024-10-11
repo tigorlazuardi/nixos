@@ -83,7 +83,6 @@ lib.mkMerge [
     profile.services.ntfy-sh.client.settings.subscribe = [
       {
         topic = "valheim";
-        command = ''${pkgs.libnotify}/bin/notify-send --category=im.received --urgency=normal "$title" "$message"'';
       }
     ];
   }

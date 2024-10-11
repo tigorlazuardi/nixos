@@ -3,8 +3,8 @@ let
   cfg = config.profile.openssh;
   inherit (lib.meta) getExe;
 in
-{
-  config = lib.mkIf cfg.enable {
+lib.mkMerge [
+  (lib.mkIf cfg.enable {
     networking.firewall = {
       allowedTCPPorts = lib.mkAfter [ 22 ];
     };
@@ -56,5 +56,12 @@ in
     security.pam.services.sshd.text = lib.mkDefault (lib.mkAfter ''
       session optional pam_exec.so ${getExe pkgs.bash} ${config.sops.templates."ntfy-ssh-login.sh".path}
     '');
-  };
-}
+  })
+  {
+    profile.services.ntfy-sh.client.settings.subscribe = [
+      {
+        topic = "ssh";
+      }
+    ];
+  }
+]

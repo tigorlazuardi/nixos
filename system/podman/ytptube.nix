@@ -169,7 +169,6 @@ lib.mkMerge [
     profile.services.ntfy-sh.client.settings.subscribe = [
       {
         topic = "ytptube";
-        command = ''${pkgs.libnotify}/bin/notify-send --category=im.received --urgency=normal "$title" "$message"'';
       }
     ];
   }

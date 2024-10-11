@@ -85,7 +85,8 @@ lib.mkMerge [
             content = builtins.readFile ((pkgs.formats.yaml { }).generate filename (
               {
                 default-host = "https://${domain}";
-                detault-token = config.sops.placeholder."ntfy/tokens/tigor";
+                default-token = config.sops.placeholder."ntfy/tokens/tigor";
+                default-command = ''${pkgs.libnotify}/bin/notify-send --category=im.received --urgency=normal "$title" "$message"'';
               } // cfg.client.settings
             ));
             path = configPath;
