@@ -5,6 +5,7 @@ let
   inherit (lib) mkIf;
   domain = "ntfy.tigor.web.id";
   listenAddress = "0.0.0.0:15150";
+  configPath = "/etc/ntfy/client.yml";
 in
 lib.mkMerge [
   (mkIf cfg.enable {
@@ -46,7 +47,26 @@ lib.mkMerge [
     ];
 
     environment.sessionVariables = {
-      NTFY_CONFIG = "/etc/ntfy/client.yml";
+      NTFY_CONFIG = configPath;
+    };
+
+    systemd.services.ntfy-client = {
+      enable = true;
+      wantedBy = [ "multi-user.target" ];
+      description = "ntfy client";
+      after = [ "network-online.target" ];
+      restartTriggers = [ (builtins.toJSON cfg.client.settings) ];
+      environment = {
+        DISPLAY = ":0";
+        DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/${toString config.profile.user.uid}/bus";
+      };
+      path = [ pkgs.bash ];
+      serviceConfig = {
+        User = toString config.profile.user.uid;
+        Group = toString config.profile.user.gid;
+        ExecStart = "${pkgs.ntfy-sh}/bin/ntfy subscribe --config ${configPath} --from-config";
+        Restart = "on-failure";
+      };
     };
 
     sops = {
@@ -55,20 +75,20 @@ lib.mkMerge [
           opts = { sopsFile = ../../secrets/ntfy.yaml; };
         in
         {
-          "ntfy/default/user" = opts;
-          "ntfy/default/password" = opts;
+          "ntfy/tokens/tigor" = opts;
         };
 
       templates =
         let filename = "ntfy-client.yaml"; in
         {
           ${filename} = {
-            content = builtins.readFile ((pkgs.formats.yaml { }).generate filename {
-              default-host = "https://${domain}";
-              default-user = config.sops.placeholder."ntfy/default/user";
-              default-password = config.sops.placeholder."ntfy/default/password";
-            });
-            path = "/etc/ntfy/client.yml";
+            content = builtins.readFile ((pkgs.formats.yaml { }).generate filename (
+              {
+                default-host = "https://${domain}";
+                detault-token = config.sops.placeholder."ntfy/tokens/tigor";
+              } // cfg.client.settings
+            ));
+            path = configPath;
             owner = config.profile.user.name;
           };
         };

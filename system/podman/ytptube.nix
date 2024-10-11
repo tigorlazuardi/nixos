@@ -59,8 +59,8 @@ let
     }
   ]);
 in
-{
-  config = mkIf (podman.enable && podman.${name}.enable) {
+lib.mkMerge [
+  (mkIf podman.${name}.enable {
     sops = {
       secrets =
         let
@@ -142,6 +142,7 @@ in
       mode = "0444";
     };
 
+
     virtualisation.oci-containers.containers.${name} = {
       inherit image;
       hostname = name;
@@ -163,5 +164,13 @@ in
         "io.containers.autoupdate" = "registry";
       };
     };
-  };
-}
+  })
+  {
+    profile.services.ntfy-sh.client.settings.subscribe = [
+      {
+        topic = "ytptube";
+        command = ''${pkgs.libnotify}/bin/notify-send --category=im.received --urgency=normal "$title" "$message"'';
+      }
+    ];
+  }
+]

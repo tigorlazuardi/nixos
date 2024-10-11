@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   inherit (lib) mkEnableOption mkOption types;
 in
@@ -24,9 +24,15 @@ in
     navidrome.enable = mkEnableOption "navidrome";
 
     ntfy-sh.enable = mkEnableOption "ntfy-sh";
-    ntfy-sh.client.enable = mkOption {
-      type = types.bool;
-      default = config.profile.services.ntfy-sh.enable;
+    ntfy-sh.client = {
+      settings = lib.mkOption {
+        type = (pkgs.formats.yaml { }).type;
+        default = { };
+      };
+      enable = mkOption {
+        type = types.bool;
+        default = config.profile.services.ntfy-sh.enable;
+      };
     };
 
     couchdb.enable = mkEnableOption "couchdb";
