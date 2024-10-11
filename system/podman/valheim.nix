@@ -11,8 +11,8 @@ let
   gid = toString user.gid;
   base_dir = "/var/lib/${name}";
 in
-{
-  config = mkIf (podman.enable && podman.${name}.enable) {
+lib.mkMerge [
+  (mkIf (podman.${name}.enable) {
     services.caddy.virtualHosts.${domain}.extraConfig = ''
       reverse_proxy ${ip}:80
     '';
@@ -78,5 +78,13 @@ in
           "io.containers.autoupdate" = "registry";
         };
       };
-  };
-}
+  })
+  {
+    profile.services.ntfy-sh.client.settings.subscribe = [
+      {
+        topic = "valheim";
+        command = ''${pkgs.libnotify}/bin/notify-send --category=im.received --urgency=normal "$title" "$message"'';
+      }
+    ];
+  }
+]
