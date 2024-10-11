@@ -68,6 +68,7 @@
       navidrome.enable = true;
       telemetry.enable = true;
       ntfy-sh.enable = true;
+      ntfy-sh.client.enable = false;
       couchdb.enable = true;
     };
   };
