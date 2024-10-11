@@ -47,7 +47,8 @@ lib.mkMerge [
                 -H "X-Priority: 4" \
                 -H "X-Tags: warning" \
                 -H "Authorization: Bearer ${config.sops.placeholder."ntfy/tokens/homeserver"}" \
-                -d "SSH login: $PAM_USER from $PAM_RHOST" \
+                -H "X-Title: SSH login" \
+                -d "$PAM_USER from $PAM_RHOST" \
                 https://ntfy.tigor.web.id/ssh
         fi
       ''));
