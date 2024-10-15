@@ -88,6 +88,9 @@
     flatpak = {
       enable = true;
       zen-browser.enable = true;
+      redisinsight.enable = true;
     };
+
+    services.ntfy-sh.client.enable = true;
   };
 }
