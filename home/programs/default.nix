@@ -23,6 +23,7 @@
     ./nnn.nix
     ./node.nix
     ./obsidian.nix
+    ./redis.nix
     ./slack.nix
     ./spotify.nix
     ./starship.nix

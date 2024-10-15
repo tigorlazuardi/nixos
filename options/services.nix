@@ -35,6 +35,10 @@ in
       };
     };
 
+    redis = {
+      client.cli.enable = mkEnableOption "redis cli client";
+    };
+
     couchdb.enable = mkEnableOption "couchdb";
 
     telemetry = {

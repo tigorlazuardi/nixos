@@ -82,6 +82,7 @@ in
     flatpak = {
       enable = true;
       zen-browser.enable = true;
+      redisinsight.enable = true;
     };
 
     microsoft-edge.enable = true;
