@@ -8,6 +8,9 @@ in
     home.packages = [
       pkgs.dunst
     ];
+    wayland.windowManager.hyprland.settings.exec-once = [
+      "dunst"
+    ];
     home.file.".config/dunst/dunstrc".text = generators.toINI { } {
       global = {
         # Which monitor should the notifications be displayed on.

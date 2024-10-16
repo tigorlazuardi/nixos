@@ -22,7 +22,6 @@ in
     profile.home.programs.foot.enable = lib.mkForce true;
 
     home.packages = [
-      inputs.hyprland-contrib.packages.${pkgs.system}.grimblast
       pkgs.wl-clipboard
       pkgs.kcalc
     ];
@@ -138,11 +137,6 @@ in
           # Language Input
           "$mod, I, exec, fcitx5-remote -t"
 
-          "$mod, PRINT, exec, grimblast --notify copysave output"
-          "$mod SHIFT, PRINT, exec, grimblast --notify save output - | swappy -f -"
-          ", PRINT, exec, grimblast --notify copysave area"
-          "SHIFT, PRINT, exec, grimblast --notify save area - | swappy -f -"
-          "ALT, PRINT, exec, grimblast --wait 1 --notify save area - | swappy -f -"
         ];
 
         binde = [
@@ -236,15 +230,12 @@ in
 
         exec-once=${init-wallpaper.path} ${./wallpaper.jpeg}
         exec-once=wallust run ${config.home.homeDirectory}/.cache/wallpaper/current
-        exec-once=swayosd-libinput-backend
-        exec-once=swayosd-server
         exec-once=swww-daemon
         exec-once=bash -c "sleep 10; hypridle"
         exec-once=waybar
         exec-once=nm-applet
         exec-once=pasystray
         exec-once=pypr
-        exec-once=dunst
 
         source=${config.home.homeDirectory}/.cache/wallust/hyprland.conf
         exec-once=sleep 0.2 && swww img ${config.home.homeDirectory}/.cache/wallpaper/current

@@ -4,10 +4,11 @@ let
 in
 {
   imports = [
-    ./dunst.nix
+    # ./dunst.nix
     ./hypridle.nix
     ./hyprland.nix
     ./hyprlock.nix
+    ./hyprshot.nix
     # hyprpaper seems to be broken with out of memory and failure to swap wallpapers correctly.
     # Use swww for now until the application is stable.
     # ./hyprpaper.nix
@@ -16,8 +17,10 @@ in
     ./wallust.nix
     ./waybar.nix
     ./wlogout.nix
-    ./swappy.nix
+    # ./swappy.nix
     ./alacritty.nix
+    ./swayosd.nix
+    ./sway-notification-center.nix
   ];
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
