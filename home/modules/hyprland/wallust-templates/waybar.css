@@ -454,3 +454,12 @@ window#waybar.empty #window {
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
 }
+
+#custom-notification {
+  font-family: "NotoSansMono Nerd Font";
+  margin-right: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  opacity: 0.8;
+  color: @iconcolor;
+}

@@ -19,7 +19,7 @@ in
     ./wlogout.nix
     # ./swappy.nix
     ./alacritty.nix
-    ./audio.nix
+    ./swayosd.nix
     ./sway-notification-center.nix
     ./ntfy-sh.nix
   ];

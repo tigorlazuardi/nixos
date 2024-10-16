@@ -97,17 +97,38 @@ let
       spacing = 10;
     };
 
+    clock = {
+      format = "{:%H:%M %a}";
+      timezone = "Asia/Jakarta";
+      tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+      format-alt = "{:%Y-%m-%d}";
+    };
+
     "custom/exit" = {
       format = "";
       on-click = "wlogout";
       tooltip = false;
     };
 
-    clock = {
-      format = "{:%H:%M %a}";
-      timezone = "Asia/Jakarta";
-      tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-      format-alt = "{:%Y-%m-%d}";
+    "custom/notification" = {
+      tooltip = false;
+      format = "{icon}";
+      format-icons = {
+        notification = "<span foreground='red'><sup></sup></span>";
+        none = "";
+        dnd-notification = "<span foreground='red'><sup></sup></span>";
+        dnd-none = "";
+        inhibited-notification = "<span foreground='red'><sup></sup></span>";
+        inhibited-none = "";
+        dnd-inhibited-notification = "<span foreground='red'><sup></sup></span>";
+        dnd-inhibited-none = "";
+      };
+      return-type = "json";
+      exec-if = "which swaync-client";
+      exec = "swaync-client --subscribe-waybar";
+      on-click = "swaync-client --toggle-panel --skip-wait";
+      on-click-right = "swaync-client --toggle-dnd --skip-wait";
+      escape = true;
     };
   };
 in
@@ -148,7 +169,7 @@ in
             "bluetooth"
             "battery"
             "network"
-            # "group/hardware"
+            "custom/notification"
             "custom/cliphist"
             "idle_inhibitor"
             "tray"
