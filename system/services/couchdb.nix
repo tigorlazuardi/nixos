@@ -39,10 +39,13 @@ in
     };
 
     services.caddy.virtualHosts."couchdb.tigor.web.id".extraConfig = ''
-      @origin header Origin {args[0]}
-      header @origin {
-        Access-Control-Allow-Origin "{args[0]}"
+      @obsidian header Origin "app://obsidian.md"
+      header @obsidian {
+        Access-Control-Allow-Origin "app://obsidian.md"
         Access-Control-Allow-Methods "OPTIONS,HEAD,GET,POST,PUT,PATCH,DELETE"
+        Access-Control-Allow-Credentials "true"
+        Access-Control-Allow-Headers "Authorization,Content-Type"
+        defer
       }
       @options method OPTIONS
       respond @options 204
