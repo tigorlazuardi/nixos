@@ -12,5 +12,9 @@ in
       source = ./rofi;
       recursive = true;
     };
+
+    wayland.windowManager.hyprland.settings.bind = [
+      "$mod, D, exec, rofi -show drun -replace -i"
+    ];
   };
 }

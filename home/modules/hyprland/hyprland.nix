@@ -91,7 +91,6 @@ in
           ''$mod, RETURN, exec, footclient''
           "$mod, E, exec, thunar"
           "$mod, B, exec, microsoft-edge"
-          "$mod, D, exec, rofi -show drun -replace -i"
           "$mod, BackSpace, exec, wlogout"
           ''$mod, F, exec, ${select-window.path}''
           "$mod, W, exec, pypr wall next"
@@ -151,24 +150,11 @@ in
           "$mod, mouse:272, movewindow"
           "$mod, mouse:273, resizewindow"
         ];
-        # e -> repeat, will repeat when held.
-        # l -> even when locked
-        bindel = [
-          # Media
-          ", XF86AudioRaiseVolume, exec, swayosd-client --output-volume raise --max-volume 150"
-          ", XF86AudioLowerVolume, exec, swayosd-client --output-volume lower --max-volume 150"
-
-          # Light
-          ", XF86MonBrightnessUp, exec, swayosd-client --brightness +10"
-          ", XF86MonBrightnessDown, exec, swayosd-client --brightness -10"
-        ];
         bindl = [
-          ", XF86AudioMute, exec, swayosd-client --output-volume mute-toggle"
           ", XF86AudioPlay, exec, playerctl play-pause"
           ", XF86AudioPause, exec, playerctl pause"
           ", XF86AudioNext, exec, playerctl next"
           ", XF86AudioPrev, exec, playerctl previous"
-          ", XF86AudioMicMute, exec, swayosd-client --input-volume mute-toggle"
           ", XF86Calculator, exec, qalculate-gtk"
         ];
 
