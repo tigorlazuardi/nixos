@@ -1,35 +1,126 @@
 { lib, config, unstable, pkgs, ... }:
 let
   cfg = config.profile.hyprland;
+  modules = (pkgs.formats.json { }).generate "modules.json" {
+    pulseaudio = {
+      format = "{icon}   {volume}%";
+      format-blocked = "{volume}%  {icon} {format_source}";
+      format-bluetooth-muted = " {icon} {format_source}";
+      format-muted = " {format_source}";
+      format-source = "{volume}% ";
+      format-source-muted = "";
+      format-icons = {
+        headphone = " ";
+        hands-free = " ";
+        headset = " ";
+        phone = " ";
+        portable = " ";
+        car = " ";
+        default = [ " " " " " " ];
+      };
+      on-click = "pavucontrol";
+    };
+    bluetooth = {
+      format = "  {status}";
+      format-disabled = "";
+      format-off = "";
+      interval = 30;
+      on-click = "blueman-manager";
+      format-no-controller = "";
+    };
+    battery = {
+      states = {
+        warning = 30;
+        critical = 15;
+      };
+      format = "{icon}  {capacity}%";
+      format-charging = "  {capacity}%";
+      format-plugged = "  {capacity}%";
+      format-alt = "{icon}  {time}";
+      format-icons = [ " " " " " " " " " " ];
+    };
+    network = {
+      format = "{ifname}";
+      format-wifi = "   {signalStrength}%";
+      format-ethernet = "  {ifname}";
+      format-disconnected = "Disconnected";
+      tooltip-format = " {ifname} via {gwaddri}";
+      tooltip-format-wifi = "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}";
+      tooltip-format-ethernet = " {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}";
+      tooltip-format-disconnected = "Disconnected";
+      max-length = 50;
+      on-click = "nm-connection-editor";
+    };
+
+    "custom/cliphist" = {
+      format = "";
+      on-click = ''cliphist list | rofi -dmenu -font "$gui-font" -p "Select item to copy" -lines 10 -width 35 | cliphist decode | wl-copy'';
+      tooltip = false;
+    };
+
+
+    "hyprland/workspaces" = {
+      on-click = "activate";
+      active-only = false;
+      all-outputs = false;
+      format = "{icon}";
+      format-icons = {
+        "1" = "1";
+        "2" = "2";
+        "3" = "3";
+        "4" = "4";
+        "5" = "  5";
+        "6" = "  6";
+        "7" = "󰙯  7";
+        "8" = "8";
+        "9" = "9";
+        "10" = "10";
+      };
+      persistent-workspaces = cfg.waybar.persistent-workspaces;
+      ignore-workspaces = [
+        ''^-'' # Ignore negatives (Scratchpads takes negavite workspace values).
+      ];
+    };
+
+    idle_inhibitor = {
+      format = "{icon}";
+      tooltip = true;
+      format-icons = {
+        activated = "";
+        deactivated = "";
+      };
+      on-click-right = "hyprlock";
+    };
+
+    tray = {
+      icon-size = 21;
+      spacing = 10;
+    };
+
+    "custom/exit" = {
+      format = "";
+      on-click = "wlogout";
+      tooltip = false;
+    };
+
+    clock = {
+      format = "{:%H:%M %a}";
+      timezone = "Asia/Jakarta";
+      tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+      format-alt = "{:%Y-%m-%d}";
+    };
+  };
 in
 {
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkgs.btop ];
-    home.file.".config/waybar/modules.jsonc".source = ./waybar-modules.jsonc;
-    home.file.".config/waybar/hyprland.jsonc".text = builtins.toJSON {
-      "hyprland/workspaces" = {
-        "on-click" = "activate";
-        "active-only" = false;
-        "all-outputs" = false;
-        "format" = "{icon}";
-        "format-icons" = {
-          "1" = "1";
-          "2" = "2";
-          "3" = "3";
-          "4" = "4";
-          "5" = "  5";
-          "6" = "  6";
-          "7" = "󰙯  7";
-          "8" = "8";
-          "9" = "9";
-          "10" = "10";
-        };
-        "persistent-workspaces" = cfg.waybar.persistent-workspaces;
-        "ignore-workspaces" = [
-          ''^-'' # Ignore negatives (Scratchpads takes negavite workspace values).
-        ];
-      };
-    };
+    home.packages = with pkgs; [
+      cliphist
+      wl-clipboard
+      rofi-wayland
+    ];
+    wayland.windowManager.hyprland.settings.exec-once = [
+      "wl-paste --watch cliphist store"
+    ];
     programs.waybar = {
       package = unstable.waybar;
       enable = true;
@@ -44,11 +135,9 @@ in
           spacing = 0;
           reload_style_on_change = true;
           include = [
-            "~/.config/waybar/modules.jsonc"
-            "~/.config/waybar/hyprland.jsonc"
+            modules
           ];
           modules-left = [
-            "group/quicklinks"
             "hyprland/window"
           ];
           modules-center = [
@@ -59,7 +148,7 @@ in
             "bluetooth"
             "battery"
             "network"
-            "group/hardware"
+            # "group/hardware"
             "custom/cliphist"
             "idle_inhibitor"
             "tray"
@@ -69,8 +158,10 @@ in
         };
       };
       # style = ''
-      #   @import "${config.home.homeDirectory}/.cache/wallust/waybar.css";
+      #   @import "${config.home.homeDirectory}/.cache/wallust/waybar.css"  ;
       # '';
     };
   };
 }
+
+
