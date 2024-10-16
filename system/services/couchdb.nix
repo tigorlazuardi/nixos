@@ -39,6 +39,14 @@ in
     };
 
     services.caddy.virtualHosts."couchdb.tigor.web.id".extraConfig = ''
+      @origin header Origin {args[0]}
+      header @origin {
+        Access-Control-Allow-Origin "{args[0]}"
+        Access-Control-Allow-Methods "OPTIONS,HEAD,GET,POST,PUT,PATCH,DELETE"
+      }
+      @options method OPTIONS
+      respond @options 204
+
       reverse_proxy localhost:5984
     '';
 
