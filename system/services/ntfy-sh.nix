@@ -50,25 +50,6 @@ lib.mkMerge [
       NTFY_CONFIG = configPath;
     };
 
-    systemd.services.ntfy-client = {
-      enable = true;
-      wantedBy = [ "multi-user.target" ];
-      description = "ntfy client";
-      after = [ "network-online.target" ];
-      restartTriggers = [ (builtins.toJSON cfg.client.settings) ];
-      environment = {
-        DISPLAY = ":0";
-        DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/${toString config.profile.user.uid}/bus";
-      };
-      path = [ pkgs.bash ];
-      serviceConfig = {
-        User = toString config.profile.user.uid;
-        Group = toString config.profile.user.gid;
-        ExecStart = "${pkgs.ntfy-sh}/bin/ntfy subscribe --config ${configPath} --from-config";
-        Restart = "on-failure";
-      };
-    };
-
     sops = {
       secrets =
         let

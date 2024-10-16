@@ -21,6 +21,7 @@ in
     ./alacritty.nix
     ./swayosd.nix
     ./sway-notification-center.nix
+    ./ntfy-sh.nix
   ];
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
