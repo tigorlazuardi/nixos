@@ -6,8 +6,12 @@ let
 in
 {
   config = mkIf (hyprland.enable && cfg.enable) {
+    home.packages = with pkgs; [
+      ntfy-sh
+    ];
+
     wayland.windowManager.hyprland.settings.exec-once = [
-      "${pkgs.ntfy-sh}/bin/ntfy subscribe --config /etc/ntfy/client.yml --from-config"
+      "ntfy subscribe --config /etc/ntfy/client.yml --from-config"
     ];
   };
 }
