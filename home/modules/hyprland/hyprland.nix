@@ -1,4 +1,4 @@
-{ lib, inputs, pkgs, config, ... }:
+{ lib, pkgs, config, ... }:
 let
   cfg = config.profile.hyprland;
   select-window = rec {
@@ -9,11 +9,6 @@ let
   init-wallpaper = rec {
     filename = "init-wallpaper.sh";
     script = pkgs.writeScriptBin filename (builtins.readFile (./scripts/init-wallpaper.sh));
-    path = "${script}/bin/${filename}";
-  };
-  gnome-keyring = rec {
-    filename = "gnome-keyring.sh";
-    script = pkgs.writeScriptBin filename (builtins.readFile (./scripts/gnome-keyring.sh));
     path = "${script}/bin/${filename}";
   };
 in
@@ -211,7 +206,6 @@ in
       };
       extraConfig = /*hyprlang*/ ''
         exec-once=dbus-update-activation-environment --all
-        exec-once=${gnome-keyring.path} ${config.sops.secrets."gnome-keyring/${config.home.username}".path}
         exec-once=foot --server
 
         exec-once=${init-wallpaper.path} ${./wallpaper.jpeg}
