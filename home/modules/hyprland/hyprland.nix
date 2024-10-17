@@ -6,11 +6,6 @@ let
     script = pkgs.writeScriptBin filename (builtins.readFile (./scripts/search-window.sh));
     path = "${script}/bin/${filename}";
   };
-  init-wallpaper = rec {
-    filename = "init-wallpaper.sh";
-    script = pkgs.writeScriptBin filename (builtins.readFile (./scripts/init-wallpaper.sh));
-    path = "${script}/bin/${filename}";
-  };
 in
 {
   config = lib.mkIf cfg.enable {
@@ -25,6 +20,9 @@ in
       enable = true;
       systemd.variables = [ "all" ];
       settings = {
+        exec-once = lib.mkOrder 5 [
+          ''${pkgs.dbus}/bin/dbus-update-activation-environment --all''
+        ];
         # window decors
         general = {
           gaps_in = 10;
@@ -205,11 +203,8 @@ in
         ];
       };
       extraConfig = /*hyprlang*/ ''
-        exec-once=dbus-update-activation-environment --all
         exec-once=foot --server
 
-        exec-once=${init-wallpaper.path} ${./wallpaper.jpeg}
-        exec-once=wallust run ${config.home.homeDirectory}/.cache/wallpaper/current
         exec-once=swww-daemon
         exec-once=bash -c "sleep 10; hypridle"
         exec-once=waybar
