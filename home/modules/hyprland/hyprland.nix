@@ -10,7 +10,6 @@ in
       pkgs.wl-clipboard
       pkgs.kcalc
     ];
-    sops.secrets."gnome-keyring/${config.home.username}" = { };
     wayland.windowManager.hyprland = {
       enable = true;
       systemd.variables = [ "all" ];
