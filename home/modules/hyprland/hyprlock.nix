@@ -11,6 +11,7 @@ in
     home.file.".config/hypr/hyprlock.conf".text =
       let
         blurred_image = "${config.home.homeDirectory}/.cache/wallpaper/blurred.png";
+        profilePicture = "${config.home.homeDirectory}/.cache/wallpaper/square.png";
       in
         /*hyprlang*/
       ''
@@ -81,7 +82,7 @@ in
 
         image {
             monitor =
-            path = $HOME/.cache/wallpaper/square.png
+            path = ${profilePicture}
             size = 280 # lesser side if not 1:1 ratio
             rounding = -1 # negative values mean circle
             border_size = 4
