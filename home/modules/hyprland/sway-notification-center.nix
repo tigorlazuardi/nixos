@@ -9,6 +9,11 @@ in
       libnotify
     ];
 
+    home.file.".config/swaync/config.json".text = builtins.toJSON {
+      positionX = "right";
+      positionY = "top";
+    };
+
     wayland.windowManager.hyprland.settings.exec-once = [
       "swaync"
     ];
