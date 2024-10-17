@@ -5,13 +5,6 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    programs.thunar = {
-      enable = true;
-      plugins = with pkgs.xfce; [
-        thunar-volman
-        thunar-archive-plugin
-      ];
-    };
     programs.xfconf.enable = true;
     programs.hyprland = {
       enable = true;
@@ -20,6 +13,8 @@ in
     };
     services.gvfs.enable = true; # Mount, trash, and other functionalities
     services.tumbler.enable = true; # Thumbnail support for images
+    programs.nautilus-open-any-terminal.enable = true;
+    services.gnome.sushi.enable = true; # File previewer
 
     environment = {
       sessionVariables = {
@@ -31,6 +26,8 @@ in
         poppler # .pdf filees
         ffmpegthumbnailer # video thumbnailer
         mcomix # comicbook archives
+        gnome.nautilus # file manager
+
         gwenview
 
         # Hyprland Programs
