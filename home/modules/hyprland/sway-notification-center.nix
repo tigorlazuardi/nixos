@@ -10,7 +10,7 @@ in
     ];
 
     home.file.".config/swaync/config.json".text = builtins.toJSON {
-      positionX = "right";
+      positionX = "center";
       positionY = "top";
     };
 
