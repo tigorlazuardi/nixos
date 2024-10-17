@@ -171,13 +171,13 @@ in
           ];
           modules-center = [
             "hyprland/workspaces"
+            "custom/notification"
           ];
           modules-right = [
             "pulseaudio"
             "bluetooth"
             "battery"
             "network"
-            "custom/notification"
             "custom/cliphist"
             "idle_inhibitor"
             "tray"
