@@ -1,11 +1,6 @@
 { lib, pkgs, config, ... }:
 let
   cfg = config.profile.hyprland;
-  select-window = rec {
-    filename = "select-window.sh";
-    script = pkgs.writeScriptBin filename (builtins.readFile (./scripts/search-window.sh));
-    path = "${script}/bin/${filename}";
-  };
 in
 {
   config = lib.mkIf cfg.enable {
@@ -85,7 +80,6 @@ in
           "$mod, E, exec, thunar"
           "$mod, B, exec, microsoft-edge"
           "$mod, BackSpace, exec, wlogout"
-          ''$mod, F, exec, ${select-window.path}''
           "$mod, S, exec, foot ssh homeserver@vpn.tigor.web.id"
 
           # Workspaces
