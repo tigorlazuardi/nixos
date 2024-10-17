@@ -86,7 +86,6 @@ in
           "$mod, B, exec, microsoft-edge"
           "$mod, BackSpace, exec, wlogout"
           ''$mod, F, exec, ${select-window.path}''
-          "$mod, W, exec, pypr wall next"
           "$mod, S, exec, foot ssh homeserver@vpn.tigor.web.id"
 
           # Workspaces
@@ -210,7 +209,6 @@ in
         exec-once=waybar
         exec-once=nm-applet
         exec-once=pasystray
-        exec-once=pypr
 
         source=${config.home.homeDirectory}/.cache/wallust/hyprland.conf
         exec-once=sleep 0.2 && swww img ${config.home.homeDirectory}/.cache/wallpaper/current

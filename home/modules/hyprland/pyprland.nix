@@ -1,37 +1,47 @@
 { lib, pkgs, unstable, config, ... }:
 let
   cfg = config.profile.hyprland;
-  draw-wallpaper = rec {
-    filename = "select-wallpaper.sh";
-    script = pkgs.writeScriptBin filename (builtins.readFile ./scripts/draw-wallpaper.sh);
-    path = "${script}/bin/${filename}";
-  };
+  inherit (lib.meta) getExe;
+  wallpaperDir = "${config.home.homeDirectory}/.cache/wallpaper";
+  draw-wallpaper = pkgs.writeShellScriptBin "draw-wallpaper.sh" /*sh*/ ''
+    image_file=$1
+    target="${wallpaperDir}/current"
+    blur_target="${wallpaperDir}/blurred.png"
+
+    mkdir -p "${wallpaperDir}"
+    echo "$image_file" > "${wallpaperDir}/origin.txt"
+    cp "$image_file" "$target"
+    swww img "$target"
+    ${unstable.wallust}/bin/wallust run "$target"
+    ${pkgs.imagemagick}/bin/gm convert -resize 75% -blur 50x30 "$target" "$blur_target"
+  '';
 in
 {
   config = lib.mkIf cfg.enable {
-    home.packages = [ unstable.pyprland unstable.swww ];
+    home.packages = [
+      unstable.pyprland
+      unstable.swww
+    ];
     home.file.".config/hypr/pyprland.toml".source =
       let
         tomlFormat = pkgs.formats.toml { };
       in
       tomlFormat.generate "pyprland.toml" {
-        # https://github.com/hyprland-community/pyprland/wiki/Getting-started#configuring
         pyprland.plugins = [
-          # "scratchpads"
-          # "fetch_client_menu"
           "wallpapers"
         ];
-        # scratchpads.term = {
-        #   animation = "fromTop";
-        #   command = "foot --app-id foot-scratchpad";
-        #   class = "foot-scratchpad";
-        #   size = "75% 75%";
-        # };
         wallpapers = {
           path = cfg.pyprland.wallpaper-dirs;
           unique = false;
-          command = ''${draw-wallpaper.path} [file]'';
+          command = ''${getExe draw-wallpaper} [file]'';
         };
       };
+
+    wayland.windowManager.hyprland.settings = {
+      exec-once = [ "pypr" ];
+      bind = [
+        "$mod, W, exec, pypr wall next"
+      ];
+    };
   };
 }
