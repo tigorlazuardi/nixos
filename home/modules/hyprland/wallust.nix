@@ -7,7 +7,8 @@ let
   initWallPaperScript = pkgs.writeShellScriptBin "init-wallpaper.sh" ''
     init_wallpaper="${./wallpaper.jpeg}"
     cache_file="${wallpaperDir}/current"
-    blurred="${wallpaperDir}/blurred"
+    blurred="${wallpaperDir}/blurred.png"
+    square="${wallpaperDir}/square.png"
 
     mkdir -p "${wallpaperDir}"
 
@@ -16,7 +17,11 @@ let
     fi
 
     if [ ! -f "$blurred" ]; then
-        ${pkgs.imagemagick}/bin/gm convert -resize 75% -blur 50x30 "$cache_file" "$blurred"
+        ${pkgs.graphicsmagick}/bin/gm convert -resize 75% -blur 50x30 "$cache_file" "$blurred"
+    fi
+
+    if [ ! -f "$square" ]; then
+        ${pkgs.imagemagick}/bin/magick "$cache_file" -resize 25% -gravity Center -extent 1:1 "$square"
     fi
 
     if [ ! -f "${config.home.homeDirectory}/.cache/wallust/sequences" ]; then

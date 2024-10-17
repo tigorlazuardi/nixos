@@ -14,6 +14,10 @@ in
       in
         /*hyprlang*/
       ''
+        general {
+            ignore_empty_input = true
+        }
+
         background {
             monitor =
             path = ${blurred_image}
@@ -30,7 +34,7 @@ in
             outer_color = rgb(151515)
             inner_color = rgb(FFFFFF)
             font_color = rgb(10, 10, 10)
-            fade_on_empty = true
+            fade_on_empty = false
             fade_timeout = 1000 # Milliseconds before fade_on_empty is triggered.
             placeholder_text = <i>Input Password...</i> # Text rendered in the input box when it's empty.
             hide_input = false
@@ -64,7 +68,7 @@ in
 
         label {
             monitor =
-            text = $USER
+            text = ${config.profile.user.fullName}
             color = rgba(200, 200, 200, 1.0)
             font_size = 20
             font_family = Fira Semibold
@@ -77,7 +81,7 @@ in
 
         image {
             monitor =
-            path = $HOME/.cache/wallpaper/square_wallpaper.png
+            path = $HOME/.cache/wallpaper/square.png
             size = 280 # lesser side if not 1:1 ratio
             rounding = -1 # negative values mean circle
             border_size = 4

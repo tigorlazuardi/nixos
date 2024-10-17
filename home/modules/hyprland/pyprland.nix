@@ -7,13 +7,15 @@ let
     image_file=$1
     target="${wallpaperDir}/current"
     blur_target="${wallpaperDir}/blurred.png"
+    square_target="${wallpaperDir}/square.png"
 
     mkdir -p "${wallpaperDir}"
     echo "$image_file" > "${wallpaperDir}/origin.txt"
     cp "$image_file" "$target"
     swww img "$target"
     ${unstable.wallust}/bin/wallust run "$target"
-    ${pkgs.imagemagick}/bin/gm convert -resize 75% -blur 50x30 "$target" "$blur_target"
+    ${pkgs.graphicsmagick}/bin/gm convert -resize 75% -blur 50x30 "$target" "$blur_target"
+    ${pkgs.imagemagick}/bin/magick "$target" -resize 25% -gravity Center -extent 1:1 "$square_target"
   '';
 in
 {
