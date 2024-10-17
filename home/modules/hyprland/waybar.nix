@@ -110,6 +110,14 @@ let
       tooltip = false;
     };
 
+    "hyprland/window" = {
+      rewrite = {
+        "(.*) - Microsoft Edge$" = "   $1";
+        "(.*) - NVIM" = "   $1";
+        "^foot$" = "    Foot";
+      };
+    };
+
     "custom/notification" = {
       tooltip = false;
       format = "{icon}";
