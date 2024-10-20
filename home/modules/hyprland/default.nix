@@ -20,7 +20,7 @@ in
     # ./swappy.nix
     ./alacritty.nix
     ./swayosd.nix
-    ./sway-notification-center.nix
+    ./swaync.nix
     ./ntfy-sh.nix
     ./gnome-keyring.nix
   ];
