@@ -10,8 +10,8 @@ in
       ntfy-sh
     ];
 
-    wayland.windowManager.hyprland.settings.exec-once = [
-      "ntfy subscribe --config /etc/ntfy/client.yml --from-config"
-    ];
+    # wayland.windowManager.hyprland.settings.exec-once = [
+    #   "ntfy subscribe --config /etc/ntfy/client.yml --from-config"
+    # ];
   };
 }
