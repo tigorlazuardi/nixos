@@ -1,11 +1,11 @@
-{ lib, unstable, config, ... }:
+{ lib, pkgs, config, ... }:
 let
   cfg = config.profile.hyprland;
 in
 {
   config = lib.mkIf cfg.enable {
     home.packages = [
-      unstable.hyprlock
+      pkgs.hyprlock
     ];
 
     home.file.".config/hypr/hyprlock.conf".text =
@@ -60,7 +60,7 @@ in
             color = rgba(200, 200, 200, 1.0)
             font_size = 55
             font_family = Fira Semibold
-            position = -100, 25
+            position = -100, 75
             halign = right
             valign = bottom
             shadow_passes = 5
