@@ -4,30 +4,30 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    home.packages = [ unstable.hypridle ];
-
-    home.file.".config/hypr/hypridle.conf".text = /*hyprlang*/ ''
-      general {
-        lock_cmd = "pidof hyprlock || hyprlock"
-        before_sleep_cmd = "hyprlock"
-        after_sleep_cmd = hyprctl dispatch dpms on
-      }
-
-      listener {
-        timeout = ${toString cfg.hypridle.lockTimeout}
-        on-timeout = "hyprlock"
-      }
-
-      listener {
-        timeout = ${toString cfg.hypridle.dpmsTimeout}
-        on-timeout = hyprctl dispatch dpms off
-        on-resume = hyprctl dispatch dpms on
-      }
-
-      listener {
-        timeout = ${toString cfg.hypridle.suspendTimeout}
-        on-timeout = systemctl suspend
-      }
-    '';
+    services.hypridle = {
+      enable = true;
+      settings = {
+        general = {
+          lock_cmd = "pidof hyprlock || hyprlock";
+          before_sleep_cmd = "loginctl lock-session";
+          after_sleep_cmd = "hyprctl dispatch dpms on";
+        };
+        listener = [
+          {
+            timeout = cfg.hypridle.lockTimeout;
+            on-timeout = "loginctl lock-session";
+          }
+          {
+            timeout = cfg.hypridle.dpmsTimeout;
+            on-timeout = "hyprctl dispatch dpms off";
+            on-resume = "hyprctl dispatch dpms on";
+          }
+          {
+            timeout = cfg.hypridle.suspendTimeout;
+            on-timeout = "systemctl suspend";
+          }
+        ];
+      };
+    };
   };
 }
