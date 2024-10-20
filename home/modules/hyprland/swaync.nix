@@ -27,6 +27,25 @@ in
       };
     };
 
+    systemd.user.services.swaync = {
+      Unit = {
+        X-Reload-Triggers = [
+          (pkgs.writeText "swaync/config.json" (builtins.toJSON config.services.swaync.settings))
+          config.services.swaync.style
+        ];
+      };
+      Service =
+        let
+          reloadScript = pkgs.writeShellScriptBin "swaync-reload.sh" /*sh*/ ''
+            ${pkgs.swaynotificationcenter}/bin/swaync-client --reload-config
+            ${pkgs.swaynotificationcenter}/bin/swaync-client --reload-css
+          '';
+        in
+        {
+          ExecReload = "${lib.meta.getExe reloadScript}";
+        };
+    };
+
     home.packages = with pkgs; [
       libnotify
     ];
