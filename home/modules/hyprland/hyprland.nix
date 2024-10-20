@@ -202,7 +202,6 @@ in
 
         source=${config.home.homeDirectory}/.cache/wallust/hyprland.conf
 
-        exec-once=bash -c "sleep 10; until ping -c 1 discord.com; do sleep 1; done; discord"
         exec-once=bash -c "sleep 10; until ping -c 1 google.com; do sleep 1; done; slack"
         exec-once=bash -c "sleep 10; until ping -c 1 nextcloud.tigor.web.id; do sleep 1; done; nextcloud --background"
       '';

@@ -48,7 +48,10 @@ in
         suspendTimeout = 7200;
       };
     };
-    discord.enable = true;
+    discord = {
+      enable = true;
+      autostart = true;
+    };
     slack.enable = true;
     whatsapp = {
       enable = true;
