@@ -19,10 +19,9 @@ in
         timeout-low = 3;
 
         scripts = {
-          _99-play-notification-sound = {
+          _98-play-notification-sound-normal = {
             exec = ''${pkgs.sox}/bin/play --volume 0.5 ${./gran_turismo_menu_sound_effect.mp3}'';
             app-name = "^(?!discord|TelegramDesktop|Slack|slack|Signal|Element).*$";
-            urgency = "Normal";
           };
         };
       };
