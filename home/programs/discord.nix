@@ -25,7 +25,7 @@ in
         script = pkgs.callPackage ../../scripts/hyprland/focus-window.nix { };
       in
       {
-        app-name = "discord";
+        app-name = "(?=discord|vesktop)";
         exec = "${getExe script}";
         run-on = "action";
       };
