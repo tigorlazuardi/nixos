@@ -30,7 +30,7 @@ let
             hyprctl dispatch focuswindow address:''${addr}
         else
             notify-send 'Complex switch' "$window"
-            hyprctl --batch "dispatch focuswindow address:''${fullscreen_on_same_ws}; dispatch fullscreen 1; dispatch focuswindow address:''${addr}; dispatch fullscreen 1"
+            hyprctl --batch "dispatch focuswindow address:''${fullscreen_on_same_ws}; dispatch fullscreen 1;"
         fi
     fi
   '';
