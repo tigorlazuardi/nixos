@@ -166,10 +166,18 @@ lib.mkMerge [
     };
   })
   {
-    profile.services.ntfy-sh.client.settings.subscribe = [
-      {
-        topic = "ytptube";
-      }
-    ];
+    profile.services.ntfy-sh.client.settings.subscribe =
+      let
+        vueIcon = pkgs.fetchurl {
+          url = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/120px-Vue.js_Logo_2.svg.png";
+          hash = "sha256-chQ5dFB22qfGpGnYJ9B6NsUWlbfAeIIoJL5bSyz2YEg=";
+        };
+      in
+      [
+        {
+          command = ''${pkgs.libnotify}/bin/notify-send --app-name="YTPTUBE" --icon="${vueIcon}" --category=im.received --urgency=normal "$title" "$message"'';
+          topic = "ytptube";
+        }
+      ];
   }
 ]
