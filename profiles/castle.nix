@@ -50,7 +50,10 @@ in
     };
     discord.enable = true;
     slack.enable = true;
-    whatsapp.enable = true;
+    whatsapp = {
+      enable = true;
+      autostart = true;
+    };
     obs.enable = true;
     avahi.enable = true;
     steam.enable = true;

@@ -148,6 +148,7 @@ in
       rofi-wayland
     ];
     wayland.windowManager.hyprland.settings.exec-once = [
+      "sleep 1 && waybar"
       "wl-paste --watch cliphist store"
     ];
     programs.waybar = {

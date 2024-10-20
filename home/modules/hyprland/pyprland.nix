@@ -22,7 +22,7 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [
       unstable.pyprland
-      unstable.swww
+      pkgs.swww
     ];
     home.file.".config/hypr/pyprland.toml".source =
       let
@@ -40,7 +40,11 @@ in
       };
 
     wayland.windowManager.hyprland.settings = {
-      exec-once = [ "pypr" ];
+      exec-once = [
+        "pypr"
+        "swww-daemon"
+        "sleep 0.2 && swww img ${config.home.homeDirectory}/.cache/wallpaper/current"
+      ];
       bind = [
         "$mod, W, exec, pypr wall next"
       ];

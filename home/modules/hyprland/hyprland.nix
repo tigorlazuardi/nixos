@@ -197,16 +197,11 @@ in
       extraConfig = /*hyprlang*/ ''
         exec-once=foot --server
 
-        exec-once=swww-daemon
-        exec-once=bash -c "sleep 10; hypridle"
-        exec-once=waybar
         exec-once=nm-applet
         exec-once=pasystray
 
         source=${config.home.homeDirectory}/.cache/wallust/hyprland.conf
-        exec-once=sleep 0.2 && swww img ${config.home.homeDirectory}/.cache/wallpaper/current
 
-        exec-once=bash -c "sleep 10; until ping -c 1 web.whatsapp.com; do sleep 1; done; whatsapp-for-linux"
         exec-once=bash -c "sleep 10; until ping -c 1 discord.com; do sleep 1; done; discord"
         exec-once=bash -c "sleep 10; until ping -c 1 google.com; do sleep 1; done; slack"
         exec-once=bash -c "sleep 10; until ping -c 1 nextcloud.tigor.web.id; do sleep 1; done; nextcloud --background"
