@@ -21,7 +21,7 @@ in
       scripts = {
         play-notification-sound = {
           exec = ''${pkgs.sox}/bin/play --volume 0.5 ${./gran_turismo_menu_sound_effect.mp3}'';
-          app-name = ".*";
+          app-name = "^(?!discord|TelegramDesktop|Slack|Signal|Element).*$";
           urgency = "Normal";
         };
       };
