@@ -52,7 +52,10 @@ in
       enable = true;
       autostart = true;
     };
-    slack.enable = true;
+    slack = {
+      enable = true;
+      autostart = true;
+    };
     whatsapp = {
       enable = true;
       autostart = true;

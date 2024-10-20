@@ -86,7 +86,7 @@ in
       /*bash*/
       ''
         packfiles() {
-          find $(nix build "nixpkgs#$1" --no-link --print-out-paths) 
+          find $(NIXPKGS_ALLOW_UNFREE=1 nix build "nixpkgs#$1" --impure --no-link --print-out-paths) 
         }
 
         build() {
