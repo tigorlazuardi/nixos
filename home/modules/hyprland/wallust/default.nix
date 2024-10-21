@@ -13,7 +13,7 @@ let
     pkgs.writeShellScriptBin "init-wallpaper.sh"
       # sh
       ''
-        init_wallpaper="${../wallpaper.jpeg}"
+        init_wallpaper="${./wallpaper.jpeg}"
         cache_file="${wallpaperDir}/current"
         blurred="${wallpaperDir}/blurred.png"
         square="${wallpaperDir}/square.png"
