@@ -9,6 +9,7 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
+    services.poweralertd.enable = true;
     services.swaync = {
       enable = true;
       style = pkgs.fetchurl {
