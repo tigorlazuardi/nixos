@@ -28,11 +28,6 @@ in
             box-shadow: none;
           }
 
-          window {
-            background: url("${config.home.homeDirectory}/.cache/wallpaper/blurred.png");
-            background-size: cover;
-          }
-
           button {
             color: #ffffff;
             font-size: 20px;

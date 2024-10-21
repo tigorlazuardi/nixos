@@ -1,4 +1,9 @@
-{ lib, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 let
   types = lib.types;
 in
@@ -75,67 +80,9 @@ in
       default = "0";
     };
 
-    wallust = {
-      backend = lib.mkOption {
-        type = lib.types.enum [
-          "full"
-          "resized"
-          "wal"
-          "thumb"
-          "fastresize"
-          "kmeans"
-        ];
-        default = "kmeans";
-        description = "How the image is parse, in order to get the colors";
-      };
-      colorSpace = lib.mkOption {
-        type = lib.types.enum [
-          "lab"
-          "labmixed"
-          "lch"
-          "lchmixed"
-        ];
-        default = "lch";
-        description = "What color space to use to produce and select the most prominent colors";
-      };
-      alpha = lib.mkOption {
-        type = lib.types.int;
-        default = 100;
-      };
-      threshold = lib.mkOption {
-        type = lib.types.int;
-        default = 1;
-      };
-      palette = lib.mkOption {
-        type = lib.types.enum [
-          "dark"
-          "dark16"
-          "darkcomp"
-          "darkcomp16"
-          "light"
-          "light16"
-          "lightcomp"
-          "lightcomp16"
-          "harddark"
-          "harddark16"
-          "harddarkcomp"
-          "harddarkcomp16"
-          "softdark"
-          "softdark16"
-          "softdarkcomp"
-          "softdarkcomp16"
-          "softlight"
-          "softlight16"
-          "softlightcomp"
-          "softlightcomp16"
-        ];
-        default = "dark";
-        description = ''Use the most prominent colors in a way that makes sense. A Scheme color palette.'';
-      };
-      checkContrast = lib.mkOption {
-        type = lib.types.bool;
-        default = true;
-      };
+    wallust.settings = lib.mkOption {
+      type = (pkgs.formats.toml { }).type;
+      default = { };
     };
   };
 }

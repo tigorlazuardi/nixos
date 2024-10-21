@@ -19,7 +19,6 @@ in
     # ./hyprpaper.nix
     ./pyprland.nix
     ./rofi.nix
-    ./wallust.nix
     ./waybar.nix
     ./wlogout.nix
     # ./swappy.nix
@@ -28,6 +27,8 @@ in
     ./swaync.nix
     ./ntfy-sh.nix
     ./gnome-keyring.nix
+
+    ./wallust
   ];
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [

@@ -18,3 +18,9 @@
 @define-color color13 {{color13}};
 @define-color color14 {{color14}};
 @define-color color15 {{color15}};
+
+
+window {
+    background: url("${config.home.homeDirectory}/.cache/wallpaper/blurred.png");
+    background-size: cover;
+}

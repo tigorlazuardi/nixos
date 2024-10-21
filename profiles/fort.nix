@@ -42,7 +42,6 @@
         ];
       };
       pyprland.wallpaper-dirs = [ "/home/tigor/Syncthing/Redmage/Laptop-Kerja" ];
-      wallust.alpha = 80;
     };
     discord = {
       enable = true;
