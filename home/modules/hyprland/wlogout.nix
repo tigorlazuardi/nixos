@@ -9,100 +9,102 @@ in
       recursive = true;
     };
     programs.wlogout = {
-      style = ''
-        /* -----------------------------------------------------
-         * Import Pywal colors 
-         * ----------------------------------------------------- */
-        @import "${config.home.homeDirectory}/.cache/wallust/wlogout.css";
+      style =
+        # css
+        ''
+          /* -----------------------------------------------------
+           * Import Pywal colors 
+           * ----------------------------------------------------- */
+          @import "${config.home.homeDirectory}/.cache/wallust/wlogout.css";
 
-        /* -----------------------------------------------------
-         * General 
-         * ----------------------------------------------------- */
+          /* -----------------------------------------------------
+           * General 
+           * ----------------------------------------------------- */
 
-        * {
-          font-family: "Fira Sans Semibold", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-          background-image: none;
-          transition: 20ms;
-          box-shadow: none;
-        }
+          * {
+            font-family: "Fira Sans Semibold", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+            background-image: none;
+            transition: 20ms;
+            box-shadow: none;
+          }
 
-        window {
-          background: url("../../.cache/blurred_wallpaper.png");
-          background-size: cover;
-        }
+          window {
+            background: url("../../.cache/blurred_wallpaper.png");
+            background-size: cover;
+          }
 
-        button {
-          color: #ffffff;
-          font-size: 20px;
+          button {
+            color: #ffffff;
+            font-size: 20px;
 
-          background-repeat: no-repeat;
-          background-position: center;
-          background-size: 25%;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 25%;
 
-          border-style: solid;
-          background-color: rgba(12, 12, 12, 0.3);
-          border: 3px solid #ffffff;
+            border-style: solid;
+            background-color: rgba(12, 12, 12, 0.3);
+            border: 3px solid #ffffff;
 
-          box-shadow:
-            0 4px 8px 0 rgba(0, 0, 0, 0.2),
-            0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        }
+            box-shadow:
+              0 4px 8px 0 rgba(0, 0, 0, 0.2),
+              0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          }
 
-        button:focus,
-        button:active,
-        button:hover {
-          color: @color11;
-          background-color: rgba(12, 12, 12, 0.5);
-          border: 3px solid @color11;
-        }
+          button:focus,
+          button:active,
+          button:hover {
+            color: @color11;
+            background-color: rgba(12, 12, 12, 0.5);
+            border: 3px solid @color11;
+          }
 
-        /* 
-        ----------------------------------------------------- 
-        Buttons
-        ----------------------------------------------------- 
-        */
+          /* 
+          ----------------------------------------------------- 
+          Buttons
+          ----------------------------------------------------- 
+          */
 
-        #lock {
-          margin: 10px;
-          border-radius: 20px;
-          background-image: image(url("icons/lock.png"));
-        }
+          #lock {
+            margin: 10px;
+            border-radius: 20px;
+            background-image: image(url("icons/lock.png"));
+          }
 
-        #logout {
-          margin: 10px;
-          border-radius: 20px;
-          background-image: image(url("icons/logout.png"));
-        }
+          #logout {
+            margin: 10px;
+            border-radius: 20px;
+            background-image: image(url("icons/logout.png"));
+          }
 
-        #suspend {
-          margin: 10px;
-          border-radius: 20px;
-          background-image: image(url("icons/suspend.png"));
-        }
+          #suspend {
+            margin: 10px;
+            border-radius: 20px;
+            background-image: image(url("icons/suspend.png"));
+          }
 
-        #hibernate {
-          margin: 10px;
-          border-radius: 20px;
-          background-image: image(url("icons/hibernate.png"));
-        }
+          #hibernate {
+            margin: 10px;
+            border-radius: 20px;
+            background-image: image(url("icons/hibernate.png"));
+          }
 
-        #shutdown {
-          margin: 10px;
-          border-radius: 20px;
-          background-image: image(url("icons/shutdown.png"));
-        }
+          #shutdown {
+            margin: 10px;
+            border-radius: 20px;
+            background-image: image(url("icons/shutdown.png"));
+          }
 
-        #reboot {
-          margin: 10px;
-          border-radius: 20px;
-          background-image: image(url("icons/reboot.png"));
-        }
-      '';
+          #reboot {
+            margin: 10px;
+            border-radius: 20px;
+            background-image: image(url("icons/reboot.png"));
+          }
+        '';
       enable = true;
       layout = [
         {
           label = "lock";
-          action = "hyprlock";
+          action = "loginctl lock-session";
           text = "Lock";
           keybind = "l";
         }
