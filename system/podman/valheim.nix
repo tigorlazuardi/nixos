@@ -54,13 +54,13 @@ lib.mkMerge [
       };
     };
 
-    systemd.tmpfiles.settings."podman-${name}-hutasuhut" = {
-      ${base_dir_hutasuhut}.d = {
-        group = config.profile.user.name;
-        mode = "0755";
-        user = config.profile.user.name;
-      };
-    };
+    # systemd.tmpfiles.settings."podman-${name}-hutasuhut" = {
+    #   ${base_dir_hutasuhut}.d = {
+    #     group = config.profile.user.name;
+    #     mode = "0755";
+    #     user = config.profile.user.name;
+    #   };
+    # };
 
     virtualisation.oci-containers.containers.${name} = {
       inherit image;
@@ -89,34 +89,34 @@ lib.mkMerge [
         "io.containers.autoupdate" = "registry";
       };
     };
-    virtualisation.oci-containers.containers."${name}-hutasuhut" = {
-      inherit image;
-      hostname = name;
-      autoStart = true;
-      ports = [ "2457:2457/udp" ];
-      volumes = [
-        "${base_dir_hutasuhut}/config:/config"
-        "${base_dir_hutasuhut}/data:/opt/valheim"
-      ];
-      environment = {
-        TZ = "Asia/Jakarta";
-        SERVER_NAME = "Hutasuhut";
-        WORLD_NAME = "Hutasuhut";
-        STATUS_HTTP = "true";
-        PUID = uid;
-        PGID = gid;
-      };
-      extraOptions = [
-        "--network=podman"
-        "--ip=${ip-hutasuhut}"
-        "--cap-add=sys_nice"
-      ];
-      environmentFiles = [ config.sops.templates."valheim-env".path ];
-      labels = {
-        "io.containers.autoupdate" = "registry";
-      };
-    };
+    # virtualisation.oci-containers.containers."${name}-hutasuhut" = {
+    #   inherit image;
+    #   hostname = name;
+    #   autoStart = true;
+    #   ports = [ "2457:2457/udp" ];
+    #   volumes = [
+    #     "${base_dir_hutasuhut}/config:/config"
+    #     "${base_dir_hutasuhut}/data:/opt/valheim"
+    #   ];
+    #   environment = {
+    #     TZ = "Asia/Jakarta";
+    #     SERVER_NAME = "Hutasuhut";
+    #     WORLD_NAME = "Hutasuhut";
+    #     STATUS_HTTP = "true";
+    #     PUID = uid;
+    #     PGID = gid;
+    #   };
+    #   extraOptions = [
+    #     "--network=podman"
+    #     "--ip=${ip-hutasuhut}"
+    #     "--cap-add=sys_nice"
+    #   ];
+    #   environmentFiles = [ config.sops.templates."valheim-env".path ];
+    #   labels = {
+    #     "io.containers.autoupdate" = "registry";
+    #   };
+    # };
   })
-  { profile.services.ntfy-sh.client.settings.subscribe = [ { topic = "valheim"; } ]; }
-  { profile.services.ntfy-sh.client.settings.subscribe = [ { topic = "valheim-hutasuhut"; } ]; }
+  { profile.services.ntfy-sh.client.settings.subscribe = [{ topic = "valheim"; }]; }
+  # { profile.services.ntfy-sh.client.settings.subscribe = [{ topic = "valheim-hutasuhut"; }]; }
 ]
