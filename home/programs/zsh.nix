@@ -24,7 +24,7 @@ in
         unsetopt GLOBAL_RCS
       '';
     autosuggestion.enable = true;
-    enableCompletion = true;
+    enableCompletion = false;
     defaultKeymap = "emacs";
     dirHashes = {
       docs = "$HOME/Documents";
@@ -59,9 +59,17 @@ in
       save = 40000;
       size = 40000;
     };
-    completionInit = lib.mkOrder 9999 (concatStrings [
+    syntaxHighlighting.enable = true;
+    initExtraFirst = lib.mkOrder 9999 (concatStrings [
       # bash
       ''
+        export ZSH_CACHE_DIR=$HOME/.cache/zsh
+
+        _ZSH_COLOR_SCHEME_FILE=$HOME/.cache/wallust/sequences
+        if [ -f "$_ZSH_COLOR_SCHEME_FILE" ]; then
+            (cat "$_ZSH_COLOR_SCHEME_FILE" &)
+        fi
+
         mkdir -p $ZSH_CACHE_DIR/completions
         fpath+=$ZSH_CACHE_DIR/completions
         fpath+=${pkgs.zsh-completions}/share/zsh/site-functions
@@ -73,26 +81,7 @@ in
           fi
         ''
       )
-      # Value below must be always last in the completionInit
-      # bash
-      ''
-        autoload -U compinit && compinit
-      ''
     ]);
-    syntaxHighlighting.enable = true;
-    initExtraFirst = # bash
-      ''
-        export ZSH_CACHE_DIR=$HOME/.cache/zsh
-
-        # if [ -f $HOME/.config/zsh/.p10k.zsh ]; then
-        #     source $HOME/.config/zsh/.p10k.zsh
-        # fi
-
-        _ZSH_COLOR_SCHEME_FILE=$HOME/.cache/wallust/sequences
-        if [ -f "$_ZSH_COLOR_SCHEME_FILE" ]; then
-            (cat "$_ZSH_COLOR_SCHEME_FILE" &)
-        fi
-      '';
     initExtra = concatStrings [
       # bash
       ''
@@ -153,6 +142,11 @@ in
         name = "zsh-history-substring-search";
         src = pkgs.zsh-history-substring-search;
         file = "share/zsh-history-substring-search/zsh-history-substring-search.zsh";
+      }
+      {
+        name = "zsh-autocomplete";
+        src = pkgs.zsh-autocomplete;
+        file = "share/zsh-autocomplete/zsh-autocomplete.plugin.zsh";
       }
       # {
       #   name = "zsh-defer";
