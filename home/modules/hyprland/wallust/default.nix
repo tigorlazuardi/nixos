@@ -1,8 +1,9 @@
-{ pkgs
-, unstable
-, lib
-, config
-, ...
+{
+  pkgs,
+  unstable,
+  lib,
+  config,
+  ...
 }:
 let
   cfg = config.profile.hyprland;
@@ -56,18 +57,21 @@ in
       (getExe initWallPaperScript)
     ]);
 
-
     # See https://codeberg.org/explosion-mental/wallust/src/branch/master/wallust.toml
     home.file.".config/wallust/wallust.toml".source = (
-      (pkgs.formats.toml { }).generate "wallust.toml"
-        {
-          backend = "kmeans";
-          color_space = "lch";
-          alpha = 100;
-          threshold = 1;
-          palette = "dark";
-          checkContrast = true;
-        } // cfg.wallust.settings
+      (pkgs.formats.toml { }).generate "wallust.toml" (
+        lib.attrsets.mergeAttrsList [
+          {
+            backend = "kmeans";
+            color_space = "lch";
+            alpha = 100;
+            threshold = 1;
+            palette = "dark";
+            checkContrast = true;
+          }
+          cfg.wallust.settings
+        ]
+      )
     );
   };
 }
