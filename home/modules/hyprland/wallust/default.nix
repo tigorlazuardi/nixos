@@ -39,9 +39,11 @@ let
 in
 {
   imports = [
+    ./alacritty.nix
     ./foot.nix
     ./hyprland.nix
     ./kitty.nix
+    ./rofi.nix
     ./waybar.nix
     ./wlogout.nix
   ];

@@ -3,7 +3,7 @@ let
   cfg = config.profile.hyprland;
 in
 {
-  config = lib.mkIf (cfg.enable && config.profile.kitty.enable) {
+  config = lib.mkIf (cfg.enable && config.programs.kitty.enable) {
     home.file.".config/wallust/templates/kitty.conf".text =
       # css
       ''
