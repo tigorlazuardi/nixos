@@ -29,7 +29,7 @@ in
           }
 
           window {
-            background: url("../../.cache/blurred_wallpaper.png");
+            background: url("${config.home.homeDirectory}/.cache/wallpaper/blurred.png");
             background-size: cover;
           }
 
