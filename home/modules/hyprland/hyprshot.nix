@@ -24,15 +24,16 @@ in
 
     wayland.windowManager.hyprland.settings.bind =
       let
-        saveFilename = "${saveDir}/$(date +%Y-%m-%d_%H%M%S).png";
-        sattySaveCommand = ''satty --save-after-copy --filename - --fullscreen --output-filename ${saveFilename}'';
+        filename = "$(date +%Y-%m-%d_%H%M%S).png";
+        sattyFilename = "${saveDir}/${filename}";
+        sattySaveCommand = ''satty --save-after-copy --filename - --fullscreen --output-filename ${sattyFilename}'';
       in
       [
-        "$mod, PRINT, exec, hyprshot -m window --filename ${saveFilename}"
+        "$mod, PRINT, exec, hyprshot -m window --filename ${filename} --output-folder ${saveDir}"
         "$mod SHIFT, PRINT, exec, hyprshot -m window --raw | ${sattySaveCommand}"
-        ", PRINT, exec, hyprshot -m region --filename ${saveFilename}"
+        ", PRINT, exec, hyprshot -m region --filename ${filename} --output-folder ${saveDir}"
         "SHIFT, PRINT, exec, hyprshot -m region --raw | ${sattySaveCommand}"
-        "ALT, PRINT, exec, hyprshot -m output --filename ${saveFilename}"
+        "ALT, PRINT, exec, hyprshot -m output --filename ${filename} --output-folder ${saveDir}"
         "ALT SHIFT, PRINT, exec, hyprshot -m output --raw | ${sattySaveCommand}"
       ];
   };
