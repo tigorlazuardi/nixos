@@ -1,8 +1,7 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }:
 let
   inherit (lib.strings) optionalString concatStrings;
@@ -40,12 +39,15 @@ in
       superupdate = "nh os switch --update";
       uptest = "nh os test";
       lg = "${pkgs.lazygit}/bin/lazygit";
+      g = "${pkgs.lazygit}/bin/lazygit";
       du = "${pkgs.dust}/bin/dust";
       dry = "sudo nixos-rebuild dry-activate --flake $HOME/dotfiles";
       jq = "${pkgs.gojq}/bin/gojq";
       n = lib.mkIf config.profile.neovide.enable "neovide";
       v = "nvim";
       cd = "z";
+      grep = "${pkgs.ripgrep}/bin/rg";
+      find = "${pkgs.fd}/bin/fd";
     };
     dotDir = ".config/zsh";
     history = {
