@@ -20,14 +20,10 @@ in
 
     home.file.".config/autostart/slack.sh" = lib.mkIf cfg.autostart { source = autostartScriptFile; };
 
-    services.swaync.settings.scripts._10-slack =
-      let
-        focusWindowScript = pkgs.callPackage ../../scripts/hyprland/focus-window.nix { };
-      in
-      {
-        app-name = "[Ss]lack";
-        exec = "${getExe focusWindowScript}";
-        run-on = "action";
-      };
+    services.swaync.settings.scripts._10-slack = {
+      app-name = "[Ss]lack";
+      exec = "hyprctl dispatch focuswindow $SWAYNC_APP_NAME";
+      run-on = "action";
+    };
   };
 }

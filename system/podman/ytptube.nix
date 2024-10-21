@@ -184,7 +184,7 @@ lib.mkMerge [
       in
       [
         {
-          command = ''${pkgs.libnotify}/bin/notify-send --app-name="YTPTUBE" --icon="${vueIcon}" --category=im.received --urgency=normal "$title" "$message"'';
+          command = ''${pkgs.libnotify}/bin/notify-send --app-name="ytptube" --icon="${vueIcon}" --category=im.received --urgency=normal "$title" "$message"'';
           topic = "ytptube";
         }
       ];

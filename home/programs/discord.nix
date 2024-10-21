@@ -29,14 +29,10 @@ in
 
     home.file.".config/autostart/discord.sh" = lib.mkIf cfg.autostart { source = autostartScriptFile; };
 
-    services.swaync.settings.scripts._10-discord =
-      let
-        focusWindowScript = pkgs.callPackage ../../scripts/hyprland/focus-window.nix { };
-      in
-      {
-        app-name = "(?=discord|vesktop)";
-        exec = "${getExe focusWindowScript}";
-        run-on = "action";
-      };
+    services.swaync.settings.scripts._10-discord = {
+      app-name = "(?=discord|vesktop)";
+      exec = "hyprctl dispatch focuswindow $SWAYNC_APP_NAME";
+      run-on = "action";
+    };
   };
 }

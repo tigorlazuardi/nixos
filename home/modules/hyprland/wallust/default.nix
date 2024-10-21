@@ -67,7 +67,7 @@ in
             alpha = 100;
             threshold = 1;
             palette = "dark";
-            checkContrast = true;
+            check_contrast = true;
           }
           cfg.wallust.settings
         ]

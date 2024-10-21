@@ -24,33 +24,17 @@ in
         timeout-low = 3;
 
         scripts = {
+          _10-hyprland-ytptube = {
+            app-name = "ytptube";
+            exec = ''hyprctl dispatch exec "xdg-open https://ytptube.tigor.web.id"'';
+            run-on = "action";
+          };
           _98-play-notification-sound-normal = {
             exec = ''${pkgs.sox}/bin/play --volume 0.5 ${./gran_turismo_menu_sound_effect.mp3}'';
             app-name = "^(?!discord|TelegramDesktop|Slack|slack|Signal|Element|whatsapp-for-linux).*$";
           };
         };
       };
-    };
-
-    systemd.user.services.swaync = {
-      Unit = {
-        X-Reload-Triggers = [
-          (pkgs.writeText "swaync/config.json" (builtins.toJSON config.services.swaync.settings))
-          config.services.swaync.style
-        ];
-      };
-      Service =
-        let
-          reloadScript =
-            pkgs.writeShellScriptBin "swaync-reload.sh" # sh
-              ''
-                ${pkgs.swaynotificationcenter}/bin/swaync-client --reload-config
-                ${pkgs.swaynotificationcenter}/bin/swaync-client --reload-css
-              '';
-        in
-        {
-          ExecReload = "${lib.meta.getExe reloadScript}";
-        };
     };
 
     home.packages = with pkgs; [ libnotify ];

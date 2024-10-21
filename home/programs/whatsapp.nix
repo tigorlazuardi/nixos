@@ -22,14 +22,10 @@ in
       source = "${lib.meta.getExe autostartScript}";
     };
 
-    services.swaync.settings.scripts._10-whatsapp =
-      let
-        focusWindowScript = pkgs.callPackage ../../scripts/hyprland/focus-window.nix { };
-      in
-      {
-        app-name = "whatsapp-for-linux";
-        exec = "${lib.meta.getExe focusWindowScript}";
-        run-on = "action";
-      };
+    services.swaync.settings.scripts._10-whatsapp = {
+      app-name = "whatsapp-for-linux";
+      exec = "hyprctl dispatch focuswindow whatsapp-for-linux";
+      run-on = "action";
+    };
   };
 }
