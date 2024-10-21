@@ -55,7 +55,7 @@ lib.mkMerge [
       NTFY_CONFIG = configPath;
     };
 
-    systemd.services.ntfy-client = {
+    systemd.user.services.ntfy-client = {
       enable = true;
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
@@ -72,8 +72,8 @@ lib.mkMerge [
       serviceConfig = {
         ExecStart = "${pkgs.ntfy-sh}/bin/ntfy --debug subscribe --config /etc/ntfy/client.yml --from-config";
         Restart = "on-failure";
-        User = config.profile.user.uid;
-        Group = config.profile.user.gid;
+        # User = config.profile.user.uid;
+        # Group = config.profile.user.gid;
       };
     };
 
