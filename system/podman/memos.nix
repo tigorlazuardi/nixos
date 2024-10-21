@@ -31,9 +31,7 @@ in
         TZ = "Asia/Jakarta";
         # MEMOS_PUBLIC = "true";
       };
-      volumes = [
-        "${rootVolume}:/var/opt/memos"
-      ];
+      volumes = [ "${rootVolume}:/var/opt/memos" ];
       extraOptions = [
         "--network=podman"
         "--ip=${ip}"

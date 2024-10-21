@@ -17,17 +17,17 @@ in
           "caddy/basic_auth/password" = opts;
         };
       templates = {
-        "mimir-basic-auth".content = /*sh*/ ''
-          MIMIR_USERNAME=${config.sops.placeholder."caddy/basic_auth/username"}
-          MIMIR_PASSWORD=${config.sops.placeholder."caddy/basic_auth/password"}
-        '';
+        "mimir-basic-auth".content = # sh
+          ''
+            MIMIR_USERNAME=${config.sops.placeholder."caddy/basic_auth/username"}
+            MIMIR_PASSWORD=${config.sops.placeholder."caddy/basic_auth/password"}
+          '';
       };
     };
 
     systemd.services."caddy".serviceConfig = {
       EnvironmentFile = [ config.sops.templates."mimir-basic-auth".path ];
     };
-
 
     services.caddy.virtualHosts.${domain}.extraConfig =
       let
@@ -40,7 +40,7 @@ in
         basicauth @require_auth {
           {$ALLOY_USERNAME} {$ALLOY_PASSWORD}
         }
-    
+
         reverse_proxy ${hostAddress}
       '';
 

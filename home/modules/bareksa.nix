@@ -10,6 +10,8 @@ in
   };
 
   programs.zsh.shellAliases = {
-    vpn-bareksa = "sudo ${pkgs.openvpn}/bin/openvpn --config ${config.sops.secrets."bareksa/openvpn".path}";
+    vpn-bareksa = "sudo ${pkgs.openvpn}/bin/openvpn --config ${
+      config.sops.secrets."bareksa/openvpn".path
+    }";
   };
 }

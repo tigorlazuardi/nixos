@@ -27,7 +27,9 @@ in
     #
     # This works by collecting all the virtual hosts defined in caddy
     # and check if the length of the list changes, if it does, we restart the pihole container.
-    systemd.services."podman-${name}".restartTriggers = attrsets.mapAttrsToList (name: _: name) config.services.caddy.virtualHosts;
+    systemd.services."podman-${name}".restartTriggers = attrsets.mapAttrsToList (
+      name: _: name
+    ) config.services.caddy.virtualHosts;
     environment.etc."pihole/custom.list" = {
       # Copy file instead of symlink
       mode = "0444";
@@ -46,7 +48,9 @@ in
         ''
           192.168.100.5 vpn.tigor.web.id
           ${strings.concatStringsSep "\n" (
-            attrsets.mapAttrsToList (name: _: "192.168.100.5 ${strings.removePrefix "https://" name}") config.services.caddy.virtualHosts
+            attrsets.mapAttrsToList (
+              name: _: "192.168.100.5 ${strings.removePrefix "https://" name}"
+            ) config.services.caddy.virtualHosts
           )}
         '';
     };
@@ -72,9 +76,7 @@ in
         "pihole-dnsmasq:/etc/dnsmasq.d"
         "/etc/pihole/custom.list:/etc/pihole/custom.list"
       ];
-      environmentFiles = [
-        config.sops.secrets."pihole/env".path
-      ];
+      environmentFiles = [ config.sops.secrets."pihole/env".path ];
       extraOptions = [
         "--ip=${ip}"
         "--network=podman"

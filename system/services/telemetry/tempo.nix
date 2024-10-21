@@ -15,17 +15,21 @@ in
     sops = {
       secrets =
         let
-          opts = { sopsFile = ../../../secrets/telemetry.yaml; owner = "grafana"; };
+          opts = {
+            sopsFile = ../../../secrets/telemetry.yaml;
+            owner = "grafana";
+          };
         in
         {
           ${basic_auth.username} = opts;
           ${basic_auth.password} = opts;
         };
       templates = {
-        ${basic_auth.template}.content = /*sh*/ ''
-          TEMPO_USERNAME=${config.sops.placeholder.${basic_auth.username}}
-          TEMPO_PASSWORD=${config.sops.placeholder.${basic_auth.password}}
-        '';
+        ${basic_auth.template}.content = # sh
+          ''
+            TEMPO_USERNAME=${config.sops.placeholder.${basic_auth.username}}
+            TEMPO_PASSWORD=${config.sops.placeholder.${basic_auth.password}}
+          '';
       };
     };
 
@@ -93,7 +97,12 @@ in
             datasourceUid = "loki";
             spanStartTimeShift = "-1h";
             spanEndTimeShift = "1h";
-            tags = [ "job" "instance" "pod" "namespace" ];
+            tags = [
+              "job"
+              "instance"
+              "pod"
+              "namespace"
+            ];
             filterByTraceID = false;
             filterBySpanID = false;
             customQuery = true;

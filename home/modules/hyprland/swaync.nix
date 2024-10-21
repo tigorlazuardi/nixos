@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.profile.hyprland;
 in
@@ -36,18 +41,18 @@ in
       };
       Service =
         let
-          reloadScript = pkgs.writeShellScriptBin "swaync-reload.sh" /*sh*/ ''
-            ${pkgs.swaynotificationcenter}/bin/swaync-client --reload-config
-            ${pkgs.swaynotificationcenter}/bin/swaync-client --reload-css
-          '';
+          reloadScript =
+            pkgs.writeShellScriptBin "swaync-reload.sh" # sh
+              ''
+                ${pkgs.swaynotificationcenter}/bin/swaync-client --reload-config
+                ${pkgs.swaynotificationcenter}/bin/swaync-client --reload-css
+              '';
         in
         {
           ExecReload = "${lib.meta.getExe reloadScript}";
         };
     };
 
-    home.packages = with pkgs; [
-      libnotify
-    ];
+    home.packages = with pkgs; [ libnotify ];
   };
 }

@@ -13,9 +13,7 @@
 
     #### Required Options ####
 
-    hostname = lib.mkOption {
-      type = lib.types.str;
-    };
+    hostname = lib.mkOption { type = lib.types.str; };
     networking.disableWaitOnline = lib.mkEnableOption "disable waiting for network";
     networking.externalInterface = lib.mkOption {
       type = lib.types.str;
@@ -28,12 +26,8 @@
     };
 
     user = {
-      name = lib.mkOption {
-        type = lib.types.str;
-      };
-      fullName = lib.mkOption {
-        type = lib.types.str;
-      };
+      name = lib.mkOption { type = lib.types.str; };
+      fullName = lib.mkOption { type = lib.types.str; };
       uid = lib.mkOption {
         type = lib.types.int;
         default = 1000;
@@ -46,9 +40,7 @@
       getty.autoLogin = lib.mkEnableOption "auto-login to getty";
     };
 
-    system.stateVersion = lib.mkOption {
-      type = lib.types.str;
-    };
+    system.stateVersion = lib.mkOption { type = lib.types.str; };
 
     #### Optionals ####
 

@@ -1,8 +1,6 @@
 { ... }:
 {
-  imports = [
-    ../options
-  ];
+  imports = [ ../options ];
 
   profile = {
     hostname = "homeserver";
@@ -23,7 +21,10 @@
     openssh.enable = true;
     go.enable = true;
     networking.firewall.enable = true;
-    networking.firewall.allowedTCPPorts = [ 80 443 ];
+    networking.firewall.allowedTCPPorts = [
+      80
+      443
+    ];
     podman = {
       enable = true;
       pihole.enable = true;

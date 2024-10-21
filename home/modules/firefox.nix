@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.profile.firefox;
 in
@@ -30,7 +35,7 @@ in
           id = 0;
           name = "Tigor";
           isDefault = true;
-          extensions = with pkgs.nur.repos.rycee.firefox-addons;  [
+          extensions = with pkgs.nur.repos.rycee.firefox-addons; [
             ublock-origin
             bitwarden
             cookie-autodelete

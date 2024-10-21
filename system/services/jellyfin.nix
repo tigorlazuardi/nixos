@@ -48,16 +48,15 @@ in
       inherit dataDir;
     };
 
-    services.jellyseerr = mkIf cfg.jellyseerr.enable {
-      enable = true;
-    };
+    services.jellyseerr = mkIf cfg.jellyseerr.enable { enable = true; };
 
-    environment.etc."alloy/config.alloy".text = /*hcl*/ ''
-      prometheus.scrape "jellyfin" {
-        targets = [{__address__ = "0.0.0.0:8096"}]
-        job_name = "jellyfin"
-        forward_to = [prometheus.remote_write.mimir.receiver]
-      }
-    '';
+    environment.etc."alloy/config.alloy".text = # hcl
+      ''
+        prometheus.scrape "jellyfin" {
+          targets = [{__address__ = "0.0.0.0:8096"}]
+          job_name = "jellyfin"
+          forward_to = [prometheus.remote_write.mimir.receiver]
+        }
+      '';
   };
 }

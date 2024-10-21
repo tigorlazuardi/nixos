@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   name = "minecraft";
   podman = config.profile.podman;
@@ -24,33 +29,36 @@ let
 in
 {
   config = mkIf (podman.enable && podman.${name}.enable) {
-    services.caddy.virtualHosts.${domain}.extraConfig = /*html*/ ''
-      header Content-Type text/html
-      respond <<EOF
-          <!DOCTYPE html>
-          <html>
-              <head>
-                <title>Minecraft Server</title>
-              </head>
-              <body>
-                <h1>Congrats! The minecraft server should be up!</h1>
-                <h2>
-                  This server is invitation only.
-                  Please contact the server owner for more info.
-                </h2>
-                <p>Server Address: <b>${domain}</b></p>
-                <p>Bedrock Server Port: <b>19132</b></p>
-                <p>Java Server Port: <b>25565</b></p>
-              </body>
-          </html>
-          EOF 200 
-    '';
+    services.caddy.virtualHosts.${domain}.extraConfig = # html
+      ''
+        header Content-Type text/html
+        respond <<EOF
+            <!DOCTYPE html>
+            <html>
+                <head>
+                  <title>Minecraft Server</title>
+                </head>
+                <body>
+                  <h1>Congrats! The minecraft server should be up!</h1>
+                  <h2>
+                    This server is invitation only.
+                    Please contact the server owner for more info.
+                  </h2>
+                  <p>Server Address: <b>${domain}</b></p>
+                  <p>Bedrock Server Port: <b>19132</b></p>
+                  <p>Java Server Port: <b>25565</b></p>
+                </body>
+            </html>
+            EOF 200 
+      '';
 
     # Minecraft only autoupdates at startup
     #
     # To keep up with the update, restart the server at 4am everyday.
     systemd =
-      let serviceName = "podman-${name}"; in
+      let
+        serviceName = "podman-${name}";
+      in
       {
         tmpfiles.settings."${serviceName}-mount".${rootVolume}.d = {
           group = config.profile.user.name;
@@ -88,9 +96,7 @@ in
         "19132:19132/udp"
         "19132:19132"
       ];
-      volumes = [
-        "${rootVolume}:/minecraft"
-      ];
+      volumes = [ "${rootVolume}:/minecraft" ];
       extraOptions = [
         "--network=podman"
         "--ip=${ip}"

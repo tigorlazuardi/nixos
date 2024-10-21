@@ -43,7 +43,6 @@
       autostart = lib.mkEnableOption "variety autostart";
     };
 
-
     bitwarden = {
       enable = lib.mkEnableOption "bitwarden";
       autostart = lib.mkEnableOption "bitwarden autostart";

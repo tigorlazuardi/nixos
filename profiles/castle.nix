@@ -4,9 +4,7 @@ let
   secondaryMonitor = "ViewSonic Corporation VX3276-QHD V9W204243765";
 in
 {
-  imports = [
-    ../options
-  ];
+  imports = [ ../options ];
 
   profile = {
     hostname = "castle";
@@ -36,8 +34,20 @@ in
         ];
       };
       waybar.persistent-workspaces = {
-        DP-1 = [ 1 2 3 4 5 6 7 ];
-        DP-2 = [ 8 9 10 ];
+        DP-1 = [
+          1
+          2
+          3
+          4
+          5
+          6
+          7
+        ];
+        DP-2 = [
+          8
+          9
+          10
+        ];
       };
       pyprland.wallpaper-dirs = [ "/nas/redmage/images/windows" ];
       wallust.alpha = 80;

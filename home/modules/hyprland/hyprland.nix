@@ -1,4 +1,9 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 let
   cfg = config.profile.hyprland;
 in
@@ -14,12 +19,8 @@ in
       enable = true;
       systemd.variables = [ "all" ];
       settings = {
-        env = [
-          "DBUS_SESSION_BUS_ADDRESS,unix:path=/run/user/${toString config.profile.user.uid}/bus"
-        ];
-        exec-once = lib.mkOrder 5 [
-          ''${pkgs.dbus}/bin/dbus-update-activation-environment --all''
-        ];
+        env = [ "DBUS_SESSION_BUS_ADDRESS,unix:path=/run/user/${toString config.profile.user.uid}/bus" ];
+        exec-once = lib.mkOrder 5 [ ''${pkgs.dbus}/bin/dbus-update-activation-environment --all'' ];
         # window decors
         general = {
           gaps_in = 10;
@@ -197,14 +198,15 @@ in
           ''stayfocused,class:^(lazygit)$''
         ];
       };
-      extraConfig = /*hyprlang*/ ''
-        exec-once=foot --server
+      extraConfig = # hyprlang
+        ''
+          exec-once=foot --server
 
-        exec-once=nm-applet
-        exec-once=pasystray
+          exec-once=nm-applet
+          exec-once=pasystray
 
-        source=${config.home.homeDirectory}/.cache/wallust/hyprland.conf
-      '';
+          source=${config.home.homeDirectory}/.cache/wallust/hyprland.conf
+        '';
     };
   };
 }

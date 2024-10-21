@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.profile.programs.yazi;
   inherit (lib) mkIf;
@@ -11,7 +16,11 @@ in
       settings = {
         manager = {
           # 1/8 width for parent, 4/8 width for current, 3/8 width for preview
-          ratio = [ 1 4 3 ];
+          ratio = [
+            1
+            4
+            3
+          ];
           sort_by = "natural";
           sort_sensitive = false;
           sort_dir_first = true;
@@ -22,13 +31,24 @@ in
         };
         opener = {
           edit = [
-            { run = ''nvim "$@"''; block = true; desc = "Edit in Neovim"; }
+            {
+              run = ''nvim "$@"'';
+              block = true;
+              desc = "Edit in Neovim";
+            }
           ];
           play = [
-            { run = ''mpv "$@"''; orphan = true; desc = "Play in MPV"; }
+            {
+              run = ''mpv "$@"'';
+              orphan = true;
+              desc = "Play in MPV";
+            }
           ];
           open = [
-            { run = ''xdg-open "$@"''; desc = "Open"; }
+            {
+              run = ''xdg-open "$@"'';
+              desc = "Open";
+            }
           ];
         };
         open = {
@@ -48,17 +68,29 @@ in
             # Multiple openers for a single rule
             {
               name = "*.html";
-              use = [ "open" "edit" ];
+              use = [
+                "open"
+                "edit"
+              ];
             }
           ];
           append_rules = [
-            { name = "*"; use = "open"; }
+            {
+              name = "*";
+              use = "open";
+            }
           ];
         };
         plugin = {
           prepend_previewers = [
-            { mime = "{image,audio,video}/*"; run = "mediainfo"; }
-            { mime = "application/x-subrip"; run = "mediainfo"; }
+            {
+              mime = "{image,audio,video}/*";
+              run = "mediainfo";
+            }
+            {
+              mime = "application/x-subrip";
+              run = "mediainfo";
+            }
           ];
         };
       };

@@ -7,9 +7,7 @@ in
     programs.alacritty = {
       enable = true;
       settings = {
-        import = [
-          "${config.home.homeDirectory}/.cache/wallust/alacritty.toml"
-        ];
+        import = [ "${config.home.homeDirectory}/.cache/wallust/alacritty.toml" ];
         live_config_reload = true;
         font = {
           normal = {

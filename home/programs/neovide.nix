@@ -1,12 +1,16 @@
-{ config, unstable, pkgs, lib, ... }:
+{
+  config,
+  unstable,
+  pkgs,
+  lib,
+  ...
+}:
 let
   cfg = config.profile.neovide;
 in
 {
   config = lib.mkIf cfg.enable {
-    home.packages = [
-      unstable.neovide
-    ];
+    home.packages = [ unstable.neovide ];
 
     home.file.".config/neovide/config.toml".source =
       let

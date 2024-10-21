@@ -52,9 +52,7 @@ in
         PGID = gid;
         TZ = "Asia/Jakarta";
       };
-      volumes = [
-        "${configVolume}:/config"
-      ];
+      volumes = [ "${configVolume}:/config" ];
       extraOptions = [
         "--ip=${ip}"
         "--network=podman"
@@ -65,4 +63,3 @@ in
     };
   };
 }
-

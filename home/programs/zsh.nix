@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   inherit (lib.strings) optionalString concatStrings;
 in
@@ -11,13 +16,14 @@ in
   ];
   programs.zsh = {
     enable = true;
-    envExtra = /*bash*/ ''
-      # Disable loading global RC files in /etc/zsh/*
-      # Mostly because they are unneeded
-      # and global rc files has to be small for security reasons (no plugins)
-      # thus making them saver for Root account to load them.
-      unsetopt GLOBAL_RCS
-    '';
+    envExtra = # bash
+      ''
+        # Disable loading global RC files in /etc/zsh/*
+        # Mostly because they are unneeded
+        # and global rc files has to be small for security reasons (no plugins)
+        # thus making them saver for Root account to load them.
+        unsetopt GLOBAL_RCS
+      '';
     autosuggestion.enable = true;
     enableCompletion = true;
     defaultKeymap = "emacs";
@@ -52,38 +58,41 @@ in
       size = 40000;
     };
     completionInit = lib.mkOrder 9999 (concatStrings [
-      /* bash */
+      # bash
       ''
         mkdir -p $ZSH_CACHE_DIR/completions
         fpath+=$ZSH_CACHE_DIR/completions
         fpath+=${pkgs.zsh-completions}/share/zsh/site-functions
       ''
-      (optionalString config.profile.podman.enable /*bash*/ ''
-        if [ ! -f $ZSH_CACHE_DIR/completions/_podman ]; then
-            podman completion zsh > $ZSH_CACHE_DIR/completions/_podman
-        fi
-      '')
+      (optionalString config.profile.podman.enable # bash
+        ''
+          if [ ! -f $ZSH_CACHE_DIR/completions/_podman ]; then
+              podman completion zsh > $ZSH_CACHE_DIR/completions/_podman
+          fi
+        ''
+      )
       # Value below must be always last in the completionInit
-      /* bash */
+      # bash
       ''
         autoload -U compinit && compinit
       ''
     ]);
     syntaxHighlighting.enable = true;
-    initExtraFirst = /*bash*/ ''
-      export ZSH_CACHE_DIR=$HOME/.cache/zsh
+    initExtraFirst = # bash
+      ''
+        export ZSH_CACHE_DIR=$HOME/.cache/zsh
 
-      # if [ -f $HOME/.config/zsh/.p10k.zsh ]; then
-      #     source $HOME/.config/zsh/.p10k.zsh
-      # fi
+        # if [ -f $HOME/.config/zsh/.p10k.zsh ]; then
+        #     source $HOME/.config/zsh/.p10k.zsh
+        # fi
 
-      _ZSH_COLOR_SCHEME_FILE=$HOME/.cache/wallust/sequences
-      if [ -f "$_ZSH_COLOR_SCHEME_FILE" ]; then
-          (cat "$_ZSH_COLOR_SCHEME_FILE" &)
-      fi
-    '';
+        _ZSH_COLOR_SCHEME_FILE=$HOME/.cache/wallust/sequences
+        if [ -f "$_ZSH_COLOR_SCHEME_FILE" ]; then
+            (cat "$_ZSH_COLOR_SCHEME_FILE" &)
+        fi
+      '';
     initExtra = concatStrings [
-      /*bash*/
+      # bash
       ''
         packfiles() {
           find $(NIXPKGS_ALLOW_UNFREE=1 nix build "nixpkgs#$1" --impure --no-link --print-out-paths) 

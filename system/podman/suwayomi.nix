@@ -45,9 +45,7 @@ in
         FLARESOLVERR_ENABLED = "true";
         FLARESOLVERR_URL = "http://${ip-flaresolverr}:8191";
       };
-      volumes = [
-        "${volume}:/home/suwayomi/.local/share/Tachidesk"
-      ];
+      volumes = [ "${volume}:/home/suwayomi/.local/share/Tachidesk" ];
       extraOptions = [
         "--ip=${ip}"
         "--network=podman"

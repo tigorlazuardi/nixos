@@ -1,4 +1,10 @@
-{ config, lib, inputs, unstable, ... }:
+{
+  config,
+  lib,
+  inputs,
+  unstable,
+  ...
+}:
 let
   cfg = config.profile.services.telemetry.alloy;
   webguiListenAddress = "0.0.0.0:5319";
@@ -13,12 +19,9 @@ in
   config = lib.mkIf cfg.enable {
     services.alloy = {
       enable = true;
-      extraFlags = [
-        ''--server.http.listen-addr=${webguiListenAddress}''
-      ];
+      extraFlags = [ ''--server.http.listen-addr=${webguiListenAddress}'' ];
       package = unstable.grafana-alloy;
     };
-
 
     sops = {
       secrets =
@@ -30,10 +33,11 @@ in
           "caddy/basic_auth/password" = opts;
         };
       templates = {
-        "alloy-basic-auth".content = /*sh*/ ''
-          ALLOY_USERNAME=${config.sops.placeholder."caddy/basic_auth/username"}
-          ALLOY_PASSWORD=${config.sops.placeholder."caddy/basic_auth/password"}
-        '';
+        "alloy-basic-auth".content = # sh
+          ''
+            ALLOY_USERNAME=${config.sops.placeholder."caddy/basic_auth/username"}
+            ALLOY_PASSWORD=${config.sops.placeholder."caddy/basic_auth/password"}
+          '';
       };
     };
 
@@ -43,7 +47,7 @@ in
       basicauth @require_auth {
         {$ALLOY_USERNAME} {$ALLOY_PASSWORD}
       }
-    
+
       reverse_proxy ${webguiListenAddress}
     '';
 
@@ -55,14 +59,14 @@ in
       User = "root";
     };
 
-
     environment.etc."alloy/config.alloy".text =
       let
         lokiConfig = config.services.loki.configuration;
         tempoServer = config.services.tempo.settings.server;
         mimirServer = config.services.mimir.configuration.server;
       in
-        /*hcl*/ ''
+      # hcl
+      ''
         otelcol.receiver.otlp "homeserver" {
             grpc {
                 endpoint = "0.0.0.0:5317"

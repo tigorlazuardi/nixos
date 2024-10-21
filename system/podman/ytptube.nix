@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   name = "ytptube";
   podman = config.profile.podman;
@@ -15,49 +20,51 @@ let
     password = "caddy/basic_auth/password";
     template = "caddy/basic_auth";
   };
-  webhook = builtins.readFile ((pkgs.formats.json { }).generate "webhooks.json" [
-    {
-      name = "NTFY Webhook Added";
-      on = [ "added" ];
-      request = {
-        url = "https://ntfy.tigor.web.id/ytptube?click=https%3A%2F%2F${domain}&tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20added.";
-        type = "json";
-        method = "POST";
-        headers = {
-          Authorization = ''Bearer ${config.sops.placeholder."ntfy/tokens/homeserver"}'';
-          X-Tags = "rocket";
+  webhook = builtins.readFile (
+    (pkgs.formats.json { }).generate "webhooks.json" [
+      {
+        name = "NTFY Webhook Added";
+        on = [ "added" ];
+        request = {
+          url = "https://ntfy.tigor.web.id/ytptube?click=https%3A%2F%2F${domain}&tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20added.";
+          type = "json";
+          method = "POST";
+          headers = {
+            Authorization = ''Bearer ${config.sops.placeholder."ntfy/tokens/homeserver"}'';
+            X-Tags = "rocket";
+          };
         };
-      };
-    }
-    {
-      name = "NTFY Webhook Completed";
-      on = [ "completed" ];
-      request = {
-        url = "https://ntfy.tigor.web.id/ytptube?click=https%3A%2F%2F${domain}&tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20%7B%7B%20.status%20%7D%7D";
-        type = "json";
-        method = "POST";
-        headers = {
-          Authorization = ''Bearer ${config.sops.placeholder."ntfy/tokens/homeserver"}'';
-          X-Tags = "heavy_check_mark";
-          X-Priority = "4";
+      }
+      {
+        name = "NTFY Webhook Completed";
+        on = [ "completed" ];
+        request = {
+          url = "https://ntfy.tigor.web.id/ytptube?click=https%3A%2F%2F${domain}&tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20%7B%7B%20.status%20%7D%7D";
+          type = "json";
+          method = "POST";
+          headers = {
+            Authorization = ''Bearer ${config.sops.placeholder."ntfy/tokens/homeserver"}'';
+            X-Tags = "heavy_check_mark";
+            X-Priority = "4";
+          };
         };
-      };
-    }
-    {
-      name = "NTFY Webhook Error";
-      on = [ "error" ];
-      request = {
-        url = "https://ntfy.tigor.web.id/ytptube?click=https%3A%2F%2F${domain}&tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20%7B%7B%20.status%20%7D%7D";
-        type = "json";
-        method = "POST";
-        headers = {
-          Authorization = ''Bearer ${config.sops.placeholder."ntfy/tokens/homeserver"}'';
-          X-Priority = "4";
-          X-Tags = "x";
+      }
+      {
+        name = "NTFY Webhook Error";
+        on = [ "error" ];
+        request = {
+          url = "https://ntfy.tigor.web.id/ytptube?click=https%3A%2F%2F${domain}&tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20%7B%7B%20.status%20%7D%7D";
+          type = "json";
+          method = "POST";
+          headers = {
+            Authorization = ''Bearer ${config.sops.placeholder."ntfy/tokens/homeserver"}'';
+            X-Priority = "4";
+            X-Tags = "x";
+          };
         };
-      };
-    }
-  ]);
+      }
+    ]
+  );
 in
 lib.mkMerge [
   (mkIf podman.${name}.enable {
@@ -69,13 +76,16 @@ lib.mkMerge [
         {
           ${basic_auth.username} = opts;
           ${basic_auth.password} = opts;
-          "ntfy/tokens/homeserver" = { sopsFile = ../../secrets/ntfy.yaml; };
+          "ntfy/tokens/homeserver" = {
+            sopsFile = ../../secrets/ntfy.yaml;
+          };
         };
       templates = {
-        ${basic_auth.template}.content = /*sh*/ ''
-          YTPTUBE_USERNAME=${config.sops.placeholder.${basic_auth.username}}
-          YTPTUBE_PASSWORD=${config.sops.placeholder.${basic_auth.password}}
-        '';
+        ${basic_auth.template}.content = # sh
+          ''
+            YTPTUBE_USERNAME=${config.sops.placeholder.${basic_auth.username}}
+            YTPTUBE_PASSWORD=${config.sops.placeholder.${basic_auth.password}}
+          '';
         "ytptube/webhooks.json" = mkIf config.services.ntfy-sh.enable {
           content = webhook;
           path = "/etc/podman/${name}/webhooks.json";
@@ -141,7 +151,6 @@ lib.mkMerge [
       };
       mode = "0444";
     };
-
 
     virtualisation.oci-containers.containers.${name} = {
       inherit image;

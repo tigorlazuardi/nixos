@@ -34,16 +34,12 @@ in
         ZO_DATA_DIR = "/data";
         ZO_WEB_URL = "https://${domain}";
       };
-      volumes = [
-        "${rootVolume}/data:/data"
-      ];
+      volumes = [ "${rootVolume}/data:/data" ];
       extraOptions = [
         "--network=podman"
         "--ip=${ip}"
       ];
-      environmentFiles = [
-        config.sops.secrets."openobserve/env".path
-      ];
+      environmentFiles = [ config.sops.secrets."openobserve/env".path ];
       labels = {
         "io.containers.autoupdate" = "registry";
       };

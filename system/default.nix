@@ -1,4 +1,10 @@
-{ hardware-configuration, profile-path, config, pkgs, ... }:
+{
+  hardware-configuration,
+  profile-path,
+  config,
+  pkgs,
+  ...
+}:
 {
   imports = [
     profile-path
@@ -16,10 +22,12 @@
   networking.hostName = config.profile.hostname;
   systemd.services.NetworkManager-wait-online.enable = !config.profile.networking.disableWaitOnline;
 
-
   nixpkgs.config.allowUnfree = true;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nix.extraOptions = ''
     http-connections = 8
     connect-timeout = 5
@@ -79,6 +87,7 @@
     # Tools for nh
     nix-output-monitor
     nvd
+    nixfmt-rfc-style
   ];
 
   services.dbus.implementation = "broker";

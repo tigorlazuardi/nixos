@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
   user = config.profile.user.name;
   fullName = config.profile.user.fullName;
@@ -7,7 +12,10 @@ in
   users.users.${user} = {
     isNormalUser = true;
     description = fullName;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     shell = pkgs.zsh;
   };
 

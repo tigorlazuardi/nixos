@@ -1,4 +1,9 @@
-{ config, lib, unstable, ... }:
+{
+  config,
+  lib,
+  unstable,
+  ...
+}:
 let
   cfg = config.profile.vscode;
 in

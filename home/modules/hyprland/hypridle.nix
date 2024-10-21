@@ -1,4 +1,9 @@
-{ lib, config, unstable, ... }:
+{
+  lib,
+  config,
+  unstable,
+  ...
+}:
 let
   cfg = config.profile.hyprland;
 in

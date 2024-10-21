@@ -1,6 +1,11 @@
 # Guide on how to create client ovpn files, and server config: https://wiki.archlinux.org/title/OpenVPN/Checklist_guide
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.profile.services.openvpn;
   domain = "vpn.tigor.web.id";
@@ -49,31 +54,33 @@ in
         let
           # secretPlaceholder is a generated inline file from easyrsa build-client-full.
           # it contains <cert>, <key>, <ca> sections.
-          template = { secretPlaceholder, ifConfig }: ''
-            client
+          template =
+            { secretPlaceholder, ifConfig }:
+            ''
+              client
 
-            dev tun
-            remote "${domain}"
-            port ${toString port}
-            redirect-gateway def1
+              dev tun
+              remote "${domain}"
+              port ${toString port}
+              redirect-gateway def1
 
-            cipher AES-256-CBC
-            auth-nocache
+              cipher AES-256-CBC
+              auth-nocache
 
-            keepalive 10 60
-            resolv-retry infinite
-            nobind
-            persist-key
-            persist-tun
-            key-direction 1
+              keepalive 10 60
+              resolv-retry infinite
+              nobind
+              persist-key
+              persist-tun
+              key-direction 1
 
-            tls-client
-            <tls-auth>
-            ${config.sops.placeholder."openvpn/server/tls-auth"}
-            </tls-auth>
+              tls-client
+              <tls-auth>
+              ${config.sops.placeholder."openvpn/server/tls-auth"}
+              </tls-auth>
 
-            ${secretPlaceholder}
-          '';
+              ${secretPlaceholder}
+            '';
         in
         {
           "openvpn/key/phone" = {
@@ -127,5 +134,3 @@ in
     };
   };
 }
-
-

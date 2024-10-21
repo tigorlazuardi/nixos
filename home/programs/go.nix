@@ -1,4 +1,10 @@
-{ config, lib, pkgs, unstable, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  unstable,
+  ...
+}:
 let
   cfg = config.profile.go;
   impl = pkgs.buildGoModule rec {
@@ -17,9 +23,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.go = {
       enable = true;
-      goPrivate = [
-        "gitlab.bareksa.com"
-      ];
+      goPrivate = [ "gitlab.bareksa.com" ];
       package = unstable.go_1_23;
     };
     home.packages = with pkgs; [

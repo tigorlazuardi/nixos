@@ -1,4 +1,10 @@
-{ lib, config, unstable, pkgs, ... }:
+{
+  lib,
+  config,
+  unstable,
+  pkgs,
+  ...
+}:
 let
   cfg = config.profile.hyprland;
   modules = (pkgs.formats.json { }).generate "modules.json" {
@@ -16,7 +22,11 @@ let
         phone = " ";
         portable = " ";
         car = " ";
-        default = [ " " " " " " ];
+        default = [
+          " "
+          " "
+          " "
+        ];
       };
       on-click = "pavucontrol";
     };
@@ -37,7 +47,13 @@ let
       format-charging = "  {capacity}%";
       format-plugged = "  {capacity}%";
       format-alt = "{icon}  {time}";
-      format-icons = [ " " " " " " " " " " ];
+      format-icons = [
+        " "
+        " "
+        " "
+        " "
+        " "
+      ];
     };
     network = {
       format = "{ifname}";
@@ -57,7 +73,6 @@ let
       on-click = ''cliphist list | rofi -dmenu -font "$gui-font" -p "Select item to copy" -lines 10 -width 35 | cliphist decode | wl-copy'';
       tooltip = false;
     };
-
 
     "hyprland/workspaces" = {
       on-click = "activate";
@@ -164,12 +179,8 @@ in
           margin-right = 0;
           spacing = 0;
           reload_style_on_change = true;
-          include = [
-            modules
-          ];
-          modules-left = [
-            "hyprland/window"
-          ];
+          include = [ modules ];
+          modules-left = [ "hyprland/window" ];
           modules-center = [
             "hyprland/workspaces"
             "custom/notification"
@@ -193,5 +204,3 @@ in
     };
   };
 }
-
-

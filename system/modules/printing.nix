@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.profile.printing;
   username = config.profile.user.name;
@@ -11,4 +16,4 @@ in
       drivers = [ pkgs.brlaser ]; # Brother Laser Printer
     };
   };
-} 
+}

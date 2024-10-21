@@ -1,8 +1,6 @@
 { ... }:
 {
-  imports = [
-    ../options
-  ];
+  imports = [ ../options ];
 
   profile = {
     hostname = "fort";
@@ -15,9 +13,7 @@
     hyprland = {
       enable = true;
       settings = {
-        monitors = [
-          ",preferred,auto,1"
-        ];
+        monitors = [ ",preferred,auto,1" ];
         workspaces = [
           "1,default:true"
           "2"
@@ -32,7 +28,18 @@
         ];
       };
       waybar.persistent-workspaces = {
-        eDP-1 = [ 1 2 3 4 5 6 7 8 9 10 ];
+        eDP-1 = [
+          1
+          2
+          3
+          4
+          5
+          6
+          7
+          8
+          9
+          10
+        ];
       };
       pyprland.wallpaper-dirs = [ "/home/tigor/Syncthing/Redmage/Laptop-Kerja" ];
       wallust.alpha = 80;

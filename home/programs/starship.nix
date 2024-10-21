@@ -35,7 +35,6 @@
           format = "[$ssh_symbol$hostname]($style)\\] ";
         };
         palette = "catppuccin_${flavour}";
-      } // builtins.fromTOML (builtins.readFile
-        (catppuccin-starship-repo + /palettes/${flavour}.toml));
+      } // builtins.fromTOML (builtins.readFile (catppuccin-starship-repo + /palettes/${flavour}.toml));
     };
 }

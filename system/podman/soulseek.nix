@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   name = "soulseek";
   podman = config.profile.podman;
@@ -32,17 +37,20 @@ in
     sops = {
       secrets =
         let
-          opts = { sopsFile = ../../secrets/soulseek.yaml; };
+          opts = {
+            sopsFile = ../../secrets/soulseek.yaml;
+          };
         in
         {
           ${basic_auth.username} = opts;
           ${basic_auth.password} = opts;
         };
       templates = {
-        ${basic_auth.template}.content = /*sh*/ ''
-          SOULSEEK_USERNAME=${config.sops.placeholder.${basic_auth.username}}
-          SOULSEEK_PASSWORD=${config.sops.placeholder.${basic_auth.password}}
-        '';
+        ${basic_auth.template}.content = # sh
+          ''
+            SOULSEEK_USERNAME=${config.sops.placeholder.${basic_auth.username}}
+            SOULSEEK_PASSWORD=${config.sops.placeholder.${basic_auth.password}}
+          '';
       };
     };
 
@@ -50,7 +58,6 @@ in
       mkdir -p ${rootVolume}/{config,downloads,incomplete}
       chown ${uid}:${gid} ${rootVolume} ${rootVolume}/{config,downloads,incomplete}
     '';
-
 
     # Soulseek only autoscans on startup
     #
@@ -79,7 +86,6 @@ in
         };
       };
 
-
     virtualisation.oci-containers.containers.${name} = {
       inherit image;
       hostname = name;
@@ -94,9 +100,7 @@ in
         "${rootVolume}/incomplete:/data/incomplete_downloads"
         "${rootVolumeMusic}:/data/shared"
       ];
-      ports = [
-        "2234-2239:2234-2239"
-      ];
+      ports = [ "2234-2239:2234-2239" ];
       extraOptions = [
         "--network=podman"
         "--ip=${ip}"

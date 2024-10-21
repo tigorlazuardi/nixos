@@ -26,18 +26,18 @@ in
       scrapeConfigs = [
         {
           job_name = "systemd";
-          static_configs = [{
-            labels = {
-              job = "systemd";
-            };
-            targets =
-              let
-                systemdExporter = config.services.prometheus.exporters.systemd;
-              in
-              [
-                "${systemdExporter.listenAddress}:${toString systemdExporter.port}"
-              ];
-          }];
+          static_configs = [
+            {
+              labels = {
+                job = "systemd";
+              };
+              targets =
+                let
+                  systemdExporter = config.services.prometheus.exporters.systemd;
+                in
+                [ "${systemdExporter.listenAddress}:${toString systemdExporter.port}" ];
+            }
+          ];
         }
       ];
       exporters = {

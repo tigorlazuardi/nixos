@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.profile.services.stubby;
   inherit (lib) mkIf lists;
@@ -10,9 +15,7 @@ in
     services.stubby = {
       enable = true;
       settings = pkgs.stubby.passthru.settingsExample // {
-        listen_addresses = [
-          "192.168.100.5"
-        ];
+        listen_addresses = [ "192.168.100.5" ];
         upstream_recursive_servers = [
           {
             address_data = "1.1.1.1";

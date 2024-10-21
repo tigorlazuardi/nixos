@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.profile.hyprland;
   saveDir = "${config.home.homeDirectory}/Pictures/screenshots";
@@ -10,10 +15,12 @@ in
       satty
     ];
 
-    home.activation.sattyDirCreate = lib.hm.dag.entryAfter [ "writeBoundary" ] /*sh*/ ''
-      mkdir -p "${saveDir}"
-      chown ${config.home.username} "${saveDir}"
-    '';
+    home.activation.sattyDirCreate =
+      lib.hm.dag.entryAfter [ "writeBoundary" ] # sh
+        ''
+          mkdir -p "${saveDir}"
+          chown ${config.home.username} "${saveDir}"
+        '';
 
     wayland.windowManager.hyprland.settings.bind =
       let

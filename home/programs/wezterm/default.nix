@@ -9,22 +9,24 @@ in
       enableZshIntegration = true;
       enableBashIntegration = true;
 
-      extraConfig = /*lua*/ ''
-        -- take config from ./base_config.lua
-        local config = require('base_config')
+      extraConfig = # lua
+        ''
+          -- take config from ./base_config.lua
+          local config = require('base_config')
 
-        -- and override settings for nixos specific things here.
-        config.window_background_opacity = ${toString cfg.config.window_background_opacity};
+          -- and override settings for nixos specific things here.
+          config.window_background_opacity = ${toString cfg.config.window_background_opacity};
 
-        return config
-      '';
+          return config
+        '';
     };
 
-    programs.zsh.initExtra = /*bash*/ ''
-      if [ -n "$WEZTERM_PANE" ]; then
-          alias ssh="wezterm ssh"
-      fi
-    '';
+    programs.zsh.initExtra = # bash
+      ''
+        if [ -n "$WEZTERM_PANE" ]; then
+            alias ssh="wezterm ssh"
+        fi
+      '';
 
     home.file.".config/wezterm" = {
       source = ./.;

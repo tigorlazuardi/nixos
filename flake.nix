@@ -44,16 +44,17 @@
     };
   };
   outputs =
-    inputs @ { self
-    , nur
-    , nixpkgs
-    , home-manager
-    , sops-nix
-    , neovim-nightly-overlay
-    , nix-index-database
-    , rust-overlay
-    , nix-flatpak
-    , ...
+    inputs@{
+      self,
+      nur,
+      nixpkgs,
+      home-manager,
+      sops-nix,
+      neovim-nightly-overlay,
+      nix-index-database,
+      rust-overlay,
+      nix-flatpak,
+      ...
     }:
     let
       commonModules = [
@@ -78,9 +79,7 @@
               "https://cache.nixos.org/"
               "https://nix-community.cachix.org"
             ];
-            trusted-public-keys = [
-              "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-            ];
+            trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
           };
         }
         sops-nix.nixosModules.sops
@@ -99,61 +98,79 @@
       };
     in
     {
-      nixosConfigurations =
-        {
-          castle =
-            let
-              profile-path = ./profiles/castle.nix;
-              hardware-configuration = ./hardware-configuration/castle.nix;
-              specialArgs = { inherit inputs unstable profile-path hardware-configuration; };
-            in
-            nixpkgs.lib.nixosSystem
+      nixosConfigurations = {
+        castle =
+          let
+            profile-path = ./profiles/castle.nix;
+            hardware-configuration = ./hardware-configuration/castle.nix;
+            specialArgs = {
+              inherit
+                inputs
+                unstable
+                profile-path
+                hardware-configuration
+                ;
+            };
+          in
+          nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+              ./system
               {
-                system = "x86_64-linux";
-                modules =
-                  [
-                    ./system
-                    {
-                      home-manager.extraSpecialArgs = specialArgs;
-                      home-manager.users.tigor = import ./home;
-                    }
-                  ] ++ commonModules;
-                specialArgs = specialArgs;
-              };
-          fort =
-            let
-              profile-path = ./profiles/fort.nix;
-              hardware-configuration = ./hardware-configuration/fort.nix;
-              specialArgs = { inherit inputs unstable profile-path hardware-configuration; };
-            in
-            nixpkgs.lib.nixosSystem {
-              system = "x86_64-linux";
-              modules = [
-                ./system
-                {
-                  home-manager.extraSpecialArgs = specialArgs;
-                  home-manager.users.tigor = import ./home;
-                }
-              ] ++ commonModules;
-              specialArgs = specialArgs;
+                home-manager.extraSpecialArgs = specialArgs;
+                home-manager.users.tigor = import ./home;
+              }
+            ] ++ commonModules;
+            specialArgs = specialArgs;
+          };
+        fort =
+          let
+            profile-path = ./profiles/fort.nix;
+            hardware-configuration = ./hardware-configuration/fort.nix;
+            specialArgs = {
+              inherit
+                inputs
+                unstable
+                profile-path
+                hardware-configuration
+                ;
             };
-          homeserver =
-            let
-              profile-path = ./profiles/homeserver.nix;
-              hardware-configuration = ./hardware-configuration/homeserver.nix;
-              specialArgs = { inherit inputs unstable profile-path hardware-configuration; };
-            in
-            nixpkgs.lib.nixosSystem {
-              system = "x86_64-linux";
-              modules = [
-                ./system
-                {
-                  home-manager.extraSpecialArgs = specialArgs;
-                  home-manager.users.homeserver = import ./home;
-                }
-              ] ++ commonModules;
-              specialArgs = specialArgs;
+          in
+          nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+              ./system
+              {
+                home-manager.extraSpecialArgs = specialArgs;
+                home-manager.users.tigor = import ./home;
+              }
+            ] ++ commonModules;
+            specialArgs = specialArgs;
+          };
+        homeserver =
+          let
+            profile-path = ./profiles/homeserver.nix;
+            hardware-configuration = ./hardware-configuration/homeserver.nix;
+            specialArgs = {
+              inherit
+                inputs
+                unstable
+                profile-path
+                hardware-configuration
+                ;
             };
-        };
+          in
+          nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+              ./system
+              {
+                home-manager.extraSpecialArgs = specialArgs;
+                home-manager.users.homeserver = import ./home;
+              }
+            ] ++ commonModules;
+            specialArgs = specialArgs;
+          };
+      };
     };
 }

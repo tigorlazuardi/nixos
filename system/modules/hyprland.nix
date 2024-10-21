@@ -1,4 +1,10 @@
-{ inputs, config, lib, pkgs, ... }:
+{
+  inputs,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.profile.hyprland;
   hyprlandPkg = inputs.hyprland.packages."${pkgs.system}".hyprland;
@@ -68,9 +74,7 @@ in
     services.dbus.enable = true;
     xdg.portal = {
       enable = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-gtk
-      ];
+      extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
     };
 
     programs.file-roller.enable = true;

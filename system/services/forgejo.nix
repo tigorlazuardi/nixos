@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.profile.services.forgejo;
   inherit (lib) mkIf;
@@ -13,7 +18,6 @@ in
       redir @home_not_login /Tigor
       reverse_proxy * unix//run/forgejo/forgejo.sock
     '';
-
 
     services.forgejo = {
       enable = true;

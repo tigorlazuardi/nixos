@@ -1,4 +1,10 @@
-{ lib, stdenv, fetchzip, gettext, ... }:
+{
+  lib,
+  stdenv,
+  fetchzip,
+  gettext,
+  ...
+}:
 
 stdenv.mkDerivation rec {
   pname = "cockpit-podman";
@@ -9,11 +15,12 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-qLt6x9W+M/DztzcFxyWZLHUTM1ZsPCOykO+6o/URa6c=";
   };
 
-  nativeBuildInputs = [
-    gettext
-  ];
+  nativeBuildInputs = [ gettext ];
 
-  makeFlags = [ "DESTDIR=$(out)" "PREFIX=" ];
+  makeFlags = [
+    "DESTDIR=$(out)"
+    "PREFIX="
+  ];
 
   postPatch = ''
     substituteInPlace Makefile \

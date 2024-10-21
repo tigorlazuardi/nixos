@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.profile.podman;
   username = config.profile.user.name;
@@ -33,7 +38,6 @@ in
       allowedUDPPorts = [ 53 ]; # this needs to be there so that containers can look eachother's names up over DNS
     };
   };
-
 
   # Taken IP-Range Subnets
   #

@@ -1,13 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.profile.services.rust-motd;
   inherit (lib) mkIf;
 in
 {
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      fail2ban
-    ];
+    environment.systemPackages = with pkgs; [ fail2ban ];
     programs.rust-motd = {
       enable = true;
       settings = {

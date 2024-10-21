@@ -1,4 +1,10 @@
-{ config, pkgs, lib, unstable, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  unstable,
+  ...
+}:
 let
   cfg = config.profile.neovim;
   inherit (lib) mkIf;
@@ -22,21 +28,23 @@ in
           ping = "${pkgs.unixtools.ping}/bin/ping";
           host = "github.com";
           sleep = "${pkgs.coreutils}/bin/sleep";
-          script = pkgs.writeScriptBin "clone-nvim.sh" /*bash*/ ''
-            #!${bash}
+          script =
+            pkgs.writeScriptBin "clone-nvim.sh" # bash
+              ''
+                #!${bash}
 
-            if [ -d "${nvimCloneDir}" ]; then
-                exit 0;
-            fi
+                if [ -d "${nvimCloneDir}" ]; then
+                    exit 0;
+                fi
 
-            until ${ping} -c 1 ${host}; do
-                ${sleep} 1;
-            done
+                until ${ping} -c 1 ${host}; do
+                    ${sleep} 1;
+                done
 
-            mkdir -p ${nvimCloneDir}
+                mkdir -p ${nvimCloneDir}
 
-            ${git} clone ${repository} ${nvimCloneDir}
-          '';
+                ${git} clone ${repository} ${nvimCloneDir}
+              '';
           path = "${script}/bin/clone-nvim.sh";
         in
         {

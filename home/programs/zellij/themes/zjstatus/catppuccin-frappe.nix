@@ -1,5 +1,6 @@
 { plugins, timezone, ... }:
-/*kdl*/ ''
+# kdl
+''
   layout {
       pane split_direction="vertical" {
           pane

@@ -18,7 +18,10 @@ in
     '';
     sops.secrets =
       let
-        opts = { owner = user.name; sopsFile = ../../secrets/syncthing.yaml; };
+        opts = {
+          owner = user.name;
+          sopsFile = ../../secrets/syncthing.yaml;
+        };
       in
       {
         "syncthing/server/key.pem" = opts;
@@ -33,23 +36,17 @@ in
           "/nas/redmage/images/windows" = {
             label = "Redmage/Windows";
             id = "Redmage/Windows";
-            devices = [
-              "windows"
-            ];
+            devices = [ "windows" ];
           };
           "/nas/redmage/images/laptop-kerja" = {
             label = "Redmage/Laptop-Kerja";
             id = "Redmage/Laptop-Kerja";
-            devices = [
-              "work-laptop"
-            ];
+            devices = [ "work-laptop" ];
           };
           "/nas/redmage/images/s20fe-sfw" = {
             label = "Redmage/S20FE";
             id = "Redmage/S20FE";
-            devices = [
-              "s20fe"
-            ];
+            devices = [ "s20fe" ];
           };
           "/nas/Syncthing/Sync/Japanese-Homework" = {
             label = "Japanese Homework";
@@ -63,9 +60,7 @@ in
           "/nas/kavita/library/light-novels" = {
             label = "Light Novels";
             id = "Light-Novels";
-            devices = [
-              "onyx"
-            ];
+            devices = [ "onyx" ];
           };
           "/nas/Syncthing/Sync/VPN" = {
             label = "OpenVPN";

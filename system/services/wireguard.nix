@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.profile.services.wireguard;
   externalInterface = config.profile.networking.externalInterface;
@@ -22,17 +27,25 @@ let
 in
 {
   config = mkIf cfg.enable {
-    sops.secrets = mergeAttrsList ([
-      {
-        "wireguard/private_keys/server" = { inherit sopsFile; };
-      }
-    ] ++
-    (map (device: { ${device.secret} = { inherit sopsFile; }; }) devices)
+    sops.secrets = mergeAttrsList (
+      [
+        {
+          "wireguard/private_keys/server" = {
+            inherit sopsFile;
+          };
+        }
+      ]
+      ++ (map (device: {
+        ${device.secret} = {
+          inherit sopsFile;
+        };
+      }) devices)
     );
 
     sops.templates =
       let
-        template = { privateKey, ip }:
+        template =
+          { privateKey, ip }:
           generators.toINI ({ }) {
             Interface = {
               Address = "${ip}/32";
@@ -47,8 +60,8 @@ in
             };
           };
       in
-      mergeAttrsList (map
-        (device: {
+      mergeAttrsList (
+        map (device: {
           "wireguard/clients/${device.name}" = {
             content = template {
               privateKey = config.sops.placeholder.${device.secret};
@@ -57,8 +70,7 @@ in
             path = "/nas/Syncthing/Sync/WireGuard/${device.name}.conf";
             owner = config.profile.user.name;
           };
-        })
-        devices
+        }) devices
       );
 
     networking = {
@@ -90,12 +102,10 @@ in
 
           privateKeyFile = config.sops.secrets."wireguard/private_keys/server".path;
 
-          peers = map
-            (device: {
-              publicKey = device.publicKey;
-              allowedIPs = [ device.ip ];
-            })
-            devices;
+          peers = map (device: {
+            publicKey = device.publicKey;
+            allowedIPs = [ device.ip ];
+          }) devices;
         };
       };
     };

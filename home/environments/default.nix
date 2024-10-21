@@ -1,6 +1,4 @@
 { ... }:
 {
-  imports = [
-    ./protobuf.nix
-  ];
+  imports = [ ./protobuf.nix ];
 }

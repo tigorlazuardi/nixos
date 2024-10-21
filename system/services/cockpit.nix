@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.profile.services.cockpit;
   inherit (lib) mkIf;
@@ -8,13 +13,14 @@ in
     environment.systemPackages = mkIf config.profile.podman.enable [
       (pkgs.callPackage ../packages/cockpit-podman.nix { })
     ];
-    services.caddy.virtualHosts."cockpit.tigor.web.id".extraConfig = /*caddyfile*/ ''
-      @denied not remote_ip private_ranges
+    services.caddy.virtualHosts."cockpit.tigor.web.id".extraConfig = # caddyfile
+      ''
+        @denied not remote_ip private_ranges
 
-      respond @denied "Access denied" 403
+        respond @denied "Access denied" 403
 
-      reverse_proxy 0.0.0.0:9090
-    '';
+        reverse_proxy 0.0.0.0:9090
+      '';
     services.udisks2.enable = true;
     services.cockpit = {
       enable = true;

@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.profile.hyprland;
 in
@@ -8,9 +13,7 @@ in
     #   enable = true;
     #   display = config.profile.hyprland.swayosd.display;
     # };
-    home.packages = with pkgs; [
-      swayosd
-    ];
+    home.packages = with pkgs; [ swayosd ];
 
     wayland.windowManager.hyprland.settings = {
       exec-once = [

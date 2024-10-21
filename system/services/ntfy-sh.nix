@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   cfg = config.profile.services.ntfy-sh;
   client = cfg.client;
@@ -59,7 +64,10 @@ lib.mkMerge [
         DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/${toString config.profile.user.uid}/bus";
       };
       restartTriggers = [ (builtins.toJSON cfg.client.settings) ];
-      path = with pkgs; [ bash libnotify ];
+      path = with pkgs; [
+        bash
+        libnotify
+      ];
       description = "ntfy-sh client";
       serviceConfig = {
         ExecStart = "${pkgs.ntfy-sh}/bin/ntfy --debug subscribe --config /etc/ntfy/client.yml --from-config";
@@ -72,23 +80,30 @@ lib.mkMerge [
     sops = {
       secrets =
         let
-          opts = { sopsFile = ../../secrets/ntfy.yaml; };
+          opts = {
+            sopsFile = ../../secrets/ntfy.yaml;
+          };
         in
         {
           "ntfy/tokens/tigor" = opts;
         };
 
       templates =
-        let filename = "ntfy-client.yaml"; in
+        let
+          filename = "ntfy-client.yaml";
+        in
         {
           ${filename} = {
-            content = builtins.readFile ((pkgs.formats.yaml { }).generate filename (
-              {
-                default-host = "https://${domain}";
-                default-token = config.sops.placeholder."ntfy/tokens/tigor";
-                default-command = ''${pkgs.libnotify}/bin/notify-send --category=im.received --urgency=normal "$title" "$message"'';
-              } // cfg.client.settings
-            ));
+            content = builtins.readFile (
+              (pkgs.formats.yaml { }).generate filename (
+                {
+                  default-host = "https://${domain}";
+                  default-token = config.sops.placeholder."ntfy/tokens/tigor";
+                  default-command = ''${pkgs.libnotify}/bin/notify-send --category=im.received --urgency=normal "$title" "$message"'';
+                }
+                // cfg.client.settings
+              )
+            );
             path = configPath;
             owner = config.profile.user.name;
           };

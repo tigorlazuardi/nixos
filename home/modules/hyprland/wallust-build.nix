@@ -1,10 +1,11 @@
-{ lib
-, fetchFromGitea
-, rustPlatform
-, nix-update-script
-, imagemagick
-, makeWrapper
-, pkgs
+{
+  lib,
+  fetchFromGitea,
+  rustPlatform,
+  nix-update-script,
+  imagemagick,
+  makeWrapper,
+  pkgs,
 }:
 rustPlatform.buildRustPackage rec {
   pname = "wallust";
@@ -20,7 +21,10 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-o6VRekazqbKTef6SLjHqs9/z/Q70auvunP+yFDkclpg=";
 
-  nativeBuildInputs = [ makeWrapper pkgs.rust-bin.stable."1.79.0".default ];
+  nativeBuildInputs = [
+    makeWrapper
+    pkgs.rust-bin.stable."1.79.0".default
+  ];
 
   postFixup = ''
     wrapProgram $out/bin/wallust \
@@ -33,7 +37,10 @@ rustPlatform.buildRustPackage rec {
     description = "A better pywal";
     homepage = "https://codeberg.org/explosion-mental/wallust";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ onemoresuza iynaix ];
+    maintainers = with lib.maintainers; [
+      onemoresuza
+      iynaix
+    ];
     downloadPage = "https://codeberg.org/explosion-mental/wallust/releases/tag/${version}";
     mainProgram = "wallust";
   };

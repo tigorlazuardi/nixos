@@ -21,7 +21,10 @@ in
     };
 
     displayManager = lib.mkOption {
-      type = lib.types.enum [ "sddm" "tuigreet" ];
+      type = lib.types.enum [
+        "sddm"
+        "tuigreet"
+      ];
       default = "tuigreet";
     };
 
@@ -74,12 +77,24 @@ in
 
     wallust = {
       backend = lib.mkOption {
-        type = lib.types.enum [ "full" "resized" "wal" "thumb" "fastresize" "kmeans" ];
+        type = lib.types.enum [
+          "full"
+          "resized"
+          "wal"
+          "thumb"
+          "fastresize"
+          "kmeans"
+        ];
         default = "kmeans";
         description = "How the image is parse, in order to get the colors";
       };
       colorSpace = lib.mkOption {
-        type = lib.types.enum [ "lab" "labmixed" "lch" "lchmixed" ];
+        type = lib.types.enum [
+          "lab"
+          "labmixed"
+          "lch"
+          "lchmixed"
+        ];
         default = "lch";
         description = "What color space to use to produce and select the most prominent colors";
       };

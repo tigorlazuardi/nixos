@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   cfg = config.profile.slack;
   autostartScript = pkgs.writeShellScriptBin "slack.sh" ''
@@ -11,13 +16,9 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [ slack ];
 
-    wayland.windowManager.hyprland.settings.exec-once = lib.mkIf cfg.autostart [
-      autostartScriptFile
-    ];
+    wayland.windowManager.hyprland.settings.exec-once = lib.mkIf cfg.autostart [ autostartScriptFile ];
 
-    home.file.".config/autostart/slack.sh" = lib.mkIf cfg.autostart {
-      source = autostartScriptFile;
-    };
+    home.file.".config/autostart/slack.sh" = lib.mkIf cfg.autostart { source = autostartScriptFile; };
 
     services.swaync.settings.scripts._10-slack =
       let

@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
   cfg = config.profile.kde;
 in
@@ -24,8 +29,7 @@ in
       haruna
     ];
 
-    environment.etc."chromium/native-messaging-hosts/org.kde.plasma.browser_integration.json".source =
-      "${pkgs.plasma-browser-integration}/etc/chromium/native-messaging-hosts/org.kde.plasma.browser_integration.json";
+    environment.etc."chromium/native-messaging-hosts/org.kde.plasma.browser_integration.json".source = "${pkgs.plasma-browser-integration}/etc/chromium/native-messaging-hosts/org.kde.plasma.browser_integration.json";
 
     # Configure keymap in X11
     services.xserver = {

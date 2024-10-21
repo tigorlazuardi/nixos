@@ -24,9 +24,7 @@ in
       environment = {
         TZ = "Asia/Jakarta";
       };
-      volumes = [
-        "/tmp:/tmp"
-      ];
+      volumes = [ "/tmp:/tmp" ];
       extraOptions = [
         "--network=podman"
         "--ip=${ip}"

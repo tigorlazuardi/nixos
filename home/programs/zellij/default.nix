@@ -1,4 +1,10 @@
-{ config, lib, pkgs, unstable, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  unstable,
+  ...
+}:
 let
   cfg = config.profile.home.programs.zellij;
   plugins = {
@@ -26,7 +32,7 @@ in
     # autoloaded first after zshenv.
     programs.zsh.initExtraFirst = lib.mkOrder 50 (
       if cfg.autoAttach then
-      /*bash*/
+        # bash
         ''
           if [[ ! -z "$SSH_CLIENT" ]]; then
             if [[ -z "$ZELLIJ" ]]; then
@@ -47,21 +53,23 @@ in
           fi
         ''
       else
-      /*bash*/ ''
-        if [[ ! -z "$SSH_CLIENT" ]]; then
-            if [[ -z "$ZELLIJ" ]]; then
-                zellij attach -c default
-                exit
-            fi
-        fi
-      ''
+        # bash
+        ''
+          if [[ ! -z "$SSH_CLIENT" ]]; then
+              if [[ -z "$ZELLIJ" ]]; then
+                  zellij attach -c default
+                  exit
+              fi
+          fi
+        ''
     );
 
     home.file.".config/zellij/config.kdl".text =
       let
         mod = cfg.mod;
       in
-        /*kdl*/ ''
+      # kdl
+      ''
         theme "catppuccin-mocha";
 
         plugins {

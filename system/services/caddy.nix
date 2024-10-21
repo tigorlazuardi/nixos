@@ -1,7 +1,17 @@
-{ config, lib, unstable, ... }:
+{
+  config,
+  lib,
+  unstable,
+  ...
+}:
 let
   cfg = config.profile.services.caddy;
-  inherit (lib) mkIf attrsets strings lists;
+  inherit (lib)
+    mkIf
+    attrsets
+    strings
+    lists
+    ;
 in
 {
   config = mkIf cfg.enable {
@@ -10,27 +20,31 @@ in
       package = unstable.caddy;
     };
 
-    services.caddy.globalConfig = /*caddy*/ ''
-      servers {
-          metrics
-      } 
-    '';
+    services.caddy.globalConfig = # caddy
+      ''
+        servers {
+            metrics
+        } 
+      '';
 
     environment.etc."caddy/static/tigor.web.id/index.html" = {
       text =
         let
-          domains = attrsets.mapAttrsToList (name: _: strings.removePrefix "https://" name) config.services.caddy.virtualHosts;
+          domains = attrsets.mapAttrsToList (
+            name: _: strings.removePrefix "https://" name
+          ) config.services.caddy.virtualHosts;
           sortedDomains = lists.sort (a: b: a < b) domains;
-          list = map
-            (domain: /*html*/ ''
+          list = map (
+            domain: # html
+            ''
               <div class="col-12 col-sm-6 col-md-4 col-lg-3 text-center align-middle">
                   <a href="https://${domain}">${domain}</a>
               </div>
-            '')
-            sortedDomains;
+            '') sortedDomains;
           items = strings.concatStringsSep "\n" list;
         in
-          /*html*/ ''
+        # html
+        ''
           <!DOCTYPE html>
           <html>
               <head>
@@ -53,80 +67,78 @@ in
       group = "caddy";
     };
 
-    services.caddy.virtualHosts =
-      {
-        "router.tigor.web.id".extraConfig = ''
-          @denied not remote_ip private_ranges 
+    services.caddy.virtualHosts = {
+      "router.tigor.web.id".extraConfig = ''
+        @denied not remote_ip private_ranges 
 
-          respond @denied "Access denied" 403
+        respond @denied "Access denied" 403
 
-          reverse_proxy 192.168.100.1
-        '';
-        "tigor.web.id".extraConfig =
-          ''
-            root * /etc/caddy/static/tigor.web.id
-            file_server
-          '';
-        "crowfx.web.id".extraConfig =
-          ''
-            root * /etc/caddy/static/tigor.web.id
-            file_server
-          '';
-      };
+        reverse_proxy 192.168.100.1
+      '';
+      "tigor.web.id".extraConfig = ''
+        root * /etc/caddy/static/tigor.web.id
+        file_server
+      '';
+      "crowfx.web.id".extraConfig = ''
+        root * /etc/caddy/static/tigor.web.id
+        file_server
+      '';
+    };
 
     environment.etc."alloy/config.alloy".text =
-      /*hcl*/ ''
-      local.file_match "caddy_access_log" {
-          path_targets = [
-              {
-                  "__path__" = "/var/log/caddy/*.log",
-              },
-          ]
-          sync_period = "30s"
-      }
+      # hcl
+      ''
+        local.file_match "caddy_access_log" {
+            path_targets = [
+                {
+                    "__path__" = "/var/log/caddy/*.log",
+                },
+            ]
+            sync_period = "30s"
+        }
 
-      loki.source.file "caddy_access_log" {
-          targets = local.file_match.caddy_access_log.targets
-          forward_to = [loki.process.caddy_access_log.receiver]
-      }
+        loki.source.file "caddy_access_log" {
+            targets = local.file_match.caddy_access_log.targets
+            forward_to = [loki.process.caddy_access_log.receiver]
+        }
 
-      loki.process "caddy_access_log" {
-          forward_to = [loki.write.default.receiver]
+        loki.process "caddy_access_log" {
+            forward_to = [loki.write.default.receiver]
 
-          stage.json {
-              expressions = {
-                  level = "",
-                  host = "request.host",
-                  method = "request.method",
-                  proto = "request.proto",
-                  ts = "",
-              }
-          }
-
-          stage.labels {
-              values = {
-                  level = "",
-                  host = "",
-                  method = "",
-                  proto = "",
-              }
-          }
-
-          stage.label_drop {
-            values = ["service_name"]
-          }
-
-          stage.static_labels {
-            values = {
-                job = "caddy_access_log",
+            stage.json {
+                expressions = {
+                    level = "",
+                    host = "request.host",
+                    method = "request.method",
+                    proto = "request.proto",
+                    ts = "",
+                }
             }
-          }
 
-          stage.timestamp {
-            source = "ts"
-            format = "unix"
-          }
-      }
-    '';
+            stage.labels {
+                values = {
+                    level = "",
+                    host = "",
+                    method = "",
+                    proto = "",
+                }
+            }
+
+            stage.label_drop {
+              values = ["service_name"]
+            }
+
+            stage.static_labels {
+              values = {
+                  job = "caddy_access_log",
+              }
+            }
+
+            stage.timestamp {
+              source = "ts"
+              format = "unix"
+            }
+        }
+      '';
   };
 }
