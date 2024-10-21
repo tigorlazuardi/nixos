@@ -1,19 +1,32 @@
 { pkgs, lib, config, ... }:
 let
   cfg = config.profile.slack;
-  script = pkgs.writeShellScriptBin "slack.sh" ''
+  autostartScript = pkgs.writeShellScriptBin "slack.sh" ''
     sleep 10; until ${pkgs.unixtools.ping}/bin/ping -c 1 1.1.1.1; do sleep 1; done; slack
   '';
-  scriptFile = lib.meta.getExe script;
+  inherit (lib.meta) getExe;
+  autostartScriptFile = getExe autostartScript;
 in
 {
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [ slack ];
 
     wayland.windowManager.hyprland.settings.exec-once = lib.mkIf cfg.autostart [
-      scriptFile
+      autostartScriptFile
     ];
 
-    home.file.".config/autostart/slack.sh".source = lib.mkIf cfg.autostart scriptFile;
+    home.file.".config/autostart/slack.sh" = lib.mkIf cfg.autostart {
+      source = autostartScriptFile;
+    };
+
+    services.swaync.settings.scripts._10-slack =
+      let
+        focusWindowScript = pkgs.callPackage ../../scripts/hyprland/focus-window.nix { };
+      in
+      {
+        app-name = "[Ss]lack";
+        exec = "${getExe focusWindowScript}";
+        run-on = "action";
+      };
   };
 }

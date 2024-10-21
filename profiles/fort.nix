@@ -37,8 +37,14 @@
       pyprland.wallpaper-dirs = [ "/home/tigor/Syncthing/Redmage/Laptop-Kerja" ];
       wallust.alpha = 80;
     };
-    discord.enable = true;
-    slack.enable = true;
+    discord = {
+      enable = true;
+      autostart = true;
+    };
+    slack = {
+      enable = true;
+      autostart = true;
+    };
     whatsapp.enable = true;
     syncthing.enable = true;
     bluetooth.enable = true;
