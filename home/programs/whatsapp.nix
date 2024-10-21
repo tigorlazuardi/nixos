@@ -7,7 +7,7 @@
 let
   cfg = config.profile.whatsapp;
   autostartScript = pkgs.writeShellScriptBin "whatsapp.sh" ''
-    "sleep 10; until ${pkgs.unixtools.ping}/bin/ping -c 1 web.whatsapp.com; do sleep 1; done; whatsapp-for-linux"
+    sleep 10; until ${pkgs.unixtools.ping}/bin/ping -c 1 web.whatsapp.com; do sleep 1; done; whatsapp-for-linux
   '';
 in
 {
