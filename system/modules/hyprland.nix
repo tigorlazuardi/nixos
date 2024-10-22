@@ -93,6 +93,8 @@ in
       };
     };
 
+    boot.kernelParams = [ "console=tty1" ];
+
     services.displayManager.sddm = lib.mkIf (cfg.displayManager == "sddm") {
       enable = true;
       wayland.enable = true;
