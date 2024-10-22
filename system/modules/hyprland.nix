@@ -87,7 +87,7 @@ in
           vt = 5;
         };
         default_session = {
-          command = ''tuigreet --remember --cmd "dbus-run-session Hyprland"'';
+          command = ''tuigreet --remember --cmd "Hyprland"'';
           user = "tigor";
         };
       };
