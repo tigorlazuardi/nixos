@@ -57,8 +57,12 @@ lib.mkMerge [
 
     systemd.user.services.ntfy-client = {
       enable = true;
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
+      wantedBy = [ "default.target" ];
+      after = [
+        "network.target"
+        "dbus.socket"
+      ];
+      requires = [ "dbus.socket" ];
       environment = {
         DISPLAY = ":0";
         DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/${toString config.profile.user.uid}/bus";
