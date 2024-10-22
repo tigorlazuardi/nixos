@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  unstable,
   ...
 }:
 let
@@ -24,7 +23,6 @@ in
     programs.go = {
       enable = true;
       goPrivate = [ "gitlab.bareksa.com" ];
-      package = unstable.go_1_23;
     };
     home.packages = with pkgs; [
       gotools
@@ -33,7 +31,7 @@ in
       gomodifytags
       gotests
       iferr
-      unstable.gopls
+      gopls
       gofumpt
       impl
       golangci-lint
