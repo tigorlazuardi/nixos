@@ -21,8 +21,8 @@ in
         positionY = "top";
         fit-to-screen = false;
         control-center-height = 800;
-        timeout = 5;
-        timeout-low = 3;
+        timeout = 7;
+        timeout-low = 5;
 
         scripts = {
           _10-hyprland-ytptube = {
