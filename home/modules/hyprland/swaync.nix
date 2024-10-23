@@ -12,6 +12,7 @@ in
     services.poweralertd.enable = true;
     services.swaync = {
       enable = true;
+      # pkill swaync && GTK_DEBUG=interactive swaync - launch swaync with gtk debugger
       style =
         let
           # Origin: "https://github.com/zDyanTB/HyprNova/blob/5c2b4634a6971aaf995b4fc69cd74f8bbf0b84d0/.config/swaync/themes/nova-dark/notifications.css";
@@ -19,47 +20,38 @@ in
             url = "https://raw.githubusercontent.com/zDyanTB/HyprNova/5c2b4634a6971aaf995b4fc69cd74f8bbf0b84d0/.config/swaync/themes/nova-dark/notifications.css";
             hash = "sha256-QIM60RX/OedhfkMKngj540d/9wj4E54ncv24nueYlyk=";
           };
+          # Origin: https://github.com/zDyanTB/HyprNova/blob/5c2b4634a6971aaf995b4fc69cd74f8bbf0b84d0/.config/swaync/themes/nova-dark/central_control.css
           controlCenterCss = pkgs.fetchurl {
             url = "https://raw.githubusercontent.com/zDyanTB/HyprNova/5c2b4634a6971aaf995b4fc69cd74f8bbf0b84d0/.config/swaync/themes/nova-dark/central_control.css";
             hash = "sha256-XzFea04G4DCxDUF/XOqUkKei+Xv9bmdnSVU4/Sjtefc=";
           };
         in
-        # Origin: https://github.com/zDyanTB/HyprNova/blob/5c2b4634a6971aaf995b4fc69cd74f8bbf0b84d0/.config/swaync/themes/nova-dark/central_control.css
         # css
         ''
           @import '${config.home.homeDirectory}/.cache/wallust/swaync_base16.css';
           @import '${controlCenterCss}';
           @import '${notificationCss}';
+
+          .control-center {
+            background: alpha(@background, 0.9);
+          }
+
+          .floating-notifications.background .notification-row .notification-background {
+            background: alpha(@background, 0.9);
+          }
         '';
       settings = {
         positionX = "center";
         positionY = "top";
-        fit-to-screen = true;
+        fit-to-screen = false;
         control-center-height = 800;
         timeout = 7;
         timeout-low = 5;
-        widgets = [
-          # "label"
-          # "buttons-grid"
-          "mpris"
-          # "volume"
-          "title"
-          "dnd"
-          "notifications"
-        ];
         widget-config = {
           title = {
             text = "Notifications";
             clear-all-button = true;
             button-text = " 󰎟 ";
-          };
-          label = {
-            max-lines = 1;
-            text = " ";
-          };
-          mpris = {
-            image-size = 96;
-            image-radius = 12;
           };
         };
 
