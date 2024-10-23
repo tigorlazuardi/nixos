@@ -72,5 +72,12 @@ lib.mkMerge [
       ''
     );
   })
-  { profile.services.ntfy-sh.client.settings.subscribe = [ { topic = "ssh"; } ]; }
+  {
+    profile.services.ntfy-sh.client.settings.subscribe = [
+      {
+        command = ''${pkgs.libnotify}/bin/notify-send --app-name="openssh" --icon="${./ssh-svgrepo-com.svg}" --category=im.received --urgency=normal "$title" "$message"'';
+        topic = "ssh";
+      }
+    ];
+  }
 ]
