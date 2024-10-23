@@ -44,6 +44,7 @@ in
     ./hyprland.nix
     ./kitty.nix
     ./rofi.nix
+    ./swaync.nix
     ./waybar.nix
     ./wlogout.nix
   ];

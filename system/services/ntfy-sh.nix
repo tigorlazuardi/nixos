@@ -81,6 +81,8 @@ lib.mkMerge [
       };
     };
 
+    profile.services.ntfy-sh.client.settings.subscribe = [ { topic = "all"; } ];
+
     sops = {
       secrets =
         let

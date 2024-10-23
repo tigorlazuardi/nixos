@@ -24,6 +24,10 @@ let
         ${unstable.wallust}/bin/wallust run "$target"
         ${pkgs.graphicsmagick}/bin/gm convert -resize 75% -blur 50x30 "$target" "$blur_target"
         ${pkgs.imagemagick}/bin/magick "$target" -resize 25% -gravity Center -extent 1:1 "$square_target"
+
+        if [ `pidof swaync` ]; then
+            swaync-client --reload-css
+        fi
       '';
 in
 {
