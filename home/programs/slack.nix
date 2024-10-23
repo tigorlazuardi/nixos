@@ -22,7 +22,7 @@ in
 
     services.swaync.settings.scripts._10-slack = {
       app-name = "[Ss]lack";
-      exec = "hyprctl dispatch focuswindow $SWAYNC_APP_NAME";
+      exec = "hyprctl dispatch focuswindow Slack";
       run-on = "action";
     };
   };
