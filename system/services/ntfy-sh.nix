@@ -105,7 +105,7 @@ lib.mkMerge [
                 {
                   default-host = "https://${domain}";
                   default-token = config.sops.placeholder."ntfy/tokens/tigor";
-                  default-command = ''${pkgs.libnotify}/bin/notify-send --category=im.received --urgency=normal "$title" "$message"'';
+                  default-command = ''${pkgs.libnotify}/bin/notify-send --app-name="ntfy.sh" --icon="${./ntfy-sh.svg}" --category=im.received --urgency=normal "$title" "$message"'';
                 }
                 // cfg.client.settings
               )
