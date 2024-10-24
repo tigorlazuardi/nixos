@@ -30,8 +30,8 @@ in
     home.file.".config/autostart/discord.sh" = lib.mkIf cfg.autostart { source = autostartScriptFile; };
 
     services.swaync.settings.scripts._10-discord = {
-      app-name = "(?=discord|vesktop)";
-      exec = "hyprctl dispatch focuswindow $SWAYNC_APP_NAME";
+      app-name = "[Vv]esktop";
+      exec = "hyprctl dispatch focuswindow vesktop";
       run-on = "action";
     };
   };
