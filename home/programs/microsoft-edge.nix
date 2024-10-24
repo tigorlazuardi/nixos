@@ -1,12 +1,12 @@
 {
   config,
   lib,
-  unstable,
+  pkgs,
   ...
 }:
 let
   cfg = config.profile.microsoft-edge;
 in
 {
-  config = lib.mkIf cfg.enable { home.packages = [ unstable.microsoft-edge ]; };
+  config = lib.mkIf cfg.enable { home.packages = [ pkgs.microsoft-edge ]; };
 }
