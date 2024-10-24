@@ -3,6 +3,7 @@
   profile-path,
   config,
   pkgs,
+  inputs,
   ...
 }:
 {
@@ -88,7 +89,10 @@
     nix-output-monitor
     nvd
     nixfmt-rfc-style
+    nixd
   ];
+
+  nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
 
   services.dbus.implementation = "broker";
 }

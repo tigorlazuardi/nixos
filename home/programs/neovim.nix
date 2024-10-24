@@ -77,8 +77,6 @@ in
 
       curl
       cargo
-      nixpkgs-fmt
-      nil
 
       gcc
       python3

@@ -79,6 +79,7 @@ in
       extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
     };
 
+
     programs.file-roller.enable = true;
 
     services.greetd = lib.mkIf (cfg.displayManager == "tuigreet") {
