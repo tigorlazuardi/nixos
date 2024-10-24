@@ -57,6 +57,8 @@ in
       ];
     };
 
+    programs.kdeconnect.enable = true;
+
     fonts.packages = with pkgs; [
       meslo-lgs-nf
       font-awesome

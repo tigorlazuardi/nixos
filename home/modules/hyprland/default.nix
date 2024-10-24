@@ -27,6 +27,7 @@ in
     ./swaync.nix
     ./ntfy-sh.nix
     ./gnome-keyring.nix
+    ./kdeconnect.nix
 
     ./wallust
   ];
