@@ -32,10 +32,6 @@ in
       reverse_proxy ${webguiListenAddress}
     '';
 
-    systemd.services.caddy.serviceConfig.EnvironmentFile = [
-      config.sops.templates."alloy-basic-auth".path
-    ];
-
     systemd.services.alloy.serviceConfig = {
       User = "root";
     };
