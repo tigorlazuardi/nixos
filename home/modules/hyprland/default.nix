@@ -10,6 +10,7 @@ in
 {
   imports = [
     # ./dunst.nix
+    ./bitwarden.nix
     ./hypridle.nix
     ./hyprland.nix
     ./hyprlock.nix
