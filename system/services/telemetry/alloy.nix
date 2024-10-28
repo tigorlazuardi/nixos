@@ -22,30 +22,11 @@ in
       extraFlags = [ ''--server.http.listen-addr=${webguiListenAddress}'' ];
       package = unstable.grafana-alloy;
     };
-
-    sops = {
-      secrets =
-        let
-          opts = { };
-        in
-        {
-          "caddy/basic_auth/username" = opts;
-          "caddy/basic_auth/password" = opts;
-        };
-      templates = {
-        "alloy-basic-auth".content = # sh
-          ''
-            ALLOY_USERNAME=${config.sops.placeholder."caddy/basic_auth/username"}
-            ALLOY_PASSWORD=${config.sops.placeholder."caddy/basic_auth/password"}
-          '';
-      };
-    };
-
     services.caddy.virtualHosts.${domain}.extraConfig = ''
       @require_auth not remote_ip private_ranges
 
-      basicauth @require_auth {
-        {$ALLOY_USERNAME} {$ALLOY_PASSWORD}
+      basic_auth @require_auth {
+        {$AUTH_USERNAME} {$AUTH_PASSWORD}
       }
 
       reverse_proxy ${webguiListenAddress}

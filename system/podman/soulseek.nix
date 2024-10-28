@@ -16,43 +16,18 @@ let
   user = config.profile.user;
   uid = toString user.uid;
   gid = toString user.gid;
-  basic_auth = {
-    username = "soulseek/caddy/username";
-    password = "soulseek/caddy/password";
-    template = "soulseek/caddy/basic_auth";
-  };
 in
 {
   config = mkIf (podman.enable && podman.${name}.enable) {
     services.caddy.virtualHosts.${domain}.extraConfig = ''
       @require_auth not remote_ip private_ranges 
 
-      basicauth @require_auth {
-        {$SOULSEEK_USERNAME} {$SOULSEEK_PASSWORD}
+      basic_auth @require_auth {
+        {$AUTH_USERNAME} {$AUTH_PASSWORD}
       }
 
       reverse_proxy ${ip}:6080
     '';
-
-    sops = {
-      secrets =
-        let
-          opts = {
-            sopsFile = ../../secrets/soulseek.yaml;
-          };
-        in
-        {
-          ${basic_auth.username} = opts;
-          ${basic_auth.password} = opts;
-        };
-      templates = {
-        ${basic_auth.template}.content = # sh
-          ''
-            SOULSEEK_USERNAME=${config.sops.placeholder.${basic_auth.username}}
-            SOULSEEK_PASSWORD=${config.sops.placeholder.${basic_auth.password}}
-          '';
-      };
-    };
 
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${rootVolume}/{config,downloads,incomplete}
@@ -67,9 +42,6 @@ in
         serviceName = "podman-${name}-autorestart";
       in
       {
-        services."caddy".serviceConfig = {
-          EnvironmentFile = [ config.sops.templates.${basic_auth.template}.path ];
-        };
         services.${serviceName} = {
           description = "Podman container ${name} autorestart";
           serviceConfig = {

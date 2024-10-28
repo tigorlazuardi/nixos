@@ -19,5 +19,6 @@
     ./wireguard.nix
     ./photoprism.nix
     ./ntfy-sh.nix
+    ./technitium.nix
   ];
 }

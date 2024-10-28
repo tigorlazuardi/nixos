@@ -68,36 +68,11 @@ let
 in
 lib.mkMerge [
   (mkIf podman.${name}.enable {
-    sops = {
-      secrets =
-        let
-          opts = { };
-        in
-        {
-          ${basic_auth.username} = opts;
-          ${basic_auth.password} = opts;
-          "ntfy/tokens/homeserver" = {
-            sopsFile = ../../secrets/ntfy.yaml;
-          };
-        };
-      templates = {
-        ${basic_auth.template}.content = # sh
-          ''
-            YTPTUBE_USERNAME=${config.sops.placeholder.${basic_auth.username}}
-            YTPTUBE_PASSWORD=${config.sops.placeholder.${basic_auth.password}}
-          '';
-        "ytptube/webhooks.json" = mkIf config.services.ntfy-sh.enable {
-          content = webhook;
-          path = "/etc/podman/${name}/webhooks.json";
-          owner = config.profile.user.name;
-        };
-      };
-    };
     services.caddy.virtualHosts.${domain}.extraConfig = ''
       @require_auth not remote_ip private_ranges 
 
-      basicauth @require_auth {
-        {$YTPTUBE_USERNAME} {$YTPTUBE_PASSWORD}
+      basic_auth @require_auth {
+        {$AUTH_USERNAME} {$AUTH_PASSWORD}
       }
 
       reverse_proxy ${ip}:8081
@@ -106,10 +81,6 @@ lib.mkMerge [
       mkdir -p ${volume}
       chown -R ${uid}:${gid} ${volume} /etc/podman/${name}
     '';
-
-    systemd.services."caddy".serviceConfig = {
-      EnvironmentFile = [ config.sops.templates.${basic_auth.template}.path ];
-    };
 
     systemd.services."podman-${name}".restartTriggers = [ webhook ];
 

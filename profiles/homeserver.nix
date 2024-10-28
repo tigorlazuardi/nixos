@@ -71,6 +71,7 @@
       ntfy-sh.enable = true;
       ntfy-sh.client.enable = false;
       couchdb.enable = true;
+      technitium.enable = false;
     };
   };
 }

@@ -77,5 +77,6 @@ in
         default = config.profile.services.telemetry.enable;
       };
     };
+    technitium.enable = mkEnableOption "technitium";
   };
 }

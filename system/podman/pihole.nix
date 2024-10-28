@@ -6,7 +6,7 @@ let
   inherit (lib) mkIf attrsets;
   ip = "10.88.1.1";
   image = "docker.io/pihole/pihole:latest";
-  piholeDNSIPBind = "192.168.100.3";
+  piholeDNSIPBind = "192.168.100.5";
 in
 {
   config = mkIf (podman.enable && pihole.enable) {
@@ -70,6 +70,7 @@ in
       ports = [
         "${piholeDNSIPBind}:53:53/udp"
         "67:67/udp"
+        "2000:80/tcp"
       ];
       volumes = [
         "pihole-etc:/etc/pihole"

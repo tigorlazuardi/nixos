@@ -3,45 +3,15 @@ let
   cfg = config.profile.services.telemetry.tempo;
   inherit (lib) mkIf;
   domain = "tempo.tigor.web.id";
-  basic_auth = {
-    username = "tempo/caddy/basic_auth/username";
-    password = "tempo/caddy/basic_auth/password";
-    template = "tempo/caddy/basic_auth";
-  };
   server = config.services.tempo.settings.server;
 in
 {
   config = mkIf cfg.enable {
-    sops = {
-      secrets =
-        let
-          opts = {
-            sopsFile = ../../../secrets/telemetry.yaml;
-            owner = "grafana";
-          };
-        in
-        {
-          ${basic_auth.username} = opts;
-          ${basic_auth.password} = opts;
-        };
-      templates = {
-        ${basic_auth.template}.content = # sh
-          ''
-            TEMPO_USERNAME=${config.sops.placeholder.${basic_auth.username}}
-            TEMPO_PASSWORD=${config.sops.placeholder.${basic_auth.password}}
-          '';
-      };
-    };
-
-    systemd.services."caddy".serviceConfig = {
-      EnvironmentFile = [ config.sops.templates.${basic_auth.template}.path ];
-    };
-
     services.caddy.virtualHosts.${domain}.extraConfig = ''
       @require_auth not remote_ip private_ranges 
 
-      basicauth @require_auth {
-          {$TEMPO_USERNAME} {$TEMPO_PASSWORD}
+      basic_auth @require_auth {
+          {$AUTH_USERNAME} {$AUTH_PASSWORD}
       }
 
       reverse_proxy ${server.http_listen_address}:3200

@@ -7,39 +7,10 @@ let
 in
 {
   config = mkIf cfg.enable {
-    sops =
-      let
-        usernameKey = "loki/caddy/basic_auth/username";
-        passwordKey = "loki/caddy/basic_auth/password";
-      in
-      {
-        secrets =
-          let
-            opts = {
-              sopsFile = ../../../secrets/telemetry.yaml;
-              owner = "grafana";
-            };
-          in
-          {
-            ${usernameKey} = opts;
-            ${passwordKey} = opts;
-          };
-        templates = {
-          "loki/caddy/basic_auth".content = # sh
-            ''
-              LOKI_USERNAME=${config.sops.placeholder.${usernameKey}}
-              LOKI_PASSWORD=${config.sops.placeholder.${passwordKey}}
-            '';
-        };
-      };
-
-    systemd.services."caddy".serviceConfig = {
-      EnvironmentFile = [ config.sops.templates."loki/caddy/basic_auth".path ];
-    };
     services.caddy.virtualHosts.${lokiDomain}.extraConfig = # caddy
       ''
-        basicauth {
-          {$LOKI_USERNAME} {$LOKI_PASSWORD}
+        basic_auth {
+          {$AUTH_USERNAME} {$AUTH_PASSWORD}
         }
         reverse_proxy ${server.http_listen_address}:${toString server.http_listen_port}
       '';

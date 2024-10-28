@@ -20,6 +20,21 @@ in
       package = unstable.caddy;
     };
 
+    sops = {
+      secrets = {
+        "caddy/basic_auth/username" = { };
+        "caddy/basic_auth/password" = { };
+      };
+      templates."caddy/basic_auth.env".content = ''
+        AUTH_USERNAME=${config.sops.placeholder."caddy/basic_auth/username"}
+        AUTH_PASSWORD=${config.sops.placeholder."caddy/basic_auth/password"}
+      '';
+    };
+
+    systemd.services.caddy.serviceConfig = {
+      EnvironmentFile = [ config.sops.templates."caddy/basic_auth.env".path ];
+    };
+
     services.caddy.globalConfig = # caddy
       ''
         servers {
