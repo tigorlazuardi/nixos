@@ -17,11 +17,11 @@ in
       reverse_proxy ${server.http_listen_address}:3200
     '';
 
-    services.tempo = {
+    services.tempo = rec {
       enable = true;
       settings = {
         server = {
-          http_listen_address = "0.0.0.0";
+          http_listen_address = "192.168.100.3";
           http_listen_port = 3200;
           grpc_listen_port = 9096;
         };
@@ -29,7 +29,12 @@ in
           receivers = {
             otlp = {
               protocols = {
-                http = { };
+                http = {
+                  endpoint = "${settings.server.http_listen_address}:4318";
+                };
+                grpc = {
+                  endpoint = "${settings.server.http_listen_address}:4317";
+                };
               };
             };
           };

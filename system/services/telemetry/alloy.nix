@@ -8,6 +8,8 @@
 let
   cfg = config.profile.services.telemetry.alloy;
   webguiListenAddress = "0.0.0.0:5319";
+  otelcolHTTPListenAddress = "192.168.100.5:4318";
+  otelcolGRPCListenAddress = "192.168.100.5:4317";
   domain = "alloy.tigor.web.id";
 in
 {
@@ -32,6 +34,26 @@ in
       reverse_proxy ${webguiListenAddress}
     '';
 
+    services.caddy.virtualHosts."otelhttp.tigor.web.id".extraConfig = ''
+      @require_auth not remote_ip private_ranges
+
+      basic_auth @require_auth {
+        {$AUTH_USERNAME} {$AUTH_PASSWORD}
+      }
+
+      reverse_proxy ${otelcolHTTPListenAddress}
+    '';
+
+    services.caddy.virtualHosts."otelgrpc.tigor.web.id".extraConfig = ''
+      @require_auth not remote_ip private_ranges
+
+      basic_auth @require_auth {
+        {$AUTH_USERNAME} {$AUTH_PASSWORD}
+      }
+
+      reverse_proxy ${otelcolGRPCListenAddress}
+    '';
+
     systemd.services.alloy.serviceConfig = {
       User = "root";
     };
@@ -39,18 +61,18 @@ in
     environment.etc."alloy/config.alloy".text =
       let
         lokiConfig = config.services.loki.configuration;
-        tempoServer = config.services.tempo.settings.server;
+        tempoProtocols = config.services.tempo.settings.distributor.receivers.otlp.protocols;
         mimirServer = config.services.mimir.configuration.server;
       in
       # hcl
       ''
         otelcol.receiver.otlp "homeserver" {
             grpc {
-                endpoint = "0.0.0.0:5317"
+                endpoint = "${otelcolGRPCListenAddress}"
             }
 
             http {
-                endpoint = "0.0.0.0:5318"
+                endpoint = "${otelcolHTTPListenAddress}"
             }
 
             output {
@@ -133,7 +155,11 @@ in
 
         otelcol.exporter.otlp "tempo" {
             client {
-                endpoint = "${tempoServer.http_listen_address}:${toString tempoServer.http_listen_port}"
+                endpoint = "${tempoProtocols.grpc.endpoint}"
+                tls {
+                      insecure = true
+                      insecure_skip_verify = true
+                }
             }
         }
 
