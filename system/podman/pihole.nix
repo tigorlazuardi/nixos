@@ -59,7 +59,7 @@ in
       hostname = name;
       environment = {
         TZ = "Asia/Jakarta";
-        PIHOLE_DNS_ = "192.168.100.5";
+        PIHOLE_DNS_ = "192.168.100.3";
         DHCP_ACTIVE = "true";
         DHCP_START = "192.168.100.20";
         DHCP_END = "192.168.100.254";
