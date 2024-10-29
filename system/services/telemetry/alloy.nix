@@ -51,7 +51,12 @@ in
         {$AUTH_USERNAME} {$AUTH_PASSWORD}
       }
 
-      reverse_proxy ${otelcolGRPCListenAddress}
+      reverse_proxy ${otelcolGRPCListenAddress} {
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+      }
     '';
 
     systemd.services.alloy.serviceConfig = {
