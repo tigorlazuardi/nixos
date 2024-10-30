@@ -101,15 +101,15 @@ in
             [ ]
             ++ (optional config.services.tempo.enable {
               datasourceUid = "tempo";
-              matcherRegex = ''traceID=(\\w+)'';
-              name = "TraceID";
+              matcherRegex = ''trace_?[Ii][Dd]=(\w+)'';
+              name = "Log Trace";
               url = "$\${__value.raw}";
               urlDisplayLabel = "Trace";
             })
             ++ (optional config.services.tempo.enable {
               datasourceUid = "tempo";
-              matcherRegex = ''"trace_id":"(\\w+)"'';
-              name = "TraceID";
+              matcherRegex = ''"trace_?[Ii][Dd]":"(\w+)"'';
+              name = "Trace";
               url = "$\${__value.raw}";
               urlDisplayLabel = "Trace";
             });
