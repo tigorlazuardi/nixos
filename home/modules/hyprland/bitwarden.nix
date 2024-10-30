@@ -19,7 +19,7 @@ in
     ];
 
     sops = {
-      secrets."bitwarden/config.json" = {
+      secrets."bitwarden/rbw/config.json" = {
         sopsFile = ../../../secrets/bitwarden.yaml;
         path = "${config.home.homeDirectory}/.config/rbw/config.json";
       };
