@@ -74,7 +74,14 @@ lib.mkMerge [
       ];
       description = "ntfy-sh client";
       serviceConfig = {
-        ExecStart = "${pkgs.ntfy-sh}/bin/ntfy --debug subscribe --config /etc/ntfy/client.yml --from-config";
+        ExecStart = lib.meta.getExe (
+          pkgs.writeShellScriptBin "entrypoint.sh" ''
+            until ${pkgs.unixtools.ping}/bin/ping -c 1 ${domain}; do
+              ${pkgs.coreutils}/bin/sleep 1;
+            done
+            ${pkgs.ntfy-sh}/bin/ntfy --debug subscribe --config /etc/ntfy/client.yml --from-config
+          ''
+        );
         Restart = "on-failure";
         # User = config.profile.user.uid;
         # Group = config.profile.user.gid;
