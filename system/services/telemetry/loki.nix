@@ -2,6 +2,7 @@
 let
   cfg = config.profile.services.telemetry.loki;
   inherit (lib) mkIf;
+  inherit (lib.lists) optional;
   lokiDomain = "loki.tigor.web.id";
   server = config.services.loki.configuration.server;
 in
@@ -96,6 +97,22 @@ in
         jsonData = {
           timeout = 60;
           maxLines = 1000;
+          derivedFields =
+            [ ]
+            ++ (optional config.services.tempo.enable {
+              datasourceUid = "tempo";
+              matcherRegex = ''traceID=(\\w+)'';
+              name = "TraceID";
+              url = "$\${__value.raw}";
+              urlDisplayLabel = "Trace";
+            })
+            ++ (optional config.services.tempo.enable {
+              datasourceUid = "tempo";
+              matcherRegex = ''"trace_id":"(\\w+)"'';
+              name = "TraceID";
+              url = "$\${__value.raw}";
+              urlDisplayLabel = "Trace";
+            });
         };
       }
     ];

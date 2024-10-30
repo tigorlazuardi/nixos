@@ -53,6 +53,7 @@ in
       {
         name = "Tempo";
         type = "tempo";
+        uid = "tempo";
         access = "proxy";
         url = "http://${server.http_listen_address}:${toString server.http_listen_port}";
         basicAuth = false;
