@@ -28,7 +28,7 @@ in
         multitenancy_enabled = false;
         server = {
           http_listen_address = "0.0.0.0";
-          http_listen_port = 4400;
+          http_listen_port = 9009;
           grpc_listen_port = 4401;
         };
 

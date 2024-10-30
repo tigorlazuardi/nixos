@@ -175,6 +175,13 @@ in
             forward_to  = [prometheus.remote_write.mimir.receiver]
         }
 
+        prometheus.exporter.self "alloy" {}
+
+        prometheus.scrape "alloy" {
+            targets     = prometheus.exporter.self.alloy.targets
+            forward_to  = [prometheus.remote_write.mimir.receiver]
+        }
+
         prometheus.scrape "caddy" {
             targets = [{
                 __address__ = "localhost:2019",
