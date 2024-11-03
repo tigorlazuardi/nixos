@@ -44,33 +44,33 @@ lib.mkMerge [
       };
     };
 
-    sops.secrets."ntfy/tokens/homeserver" = {
-      sopsFile = ../../secrets/ntfy.yaml;
-    };
-    sops.templates."ntfy-ssh-login.sh" = {
-      content = builtins.readFile (
-        lib.meta.getExe (
-          pkgs.writeShellScriptBin "ntfy-ssh-login.sh" # sh
-            ''
-              if [ "$PAM_TYPE" == "open_session" ]; then
-                  ${getExe pkgs.curl} -X POST \
-                      -H "X-Priority: 4" \
-                      -H "X-Tags: warning" \
-                      -H "Authorization: Bearer ${config.sops.placeholder."ntfy/tokens/homeserver"}" \
-                      -H "X-Title: SSH login" \
-                      -d "$PAM_USER from $PAM_RHOST" \
-                      https://ntfy.tigor.web.id/ssh
-              fi
-            ''
-        )
-      );
-    };
-
-    security.pam.services.sshd.text = lib.mkDefault (
-      lib.mkAfter ''
-        session optional pam_exec.so ${getExe pkgs.bash} ${config.sops.templates."ntfy-ssh-login.sh".path}
-      ''
-    );
+    # sops.secrets."ntfy/tokens/homeserver" = {
+    #   sopsFile = ../../secrets/ntfy.yaml;
+    # };
+    # sops.templates."ntfy-ssh-login.sh" = {
+    #   content = builtins.readFile (
+    #     lib.meta.getExe (
+    #       pkgs.writeShellScriptBin "ntfy-ssh-login.sh" # sh
+    #         ''
+    #           if [ "$PAM_TYPE" == "open_session" ]; then
+    #               ${getExe pkgs.curl} -X POST \
+    #                   -H "X-Priority: 4" \
+    #                   -H "X-Tags: warning" \
+    #                   -H "Authorization: Bearer ${config.sops.placeholder."ntfy/tokens/homeserver"}" \
+    #                   -H "X-Title: SSH login" \
+    #                   -d "$PAM_USER from $PAM_RHOST" \
+    #                   https://ntfy.tigor.web.id/ssh
+    #           fi
+    #         ''
+    #     )
+    #   );
+    # };
+    #
+    # security.pam.services.sshd.text = lib.mkDefault (
+    #   lib.mkAfter ''
+    #     session optional pam_exec.so ${getExe pkgs.bash} ${config.sops.templates."ntfy-ssh-login.sh".path}
+    #   ''
+    # );
   })
   {
     profile.services.ntfy-sh.client.settings.subscribe = [
