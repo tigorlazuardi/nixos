@@ -9,7 +9,6 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    services.poweralertd.enable = true;
     services.swaync = {
       enable = true;
       # pkill swaync && GTK_DEBUG=interactive swaync - launch swaync with gtk debugger
