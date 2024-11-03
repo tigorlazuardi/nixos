@@ -14,7 +14,7 @@ in
     ./hypridle.nix
     ./hyprland.nix
     ./hyprlock.nix
-    ./hyprshot.nix
+    # ./hyprshot.nix
     # hyprpaper seems to be broken with out of memory and failure to swap wallpapers correctly.
     # Use swww for now until the application is stable.
     # ./hyprpaper.nix
@@ -22,6 +22,7 @@ in
     ./rofi.nix
     ./waybar.nix
     ./wlogout.nix
+    ./grimblast.nix
     # ./swappy.nix
     ./alacritty.nix
     ./swayosd.nix
@@ -40,7 +41,7 @@ in
       pasystray
 
       graphicsmagick
-      pkgs.swayosd
+      swayosd
       image-roll # image viewer
     ];
 
