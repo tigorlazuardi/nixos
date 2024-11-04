@@ -23,6 +23,27 @@ in
     programs.zellij.enable = true;
     programs.zellij.package = unstable.zellij;
 
+    systemd.user = {
+      services.zellij-cleanup = {
+        Service = {
+          Description = "Zellij cleanup killed sessions";
+          ExecStart = "${unstable.zellij}/bin/zellij delete-all-sessions --yes";
+        };
+      };
+      timers.zellij-cleanup = {
+        Unit = {
+          Description = "Zellij cleanup killed sessions";
+        };
+        Timer = {
+          OnCalendar = "*-*-* 4:00:00";
+          Persistent = true;
+        };
+        Install = {
+          WantedBy = [ "timers.target" ];
+        };
+      };
+    };
+
     # Uses initExtraFirst instead of initExtra
     # to avoid loading of zsh plugins before zellij loads.
     #
