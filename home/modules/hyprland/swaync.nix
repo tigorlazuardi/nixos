@@ -62,11 +62,13 @@ in
           };
           _98-play-notification-sound-normal = {
             exec = ''${pkgs.sox}/bin/play --volume 0.5 ${./gran_turismo_menu_sound_effect.mp3}'';
-            app-name = "^(?!discord|TelegramDesktop|Slack|slack|Signal|Element|whatsapp-for-linux).*$";
+            app-name = "^(?!discord|TelegramDesktop|Slack|slack|Signal|Element|whatsapp-for-linux|vesktop).*$";
           };
         };
       };
     };
+
+    systemd.user.services.swaync.Service.Environment = [ "G_MESSAGES_DEBUG=all" ];
 
     wayland.windowManager.hyprland.settings.layerrule = [
       "blur, swaync-notification-window"
