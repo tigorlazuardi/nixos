@@ -18,7 +18,7 @@ in
       settings = {
         monitors = [
           "desc:${primaryMonitor},3440x1440@165,0x0,1"
-          "desc:${secondaryMonitor},2560x1440@75,440x-1440,1"
+          "desc:${secondaryMonitor},2560x1440@75,3440x0,1"
         ];
         workspaces = [
           "1, monitor:desc:${primaryMonitor}, default:true"
