@@ -113,6 +113,8 @@ in
       elisa.enable = true;
       obsidian.enable = true;
     };
+
+    programs.mongodb-compass.enable = true;
     programs.easyeffects.enable = true;
     programs.wezterm.enable = true;
     podman.enable = true;
