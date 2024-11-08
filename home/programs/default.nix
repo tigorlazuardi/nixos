@@ -13,6 +13,7 @@
     ./github.nix
     ./go.nix
     ./jellyfin.nix
+    ./jetbrains-idea.nix
     ./kitty.nix
     ./microsoft-edge.nix
     ./mongodb-compass.nix

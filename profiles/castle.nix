@@ -112,6 +112,7 @@ in
       zoom.enable = true;
       elisa.enable = true;
       obsidian.enable = true;
+      jetbrains.idea.enable = true;
     };
 
     programs.mongodb-compass.enable = true;

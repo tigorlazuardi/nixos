@@ -13,8 +13,8 @@ in
     ./environments
 
     ./direnv.nix
-    ./config/ideavim
     ./secrets.nix
+    ./ideavimrc.nix
   ];
 
   home = {

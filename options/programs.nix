@@ -111,6 +111,7 @@
       zoom.enable = lib.mkEnableOption "zoom";
       elisa.enable = lib.mkEnableOption "elisa";
       obsidian.enable = lib.mkEnableOption "obsidian";
+      jetbrains.idea.enable = lib.mkEnableOption "jetbrains.idea";
     };
 
     programs = {
