@@ -7,6 +7,9 @@
 let
   cfg = config.profile.slack;
   autostartScript = pkgs.writeShellScriptBin "slack.sh" ''
+    # do not autostart on weekend
+    if [ "$(date +%u)" -gt 5 ]; then exit 0; fi
+
     sleep 10; until ${pkgs.unixtools.ping}/bin/ping -c 1 1.1.1.1; do sleep 1; done; slack
   '';
   inherit (lib.meta) getExe;
