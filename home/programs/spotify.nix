@@ -21,10 +21,6 @@ in
       })
     ];
 
-    sops.secrets."spotifyd/password" = {
-      sopsFile = ../../secrets/spotify.yaml;
-    };
-
     services.spotifyd = {
       enable = true;
       settings = {
