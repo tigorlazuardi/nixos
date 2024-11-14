@@ -21,7 +21,7 @@ in
       })
     ];
 
-    services.spotifyd = {
+    services.spotifyd = lib.mkIf cfg.spotifyd.enable {
       enable = true;
       settings = {
         global = {

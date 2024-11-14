@@ -57,6 +57,7 @@
     spotify = {
       enable = lib.mkEnableOption "spotify";
       autostart = lib.mkEnableOption "spotify autostart";
+      spotifyd.enable = lib.mkEnableOption "spotifyd";
     };
     firefox.enable = lib.mkEnableOption "firefox";
     vscode.enable = lib.mkEnableOption "vscode";
