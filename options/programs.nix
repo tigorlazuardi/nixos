@@ -74,6 +74,7 @@
     home.programs = {
       zathura.enable = lib.mkEnableOption "zathura";
       floorp.enable = lib.mkEnableOption "floorp";
+      java.enable = lib.mkEnableOption "java";
       zellij = {
         enable = lib.mkEnableOption "zellij";
 

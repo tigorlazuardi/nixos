@@ -113,6 +113,7 @@ in
       elisa.enable = true;
       obsidian.enable = true;
       jetbrains.idea.enable = true;
+      java.enable = true;
     };
 
     programs.mongodb-compass.enable = true;

@@ -12,6 +12,7 @@
     ./git.nix
     ./github.nix
     ./go.nix
+    ./java.nix
     ./jellyfin.nix
     ./jetbrains-idea.nix
     ./kitty.nix
