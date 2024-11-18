@@ -16,6 +16,7 @@
     ./jellyfin.nix
     ./jetbrains-idea.nix
     ./kitty.nix
+    ./lazysql.nix
     ./microsoft-edge.nix
     ./mongodb-compass.nix
     ./mpv.nix
