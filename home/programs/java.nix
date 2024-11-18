@@ -17,7 +17,10 @@ in
   config = mkIf cfg.enable {
     # This registers lombok jar to the Java classpath
     # https://github.com/NixOS/nixpkgs/blob/689fed12a013f56d4c4d3f612489634267d86529/pkgs/development/libraries/java/lombok/default.nix#L21
-    home.packages = [ pkgs.lombok ];
+    home.packages = [
+      pkgs.lombok
+      pkgs.jdt-language-server
+    ];
 
     # This one adds the lombok jar to the session variables so programs
     # can find it if they cannot find it in the classpath.
