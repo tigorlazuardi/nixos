@@ -9,6 +9,7 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
+    home.packages = [ pkgs.zen-browser ];
     programs.firefox = {
       enable = true;
       policies = {

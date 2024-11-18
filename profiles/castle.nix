@@ -99,7 +99,7 @@ in
 
     flatpak = {
       enable = true;
-      zen-browser.enable = true;
+      zen-browser.enable = false;
       redisinsight.enable = true;
     };
 

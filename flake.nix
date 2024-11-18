@@ -14,6 +14,7 @@
     ];
   };
   inputs = {
+    zen-browser.url = "github:MarceColl/zen-browser-flake";
     nur.url = "github:nix-community/NUR";
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
@@ -45,7 +46,6 @@
   };
   outputs =
     inputs@{
-      self,
       nur,
       nixpkgs,
       home-manager,
@@ -57,6 +57,7 @@
       ...
     }:
     let
+      system = "x86_64-linux";
       commonModules = [
         nur.nixosModules.nur
         nix-flatpak.nixosModules.nix-flatpak
@@ -71,6 +72,7 @@
             neovim-nightly-overlay.overlays.default
             nur.overlay
             rust-overlay.overlays.default
+            (final: prev: { zen-browser = inputs.zen-browser.packages."${system}".default; })
           ];
         }
         {
@@ -93,7 +95,7 @@
         }
       ];
       unstable = import inputs.nixpkgs-unstable {
-        system = "x86_64-linux";
+        inherit system;
         config.allowUnfree = true;
       };
     in
@@ -113,7 +115,7 @@
             };
           in
           nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
+            inherit system;
             modules = [
               ./system
               {
@@ -137,7 +139,7 @@
             };
           in
           nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
+            inherit system;
             modules = [
               ./system
               {
@@ -161,7 +163,7 @@
             };
           in
           nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
+            inherit system;
             modules = [
               ./system
               {
