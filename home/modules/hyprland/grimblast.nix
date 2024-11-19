@@ -18,19 +18,14 @@ let
 
       file=$(date +%Y-%m-%d_%H%M%S).png
       filename=${saveDir}/original/$file
-      ${grimblast}/bin/grimblast save ${mode} "$filename"
-      action=$(notify-send --icon="$filename" --app-name="grimblast" --action="copy=Copy" --action="edit=Edit" --action="delete=Delete" "Grimblast" "Screenshot saved to $filename")
+      ${grimblast}/bin/grimblast copysave ${mode} "$filename"
+      action=$(notify-send --icon="$filename" --app-name="grimblast" --action="edit=Edit" --action="delete=Delete" "Grimblast" "Screenshot saved to $filename")
       case $action in
-          "copy")
-              wl-copy < "$filename"
-              notify-send --icon="$filename" --app-name="grimblast" "Grimblast" "Screenshot copied to clipboard"
-              ;;
           "edit")
               satty --save-after-copy --filename "$filename" --fullscreen --output-filename "${saveDir}/edit/$(date +%Y-%m-%d_%H%M%S).png"
               ;;
           "delete")
               rm "$filename"
-              notify-send --app-name="grimblast" "Grimblast" "Screenshot $filename deleted"
               ;;
       esac
     '';
