@@ -1,7 +1,8 @@
-{ pkgs
-, lib
-, config
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  ...
 }:
 let
   inherit (lib.strings) optionalString concatStrings;
@@ -91,6 +92,14 @@ in
 
         build() {
             nix build --impure --expr "with import <nixpkgs> {}; callPackage $1 {}"
+        }
+
+        nf() {
+            local selected=$(zoxide query --list | fzf)
+            if [ -n "$selected" ]; then
+                cd "$selected"
+                neovide
+            fi
         }
 
         # Completion settings

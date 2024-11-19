@@ -41,6 +41,14 @@ let
             fi
         fi
       '';
+  openProjectScript =
+    pkgs.writeShellScriptBin ''select-project.sh'' # sh
+      ''
+        dir=$(zoxide query --list | rofi -dmenu -i -matching fuzzy)
+        if [[ "$dir" != "" ]]; then
+            foot --title="Project: $dir" --working-directory="$dir"
+        fi
+      '';
 in
 {
   config = lib.mkIf cfg.enable {
@@ -57,6 +65,7 @@ in
     wayland.windowManager.hyprland.settings.bind = [
       "$mod, D, exec, rofi -show drun -replace -i"
       "$mod, F, exec, ${getExe selectWindowScript}"
+      "$mod, P, exec, ${getExe openProjectScript}"
     ];
   };
 }
