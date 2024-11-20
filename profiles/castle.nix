@@ -109,6 +109,7 @@ in
     home.programs = {
       zathura.enable = true;
       bruno.enable = true;
+      krita.enable = true;
       zoom.enable = true;
       elisa.enable = true;
       obsidian.enable = true;
@@ -118,7 +119,7 @@ in
 
     programs.mongodb-compass.enable = true;
     programs.easyeffects.enable = true;
-    programs.wezterm.enable = true;
+    programs.wezterm.enable = false;
     podman.enable = true;
     services.ntfy-sh.client.enable = true;
   };
