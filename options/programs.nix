@@ -75,6 +75,7 @@
       zathura.enable = lib.mkEnableOption "zathura";
       floorp.enable = lib.mkEnableOption "floorp";
       java.enable = lib.mkEnableOption "java";
+      krita.enable = lib.mkEnableOption "krita";
       zellij = {
         enable = lib.mkEnableOption "zellij";
 

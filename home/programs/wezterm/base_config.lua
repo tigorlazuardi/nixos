@@ -4,7 +4,7 @@ local shortcuts = require('keys')
 require('event_config')
 
 return {
-	enable_wayland = false,
+	enable_wayland = true,
 	font = wezterm.font_with_fallback({
 		-- 'Comic Code Ligatures',
 		'JetBrainsMono Nerd Font Mono',
