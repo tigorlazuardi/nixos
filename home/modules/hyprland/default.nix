@@ -9,21 +9,16 @@ let
 in
 {
   imports = [
-    # ./dunst.nix
     ./bitwarden.nix
     ./hypridle.nix
     ./hyprland.nix
     ./hyprlock.nix
-    # ./hyprshot.nix
-    # hyprpaper seems to be broken with out of memory and failure to swap wallpapers correctly.
-    # Use swww for now until the application is stable.
-    # ./hyprpaper.nix
     ./pyprland.nix
     ./rofi.nix
     ./waybar.nix
     ./wlogout.nix
     ./grimblast.nix
-    # ./swappy.nix
+    ./eww.nix
     ./alacritty.nix
     ./swayosd.nix
     ./swaync.nix
