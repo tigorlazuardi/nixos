@@ -7,6 +7,13 @@
 let
   cfg = config.profile.hyprland;
   inherit (lib) mkIf;
+  gcalcliExec = (
+    pkgs.writeShellScriptBin "gcalcli" ''
+      client_id=$(cat ${config.sops.secrets."gcalcli/client/id".path})
+      client_secret=$(cat ${config.sops.secrets."gcalcli/client/secret".path})
+      ${pkgs.gcalcli}/bin/gcalcli --client-id=$client_id --client-secret=$client_secret "$@"
+    ''
+  );
 in
 {
   config = mkIf cfg.enable {
@@ -25,11 +32,16 @@ in
 
     home.packages = with pkgs; [
       eww
-      (writeShellScriptBin "gcalcli" ''
-        client_id=$(cat ${config.sops.secrets."gcalcli/client/id".path})
-        client_secret=$(cat ${config.sops.secrets."gcalcli/client/secret".path})
-        ${gcalcli}/bin/gcalcli --client-id=$client_id --client-secret=$client_secret "$@"
-      '')
+      ags
+      bun
+      typescript
+      (symlinkJoin {
+        name = "gcalcli";
+        paths = [
+          gcalcliExec
+          gcalcli
+        ];
+      })
     ];
 
     home.file.".config/gcalcli/config.toml".source = (pkgs.formats.toml { }).generate "config.toml" {
