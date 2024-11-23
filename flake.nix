@@ -16,6 +16,7 @@
   inputs = {
     zen-browser.url = "github:MarceColl/zen-browser-flake";
     nur.url = "github:nix-community/NUR";
+    ags-calendar.url = "git+https://git.tigor.web.id/tigor/AGS?ref=main";
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
     };
@@ -73,6 +74,7 @@
             nur.overlay
             rust-overlay.overlays.default
             (final: prev: { zen-browser = inputs.zen-browser.packages."${system}".default; })
+            (final: prev: { ags-calendar = inputs.ags-calendar.packages."${system}".default; })
           ];
         }
         {
