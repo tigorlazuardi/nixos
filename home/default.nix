@@ -50,10 +50,10 @@ in
         path = "${config.home.homeDirectory}/.ssh/id_ed25519";
         mode = "0400";
       };
-      "netrc" = {
-        sopsFile = ../secrets/netrc.yaml;
-        path = "${config.home.homeDirectory}/.netrc";
-        mode = "0400";
-      };
+      # "netrc" = {
+      #   sopsFile = ../secrets/netrc.yaml;
+      #   path = "${config.home.homeDirectory}/.netrc";
+      #   mode = "0400";
+      # };
     };
 }
