@@ -35,7 +35,7 @@ in
       eww
       ags
       bun
-      ags-calendar
+      ags-agenda
       typescript
       (symlinkJoin {
         name = "gcalcli";
@@ -46,7 +46,7 @@ in
       })
     ];
 
-    wayland.windowManager.hyprland.settings.exec-once = [ "ags-calendar" ];
+    wayland.windowManager.hyprland.settings.exec-once = [ "ags-agenda" ];
 
     home.file.".config/gcalcli/config.toml".source = (pkgs.formats.toml { }).generate "config.toml" {
       calendars = {

@@ -4,7 +4,7 @@
       "inputs": {
         "astal": "astal",
         "nixpkgs": [
-          "ags-calendar",
+          "ags-agenda",
           "nixpkgs"
         ]
       },
@@ -22,17 +22,17 @@
         "type": "github"
       }
     },
-    "ags-calendar": {
+    "ags-agenda": {
       "inputs": {
         "ags": "ags",
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1732362088,
-        "narHash": "sha256-ORysoloxRrg5fkKLMp6DLj45SI5A5tmt3wRdmJU0v8E=",
+        "lastModified": 1732416287,
+        "narHash": "sha256-1kqcDSVxoR9zRnj63d2aehEcjdtwdUJfXiTo6KEdL00=",
         "ref": "main",
-        "rev": "0f91ff34abd030b9a6b9e90dd50c97b40ea50a9a",
-        "revCount": 9,
+        "rev": "847555fe0573bf40b9c6fe9e09e08101e2dcb5b1",
+        "revCount": 10,
         "type": "git",
         "url": "https://git.tigor.web.id/tigor/AGS"
       },
@@ -78,7 +78,7 @@
     "astal": {
       "inputs": {
         "nixpkgs": [
-          "ags-calendar",
+          "ags-agenda",
           "ags",
           "nixpkgs"
         ]
@@ -724,7 +724,7 @@
     },
     "root": {
       "inputs": {
-        "ags-calendar": "ags-calendar",
+        "ags-agenda": "ags-agenda",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
         "hyprland-contrib": "hyprland-contrib",
