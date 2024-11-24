@@ -154,7 +154,22 @@ in
       }
       {
         name = "zsh-autocomplete";
-        src = pkgs.zsh-autocomplete;
+        src = pkgs.zsh-autocomplete.overrideAttrs (old: rec {
+          version = "23.05.24";
+          src = pkgs.fetchFromGitHub {
+            owner = "marlonrichert";
+            repo = "zsh-autocomplete";
+            rev = version;
+            sha256 = "sha256-/6V6IHwB5p0GT1u5SAiUa20LjFDSrMo731jFBq/bnpw=";
+          };
+          installPhase = ''
+            ls -la
+            mkdir -p $out/share/zsh-autocomplete
+            install -D zsh-autocomplete.plugin.zsh $out/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+            cp -R functions $out/share/zsh-autocomplete/functions
+            cp -R scripts $out/share/zsh-autocomplete/scripts
+          '';
+        });
         file = "share/zsh-autocomplete/zsh-autocomplete.plugin.zsh";
       }
       # {
