@@ -12,7 +12,7 @@
     ];
   };
   inputs = {
-    zen-browser.url = "github:MarceColl/zen-browser-flake";
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
     nur.url = "github:nix-community/NUR";
     ags-agenda.url = "git+https://git.tigor.web.id/tigor/AGS?ref=main";
     neovim-nightly-overlay = {
