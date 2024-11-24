@@ -18,7 +18,7 @@ in
     '';
 
     services.nginx.virtualHosts."syncthing.tigor.web.id" = {
-      enableACME = true;
+      useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations = {
         "/" = {
@@ -27,6 +27,8 @@ in
         };
       };
     };
+
+    security.acme.certs."tigor.web.id".extraDomainNames = [ "syncthing.tigor.web.id" ];
     sops.secrets =
       let
         opts = {

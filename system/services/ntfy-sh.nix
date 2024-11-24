@@ -19,7 +19,7 @@ lib.mkMerge [
     '';
 
     services.nginx.virtualHosts.${domain} = {
-      enableACME = true;
+      useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations = {
         "/" = {
@@ -28,6 +28,8 @@ lib.mkMerge [
         };
       };
     };
+
+    security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
 
     services.ntfy-sh = {
       enable = true;

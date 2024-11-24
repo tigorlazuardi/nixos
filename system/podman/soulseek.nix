@@ -19,24 +19,19 @@ let
 in
 {
   config = mkIf (podman.enable && podman.${name}.enable) {
-    services.caddy.virtualHosts.${domain}.extraConfig = ''
-      @require_auth not remote_ip private_ranges 
-
-      basic_auth @require_auth {
-        {$AUTH_USERNAME} {$AUTH_PASSWORD}
-      }
-
-      reverse_proxy ${ip}:6080
-    '';
-
     services.nginx.virtualHosts.${domain} = {
-      enableACME = true;
+      useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://${ip}:6080";
         proxyWebsockets = true;
+        extraConfig = ''
+          auth_basic $auth_ip;
+        '';
       };
     };
+
+    security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
 
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${rootVolume}/{config,downloads,incomplete}

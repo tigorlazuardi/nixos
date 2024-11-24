@@ -64,14 +64,17 @@ in
 lib.mkMerge [
   (mkIf podman.${name}.enable {
     services.nginx.virtualHosts.${domain} = {
-      enableACME = true;
-      # useACMEHost = "ytptube.tigor.web.id";
+      useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://${ip}:8081";
         proxyWebsockets = true;
       };
     };
+
+    security.acme.certs."tigor.web.id".extraDomainNames = [
+      domain
+    ];
 
     services.caddy.virtualHosts.${domain}.extraConfig = ''
       @require_auth not remote_ip private_ranges 

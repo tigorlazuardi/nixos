@@ -11,7 +11,7 @@ in
     '';
 
     services.nginx.virtualHosts."navidrome.tigor.web.id" = {
-      enableACME = true;
+      useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations = {
         "/" = {
@@ -20,6 +20,8 @@ in
         };
       };
     };
+
+    security.acme.certs."tigor.web.id".extraDomainNames = [ "navidrome.tigor.web.id" ];
 
     users.groups.navidrome.members = [ user.name ];
     users.groups.${user.name}.members = [ "navidrome" ];

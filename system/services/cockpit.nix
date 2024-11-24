@@ -15,13 +15,15 @@ in
     ];
 
     services.nginx.virtualHosts."cockpit.tigor.web.id" = {
-      enableACME = true;
+      useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://0.0.0.0:9090";
         proxyWebsockets = true;
       };
     };
+
+    security.acme.certs."tigor.web.id".extraDomainNames = [ "cockpit.tigor.web.id" ];
 
     services.caddy.virtualHosts."cockpit.tigor.web.id".extraConfig = # caddyfile
       ''

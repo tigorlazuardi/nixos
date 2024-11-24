@@ -7,6 +7,7 @@ let
   ip = "10.88.1.1";
   image = "docker.io/pihole/pihole:latest";
   piholeDNSIPBind = "192.168.100.5";
+  domain = "${name}.tigor.web.id";
 in
 {
   config = mkIf (podman.enable && pihole.enable) {
@@ -16,8 +17,8 @@ in
       reverse_proxy ${ip}:80
     '';
 
-    services.nginx.virtualHosts."pihole.tigor.web.id" = {
-      enableACME = true;
+    services.nginx.virtualHosts.${domain} = {
+      useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations = {
         "= /" = {
@@ -28,6 +29,8 @@ in
         };
       };
     };
+
+    security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
 
     sops.secrets."pihole/env" = {
       sopsFile = ../../secrets/pihole.yaml;

@@ -25,7 +25,7 @@ in
     '';
 
     services.nginx.virtualHosts.${domain} = {
-      enableACME = true;
+      useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://${ip}:8989";
@@ -33,12 +33,17 @@ in
       };
     };
 
+    security.acme.certs."tigor.web.id".extraDomainNames = [
+      domain
+      domain-anime
+    ];
+
     services.caddy.virtualHosts.${domain-anime}.extraConfig = ''
       reverse_proxy ${ip-anime}:8989
     '';
 
     services.nginx.virtualHosts.${domain-anime} = {
-      enableACME = true;
+      useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://${ip}:8989";

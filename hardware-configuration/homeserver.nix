@@ -138,7 +138,7 @@
     };
 
     services.nginx.virtualHosts."public.tigor.web.id" = {
-      enableACME = true;
+      useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations."/" = {
         root = "/nas/public";
@@ -148,6 +148,8 @@
         '';
       };
     };
+
+    security.acme.certs."tigor.web.id".extraDomainNames = [ "public.tigor.web.id" ];
 
     systemd.tmpfiles.settings = {
       "100-nas-public-dir" = {

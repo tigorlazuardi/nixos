@@ -17,7 +17,7 @@ in
     '';
 
     services.nginx.virtualHosts."${domain}" = {
-      enableACME = true;
+      useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations = {
         "= /metrics" = {
@@ -30,7 +30,12 @@ in
       };
     };
 
-    services.caddy.virtualHosts.${domain}.extraConfig = ''
+    security.acme.certs."tigor.web.id".extraDomainNames = [
+      domain
+      domain-jellyseerr
+    ];
+
+    services.caddy.virtualHosts."${domain}".extraConfig = ''
       @public not remote_ip private_ranges
 
       handle_path /metrics {
@@ -53,14 +58,14 @@ in
         reverse_proxy 0.0.0.0:8096
       }
     '';
-    services.caddy.virtualHosts.${domain-jellyseerr} = mkIf cfg.jellyseerr.enable {
+    services.caddy.virtualHosts."${domain-jellyseerr}" = mkIf cfg.jellyseerr.enable {
       extraConfig = ''
         reverse_proxy 0.0.0.0:5055
       '';
     };
 
-    services.nginx.virtualHosts.${domain-jellyseerr} = mkIf cfg.jellyseerr.enable {
-      enableACME = true;
+    services.nginx.virtualHosts."${domain-jellyseerr}" = mkIf cfg.jellyseerr.enable {
+      useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://0.0.0.0:5055";

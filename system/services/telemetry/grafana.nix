@@ -29,6 +29,19 @@ in
       reverse_proxy ${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}
     '';
 
+    services.nginx.virtualHosts.${grafanaDomain} = {
+      useACMEHost = "tigor.web.id";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
+        proxyWebsockets = true;
+      };
+    };
+
+    security.acme.certs."tigor.web.id".extraDomainNames = [
+      grafanaDomain
+    ];
+
     services.grafana = {
       enable = true;
       package = pkgs.grafana;

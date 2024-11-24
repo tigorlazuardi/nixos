@@ -11,7 +11,7 @@ in
 {
   config = mkIf cfg.enable {
     services.nginx.virtualHosts."git.tigor.web.id" = {
-      enableACME = true;
+      useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations = {
         "= /" = {
@@ -29,6 +29,8 @@ in
         };
       };
     };
+
+    security.acme.certs."tigor.web.id".extraDomainNames = [ "git.tigor.web.id" ];
 
     services.caddy.virtualHosts."git.tigor.web.id".extraConfig = ''
       @home_not_login {

@@ -25,7 +25,7 @@ in
     '';
 
     services.nginx.virtualHosts."kavita.tigor.web.id" = {
-      enableACME = true;
+      useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations = {
         "/" = {
@@ -34,6 +34,8 @@ in
         };
       };
     };
+
+    security.acme.certs."tigor.web.id".extraDomainNames = [ "kavita.tigor.web.id" ];
     services.kavita = {
       enable = true;
       tokenKeyFile = config.sops.secrets."kavita/token".path;

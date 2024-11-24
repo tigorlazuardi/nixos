@@ -25,12 +25,14 @@ lib.mkMerge [
     '';
 
     services.nginx.virtualHosts.${domain} = {
-      enableACME = true;
+      useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://${ip}:8080";
       };
     };
+
+    security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
 
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${volume}/{config,downloads,progress,watch}
