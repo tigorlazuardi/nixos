@@ -120,10 +120,6 @@ in
           "$mod SHIFT, J, movewindow, d"
           "$mod SHIFT, k, movewindow, u"
           "$mod SHIFT, l, movewindow, r"
-
-          # Language Input
-          "$mod, I, exec, fcitx5-remote -t"
-
         ];
 
         binde = [

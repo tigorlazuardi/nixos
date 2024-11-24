@@ -36,9 +36,9 @@ in
     shellAliases = {
       ls = "${pkgs.eza}/bin/eza -lah";
       cat = "${pkgs.bat}/bin/bat";
-      update = "nh os switch";
-      superupdate = "nh os switch --update";
-      uptest = "nh os test";
+      update = "nh os switch -- --accept-flake-config";
+      superupdate = "nh os switch --update -- --accept-flake-config";
+      uptest = "nh os test -- --accept-flake-config";
       lg = "${pkgs.lazygit}/bin/lazygit";
       g = "${pkgs.lazygit}/bin/lazygit";
       du = "${pkgs.dust}/bin/dust";

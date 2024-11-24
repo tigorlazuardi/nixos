@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  inputs,
   unstable,
   ...
 }:
@@ -13,10 +12,10 @@ let
   domain = "alloy.tigor.web.id";
 in
 {
-  imports = [
-    # Grafana Alloy is still in unstable options.
-    "${inputs.nixpkgs-unstable}/nixos/modules/services/monitoring/alloy.nix"
-  ];
+  # imports = [
+  #   # Grafana Alloy is still in unstable options.
+  #   "${inputs.nixpkgs-unstable}/nixos/modules/services/monitoring/alloy.nix"
+  # ];
 
   config = lib.mkIf cfg.enable {
     services.alloy = {

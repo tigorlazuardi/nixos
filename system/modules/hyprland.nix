@@ -1,5 +1,4 @@
 {
-  inputs,
   config,
   lib,
   pkgs,
@@ -7,14 +6,12 @@
 }:
 let
   cfg = config.profile.hyprland;
-  hyprlandPkg = inputs.hyprland.packages."${pkgs.system}".hyprland;
 in
 {
   config = lib.mkIf cfg.enable {
     programs.xfconf.enable = true;
     programs.hyprland = {
       enable = true;
-      package = hyprlandPkg;
       xwayland.enable = true;
     };
     services.gvfs.enable = true; # Mount, trash, and other functionalities
@@ -32,7 +29,7 @@ in
         poppler # .pdf filees
         ffmpegthumbnailer # video thumbnailer
         mcomix # comicbook archives
-        gnome.nautilus # file manager
+        nautilus # file manager
 
         gwenview
 
@@ -46,8 +43,8 @@ in
         dunst
         libnotify
 
-        gnome.gnome-keyring
-        gnome.seahorse
+        gnome-keyring
+        seahorse
 
         greetd.tuigreet
 
@@ -78,7 +75,6 @@ in
       enable = true;
       extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
     };
-
 
     programs.file-roller.enable = true;
 

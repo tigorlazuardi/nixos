@@ -12,7 +12,7 @@ let
 in
 {
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ gnome.gnome-keyring ];
+    home.packages = with pkgs; [ gnome-keyring ];
 
     sops.secrets.${secretKey} = { };
     wayland.windowManager.hyprland.settings.exec-once =

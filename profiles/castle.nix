@@ -113,7 +113,7 @@ in
       zoom.enable = true;
       elisa.enable = true;
       obsidian.enable = true;
-      jetbrains.idea.enable = true;
+      jetbrains.idea.enable = false;
       java.enable = true;
     };
 

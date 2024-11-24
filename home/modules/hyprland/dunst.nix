@@ -25,8 +25,8 @@ in
     services.dunst = {
       enable = true;
       iconTheme = {
-        name = "Adwait";
-        package = pkgs.gnome.adwaita-icon-theme;
+        name = "Adwaita";
+        package = pkgs.adwaita-icon-theme;
       };
       # https://dunst-project.org/documentation/
       settings = {
