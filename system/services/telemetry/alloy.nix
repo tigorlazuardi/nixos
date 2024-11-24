@@ -9,7 +9,6 @@ let
   webguiListenAddress = "0.0.0.0:5319";
   otelcolHTTPListenAddress = "192.168.100.5:4318";
   otelcolGRPCListenAddress = "192.168.100.5:4317";
-  domain = "alloy.tigor.web.id";
 in
 {
   # imports = [
@@ -23,40 +22,6 @@ in
       extraFlags = [ ''--server.http.listen-addr=${webguiListenAddress}'' ];
       package = unstable.grafana-alloy;
     };
-    services.caddy.virtualHosts.${domain}.extraConfig = ''
-      @require_auth not remote_ip private_ranges
-
-      basic_auth @require_auth {
-        {$AUTH_USERNAME} {$AUTH_PASSWORD}
-      }
-
-      reverse_proxy ${webguiListenAddress}
-    '';
-
-    services.caddy.virtualHosts."otelhttp.tigor.web.id".extraConfig = ''
-      @require_auth not remote_ip private_ranges
-
-      basic_auth @require_auth {
-        {$AUTH_USERNAME} {$AUTH_PASSWORD}
-      }
-
-      reverse_proxy ${otelcolHTTPListenAddress}
-    '';
-
-    services.caddy.virtualHosts."otelgrpc.tigor.web.id".extraConfig = ''
-      @require_auth not remote_ip private_ranges
-
-      basic_auth @require_auth {
-        {$AUTH_USERNAME} {$AUTH_PASSWORD}
-      }
-
-      reverse_proxy ${otelcolGRPCListenAddress} {
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
-      }
-    '';
 
     systemd.services.alloy.serviceConfig = {
       User = "root";

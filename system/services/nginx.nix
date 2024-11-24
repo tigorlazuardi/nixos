@@ -60,23 +60,23 @@ in
         in
         # html
         ''
-          <!DOCTYPE html>
-          <html>
-              <head>
-                  <title>Hosted Sites</title>
-                  <link
-                    rel="stylesheet"
-                    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-                    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-                    crossorigin="anonymous">
-              </head>
-              <body class="container">
-                  <h1 class="text-center">Hosted Sites</h1>
-                  <div class="row g-4">
-                      ${items}
-                  </div>
-              </body>
-          </html>
+                   <!DOCTYPE html>
+                   <html>
+                       <head>
+                           <title>Hosted Sites</title>
+                           <link
+                             rel="stylesheet"
+                             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+                             integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+                             crossorigin="anonymous">
+                       </head>
+                       <body class="container">
+          <h1 class="text-center">Hosted Sites</h1>
+                           <div class="row g-4">
+                               ${items}
+                           </div>
+                       </body>
+                   </html>
         '';
       user = "nginx";
       group = "nginx";
@@ -99,23 +99,23 @@ in
 
     # Enable Real IP from Cloudflare
     services.nginx.commonHttpConfig =
-      # let
-      #   realIpsFromList = lib.strings.concatMapStringsSep "\n" (x: "set_real_ip_from  ${x};");
-      #   fileToList = x: lib.strings.splitString "\n" (builtins.readFile x);
-      #   cfipv4 = fileToList (
-      #     pkgs.fetchurl {
-      #       url = "https://www.cloudflare.com/ips-v4";
-      #       sha256 = "0ywy9sg7spafi3gm9q5wb59lbiq0swvf0q3iazl0maq1pj1nsb7h";
-      #     }
-      #   );
-      #   cfipv6 = fileToList (
-      #     pkgs.fetchurl {
-      #       url = "https://www.cloudflare.com/ips-v6";
-      #       sha256 = "1ad09hijignj6zlqvdjxv7rjj8567z357zfavv201b9vx3ikk7cy";
-      #     }
-      #   );
-      # in
-      #nginx
+      let
+        realIpsFromList = lib.strings.concatMapStringsSep "\n" (x: "set_real_ip_from  ${x};");
+        fileToList = x: lib.strings.splitString "\n" (builtins.readFile x);
+        cfipv4 = fileToList (
+          pkgs.fetchurl {
+            url = "https://www.cloudflare.com/ips-v4";
+            sha256 = "0ywy9sg7spafi3gm9q5wb59lbiq0swvf0q3iazl0maq1pj1nsb7h";
+          }
+        );
+        cfipv6 = fileToList (
+          pkgs.fetchurl {
+            url = "https://www.cloudflare.com/ips-v6";
+            sha256 = "1ad09hijignj6zlqvdjxv7rjj8567z357zfavv201b9vx3ikk7cy";
+          }
+        );
+      in
+      # nginx
       ''
         geo $auth_ip {
             default "Password required";
@@ -124,11 +124,84 @@ in
             192.168.0.0/16 off;
         }
 
+        ${realIpsFromList cfipv4}
+        ${realIpsFromList cfipv6}
+        real_ip_header CF-Connecting-IP;
+
         auth_basic_user_file ${config.sops.secrets."nginx/htpasswd".path};
+
+        log_format json_combined escape=json '{'
+            '"time_local":"$time_local",'
+            '"host":"$host",'
+            '"remote_addr":"$remote_addr",'
+            '"remote_user":"$remote_user",'
+            '"request":"$request",'
+            '"status":$status,'
+            '"body_bytes_sent":"$body_bytes_sent",'
+            '"http_referer":"$http_referer",'
+            '"http_user_agent":"$http_user_agent",'
+            '"http_x_forwarded_for":"$http_x_forwarded_for",'
+            '"request_time":"$request_time",'
+            '"upstream_addr":"$upstream_addr",'
+            '"upstream_response_time":"$upstream_response_time",'
+            '"upstream_status":"$upstream_status"'
+        '}';
+        access_log /var/log/nginx/access.log json_combined;
       '';
 
     # This is needed for nginx to be able to read other processes
     # directories in `/run`. Else it will fail with (13: Permission denied)
     systemd.services.nginx.serviceConfig.ProtectHome = false;
+
+    environment.etc."alloy/config.alloy".text =
+      # hcl
+      ''
+          local.file_match "nginx_access_log" {
+              path_targets = [
+                  {
+                      "__path__" = "/var/log/nginx/access.log",
+                  },
+              ]
+              sync_period = "30s"
+          }   
+
+          loki.source.file "nginx_access_log" {
+            targets = local.file_match.nginx_access_log.targets
+            forward_to = [loki.process.nginx_access_log.receiver]
+          }
+
+          loki.process "nginx_access_log" {
+              forward_to = [loki.write.default.receiver]
+
+              stage.json {
+                  expressions = {
+                      time = "time_local",
+                      host = "",
+                      request = "",
+                      status = "",
+                  }
+              }
+
+              stage.labels {
+                  values = {
+                      host = "",
+                      request = "",
+                      status = "",
+                  }
+              }
+
+              stage.static_labels {
+                  values = {
+                      level = "info",
+                  }
+              } 
+
+              stage.timestamp {
+                  source = "time"
+                  format = "_2/Jan/2006:15:04:05 -0700"
+              }
+        }
+      '';
+
   };
 }
