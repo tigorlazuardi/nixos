@@ -8,16 +8,17 @@ in
   config = mkIf cfg.enable {
     services.samba = {
       enable = true;
-      securityType = "user";
       openFirewall = true;
-      extraConfig = ''
-        workgroup = WORKGROUP
-        server string = smbnix
-        netbios name = smbnix
-        security = user 
-        guest account = ${user.name}
-      '';
-      shares = {
+      settings = {
+        global = {
+          "invalid users" = [ "root" ];
+          workgroup = "WORKGROUP";
+          "server string" = "smbnix";
+          "netbios name" = "smbnix";
+          security = "user";
+          "guest account" = user.name;
+          "passwd program" = "/run/wrappers/bin/passwd %u";
+        };
         nas = {
           path = "/nas";
           browsable = "yes";
