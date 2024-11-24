@@ -20,6 +20,14 @@ in
       reverse_proxy ${ip}:6767
     '';
 
+    services.nginx.virtualHosts.${domain} = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://${ip}:6767";
+      };
+    };
+
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${configVolume}
       chown ${uid}:${gid} ${mediaVolume} ${configVolume}

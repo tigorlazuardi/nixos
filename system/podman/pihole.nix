@@ -16,6 +16,19 @@ in
       reverse_proxy ${ip}:80
     '';
 
+    services.nginx.virtualHosts."pihole.tigor.web.id" = {
+      enableACME = true;
+      forceSSL = true;
+      locations = {
+        "= /" = {
+          return = "301 /admin";
+        };
+        "/" = {
+          proxyPass = "http://${ip}:80";
+        };
+      };
+    };
+
     sops.secrets."pihole/env" = {
       sopsFile = ../../secrets/pihole.yaml;
     };
@@ -50,7 +63,7 @@ in
           ${strings.concatStringsSep "\n" (
             attrsets.mapAttrsToList (
               name: _: "192.168.100.5 ${strings.removePrefix "https://" name}"
-            ) config.services.caddy.virtualHosts
+            ) config.services.nginx.virtualHosts
           )}
         '';
     };

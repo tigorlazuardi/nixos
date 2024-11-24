@@ -11,14 +11,15 @@
     ./kavita.nix
     ./navidrome.nix
     ./nextcloud.nix
+    ./nginx.nix
+    ./ntfy-sh.nix
     ./openvpn.nix
+    ./photoprism.nix
     ./rust-motd.nix
     ./samba.nix
     ./stubby.nix
     ./syncthing.nix
-    ./wireguard.nix
-    ./photoprism.nix
-    ./ntfy-sh.nix
     ./technitium.nix
+    ./wireguard.nix
   ];
 }

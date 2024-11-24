@@ -24,9 +24,27 @@ in
       reverse_proxy ${ip}:8989
     '';
 
+    services.nginx.virtualHosts.${domain} = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://${ip}:8989";
+        proxyWebsockets = true;
+      };
+    };
+
     services.caddy.virtualHosts.${domain-anime}.extraConfig = ''
       reverse_proxy ${ip-anime}:8989
     '';
+
+    services.nginx.virtualHosts.${domain-anime} = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://${ip}:8989";
+        proxyWebsockets = true;
+      };
+    };
 
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${configVolume} ${mediaVolume} ${configVolumeAnime}

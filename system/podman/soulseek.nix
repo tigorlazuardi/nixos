@@ -29,6 +29,15 @@ in
       reverse_proxy ${ip}:6080
     '';
 
+    services.nginx.virtualHosts.${domain} = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://${ip}:6080";
+        proxyWebsockets = true;
+      };
+    };
+
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${rootVolume}/{config,downloads,incomplete}
       chown ${uid}:${gid} ${rootVolume} ${rootVolume}/{config,downloads,incomplete}

@@ -37,12 +37,12 @@
       servarr.recyclarr.enable = true;
       servarr.real-debrid-manager.enable = false;
       servarr.rdtclient.enable = true;
-      openobserve.enable = true;
+      openobserve.enable = false;
       minecraft.enable = false;
       memos.enable = true;
       morphos.enable = true;
       soulseek.enable = true;
-      valheim.enable = true;
+      valheim.enable = false;
     };
 
     home.programs.zellij = {
@@ -53,7 +53,8 @@
     };
 
     services = {
-      caddy.enable = true;
+      caddy.enable = false;
+      nginx.enable = true;
       cockpit.enable = true;
       forgejo.enable = true;
       kavita.enable = true;
@@ -65,12 +66,12 @@
       jellyfin.enable = true;
       rust-motd.enable = true;
       wireguard.enable = true;
-      photoprism.enable = true;
+      photoprism.enable = false;
       navidrome.enable = true;
       telemetry.enable = true;
       ntfy-sh.enable = true;
       ntfy-sh.client.enable = false;
-      couchdb.enable = true;
+      couchdb.enable = false;
       technitium.enable = false;
     };
   };

@@ -17,6 +17,14 @@ in
       reverse_proxy ${ip}:8080
     '';
 
+    services.nginx.virtualHosts.${domain} = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://${ip}:8080";
+      };
+    };
+
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${rootVolume}/db
       mkdir -p ${rootVolume}/images

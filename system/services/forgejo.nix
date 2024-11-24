@@ -10,6 +10,26 @@ let
 in
 {
   config = mkIf cfg.enable {
+    services.nginx.virtualHosts."git.tigor.web.id" = {
+      enableACME = true;
+      forceSSL = true;
+      locations = {
+        "= /" = {
+          extraConfig =
+            #nginx
+            ''
+              if ($http_cookie !~ "gitea_incredible") {
+                  rewrite ^(.*)$ /Tigor redirect;
+              }
+            '';
+          proxyPass = "http://unix:/run/forgejo/forgejo.sock";
+        };
+        "/" = {
+          proxyPass = "http://unix:/run/forgejo/forgejo.sock";
+        };
+      };
+    };
+
     services.caddy.virtualHosts."git.tigor.web.id".extraConfig = ''
       @home_not_login {
             not header_regexp Cookie gitea_incredible

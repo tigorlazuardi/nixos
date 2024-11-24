@@ -16,6 +16,12 @@ in
       reverse_proxy ${ip}:8080
     '';
 
+    services.nginx.virtualHosts.${domain} = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/".proxyPass = "http://${ip}:8080";
+    };
+
     virtualisation.oci-containers.containers.${name} = {
       inherit image;
       hostname = name;

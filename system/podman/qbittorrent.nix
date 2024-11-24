@@ -24,6 +24,14 @@ lib.mkMerge [
       reverse_proxy ${ip}:8080
     '';
 
+    services.nginx.virtualHosts.${domain} = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://${ip}:8080";
+      };
+    };
+
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${volume}/{config,downloads,progress,watch}
       chown ${uid}:${gid} ${volume} ${volume}/{config,downloads,progress,watch}

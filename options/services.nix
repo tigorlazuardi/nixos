@@ -10,6 +10,7 @@ in
 {
   options.profile.services = {
     caddy.enable = mkEnableOption "caddy";
+    nginx.enable = mkEnableOption "nginx";
     cockpit.enable = mkEnableOption "cockpit";
     forgejo.enable = mkEnableOption "forgejo";
     kavita.enable = mkEnableOption "kavita";

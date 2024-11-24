@@ -15,11 +15,6 @@ let
   user = config.profile.user;
   uid = toString user.uid;
   gid = toString user.gid;
-  basic_auth = {
-    username = "caddy/basic_auth/username";
-    password = "caddy/basic_auth/password";
-    template = "caddy/basic_auth";
-  };
   webhook = builtins.readFile (
     (pkgs.formats.json { }).generate "webhooks.json" [
       {
@@ -68,6 +63,16 @@ let
 in
 lib.mkMerge [
   (mkIf podman.${name}.enable {
+    services.nginx.virtualHosts.${domain} = {
+      enableACME = true;
+      # useACMEHost = "ytptube.tigor.web.id";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://${ip}:8081";
+        proxyWebsockets = true;
+      };
+    };
+
     services.caddy.virtualHosts.${domain}.extraConfig = ''
       @require_auth not remote_ip private_ranges 
 

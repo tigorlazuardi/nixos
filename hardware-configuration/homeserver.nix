@@ -137,11 +137,17 @@
       ];
     };
 
-    services.caddy.virtualHosts."public.tigor.web.id".extraConfig = # caddy
-      ''
-        file_server browse
-        root * /nas/public
-      '';
+    services.nginx.virtualHosts."public.tigor.web.id" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = {
+        root = "/nas/public";
+        tryFiles = "$uri $uri/ $uri.html =404";
+        extraConfig = ''
+          autoindex on;
+        '';
+      };
+    };
 
     systemd.tmpfiles.settings = {
       "100-nas-public-dir" = {

@@ -15,6 +15,7 @@ in
       mkdir -p ${dataDir}
       chmod -R 0777 /nas/mediaserver
     '';
+
     services.caddy.virtualHosts.${domain}.extraConfig = ''
       @public not remote_ip private_ranges
 

@@ -13,6 +13,16 @@ in
     environment.systemPackages = mkIf config.profile.podman.enable [
       (pkgs.callPackage ../packages/cockpit-podman.nix { })
     ];
+
+    services.nginx.virtualHosts."cockpit.tigor.web.id" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://0.0.0.0:9090";
+        proxyWebsockets = true;
+      };
+    };
+
     services.caddy.virtualHosts."cockpit.tigor.web.id".extraConfig = # caddyfile
       ''
         @denied not remote_ip private_ranges
