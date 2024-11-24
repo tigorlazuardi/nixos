@@ -13,9 +13,14 @@ let
 in
 {
   config = mkIf (podman.enable && podman.${name}.enable) {
-    services.caddy.virtualHosts.${domain}.extraConfig = ''
-      reverse_proxy ${ip}:5080
-    '';
+    services.nginx.virtualHosts.${domain} = {
+      useACMEHost = "tigor.web.id";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://${ip}:5080";
+        proxyWebsockets = true;
+      };
+    };
 
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${rootVolume}/data

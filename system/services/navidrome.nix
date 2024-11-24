@@ -6,10 +6,6 @@ let
 in
 {
   config = mkIf cfg.enable {
-    services.caddy.virtualHosts."navidrome.tigor.web.id".extraConfig = ''
-      reverse_proxy 0.0.0.0:${toString config.services.navidrome.settings.Port}
-    '';
-
     services.nginx.virtualHosts."navidrome.tigor.web.id" = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;

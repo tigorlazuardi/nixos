@@ -20,9 +20,6 @@ in
       owner = "kavita";
       sopsFile = ../../secrets/kavita.yaml;
     };
-    services.caddy.virtualHosts."kavita.tigor.web.id".extraConfig = ''
-      reverse_proxy 0.0.0.0:${toString config.services.kavita.settings.Port}
-    '';
 
     services.nginx.virtualHosts."kavita.tigor.web.id" = {
       useACMEHost = "tigor.web.id";

@@ -20,19 +20,16 @@ in
       locations."/" = {
         proxyPass = "http://0.0.0.0:9090";
         proxyWebsockets = true;
+        extraConfig = ''
+          if ($auth_ip != off) {
+              return 403;
+          }
+        '';
       };
     };
 
     security.acme.certs."tigor.web.id".extraDomainNames = [ "cockpit.tigor.web.id" ];
 
-    services.caddy.virtualHosts."cockpit.tigor.web.id".extraConfig = # caddyfile
-      ''
-        @denied not remote_ip private_ranges
-
-        respond @denied "Access denied" 403
-
-        reverse_proxy 0.0.0.0:9090
-      '';
     services.udisks2.enable = true;
     services.cockpit = {
       enable = true;

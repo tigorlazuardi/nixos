@@ -13,17 +13,6 @@ let
 in
 {
   config = mkIf (podman.enable && podman.${name}.enable) {
-    services.caddy.virtualHosts.${domain}.extraConfig = ''
-      @botForbidden header_regexp User-Agent "(?i)AdsBot-Google|Amazonbot|anthropic-ai|Applebot|Applebot-Extended|AwarioRssBot|AwarioSmartBot|Bytespider|CCBot|ChatGPT|ChatGPT-User|Claude-Web|ClaudeBot|cohere-ai|DataForSeoBot|Diffbot|FacebookBot|Google-Extended|GPTBot|ImagesiftBot|magpie-crawler|omgili|Omgilibot|peer39_crawler|PerplexityBot|YouBot"
-
-      handle @botForbidden {
-        respond /* "Access Denied" 403 {
-            close
-        }
-      }
-      reverse_proxy ${ip}:8080
-    '';
-
     services.nginx.virtualHosts.${domain} = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;

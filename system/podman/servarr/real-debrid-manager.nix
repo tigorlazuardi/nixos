@@ -17,10 +17,6 @@ let
 in
 {
   config = mkIf (podman.enable && real-debrid-manager.enable) {
-    services.caddy.virtualHosts.${domain}.extraConfig = ''
-      reverse_proxy ${ip}:5000
-    '';
-
     services.nginx.virtualHosts.${domain} = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;

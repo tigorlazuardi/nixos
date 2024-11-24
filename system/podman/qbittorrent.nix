@@ -20,10 +20,6 @@ let
 in
 lib.mkMerge [
   (mkIf (podman.enable && qbittorrent.enable) {
-    services.caddy.virtualHosts.${domain}.extraConfig = ''
-      reverse_proxy ${ip}:8080
-    '';
-
     services.nginx.virtualHosts.${domain} = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;

@@ -20,10 +20,6 @@ let
 in
 {
   config = mkIf (podman.enable && sonarr.enable) {
-    services.caddy.virtualHosts.${domain}.extraConfig = ''
-      reverse_proxy ${ip}:8989
-    '';
-
     services.nginx.virtualHosts.${domain} = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;
@@ -37,10 +33,6 @@ in
       domain
       domain-anime
     ];
-
-    services.caddy.virtualHosts.${domain-anime}.extraConfig = ''
-      reverse_proxy ${ip-anime}:8989
-    '';
 
     services.nginx.virtualHosts.${domain-anime} = {
       useACMEHost = "tigor.web.id";

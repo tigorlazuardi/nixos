@@ -16,15 +16,12 @@ let
 in
 {
   config = mkIf (podman.enable && bazarr.enable) {
-    services.caddy.virtualHosts.${domain}.extraConfig = ''
-      reverse_proxy ${ip}:6767
-    '';
-
     services.nginx.virtualHosts.${domain} = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://${ip}:6767";
+        proxyWebsockets = true;
       };
     };
 

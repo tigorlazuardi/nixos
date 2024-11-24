@@ -17,15 +17,12 @@ let
 in
 {
   config = mkIf (podman.enable && suwayomi.enable) {
-    services.caddy.virtualHosts.${domain}.extraConfig = ''
-      reverse_proxy ${ip}:4567
-    '';
-
     services.nginx.virtualHosts.${domain} = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://${ip}:4567";
+        proxyWebsockets = true;
       };
     };
 

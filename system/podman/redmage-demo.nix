@@ -13,10 +13,6 @@ let
 in
 {
   config = mkIf (podman.enable && podman.${name}.enable) {
-    services.caddy.virtualHosts.${domain}.extraConfig = ''
-      reverse_proxy ${ip}:8080
-    '';
-
     services.nginx.virtualHosts.${domain} = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;

@@ -15,10 +15,6 @@ let
 in
 lib.mkMerge [
   (mkIf (podman.${name}.enable) {
-    services.caddy.virtualHosts.${domain}.extraConfig = ''
-      reverse_proxy ${ip}:80
-    '';
-
     sops =
       let
         opts = {
@@ -117,6 +113,6 @@ lib.mkMerge [
     #   };
     # };
   })
-  { profile.services.ntfy-sh.client.settings.subscribe = [{ topic = "valheim"; }]; }
+  { profile.services.ntfy-sh.client.settings.subscribe = [ { topic = "valheim"; } ]; }
   # { profile.services.ntfy-sh.client.settings.subscribe = [{ topic = "valheim-hutasuhut"; }]; }
 ]

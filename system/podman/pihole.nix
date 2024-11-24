@@ -11,12 +11,6 @@ let
 in
 {
   config = mkIf (podman.enable && pihole.enable) {
-    services.caddy.virtualHosts."pihole.tigor.web.id".extraConfig = ''
-      @root path /
-      redir @root /admin
-      reverse_proxy ${ip}:80
-    '';
-
     services.nginx.virtualHosts.${domain} = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;
@@ -56,7 +50,7 @@ in
       # 192.168.100.5 {domain_name_1}
       # 192.168.100.5 {domain_name_2}
       #
-      # For each domain defined in services.caddy.virtualHosts
+      # For each domain defined in services.nginx.virtualHosts
       text =
         let
           inherit (lib) strings attrsets;

@@ -52,20 +52,7 @@ in
       };
     };
 
-    services.caddy.virtualHosts."couchdb.tigor.web.id".extraConfig = ''
-      @obsidian header Origin "app://obsidian.md"
-      header @obsidian {
-        Access-Control-Allow-Origin "app://obsidian.md"
-        Access-Control-Allow-Methods "OPTIONS,HEAD,GET,POST,PUT,PATCH,DELETE"
-        Access-Control-Allow-Credentials "true"
-        Access-Control-Allow-Headers "Authorization,Content-Type"
-        defer
-      }
-      @options method OPTIONS
-      respond @options 204
-
-      reverse_proxy localhost:5984
-    '';
+    # Have to NGINX module if this gets re-enabled
 
     services.couchdb = {
       enable = true;

@@ -13,9 +13,6 @@ in
       mkdir -p ${dataDir}
       chown ${uid}:${gid} ${dataDir}
     '';
-    services.caddy.virtualHosts."syncthing.tigor.web.id".extraConfig = ''
-      reverse_proxy 0.0.0.0:8384
-    '';
 
     services.nginx.virtualHosts."syncthing.tigor.web.id" = {
       useACMEHost = "tigor.web.id";

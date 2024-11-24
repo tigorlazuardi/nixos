@@ -76,15 +76,6 @@ lib.mkMerge [
       domain
     ];
 
-    services.caddy.virtualHosts.${domain}.extraConfig = ''
-      @require_auth not remote_ip private_ranges 
-
-      basic_auth @require_auth {
-        {$AUTH_USERNAME} {$AUTH_PASSWORD}
-      }
-
-      reverse_proxy ${ip}:8081
-    '';
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${volume}
       chown -R ${uid}:${gid} ${volume} /etc/podman/${name}
