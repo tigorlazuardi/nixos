@@ -16,6 +16,17 @@ in
     services.caddy.virtualHosts."syncthing.tigor.web.id".extraConfig = ''
       reverse_proxy 0.0.0.0:8384
     '';
+
+    services.nginx.virtualHosts."syncthing.tigor.web.id" = {
+      enableACME = true;
+      forceSSL = true;
+      locations = {
+        "/" = {
+          proxyPass = "http://0.0.0.0:8384";
+          proxyWebsockets = true;
+        };
+      };
+    };
     sops.secrets =
       let
         opts = {

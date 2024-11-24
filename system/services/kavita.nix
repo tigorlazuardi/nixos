@@ -23,6 +23,17 @@ in
     services.caddy.virtualHosts."kavita.tigor.web.id".extraConfig = ''
       reverse_proxy 0.0.0.0:${toString config.services.kavita.settings.Port}
     '';
+
+    services.nginx.virtualHosts."kavita.tigor.web.id" = {
+      enableACME = true;
+      forceSSL = true;
+      locations = {
+        "/" = {
+          proxyPass = "http://0.0.0.0:${toString config.services.kavita.settings.Port}";
+          proxyWebsockets = true;
+        };
+      };
+    };
     services.kavita = {
       enable = true;
       tokenKeyFile = config.sops.secrets."kavita/token".path;

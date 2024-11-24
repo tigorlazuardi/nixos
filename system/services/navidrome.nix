@@ -10,6 +10,17 @@ in
       reverse_proxy 0.0.0.0:${toString config.services.navidrome.settings.Port}
     '';
 
+    services.nginx.virtualHosts."navidrome.tigor.web.id" = {
+      enableACME = true;
+      forceSSL = true;
+      locations = {
+        "/" = {
+          proxyPass = "http://0.0.0.0:${toString config.services.navidrome.settings.Port}";
+          proxyWebsockets = true;
+        };
+      };
+    };
+
     users.groups.navidrome.members = [ user.name ];
     users.groups.${user.name}.members = [ "navidrome" ];
 

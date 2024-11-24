@@ -16,6 +16,20 @@ in
       chmod -R 0777 /nas/mediaserver
     '';
 
+    services.nginx.virtualHosts."${domain}" = {
+      enableACME = true;
+      forceSSL = true;
+      locations = {
+        "= /metrics" = {
+          return = "403";
+        };
+        "/" = {
+          proxyPass = "http://0.0.0.0:8096";
+          proxyWebsockets = true;
+        };
+      };
+    };
+
     services.caddy.virtualHosts.${domain}.extraConfig = ''
       @public not remote_ip private_ranges
 
@@ -43,6 +57,15 @@ in
       extraConfig = ''
         reverse_proxy 0.0.0.0:5055
       '';
+    };
+
+    services.nginx.virtualHosts.${domain-jellyseerr} = mkIf cfg.jellyseerr.enable {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://0.0.0.0:5055";
+        proxyWebsockets = true;
+      };
     };
     services.jellyfin = {
       enable = true;

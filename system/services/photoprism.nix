@@ -20,6 +20,18 @@ in
     services.caddy.virtualHosts.${domain}.extraConfig = ''
       reverse_proxy 0.0.0.0:${toString config.services.photoprism.port}
     '';
+
+    services.nginx.virtualHosts.${domain} = {
+      enableACME = true;
+      forceSSL = true;
+      locations = {
+        "/" = {
+          proxyPass = "http://0.0.0.0:${toString config.services.photoprism.port}";
+          proxyWebsockets = true;
+        };
+      };
+    };
+
     sops.secrets."photoprism/admin_password" = {
       sopsFile = ../../secrets/photoprism.yaml;
     };

@@ -18,6 +18,17 @@ lib.mkMerge [
       reverse_proxy ${listenAddress}
     '';
 
+    services.nginx.virtualHosts.${domain} = {
+      enableACME = true;
+      forceSSL = true;
+      locations = {
+        "/" = {
+          proxyPass = "http://0.0.0.0:15150";
+          proxyWebsockets = true;
+        };
+      };
+    };
+
     services.ntfy-sh = {
       enable = true;
       settings =
