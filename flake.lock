@@ -28,11 +28,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1732426524,
-        "narHash": "sha256-HAugtgAuIBJ3UzFxK1IwayQ0Hm9qbU2KOxDA7nThVeQ=",
+        "lastModified": 1732546982,
+        "narHash": "sha256-8yEMNXs5Vi56EMRigCUmhmYatCDPElCMA4q9RkmPZgM=",
         "ref": "main",
-        "rev": "ef32c388593c826174525ee776850614e268ceb8",
-        "revCount": 11,
+        "rev": "2f8deb06b4842a1a9147c4d1a38e1679b082ab5d",
+        "revCount": 12,
         "type": "git",
         "url": "https://git.tigor.web.id/tigor/AGS"
       },
