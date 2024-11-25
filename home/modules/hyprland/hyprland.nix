@@ -75,7 +75,7 @@ in
           # Programs
           ''$mod, RETURN, exec, footclient''
           "$mod, E, exec, nautilus"
-          "$mod, B, exec, microsoft-edge"
+          "$mod, B, exec, zen"
           "$mod, BackSpace, exec, wlogout"
           "$mod, S, exec, foot ssh homeserver@vpn.tigor.web.id"
 
