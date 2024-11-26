@@ -13,6 +13,7 @@ in
     environment.systemPackages = with pkgs; [ fail2ban ];
     programs.rust-motd = {
       enable = true;
+      enableMotdInSSHD = false;
       settings = {
         banner = {
           color = "white";

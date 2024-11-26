@@ -123,6 +123,10 @@ in
         zstyle ':fzf-tab:complete:z:*' fzf-preview 'eza -1 --color=always $realpath'
         # switch group using `<` and `>`
         zstyle ':fzf-tab:*' switch-group '<' '>'
+
+        if [[ -f "/var/lib/rust-motd/motd" ]]; then
+            ${pkgs.coreutils}/bin/cat /var/lib/rust-motd/motd
+        fi
       ''
     ];
 
