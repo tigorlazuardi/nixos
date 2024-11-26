@@ -28,7 +28,10 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
-    extraPackages = with pkgs; [ amdvlk ];
+    extraPackages = with pkgs; [
+      amdvlk
+      rocmPackages.clr.icd
+    ];
   };
 
   environment.systemPackages = with pkgs; [ lact ];
