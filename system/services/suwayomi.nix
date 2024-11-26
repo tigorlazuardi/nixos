@@ -16,8 +16,8 @@ in
       "suwayomi"
     ];
 
-    fileSystems."/nas/services/suwayomi" = {
-      device = config.services.suwayomi-server.dataDir;
+    fileSystems."${config.services.suwayomi-server.dataDir}" = {
+      device = "/nas/services/suwayomi-server";
       fsType = "none";
       options = [ "bind" ];
     };
