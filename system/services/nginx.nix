@@ -192,6 +192,7 @@ in
               stage.static_labels {
                   values = {
                       level = "info",
+                      job = "nginx_access_log",
                   }
               } 
 
