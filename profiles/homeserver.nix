@@ -47,8 +47,8 @@
     home.programs.zellij = {
       enable = true;
       autoAttach = true;
-      mod = "Ctrl b";
-      zjstatus.theme = ../home/programs/zellij/themes/zjstatus/gruvbox-dark.nix;
+      mod = "Ctrl a";
+      zjstatus.theme = ../home/programs/zellij/themes/zjstatus/catppuccin-mocha.nix;
     };
 
     services = {
