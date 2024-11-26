@@ -6,6 +6,7 @@
     ./caddy.nix
     ./cockpit.nix
     ./couchdb.nix
+    ./flaresolverr.nix
     ./forgejo.nix
     ./jellyfin.nix
     ./kavita.nix
@@ -19,6 +20,7 @@
     ./samba.nix
     ./stubby.nix
     ./syncthing.nix
+    ./suwayomi.nix
     ./technitium.nix
     ./wireguard.nix
   ];

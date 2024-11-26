@@ -28,7 +28,7 @@
     podman = {
       enable = true;
       pihole.enable = true;
-      suwayomi.enable = true;
+      suwayomi.enable = false;
       ytptube.enable = true;
       redmage.enable = true;
       redmage-demo.enable = true;
@@ -73,6 +73,7 @@
       ntfy-sh.client.enable = false;
       couchdb.enable = false;
       technitium.enable = false;
+      suwayomi.enable = true;
     };
   };
 }

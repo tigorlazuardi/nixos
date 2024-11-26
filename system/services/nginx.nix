@@ -26,7 +26,6 @@ in
       recommendedProxySettings = true;
       recommendedZstdSettings = true;
       recommendedBrotliSettings = true;
-      enableReload = true;
     };
 
     users.users.nginx.extraGroups = [ "acme" ];

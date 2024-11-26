@@ -28,6 +28,8 @@ in
     wireguard.enable = mkEnableOption "wireguard";
     photoprism.enable = mkEnableOption "photoprism";
     navidrome.enable = mkEnableOption "navidrome";
+    suwayomi.enable = mkEnableOption "suwayomi";
+    flaresolverr.enable = mkEnableOption "flaresolverr";
 
     ntfy-sh.enable = mkEnableOption "ntfy-sh";
     ntfy-sh.client = {
