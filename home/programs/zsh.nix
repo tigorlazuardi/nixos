@@ -13,6 +13,7 @@ in
     bat
     gojq
     nix-zsh-completions
+    tre-command
   ];
   programs.zsh = {
     enable = true;
@@ -49,6 +50,7 @@ in
       cd = "z";
       grep = "${pkgs.ripgrep}/bin/rg";
       find = "${pkgs.fd}/bin/fd";
+      tree = "${pkgs.tre-command}/bin/tre";
     };
     dotDir = ".config/zsh";
     history = {
