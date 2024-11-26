@@ -66,8 +66,8 @@
       ];
     };
     fileSystems = {
-      "/nas/telemetry/grafana" = lib.mkIf config.profile.services.telemetry.grafana.enable {
-        device = "/var/lib/grafana";
+      "${config.services.grafana.dataDir}" = lib.mkIf config.profile.services.telemetry.grafana.enable {
+        device = "/nas/services/grafana";
         fsType = "auto";
         options = [
           "defaults"
@@ -77,8 +77,8 @@
         ];
       };
 
-      "/nas/telemetry/loki" = lib.mkIf config.profile.services.telemetry.loki.enable {
-        device = "/var/lib/loki";
+      "${config.services.loki.dataDir}" = lib.mkIf config.profile.services.telemetry.loki.enable {
+        device = "/nas/services/loki";
         fsType = "auto";
         options = [
           "defaults"
@@ -88,8 +88,8 @@
         ];
       };
 
-      "/nas/telemetry/tempo" = lib.mkIf config.profile.services.telemetry.tempo.enable {
-        device = "/var/lib/tempo";
+      "/var/lib/private/tempo" = lib.mkIf config.profile.services.telemetry.tempo.enable {
+        device = "/nas/services/tempo";
         fsType = "auto";
         options = [
           "defaults"
@@ -99,8 +99,8 @@
         ];
       };
 
-      "/nas/telemetry/mimir" = lib.mkIf config.profile.services.telemetry.mimir.enable {
-        device = "/var/lib/mimir";
+      "/var/lib/private/mimir" = lib.mkIf config.profile.services.telemetry.mimir.enable {
+        device = "/nas/services/mimir";
         fsType = "auto";
         options = [
           "defaults"
