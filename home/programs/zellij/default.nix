@@ -59,7 +59,7 @@ in
             if [[ -z "$ZELLIJ" ]]; then
                 active_sessions=$(zellij list-sessions --no-formatting --reverse | grep -v "EXITED")
                 sessions=$(echo "$active_sessions" | wc -l)
-                if [ "$sessions" -ge 2 ]; then
+                if [ "$sessions" -ge 1 ]; then
                     selected=$(echo "$active_sessions" | ${pkgs.skim}/bin/sk | awk '{print $1}')
                     if [[ -n "''${selected// /}" ]]; then
                         zellij attach "$selected"
