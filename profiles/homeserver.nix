@@ -28,7 +28,6 @@
     podman = {
       enable = true;
       pihole.enable = true;
-      suwayomi.enable = false;
       ytptube.enable = true;
       redmage.enable = true;
       redmage-demo.enable = true;
