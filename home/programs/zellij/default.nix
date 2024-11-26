@@ -9,12 +9,12 @@ let
   cfg = config.profile.home.programs.zellij;
   plugins = {
     zj-quit = pkgs.fetchurl {
-      url = "https://github.com/cristiand391/zj-quit/releases/download/0.3.0/zj-quit.wasm";
-      hash = "sha256-f1D3cDuLRZ5IqY3IGq6UYSEu1VK54TwmkmwWaxVQD2A=";
+      url = "https://github.com/cristiand391/zj-quit/releases/download/0.3.1/zj-quit.wasm";
+      hash = "sha256-JSYnGGN2SLNComhMg4P814dV3TV6jRvTv9fts9oTf5Q=";
     };
     zj-status = pkgs.fetchurl {
-      url = "https://github.com/dj95/zjstatus/releases/download/v0.17.0/zjstatus.wasm";
-      hash = "sha256-IgTfSl24Eap+0zhfiwTvmdVy/dryPxfEF7LhVNVXe+U";
+      url = "https://github.com/dj95/zjstatus/releases/download/v0.19.0/zjstatus.wasm";
+      hash = "sha256-xU2CA+okW8gg9l25mLWgaQFNnzoa8Z6KH0tenmiUvhM=";
     };
   };
 in
@@ -57,17 +57,17 @@ in
         ''
           if [[ ! -z "$SSH_CLIENT" ]]; then
             if [[ -z "$ZELLIJ" ]]; then
-                ZJ_SESSIONS=$(zellij list-sessions --no-formatting)
-                NO_SESSIONS=$(echo "$ZJ_SESSIONS" | wc -l)
-                if [ "$NO_SESSIONS" -ge 2 ]; then
-                    SELECTED_SESSION=$(echo "$ZJ_SESSIONS" | ${pkgs.skim}/bin/sk | awk '{print $1}')
-                    if [[ -n "''${SELECTED_SESSION// /}" ]]; then
-                        zellij attach -c "$SELECTED_SESSION"
+                active_sessions=$(zellij list-sessions --no-formatting --reverse | grep -v "EXITED")
+                sessions=$(echo "$active_sessions" | wc -l)
+                if [ "$sessions" -ge 1 ]; then
+                    selected=$(echo "$active_sessions" | ${pkgs.skim}/bin/sk | awk '{print $1}')
+                    if [[ -n "''${selected// /}" ]]; then
+                        zellij attach "$selected"
                     else
-                        zellij attach -c --index 0
+                        zellij --new-session-with-layout base
                     fi
-                else
-                    zellij attach -c
+                else 
+                    zellij attach --new-session-with-layout base
                 fi
                 exit
             fi
@@ -252,6 +252,11 @@ in
       '';
 
     home.file.".config/zellij/layouts/default.kdl".text = import cfg.zjstatus.theme {
+      inherit plugins;
+      timezone = cfg.zjstatus.timezone;
+    };
+
+    home.file.".config/zellij/layouts/base.kdl".text = import cfg.zjstatus.theme {
       inherit plugins;
       timezone = cfg.zjstatus.timezone;
     };
