@@ -9,5 +9,10 @@ in
       enable = true;
       port = 8191;
     };
+
+    systemd.services."flaresolverr".serviceConfig = {
+      CPUWeight = 20;
+      CPUQuota = "25%";
+    };
   };
 }
