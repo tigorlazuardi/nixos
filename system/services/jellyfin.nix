@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.profile.services.jellyfin;
   dataDir = "/nas/mediaserver/jellyfin";
@@ -52,6 +57,7 @@ in
     };
     services.jellyfin = {
       enable = true;
+      package = pkgs.jellyfin2405;
       inherit dataDir;
     };
 

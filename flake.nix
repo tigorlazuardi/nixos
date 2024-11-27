@@ -24,6 +24,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "nixpkgs/nixos-24.11";
+    nixpkgs2405.url = "nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
@@ -71,6 +72,7 @@
             nur.overlay
             rust-overlay.overlays.default
             (final: prev: { zen-browser = inputs.zen-browser.packages."${system}".default; })
+            (final: prev: { jellyfin2405 = inputs.nixpkgs2405.legacyPackages."${system}".jellyfin; })
             (final: prev: { ags-agenda = inputs.ags-agenda.packages."${system}".default; })
           ];
         }
