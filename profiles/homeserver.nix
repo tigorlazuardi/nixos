@@ -27,7 +27,7 @@
     ];
     podman = {
       enable = true;
-      pihole.enable = true;
+      pihole.enable = false;
       ytptube.enable = true;
       redmage.enable = true;
       redmage-demo.enable = true;
@@ -52,6 +52,7 @@
     };
 
     services = {
+      adguardhome.enable = true;
       caddy.enable = false;
       nginx.enable = true;
       cockpit.enable = true;
@@ -61,7 +62,7 @@
       nextcloud.enable = false;
       syncthing.enable = true;
       openvpn.enable = false;
-      stubby.enable = true;
+      stubby.enable = false;
       jellyfin.enable = true;
       rust-motd.enable = true;
       wireguard.enable = true;

@@ -3,6 +3,7 @@
   imports = [
     ./telemetry
 
+    ./adguard_home.nix
     ./caddy.nix
     ./cockpit.nix
     ./couchdb.nix

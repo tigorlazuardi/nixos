@@ -9,6 +9,7 @@ let
 in
 {
   options.profile.services = {
+    adguardhome.enable = mkEnableOption "adguardhome";
     caddy.enable = mkEnableOption "caddy";
     nginx.enable = mkEnableOption "nginx";
     cockpit.enable = mkEnableOption "cockpit";
