@@ -41,6 +41,13 @@ in
       SupplementaryGroups = [ "shadow" ];
     };
 
+    # Disable ACME re-triggers every time the configuration changes
+    systemd.services.nginx.unitConfig = {
+      Before = lib.mkForce [ ];
+      After = lib.mkForce [ "network.target" ];
+      Wants = lib.mkForce [ ];
+    };
+
     environment.etc."nginx/static/tigor.web.id/index.html" = {
       text =
         let
@@ -82,13 +89,18 @@ in
     };
 
     services.nginx.virtualHosts."tigor.web.id" = {
-      # Enable ACME implies security.acme.certs."tigor.web.id" to be created.
-      enableACME = true;
+      useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations."/" = {
         root = "/etc/nginx/static/tigor.web.id";
         tryFiles = "$uri $uri/ $uri.html =404";
       };
+    };
+
+    systemd.timers."acme-tigor.web.id".timerConfig.OnCalendar = lib.mkForce "*-*-1,15 04:00:00";
+
+    security.acme.certs."tigor.web.id" = {
+      webroot = "/var/lib/acme/.challenges";
     };
 
     sops.secrets."nginx/htpasswd" = {
