@@ -57,6 +57,7 @@ in
             "192.168.100.5"
           ];
           upstream_dns = [
+            "tls://dns.bebasid.com:853"
             "quic://dns-unfiltered.adguard.com"
             "tls://dns-unfiltered.adguard.com"
             "94.140.14.140"
@@ -68,6 +69,29 @@ in
             "2620:fe::fe:10"
           ];
         };
+        user_rules = [
+          "@@||stats.grafana.org^" # Allow Grafana to collect stats of my Grafana instance.
+        ];
+        filters = [
+          {
+            enabled = true;
+            url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt";
+            name = "AdGuard DNS filter";
+            id = 1;
+          }
+          {
+            enabled = true;
+            url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_2.txt";
+            name = "AdAway Default Blocklist";
+            id = 2;
+          }
+          {
+            enabled = true;
+            url = "https://raw.githubusercontent.com/bebasid/bebasdns/main/dev/resources/hosts/custom-filtering-rules-blocklist";
+            name = "BebasDNS Custom Filtering Rules";
+            id = 3;
+          }
+        ];
         filtering = {
           filtering_enabled = true;
           rewrites = [
