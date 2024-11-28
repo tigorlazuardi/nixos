@@ -57,7 +57,6 @@ in
             "192.168.100.5"
           ];
           upstream_dns = [
-            "[/bareksa.local/]192.168.3.215"
             "quic://dns-unfiltered.adguard.com"
             "tls://dns-unfiltered.adguard.com"
             "94.140.14.140"
