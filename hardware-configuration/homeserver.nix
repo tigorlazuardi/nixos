@@ -144,7 +144,8 @@
         root = "/nas/public";
         tryFiles = "$uri $uri/ $uri.html =404";
         extraConfig = ''
-          autoindex on;
+          fancyindex on;
+          fancyindex_localtime on;
         '';
       };
     };

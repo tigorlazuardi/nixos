@@ -18,7 +18,7 @@ in
     services.nginx = {
       enable = true;
       additionalModules = [
-        pkgs.nginxModules.pam
+        pkgs.nginxModules.fancyindex
       ];
       recommendedTlsSettings = true;
       recommendedGzipSettings = true;
