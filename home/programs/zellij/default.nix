@@ -97,6 +97,8 @@ in
             zj-quit location="file:${plugins.zj-quit}";
         }
 
+        session_serialization false
+
         keybinds clear-defaults=true {
           shared_except "locked" {
               bind "Ctrl q" {
