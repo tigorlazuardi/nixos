@@ -57,11 +57,11 @@ in
             "192.168.100.5"
           ];
           upstream_dns = [
-            "[/mangadex.org/]https://dns.bebasid.com/dns-query tls://dns.bebasid.com:853"
+            "[/mangadex.org/]tls://dns.bebasid.com:853 https://dns.bebasid.com/dns-query"
             "tls://dns.bebasid.com:853"
-            "https://dns.bebasid.com/dns-query"
             "quic://dns-unfiltered.adguard.com"
             "tls://dns-unfiltered.adguard.com"
+            "https://dns.bebasid.com/dns-query"
             "94.140.14.140"
           ];
           bootstrap_dns = [
