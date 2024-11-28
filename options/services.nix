@@ -25,6 +25,7 @@ in
       type = types.bool;
       default = config.profile.services.jellyfin.enable;
     };
+    resolved.enable = mkEnableOption "resolved";
     rust-motd.enable = mkEnableOption "rust-motd";
     wireguard.enable = mkEnableOption "wireguard";
     photoprism.enable = mkEnableOption "photoprism";

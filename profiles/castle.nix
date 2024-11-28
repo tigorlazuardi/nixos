@@ -122,5 +122,6 @@ in
     programs.wezterm.enable = false;
     podman.enable = true;
     services.ntfy-sh.client.enable = true;
+    services.resolved.enable = true;
   };
 }

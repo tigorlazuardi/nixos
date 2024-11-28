@@ -14,6 +14,7 @@
     ./networking.nix
     ./openssh.nix
     ./printing.nix
+    ./resolved.nix
     ./scanner.nix
     ./sops.nix
     ./steam.nix
