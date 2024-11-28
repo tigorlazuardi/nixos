@@ -58,9 +58,10 @@ in
           ];
           upstream_dns = [
             "tls://dns.bebasid.com:853"
-            "quic://dns-unfiltered.adguard.com"
-            "tls://dns-unfiltered.adguard.com"
-            "94.140.14.140"
+            "https://dns.bebasid.com/dns-query"
+            # "quic://dns-unfiltered.adguard.com"
+            # "tls://dns-unfiltered.adguard.com"
+            # "94.140.14.140"
           ];
           bootstrap_dns = [
             "9.9.9.10"
@@ -85,12 +86,12 @@ in
             name = "AdAway Default Blocklist";
             id = 2;
           }
-          {
-            enabled = true;
-            url = "https://raw.githubusercontent.com/bebasid/bebasdns/main/dev/resources/hosts/custom-filtering-rules-blocklist";
-            name = "BebasDNS Custom Filtering Rules";
-            id = 3;
-          }
+          # {
+          #   enabled = true;
+          #   url = "https://raw.githubusercontent.com/bebasid/bebasdns/main/dev/resources/hosts/custom-filtering-rules-blocklist";
+          #   name = "BebasDNS Custom Filtering Rules";
+          #   id = 3;
+          # }
         ];
         filtering = {
           filtering_enabled = true;
