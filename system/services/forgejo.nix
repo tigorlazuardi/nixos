@@ -24,7 +24,7 @@ in
             #nginx
             ''
               if ($http_cookie !~ "gitea_incredible") {
-                  rewrite ^(.*)$ /Tigor redirect;
+                  rewrite ^(.*)$ /tigor redirect;
               }
             '';
           proxyPass = "http://unix:/run/forgejo/forgejo.sock";
@@ -35,7 +35,7 @@ in
             # nginx
             ''
               if ($http_user_agent ~* (netcrawl|npbot|malicious|meta-externalagent|Bytespider|DotBot|Googlebot)) {
-                  return 403;
+                  return 444;
               }
             '';
         };

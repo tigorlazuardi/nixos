@@ -28,7 +28,7 @@ in
             # nginx
             ''
               if ($http_user_agent ~* (netcrawl|npbot|malicious|meta-externalagent|Bytespider|DotBot|Googlebot)) {
-                  return 403;
+                  return 444;
               }
             '';
         };
