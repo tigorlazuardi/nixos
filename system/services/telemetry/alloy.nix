@@ -33,7 +33,7 @@ in
         tempoProtocols = config.services.tempo.settings.distributor.receivers.otlp.protocols;
         mimirServer = config.services.mimir.configuration.server;
       in
-      # hcl
+      # hocon
       ''
         otelcol.receiver.otlp "homeserver" {
             grpc {

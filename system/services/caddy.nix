@@ -101,7 +101,7 @@ in
     };
 
     environment.etc."alloy/config.alloy".text =
-      # hcl
+      # hocon
       ''
         local.file_match "caddy_access_log" {
             path_targets = [

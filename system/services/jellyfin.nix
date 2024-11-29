@@ -63,7 +63,7 @@ in
 
     services.jellyseerr = mkIf cfg.jellyseerr.enable { enable = true; };
 
-    environment.etc."alloy/config.alloy".text = # hcl
+    environment.etc."alloy/config.alloy".text = # hocon
       ''
         prometheus.scrape "jellyfin" {
           targets = [{__address__ = "0.0.0.0:8096"}]

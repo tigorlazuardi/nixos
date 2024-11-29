@@ -26,7 +26,7 @@ in
           "io.containers.autoupdate" = "registry";
         };
       };
-  environment.etc."alloy/config.alloy".text = # hcl
+  environment.etc."alloy/config.alloy".text = # hocon
     ''
       prometheus.scrape "podman" {
         targets = [{__address__ = "${ip}:9882"}]

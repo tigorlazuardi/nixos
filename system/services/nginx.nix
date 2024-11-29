@@ -182,7 +182,7 @@ in
     systemd.services.nginx.serviceConfig.ProtectHome = false;
 
     environment.etc."alloy/config.alloy".text =
-      # hcl
+      # hocon
       ''
           local.file_match "nginx_access_log" {
               path_targets = [
