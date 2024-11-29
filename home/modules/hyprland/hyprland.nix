@@ -107,6 +107,7 @@ in
           # Window Management
           "$mod, Q, killactive"
           "$mod, Space, fullscreen"
+          "$mod, G, togglefloating"
           "$mod, H, movefocus, l"
           "$mod, J, movefocus, d"
           "$mod, k, movefocus, u"
