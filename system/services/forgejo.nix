@@ -14,6 +14,11 @@ in
       useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations = {
+        "/robots.txt".extraConfig = # nginx
+          ''
+            add_header Content-Type text/plain;
+            return 200 "User-agent: *\nDisallow: /";
+          '';
         "= /" = {
           extraConfig =
             #nginx
@@ -26,20 +31,18 @@ in
         };
         "/" = {
           proxyPass = "http://unix:/run/forgejo/forgejo.sock";
+          extraConfig =
+            # nginx
+            ''
+              if ($http_user_agent ~* (netcrawl|npbot|malicious|meta-externalagent|Bytespider|DotBot|Googlebot)) {
+                  return 403;
+              }
+            '';
         };
       };
     };
 
     security.acme.certs."tigor.web.id".extraDomainNames = [ "git.tigor.web.id" ];
-
-    services.caddy.virtualHosts."git.tigor.web.id".extraConfig = ''
-      @home_not_login {
-            not header_regexp Cookie gitea_incredible
-            path /
-      }
-      redir @home_not_login /Tigor
-      reverse_proxy * unix//run/forgejo/forgejo.sock
-    '';
 
     services.forgejo = {
       enable = true;

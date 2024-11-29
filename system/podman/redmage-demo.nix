@@ -16,8 +16,22 @@ in
     services.nginx.virtualHosts.${domain} = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://${ip}:8080";
+      locations = {
+        "/robots.txt".extraConfig = # nginx
+          ''
+            add_header Content-Type text/plain;
+            return 200 "User-agent: *\nDisallow: /";
+          '';
+        "/" = {
+          proxyPass = "http://${ip}:8080";
+          extraConfig =
+            # nginx
+            ''
+              if ($http_user_agent ~* (netcrawl|npbot|malicious|meta-externalagent|Bytespider|DotBot|Googlebot)) {
+                  return 403;
+              }
+            '';
+        };
       };
     };
 
