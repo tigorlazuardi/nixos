@@ -36,6 +36,21 @@ in
           See: https://wiki.hyprland.org/hyprland-wiki/pages/Useful-Utilities/Hyprland-desktop-portal/
         '';
       };
+
+    postDraw = mkOption {
+      type = types.lines;
+      default = "";
+      description = ''
+        Post Draw shell script to run after drawing the wallpaper.
+
+        4 variables are in the scope of this script:
+
+        - $image_file: The path to the original image file
+        - $target: The path to the current wallpaper
+        - $blur_target: The path to the blurred wallpaper
+        - $square_target: The path to the square wallpaper
+      '';
+    };
     settings = {
       monitors = lib.mkOption {
         type = with types; listOf str;

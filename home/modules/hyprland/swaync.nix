@@ -86,6 +86,12 @@ in
         ''swaync-client --inhibitor-remove "xdg-desktop-portal-hyprland"'';
     };
 
+    profile.hyprland.postDraw =
+      #sh
+      ''
+        swaync-client --reload-css
+      '';
+
     home.packages = with pkgs; [ libnotify ];
   };
 }

@@ -12,7 +12,7 @@ let
   draw-wallpaper =
     pkgs.writeShellScriptBin "draw-wallpaper.sh" # sh
       ''
-        image_file=$1
+        image_file="$1"
         target="${wallpaperDir}/current"
         blur_target="${wallpaperDir}/blurred.png"
         square_target="${wallpaperDir}/square.png"
@@ -25,9 +25,7 @@ let
         ${pkgs.graphicsmagick}/bin/gm convert -resize 75% -blur 50x30 "$target" "$blur_target"
         ${pkgs.imagemagick}/bin/magick "$target" -resize 25% -gravity Center -extent 1:1 "$square_target"
 
-        if [ `pidof swaync` ]; then
-            swaync-client --reload-css
-        fi
+        ${config.profile.hyprland.postDraw}
       '';
 in
 {
