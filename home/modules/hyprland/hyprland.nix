@@ -199,5 +199,9 @@ in
           source=${config.home.homeDirectory}/.cache/wallust/hyprland.conf
         '';
     };
+
+    home.file.".config/xdg-desktop-portal/hyprland-portals.conf".source =
+      (pkgs.formats.ini { }).generate "hyprland-portals.conf"
+        config.profile.hyprland.xdgPortal;
   };
 }

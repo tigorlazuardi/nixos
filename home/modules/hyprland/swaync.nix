@@ -62,7 +62,7 @@ in
           };
           _98-play-notification-sound-normal = {
             exec = ''${pkgs.sox}/bin/play --volume 0.5 ${./gran_turismo_menu_sound_effect.mp3}'';
-            app-name = "^(?!discord|TelegramDesktop|Slack|slack|Signal|Element|whatsapp-for-linux|vesktop).*$";
+            app-name = "^(?!discord|TelegramDesktop|Slack|slack|Signal|Element|whatsapp-for-linux|vesktop|spotify).*$";
           };
         };
       };
@@ -78,6 +78,13 @@ in
       "ignorealpha 0.5, swaync-notification-window"
       "ignorealpha 0.5, swaync-control-center"
     ];
+
+    profile.hyprland.xdgPortal.screencast = {
+      exec_before = # sh
+        ''swaync-client --inhibitor-add "xdg-desktop-portal-hyprland"'';
+      exec_after = # sh
+        ''swaync-client --inhibitor-remove "xdg-desktop-portal-hyprland"'';
+    };
 
     home.packages = with pkgs; [ libnotify ];
   };

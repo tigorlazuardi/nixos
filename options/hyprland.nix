@@ -6,10 +6,36 @@
 }:
 let
   types = lib.types;
+  inherit (lib) mkOption;
 in
 {
   options.profile.hyprland = {
     enable = lib.mkEnableOption "hyperland";
+    xdgPortal =
+      let
+        format = pkgs.formats.ini { };
+      in
+      mkOption {
+        type = types.submodule {
+          freeformType = format.type;
+          options = {
+            preferred = {
+              default = mkOption {
+                type = types.str;
+                default = "hyprland;gtk";
+              };
+            };
+          };
+        };
+        default = { };
+        description = ''
+          Options to pass to xdg-desktop-portal-hyprland.conf.
+
+          Can be used to set notification inhibitions or change file pickers.
+
+          See: https://wiki.hyprland.org/hyprland-wiki/pages/Useful-Utilities/Hyprland-desktop-portal/
+        '';
+      };
     settings = {
       monitors = lib.mkOption {
         type = with types; listOf str;

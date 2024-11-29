@@ -21,6 +21,12 @@ in
       })
     ];
 
+    services.swaync.settings.scripts._10-spotify = {
+      app-name = "spotifywm";
+      exec = "hyprctl dispatch focuswindow spotify";
+      run-on = "action";
+    };
+
     services.spotifyd = lib.mkIf cfg.spotifyd.enable {
       enable = true;
       settings = {
