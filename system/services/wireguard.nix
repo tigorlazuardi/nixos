@@ -46,11 +46,11 @@ in
       let
         template =
           { privateKey, ip }:
-          generators.toINI ({ }) {
+          (generators.toINI { }) {
             Interface = {
               Address = "${ip}/32";
               PrivateKey = privateKey;
-              DNS = "192.168.100.3";
+              DNS = "192.168.100.5";
             };
 
             Peer = {
