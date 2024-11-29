@@ -108,6 +108,23 @@ in
       owner = "nginx";
     };
 
+    services.nginx.appendHttpConfig =
+      # Catch all server. Return 444 for all requests (end connection without response)
+      #nginx
+      ''
+        server {
+            listen 80 default_server;
+            server_name _;
+            return 444;
+        }
+        server {
+            listen 443 ssl default_server;     
+            server_name _;
+            ssl_reject_handshake on; # Reject SSL connection 
+            return 444;
+        }
+      '';
+
     # Enable Real IP from Cloudflare
     services.nginx.commonHttpConfig =
       let
