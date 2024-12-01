@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
@@ -57,13 +56,8 @@ in
     };
     services.jellyfin = {
       enable = true;
-      package = pkgs.jellyfin;
       inherit dataDir;
     };
-
-    environment.systemPackages = [
-      pkgs.jellyfin-web
-    ];
 
     services.jellyseerr = mkIf cfg.jellyseerr.enable { enable = true; };
 
