@@ -74,11 +74,19 @@ in
 
     system.activationScripts."copy-wireguard-config-to-syncthing".text = # sh
       lib.strings.concatStringsSep "\n" (
-        map (device: ''
-          cp ${
-            config.sops.templates."wireguard/clients/${device.name}".path
-          } /nas/Syncthing/Sync/WireGuard/${device.name}.conf
-        '') devices
+        map (
+          device:
+          let
+            origin = config.sops.templates."wireguard/clients/${device.name}".path;
+            target = "/nas/Syncthing/Sync/WireGuard/${device.name}.conf";
+          in
+          #sh
+          ''
+            cp ${origin} ${target} || true
+            chown ${config.profile.user.name}:${config.profile.user.name} ${target} || true
+            chmod 0600 ${target} || true
+          ''
+        ) devices
       );
 
     networking = {
