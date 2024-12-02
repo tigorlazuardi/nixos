@@ -67,10 +67,18 @@ in
               privateKey = config.sops.placeholder.${device.secret};
               ip = device.ip;
             };
-            path = "/nas/Syncthing/Sync/WireGuard/${device.name}.conf";
             owner = config.profile.user.name;
           };
         }) devices
+      );
+
+    system.activationScripts."copy-wireguard-config-to-syncthing".text = # sh
+      lib.strings.concatStringsSep "\n" (
+        map (device: ''
+          cp ${
+            config.sops.templates."wireguard/clients/${device.name}".path
+          } /nas/Syncthing/Sync/WireGuard/${device.name}.conf
+        '') devices
       );
 
     networking = {
