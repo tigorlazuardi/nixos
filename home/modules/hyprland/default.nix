@@ -18,7 +18,7 @@ in
     ./waybar.nix
     ./wlogout.nix
     ./grimblast.nix
-    ./eww.nix
+    ./ags.nix
     ./alacritty.nix
     ./swayosd.nix
     ./swaync.nix
