@@ -14,6 +14,7 @@ in
     home.packages = [
       pkgs.wl-clipboard
       pkgs.kcalc
+      pkgs.font-manager
     ];
     wayland.windowManager.hyprland = {
       enable = true;
