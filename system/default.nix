@@ -79,6 +79,7 @@
     enable = true;
     clean.enable = true;
     clean.extraArgs = "--keep-since 4d --keep 3";
+    clean.dates = "monthly";
     flake = "/home/${config.profile.user.name}/dotfiles";
   };
 
