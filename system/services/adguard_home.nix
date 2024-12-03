@@ -57,8 +57,9 @@ in
             "192.168.100.5"
           ];
           upstream_dns = [
-            "tls://dns.bebasid.com:853"
-            "https://dns.bebasid.com/dns-query"
+            # "tls://dns.bebasid.com:853"
+            # "https://dns.bebasid.com/dns-query"
+            "quic://unfiltered.adguard-dns.com"
           ];
           bootstrap_dns = [
             "9.9.9.10"
