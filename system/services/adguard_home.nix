@@ -25,6 +25,34 @@ in
       "adguard.tigor.web.id"
     ];
 
+    sops.secrets =
+      let
+        opts = {
+          sopsFile = ./../../secrets/adguard.yaml;
+        };
+      in
+      {
+        "adguard/root/username" = opts;
+        "adguard/root/password" = opts;
+      };
+
+    # Replace secrets first before
+    systemd.services.adguard = {
+      serviceConfig = {
+        LoadCredential = [
+          "username:${config.sops.secrets."adguard/root/username".path}"
+          "password:${config.sops.secrets."adguard/root/username".path}"
+        ];
+      };
+      preStart =
+        lib.mkOrder 10
+          #sh
+          ''
+            ${pkgs.replace-secret}/bin/replace-secret '@USERNAME' ''${CREDENTIALS_DIRECTORY}/username /var/lib/private/AdGuardHome/AdGuardHome.yaml
+            ${pkgs.replace-secret}/bin/replace-secret '@PASSWORD' ''${CREDENTIALS_DIRECTORY}/password /var/lib/private/AdGuardHome/AdGuardHome.yaml
+          '';
+    };
+
     services.adguardhome = {
       enable = true;
       openFirewall = true;
@@ -43,11 +71,11 @@ in
         };
         users = [
           {
-            name = config.profile.user.name;
+            name = "@USERNAME";
             # It's a huge pain in the neck integrating this with sops.
             # This is usually encrypted further with age, but for simplicity's sake, I'll just leave it as is.
             # I just have to make sure the password for this is unique to this service.
-            password = "$2b$10$vD/9Xr7/TSq5kFAMNbBVvuZzhzmsxoKOpIypBL6qjZuEZwdb5kgOO";
+            password = "@PASSWORD";
           }
         ];
         auth_attempts = 3;
