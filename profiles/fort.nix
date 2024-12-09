@@ -104,5 +104,6 @@
     };
 
     services.ntfy-sh.client.enable = true;
+    services.resolved.enable = true;
   };
 }
