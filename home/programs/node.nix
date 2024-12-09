@@ -13,4 +13,12 @@
     ''
       prefix=${config.home.homeDirectory}/.local/npm
     '';
+
+  programs.zsh.plugins = [
+    {
+      name = "zsh-better-npm-completion";
+      src = pkgs.zsh-better-npm-completion;
+      file = "share/zsh-better-npm-completion";
+    }
+  ];
 }
