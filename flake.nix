@@ -57,7 +57,7 @@
     let
       system = "x86_64-linux";
       commonModules = [
-        nur.nixosModules.nur
+        nur.modules.nixos.default
         nix-flatpak.nixosModules.nix-flatpak
         home-manager.nixosModules.home-manager
         nix-index-database.nixosModules.nix-index
@@ -68,7 +68,7 @@
         {
           nixpkgs.overlays = [
             neovim-nightly-overlay.overlays.default
-            nur.overlay
+            nur.overlays.default
             rust-overlay.overlays.default
           ] ++ import ./overlays { inherit system inputs; };
         }
