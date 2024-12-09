@@ -115,6 +115,7 @@ in
       obsidian.enable = true;
       jetbrains.idea.enable = false;
       java.enable = true;
+      neocal.enable = true;
     };
 
     programs.mongodb-compass.enable = true;
