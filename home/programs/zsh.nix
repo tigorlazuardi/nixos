@@ -12,7 +12,6 @@ in
     eza
     bat
     gojq
-    nix-zsh-completions
     tre-command
   ];
   programs.zsh = {
@@ -62,7 +61,7 @@ in
       save = 40000;
       size = 40000;
     };
-    syntaxHighlighting.enable = true;
+    syntaxHighlighting.enable = false;
     initExtraFirst = lib.mkOrder 9999 (concatStrings [
       # bash
       ''
@@ -138,11 +137,6 @@ in
         src = pkgs.zsh-fzf-tab;
         file = "share/fzf-tab/fzf-tab.plugin.zsh";
       }
-      # {
-      #   name = "powerlevel10k";
-      #   src = pkgs.zsh-powerlevel10k;
-      #   file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-      # }
       {
         name = "auto-suggestions";
         src = pkgs.zsh-autosuggestions;
@@ -160,6 +154,7 @@ in
       }
       {
         name = "zsh-autocomplete";
+        # bug fix crashes for zsh. Use old version for now.
         src = pkgs.zsh-autocomplete.overrideAttrs (old: rec {
           version = "23.05.24";
           src = pkgs.fetchFromGitHub {
@@ -178,11 +173,18 @@ in
         });
         file = "share/zsh-autocomplete/zsh-autocomplete.plugin.zsh";
       }
-      # {
-      #   name = "zsh-defer";
-      #   src = pkgs.zsh-defer;
-      #   file = "share/zsh-defer/zsh-defer.plugin.zsh";
-      # }
+      {
+        # type commands that will output json
+        # press alt-j
+        name = "jq-zsh-plugin";
+        src = pkgs.jq-zsh-plugin;
+        file = "share/jq-zsh-plugin/jq.plugin.zsh";
+      }
+      {
+        name = "zsh-f-sy-h";
+        src = pkgs.zsh-f-sy-h;
+        file = "share/zsh/site-functions/F-Sy-H.plugin.zsh";
+      }
     ];
   };
 }
