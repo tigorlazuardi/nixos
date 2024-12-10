@@ -52,6 +52,11 @@ lib.mkMerge [
           '';
       };
     };
+    systemd.services."podman-${name}".serviceConfig = {
+      CPUWeight = 20;
+      CPUQuota = "25%";
+      IOWeight = 20;
+    };
 
     virtualisation.oci-containers.containers.${name} =
       let
