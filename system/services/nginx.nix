@@ -100,7 +100,8 @@ in
     systemd.timers."acme-tigor.web.id".timerConfig.OnCalendar = lib.mkForce "*-*-1,15 04:00:00";
 
     security.acme.certs."tigor.web.id" = {
-      webroot = "/var/lib/acme/.challenges";
+      webroot = "/var/lib/acme/acme-challenge";
+      group = "nginx";
     };
 
     sops.secrets."nginx/htpasswd" = {
