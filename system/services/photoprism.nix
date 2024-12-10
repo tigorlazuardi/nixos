@@ -36,6 +36,7 @@ in
     services.photoprism = {
       enable = true;
       port = 44999;
+      address = "0.0.0.0";
       originalsPath = photoDir;
       passwordFile = config.sops.secrets."photoprism/admin_password".path;
       settings = {
@@ -45,6 +46,12 @@ in
         PHOTOPRISM_SITE_AUTHOR = "Tigor Hutasuhut";
         PHOTOPRISM_FACE_CLUSTER_CORE = "3";
       };
+    };
+
+    systemd.services."photoprism".serviceConfig = {
+      CPUWeight = 20;
+      CPUQuota = "25%";
+      IOWeight = 20;
     };
   };
 }
