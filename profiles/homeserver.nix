@@ -59,7 +59,7 @@
       forgejo.enable = true;
       kavita.enable = true;
       samba.enable = true;
-      nextcloud.enable = false;
+      nextcloud.enable = true;
       syncthing.enable = true;
       openvpn.enable = false;
       stubby.enable = false;
