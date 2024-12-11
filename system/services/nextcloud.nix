@@ -29,37 +29,44 @@ in
       fsType = "none";
       options = [ "bind" ];
     };
-    services.nextcloud =
-      let
-        secrets = config.sops.secrets;
-      in
-      {
-        enable = true;
-
-        package = pkgs.nextcloud30;
-        https = true;
-        hostName = domain;
-        config = {
+    services.nextcloud = {
+      enable = true;
+      package = pkgs.nextcloud30;
+      https = true;
+      hostName = domain;
+      config =
+        let
+          secrets = config.sops.secrets;
+        in
+        {
           adminuser = "homeserver";
           adminpassFile = secrets."nextcloud/homeserver".path;
         };
-        configureRedis = true;
-        extraOptions = {
-          enabledPreviewProviders = [
-            "OC\\Preview\\BMP"
-            "OC\\Preview\\GIF"
-            "OC\\Preview\\JPEG"
-            "OC\\Preview\\Krita"
-            "OC\\Preview\\MarkDown"
-            "OC\\Preview\\MP3"
-            "OC\\Preview\\OpenDocument"
-            "OC\\Preview\\PNG"
-            "OC\\Preview\\TXT"
-            "OC\\Preview\\XBitmap"
-            "OC\\Preview\\HEIC"
-          ];
-        };
+      configureRedis = true;
+      extraApps = {
+        inherit (pkgs.nextcloud30Packages.apps)
+          memories
+          calendar
+          contacts
+          notes
+          ;
       };
+      extraOptions = {
+        enabledPreviewProviders = [
+          "OC\\Preview\\BMP"
+          "OC\\Preview\\GIF"
+          "OC\\Preview\\JPEG"
+          "OC\\Preview\\Krita"
+          "OC\\Preview\\MarkDown"
+          "OC\\Preview\\MP3"
+          "OC\\Preview\\OpenDocument"
+          "OC\\Preview\\PNG"
+          "OC\\Preview\\TXT"
+          "OC\\Preview\\XBitmap"
+          "OC\\Preview\\HEIC"
+        ];
+      };
+    };
 
     # Nextcloud when enabled will configure nginx for given domain.
     #
