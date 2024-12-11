@@ -49,9 +49,9 @@ in
     };
 
     systemd.services."photoprism".serviceConfig = {
-      CPUWeight = 20;
+      CPUWeight = 10;
       CPUQuota = "25%";
-      IOWeight = 20;
+      IOWeight = 10;
     };
   };
 }
