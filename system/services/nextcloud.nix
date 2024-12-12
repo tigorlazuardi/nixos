@@ -11,6 +11,9 @@ in
 {
   config = lib.mkIf cfg.enable {
     users.groups.nextcloud.members = [ config.profile.user.name ];
+    environment.systemPackages = with pkgs; [
+      ffmpeg
+    ];
     sops.secrets =
       let
         opts = {
@@ -41,19 +44,25 @@ in
         {
           adminuser = "homeserver";
           adminpassFile = secrets."nextcloud/homeserver".path;
+          dbtype = "pgsql";
         };
       configureRedis = true;
+      caching.redis = true;
+      database.createLocally = true;
       extraApps = {
         inherit (pkgs.nextcloud30Packages.apps)
           memories
           calendar
           contacts
           notes
+          previewgenerator
           ;
       };
       settings = {
         enable_previews = true;
         default_timezone = "Asia/Jakarta";
+        "memcache.local" = "\\OC\\Memcache\\Redis";
+        "auth.bruteforce.protection.enabled" = true;
         enabledPreviewProviders = [
           ''OC\Preview\BMP''
           ''OC\Preview\GIF''
@@ -61,6 +70,7 @@ in
           ''OC\Preview\Krita''
           ''OC\Preview\MarkDown''
           ''OC\Preview\MP3''
+          ''OC\Preview\Movie''
           ''OC\Preview\MP4''
           ''OC\Preview\OpenDocument''
           ''OC\Preview\PNG''
@@ -69,6 +79,16 @@ in
           ''OC\Preview\HEIC''
         ];
         preview_ffmpeg_path = lib.meta.getExe pkgs.ffmpeg;
+        preview_max_x = 1024;
+        preview_max_y = 1024;
+        "memories.exiftool" = lib.meta.getExe pkgs.exiftool;
+        "memories.vod.disable" = true;
+        "memories.vod.vaapi" = true;
+        "memories.vod.ffmpeg" = lib.meta.getExe pkgs.ffmpeg;
+        "memories.vod.ffprobe" = "${pkgs.ffmpeg}/bin/ffprobe";
+        trusted_proxies = [
+          "192.168.100.0/24"
+        ];
       };
     };
 
