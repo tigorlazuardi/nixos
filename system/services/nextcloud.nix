@@ -81,7 +81,7 @@ in
         preview_ffmpeg_path = lib.meta.getExe pkgs.ffmpeg;
         preview_max_x = 1024;
         preview_max_y = 1024;
-        "memories.exiftool" = lib.meta.getExe pkgs.exiftool;
+        # "memories.exiftool" = lib.meta.getExe pkgs.exiftool;
         "memories.vod.disable" = true;
         "memories.vod.vaapi" = true;
         "memories.vod.ffmpeg" = lib.meta.getExe pkgs.ffmpeg;
