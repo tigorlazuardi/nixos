@@ -23,6 +23,7 @@ in
         };
       };
 
+    # documentation for symlinkJoin: https://nixos.wiki/wiki/Nix_Cookbook#Wrapping_packages
     home.packages = with pkgs; [
       ags-agenda
       (symlinkJoin {
