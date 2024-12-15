@@ -20,6 +20,12 @@ let
       secret = "wireguard/private_keys/laptop";
       publicKey = "5nporvzbJtTQC9Hek8JBJNIF+wGlWUj4En2w9DrvaV0=";
     }
+    {
+      name = "oppo-find-x8";
+      ip = "10.100.0.4";
+      secret = "wireguard/private_keys/oppo-find-x8";
+      publicKey = "ExGQMlmSVKpP3lpZKcnuAiOUOeSD44RMKf2k016rqHs=";
+    }
   ];
   serverPublicKey = "GDRUvnKUPNzwAloQ5fxvdHoVw4D1YbdCR0GyiOyyB38=";
   sopsFile = ../../secrets/wireguard.yaml;

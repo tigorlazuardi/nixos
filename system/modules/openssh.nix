@@ -6,7 +6,6 @@
 }:
 let
   cfg = config.profile.openssh;
-  inherit (lib.meta) getExe;
 in
 {
   config = lib.mkIf cfg.enable {
@@ -21,7 +20,7 @@ in
         UseDns = false;
         X11Forwarding = false;
         PermitRootLogin = "no";
-        GSSAPIAuthentication = false;
+        # GSSAPIAuthentication = false;
       };
     };
     services.fail2ban = {

@@ -58,6 +58,11 @@ in
             id = "Redmage/S20FE";
             devices = [ "s20fe" ];
           };
+          "/nas/redmage/images/oppo-find-x8" = {
+            label = "Redmage/oppo-find-x8";
+            id = "Redmage/oppo-find-x8";
+            devices = [ "oppo-find-x8" ];
+          };
           "/nas/Syncthing/Sync/Japanese-Homework" = {
             label = "Japanese Homework";
             id = "Japanese-Homework";
@@ -87,6 +92,7 @@ in
             devices = [
               "s20fe"
               "work-laptop"
+              "oppo-find-x8"
             ];
           };
           "/nas/photos/mama" = {
@@ -97,7 +103,9 @@ in
           "/nas/photos/tigor" = {
             label = "Camera Tigor";
             id = "sm-g780f_yjwa-photos";
-            devices = [ "s20fe" ];
+            devices = [
+              "s20fe"
+            ];
           };
           "/nas/Syncthing/Sync/Onyx-Notes" = {
             label = "Onyx Notes";
@@ -136,6 +144,7 @@ in
               "s20fe"
               "work-laptop"
               "windows"
+              "oppo-find-x8"
             ];
           };
           "/nas/Syncthing/Sync/Music" = {
@@ -146,6 +155,7 @@ in
               "work-laptop"
               "windows"
               "living-room-system"
+              "oppo-find-x8"
             ];
           };
           "/nas/Syncthing/Sync/General" = {
@@ -156,6 +166,7 @@ in
               "work-laptop"
               "windows"
               "living-room-system"
+              "oppo-find-x8"
             ];
           };
           "/nas/Syncthing/Sync/Public" = {
@@ -166,6 +177,7 @@ in
               "work-laptop"
               "windows"
               "living-room-system"
+              "oppo-find-x8"
             ];
           };
         };
@@ -197,6 +209,10 @@ in
           living-room-system = {
             name = "Living Room System";
             id = "63W5VTT-X6R6WOC-LMQEXM7-6PCUYLX-UONPYFB-UYM2OGN-2TJ47HG-66TSCQC";
+          };
+          oppo-find-x8 = {
+            name = "Oppo Find X8";
+            id = "SAYTPBV-HYUWZS7-U25B53S-D6BJFSH-Q5E3PUT-ZO53LBB-QJ255QK-HJTNDAQ";
           };
         };
       };
