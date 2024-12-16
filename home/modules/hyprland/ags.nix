@@ -39,7 +39,7 @@ in
       })
     ];
 
-    wayland.windowManager.hyprland.settings.exec-once = [ "ags-agenda" ];
+    # wayland.windowManager.hyprland.settings.exec-once = [ "ags-agenda" ];
 
     home.file.".config/gcalcli/config.toml".source = (pkgs.formats.toml { }).generate "config.toml" {
       calendars = {
