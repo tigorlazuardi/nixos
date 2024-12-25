@@ -6,12 +6,32 @@
   lib,
   pkgs,
   modulesPath,
+  inputs,
   ...
 }:
+let
+  inherit (inputs) nixos-hardware;
+in
 
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports =
+    let
+      hardware = nixos-hardware.nixosModules;
+    in
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
+      hardware.common-cpu-amd
+      hardware.common-cpu-amd-zenpower
+      hardware.common-cpu-amd-pstate
+      hardware.common-gpu-intel
+    ];
   config = {
+
+    hardware.intelgpu = {
+      driver = "xe";
+    };
+
+    boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.initrd.availableKernelModules = [
       "xhci_pci"
       "ahci"
@@ -25,7 +45,6 @@
       "kvm-amd"
       "nct6775"
     ];
-    boot.extraModulePackages = [ ];
 
     fileSystems."/" = {
       device = "/dev/disk/by-uuid/439a1beb-1443-495b-9891-012605819803";
@@ -167,22 +186,11 @@
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
     hardware.enableAllFirmware = true;
     hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-    hardware.graphics = {
-      enable = true;
-      enable32Bit = true;
-      extraPackages = with pkgs; [
-        libvdpau-va-gl
-        intel-media-driver
-        intel-vaapi-driver # previously vaapiIntel
-        vaapiVdpau
-        intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
-        vpl-gpu-rt # QSV on 11th gen or newer
-        intel-media-sdk # QSV up to 11th gen
-        intel-ocl
-      ];
-    };
-    environment.sessionVariables = {
-      LIBVA_DRIVER_NAME = "iHD";
-    }; # Force intel-media-driver
+    hardware.enableRedistributableFirmware = true;
+    hardware.graphics.extraPackages = with pkgs; [
+      intel-media-driver
+      intel-vaapi-driver
+      libvdpau-va-gl
+    ];
   };
 }

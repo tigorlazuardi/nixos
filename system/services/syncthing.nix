@@ -72,6 +72,16 @@ in
               "windows"
             ];
           };
+          "/nas/Syncthing/Sync/Windows" = {
+            label = "Windows";
+            id = "Windows";
+            devices = [ "windows" ];
+          };
+          "/nas/Syncthing/Sync/Rips" = {
+            label = "Rips";
+            id = "Rips";
+            devices = [ "windows" ];
+          };
           "/nas/kavita/library/light-novels" = {
             label = "Light Novels";
             id = "Light-Novels";
