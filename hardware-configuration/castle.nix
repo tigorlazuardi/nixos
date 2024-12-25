@@ -3,15 +3,32 @@
   lib,
   pkgs,
   modulesPath,
+  inputs,
   ...
 }:
-
+let
+  inherit (inputs) nixos-hardware;
+in
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports =
+    let
+      hardware = nixos-hardware.nixosModules;
+    in
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
+      hardware.common-cpu-amd
+      hardware.common-cpu-amd-zenpower
+      hardware.common-cpu-amd-pstate
+      hardware.common-gpu-amd
+      hardware.common-pc
+      hardware.common-pc-ssd
+    ];
 
   sops.secrets."smb/secrets" = {
     owner = config.profile.user.name;
   };
+
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.initrd.availableKernelModules = [
     "nvme"
