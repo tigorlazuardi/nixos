@@ -103,7 +103,7 @@ in
       redisinsight.enable = true;
     };
 
-    microsoft-edge.enable = true;
+    microsoft-edge.enable = false;
     nextcloud.enable = false;
 
     home.programs = {
