@@ -102,7 +102,7 @@ in
           "\\OC\\Preview\\Movie"
           "OC\\Preview\\Movie"
         ];
-        preview_ffmpeg_path = "${pkgs.jellyfin-ffmpeg}/bin/ffmpeg";
+        preview_ffmpeg_path = "${pkgs.ffmpeg}/bin/ffmpeg";
         preview_imaginary_url = "http://${config.services.imaginary.address}:${toString config.services.imaginary.port}";
         "memories.exiftool_no_local" = true;
         "memories.exiftool" = "";
@@ -110,8 +110,7 @@ in
         "memories.vod.ffprobe" = "${pkgs.ffmpeg}/bin/ffprobe";
         # "memories.vod.ffmpeg" = "";
         # "memories.vod.ffprobe" = "";
-        "memories.vod.external" = true;
-        "memories.vod.connect" = "localhost:47788";
+        "memories.vod.external" = false;
         preview_max_x = 1024;
         preview_max_y = 1024;
         trusted_proxies = [
@@ -154,30 +153,30 @@ in
 
     security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
 
-    systemd.services."go-vod" =
-      let
-        cfgFile = (pkgs.formats.json { }).generate "go-vod-config.json" {
-          ffmpeg = "${pkgs.ffmpeg}/bin/ffmpeg";
-          ffprobe = "${pkgs.ffmpeg}/bin/ffprobe";
-          vaapi = true;
-        };
-      in
-      {
-        wantedBy = [ "default.target" ];
-        path = with pkgs; [
-          ffmpeg
-        ];
-        environment = {
-          LIBVA_DRIVER_NAME = "i965";
-        };
-
-        serviceConfig = {
-          DynamicUser = true;
-          ExecStart = "${go-vod}/bin/go-vod ${cfgFile}";
-          PrivateDevices = false;
-          ReadOnlyPaths = config.services.nextcloud.home;
-          SupplementaryGroups = [ "nextcloud" ];
-        };
-      };
+    # systemd.services."go-vod" =
+    #   let
+    #     cfgFile = (pkgs.formats.json { }).generate "go-vod-config.json" {
+    #       ffmpeg = "${pkgs.ffmpeg}/bin/ffmpeg";
+    #       ffprobe = "${pkgs.ffmpeg}/bin/ffprobe";
+    #       vaapi = true;
+    #     };
+    #   in
+    #   {
+    #     wantedBy = [ "default.target" ];
+    #     path = with pkgs; [
+    #       ffmpeg
+    #     ];
+    #     environment = {
+    #       LIBVA_DRIVER_NAME = "i965";
+    #     };
+    #
+    #     serviceConfig = {
+    #       DynamicUser = true;
+    #       ExecStart = "${go-vod}/bin/go-vod ${cfgFile}";
+    #       PrivateDevices = false;
+    #       ReadOnlyPaths = config.services.nextcloud.home;
+    #       SupplementaryGroups = [ "nextcloud" ];
+    #     };
+    #   };
   };
 }

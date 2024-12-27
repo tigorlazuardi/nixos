@@ -26,11 +26,6 @@ in
       hardware.common-gpu-intel
     ];
   config = {
-
-    hardware.intelgpu = {
-      driver = "xe";
-    };
-
     boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.initrd.availableKernelModules = [
       "xhci_pci"
@@ -187,10 +182,17 @@ in
     hardware.enableAllFirmware = true;
     hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     hardware.enableRedistributableFirmware = true;
+    hardware.graphics.enable = true;
     hardware.graphics.extraPackages = with pkgs; [
       intel-media-driver
       intel-vaapi-driver
       libvdpau-va-gl
+      libva-vdpau-driver
+      vaapi-intel-hybrid
+      intel-media-sdk
     ];
+    environment.sessionVariables = {
+      LIBVA_DRIVER_NAME = "iHD";
+    };
   };
 }
