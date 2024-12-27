@@ -96,81 +96,52 @@
         inherit system;
         config.allowUnfree = true;
       };
+      mkNixosConfiguration = (
+        {
+          profile-path,
+          hardware-configuration,
+          user,
+        }:
+        let
+          specialArgs = {
+            inherit
+              inputs
+              unstable
+              profile-path
+              hardware-configuration
+              ;
+          };
+        in
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./system
+            {
+              home-manager.extraSpecialArgs = specialArgs;
+              home-manager.users.${user} = import ./home;
+            }
+          ] ++ commonModules;
+          specialArgs = specialArgs;
+        }
+      );
     in
     {
       nixosConfigurations = {
-        castle =
-          let
-            profile-path = ./profiles/castle.nix;
-            hardware-configuration = ./hardware-configuration/castle.nix;
-            specialArgs = {
-              inherit
-                inputs
-                unstable
-                profile-path
-                hardware-configuration
-                ;
-            };
-          in
-          nixpkgs.lib.nixosSystem {
-            inherit system;
-            modules = [
-              ./system
-              {
-                home-manager.extraSpecialArgs = specialArgs;
-                home-manager.users.tigor = import ./home;
-              }
-            ] ++ commonModules;
-            specialArgs = specialArgs;
-          };
-        fort =
-          let
-            profile-path = ./profiles/fort.nix;
-            hardware-configuration = ./hardware-configuration/fort.nix;
-            specialArgs = {
-              inherit
-                inputs
-                unstable
-                profile-path
-                hardware-configuration
-                ;
-            };
-          in
-          nixpkgs.lib.nixosSystem {
-            inherit system;
-            modules = [
-              ./system
-              {
-                home-manager.extraSpecialArgs = specialArgs;
-                home-manager.users.tigor = import ./home;
-              }
-            ] ++ commonModules;
-            specialArgs = specialArgs;
-          };
-        homeserver =
-          let
-            profile-path = ./profiles/homeserver.nix;
-            hardware-configuration = ./hardware-configuration/homeserver.nix;
-            specialArgs = {
-              inherit
-                inputs
-                unstable
-                profile-path
-                hardware-configuration
-                ;
-            };
-          in
-          nixpkgs.lib.nixosSystem {
-            inherit system;
-            modules = [
-              ./system
-              {
-                home-manager.extraSpecialArgs = specialArgs;
-                home-manager.users.homeserver = import ./home;
-              }
-            ] ++ commonModules;
-            specialArgs = specialArgs;
-          };
+        castle = mkNixosConfiguration {
+          profile-path = ./profiles/castle.nix;
+          hardware-configuration = ./hardware-configuration/castle.nix;
+          user = "tigor";
+        };
+        fort = mkNixosConfiguration {
+          profile-path = ./profiles/fort.nix;
+          hardware-configuration = ./hardware-configuration/fort.nix;
+          user = "tigor";
+        };
+        homeserver = mkNixosConfiguration {
+          profile-path = ./profiles/homeserver.nix;
+          hardware-configuration = ./hardware-configuration/homeserver.nix;
+          user = "homeserver";
+        };
       };
     };
 }
