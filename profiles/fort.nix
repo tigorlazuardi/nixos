@@ -72,7 +72,7 @@
     bitwarden.enable = true;
     dbeaver.enable = true;
 
-    microsoft-edge.enable = true;
+    microsoft-edge.enable = false;
     nextcloud.enable = false;
 
     programs.easyeffects.enable = true;

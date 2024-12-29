@@ -2,11 +2,25 @@
   config,
   lib,
   modulesPath,
+  inputs,
+  pkgs,
   ...
 }:
-
+let
+  inherit (inputs) nixos-hardware;
+in
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports = with nixos-hardware.nixosModules; [
+    (modulesPath + "/installer/scan/not-detected.nix")
+    common-pc
+    common-pc-ssd
+    common-cpu-intel
+    common-gpu-intel
+  ];
+
+  hardware.intelgpu.driver = "xe";
+
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.initrd.availableKernelModules = [
     "xhci_pci"
@@ -34,6 +48,7 @@
   swapDevices = [ { device = "/dev/disk/by-label/NIXSWAP"; } ];
 
   networking.useDHCP = lib.mkDefault true;
+  hardware.graphics.enable = true;
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.enableAllFirmware = true;
