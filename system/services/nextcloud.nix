@@ -62,23 +62,19 @@ in
         "memcache.local" = "\\OC\\Memcache\\Redis";
         "auth.bruteforce.protection.enabled" = true;
         enabledPreviewProviders = [
-          # ''OC\Preview\BMP''
-          # ''OC\Preview\GIF''
-          # ''OC\Preview\JPEG''
-          # ''OC\Preview\Krita''
-          # ''OC\Preview\MarkDown''
-          # ''OC\Preview\MP3''
-          # ''OC\Preview\Movie''
-          # ''OC\Preview\MP4''
-          # ''OC\Preview\OpenDocument''
-          # ''OC\Preview\PNG''
-          # ''OC\Preview\TXT''
-          # ''OC\Preview\XBitmap''
-          # ''OC\Preview\HEIC''
-          "OC\\Preview\\Imaginary"
-          "\\OC\\Preview\\Imaginary"
-          "\\OC\\Preview\\Movie"
-          "OC\\Preview\\Movie"
+          ''OC\Preview\BMP''
+          ''OC\Preview\GIF''
+          ''OC\Preview\JPEG''
+          ''OC\Preview\Krita''
+          ''OC\Preview\MarkDown''
+          ''OC\Preview\MP3''
+          ''OC\Preview\Movie''
+          ''OC\Preview\MP4''
+          ''OC\Preview\OpenDocument''
+          ''OC\Preview\PNG''
+          ''OC\Preview\TXT''
+          ''OC\Preview\XBitmap''
+          ''OC\Preview\HEIC''
         ];
         preview_ffmpeg_path = "${pkgs.ffmpeg}/bin/ffmpeg";
         preview_imaginary_url = "http://${config.services.imaginary.address}:${toString config.services.imaginary.port}";
@@ -99,6 +95,7 @@ in
 
     systemd.services.phpfpm-nextcloud = {
       serviceConfig = {
+        # Allow go-vod transcoder to be able to use GPU.
         PrivateDevices = lib.mkForce false;
       };
       path = [
@@ -112,11 +109,6 @@ in
         pkgs.perl
         pkgs.exiftool
       ];
-    };
-
-    services.imaginary = {
-      enable = true;
-      settings.return-size = true;
     };
 
     # Nextcloud when enabled will configure nginx for given domain.
