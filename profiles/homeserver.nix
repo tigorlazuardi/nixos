@@ -66,7 +66,7 @@
       jellyfin.enable = true;
       rust-motd.enable = true;
       wireguard.enable = true;
-      photoprism.enable = true;
+      photoprism.enable = false;
       navidrome.enable = true;
       telemetry.enable = true;
       ntfy-sh.enable = true;
