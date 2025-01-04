@@ -27,7 +27,8 @@ in
       };
 
     # Do not set services.nextcloud.home. Issues with sandboxing nature of NixOS.
-    # Instead uses bind mount and fstab to mount seeked directory to /var/lib/nextcloud.
+    # Instead force change the datadirectory with lib.mkForce to change where the data like images
+    # will be stored.
     services.nextcloud = {
       enable = true;
       package = pkgs.nextcloud30;
