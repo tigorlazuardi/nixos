@@ -47,11 +47,6 @@ in
 
     # Do not set services.nextcloud.home. Issues with sandboxing nature of NixOS.
     # Instead uses bind mount and fstab to mount seeked directory to /var/lib/nextcloud.
-    fileSystems."/nas/services/nextcloud" = {
-      device = "/var/lib/nextcloud/data";
-      fsType = "none";
-      options = [ "bind" ];
-    };
     services.nextcloud = {
       enable = true;
       package = pkgs.nextcloud30;
@@ -79,6 +74,7 @@ in
           ;
       };
       settings = {
+        datadirectory = lib.mkForce "/nas/services/nextcloud/data";
         enable_previews = true;
         default_timezone = "Asia/Jakarta";
         "memcache.local" = "\\OC\\Memcache\\Redis";
