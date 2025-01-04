@@ -7,25 +7,6 @@
 let
   cfg = config.profile.services.nextcloud;
   domain = "nextcloud.tigor.web.id";
-  go-vod =
-    with pkgs;
-    buildGoModule {
-      pname = "go-vod";
-      version = "0.2.5";
-
-      src =
-        (fetchgit {
-          url = "https://github.com/pulsejet/memories.git";
-          sparseCheckout = [ "go-vod" ];
-          rev = "385836b9d14ecb4a28802b4f9cf0ff47505772ce";
-          hash = "sha256-PIqNFGdfUKEf9/YUKJJqrOmVAzLpX/q9pz6wBsVhvBs=";
-        })
-        + "/go-vod";
-
-      deleteVendor = true;
-      # vendorHash = "sha256-KQr0DtyH3xzlFwsDl3MGLRRLQC4+EtdTOG7IhmNCzV4=";
-      vendorHash = null;
-    };
 in
 {
   config = lib.mkIf cfg.enable {
@@ -148,31 +129,5 @@ in
     };
 
     security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
-
-    # systemd.services."go-vod" =
-    #   let
-    #     cfgFile = (pkgs.formats.json { }).generate "go-vod-config.json" {
-    #       ffmpeg = "${pkgs.ffmpeg}/bin/ffmpeg";
-    #       ffprobe = "${pkgs.ffmpeg}/bin/ffprobe";
-    #       vaapi = true;
-    #     };
-    #   in
-    #   {
-    #     wantedBy = [ "default.target" ];
-    #     path = with pkgs; [
-    #       ffmpeg
-    #     ];
-    #     environment = {
-    #       LIBVA_DRIVER_NAME = "i965";
-    #     };
-    #
-    #     serviceConfig = {
-    #       DynamicUser = true;
-    #       ExecStart = "${go-vod}/bin/go-vod ${cfgFile}";
-    #       PrivateDevices = false;
-    #       ReadOnlyPaths = config.services.nextcloud.home;
-    #       SupplementaryGroups = [ "nextcloud" ];
-    #     };
-    #   };
   };
 }
