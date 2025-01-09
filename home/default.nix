@@ -31,6 +31,7 @@ in
   programs.home-manager.enable = true;
   systemd.user.sessionVariables = {
     XDG_CONFIG_HOME = "/home/${user.name}/.config";
+    NIXPKGS_ALLOW_UNFREE = "1";
   };
 
   services.mpris-proxy.enable = config.profile.mpris-proxy.enable;
