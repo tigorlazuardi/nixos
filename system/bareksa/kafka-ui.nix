@@ -112,7 +112,7 @@ in
         ];
       };
       serviceConfig = {
-        ExecStart = "${pkgs.systemd}/lib/systemd/systemd-socket-proxyd --exit-idle-time=30s ${ip}:8080";
+        ExecStart = "${pkgs.systemd}/lib/systemd/systemd-socket-proxyd --exit-idle-time=15m ${ip}:8080";
       };
     };
 
