@@ -72,6 +72,15 @@ in
               "windows"
             ];
           };
+          "/nas/Syncthing/Sync/PCSX2" = {
+            label = "PCSX2";
+            id = "PCSX2";
+            devices = [
+              "windows"
+              "steam-deck"
+              "oppo-find-x8"
+            ];
+          };
           "/nas/Syncthing/Sync/Windows" = {
             label = "Windows";
             id = "Windows";
