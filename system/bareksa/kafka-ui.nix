@@ -116,7 +116,22 @@ in
       };
     };
 
-    services.nginx.virtualHosts."${domain}".locations."/".proxyPass = "http://${socketAddress}";
+    services.nginx.virtualHosts."${domain}".locations = {
+      "/" = {
+        proxyPass = "http://${socketAddress}";
+        extraConfig = # nginx
+          ''
+            error_page 502 = @handle_502;
+          '';
+      };
+      # loop back to Nginx until the container is started.
+      "@handle_502".extraConfig = # nginx
+        ''
+          echo_sleep 5;
+          echo_exec @loop;
+        '';
+      "@loop".proxyPass = "http://localhost:80";
+    };
 
     # 127.0.0.1 ${domain} will force browsers to resolve kafka-ui.bareksa.local to
     # nginx, and nginx will proxy the request to the Kafka UI container.
