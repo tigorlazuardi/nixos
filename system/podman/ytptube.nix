@@ -69,10 +69,10 @@ lib.mkMerge [
       locations."/" = {
         proxyPass = "http://${ip}:8081";
         proxyWebsockets = true;
-        extraConfig = # nginx
-          ''
-            auth_basic $auth_ip;
-          '';
+        # extraConfig = # nginx
+        #   ''
+        #     auth_basic $auth_ip;
+        #   '';
       };
     };
 
