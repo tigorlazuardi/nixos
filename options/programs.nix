@@ -76,6 +76,7 @@
       floorp.enable = lib.mkEnableOption "floorp";
       java.enable = lib.mkEnableOption "java";
       krita.enable = lib.mkEnableOption "krita";
+      ghostty.enable = lib.mkEnableOption "ghostty";
       zellij = {
         enable = lib.mkEnableOption "zellij";
 

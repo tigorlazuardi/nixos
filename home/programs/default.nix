@@ -9,6 +9,7 @@
     ./easyeffects.nix
     ./elisa.nix
     ./foot.nix
+    ./ghostty.nix
     ./git.nix
     ./github.nix
     ./go.nix

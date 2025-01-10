@@ -116,6 +116,7 @@ in
       jetbrains.idea.enable = false;
       java.enable = true;
       neocal.enable = true;
+      ghostty.enable = true;
     };
 
     programs.mongodb-compass.enable = true;
