@@ -17,6 +17,7 @@
     ./programs.nix
     ./user.nix
     ./keyboard.nix
+    ./bareksa
   ];
 
   security.sudo.wheelNeedsPassword = config.profile.security.sudo.wheelNeedsPassword;

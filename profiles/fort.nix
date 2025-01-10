@@ -3,6 +3,10 @@
   imports = [ ../options ];
 
   profile = {
+    environment = {
+      bareksa.enable = true;
+    };
+
     hostname = "fort";
     user = {
       name = "tigor";
