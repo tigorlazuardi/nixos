@@ -7,6 +7,7 @@ in
   imports = [ ../options ];
 
   profile = {
+    environment.bareksa.enable = true;
     hostname = "castle";
     user = {
       name = "tigor";

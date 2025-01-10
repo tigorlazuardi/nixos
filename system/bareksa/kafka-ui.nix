@@ -6,6 +6,7 @@
 }:
 let
   ip = "10.88.244.1";
+  socketAddress = "127.0.0.1:48901";
   name = "bareksa-kafka-ui";
   domain = "kafka-ui.bareksa.local";
   settings = {
@@ -13,18 +14,70 @@ let
       clusters = [
         {
           name = "Bareksa Development";
-          bootstrapServers = "kafka.dev.bareksa.local:9093";
+          bootstrapServers = "kafka.dev.bareksa.local:9093,kafka.dev.bareksa.local:9094,kafka.dev.bareksa.local:9095";
+        }
+        {
+          name = "Bareksa Production";
+          bootstrapServers = "192.168.50.102:9092,192.168.50.103:9092,192.168.50.104:9092";
+          readOnly = true;
+        }
+        {
+          name = "Bareksa Aiven";
+          bootstrapServers = config.sops.placeholder."bareksa/aiven/kafka/host";
+          readOnly = true;
+          properties = {
+            security.protocol = "SSL";
+            ssl.truststore.location = "/aiven.keystore.jks";
+            ssl.truststore.password = config.sops.placeholder."bareksa/aiven/kafka/truststore/password";
+            ssl.keystore.type = "PKCS12";
+            ssl.keystore.location = "/aiven.bareksa.p12";
+            ssl.keystore.password = config.sops.placeholder."bareksa/aiven/kafka/truststore/password";
+          };
         }
       ];
     };
   };
+  user = config.profile.user;
+  uid = toString user.uid;
+  gid = toString user.gid;
 in
 {
   config = lib.mkIf config.profile.environment.bareksa.enable {
+    sops = {
+      secrets = {
+        "aiven.bareksa.p12" = {
+          format = "binary";
+          sopsFile = ../../secrets/bareksa/aiven.bareksa.p12;
+          owner = user.name;
+        };
+        "aiven.keystore.jks" = {
+          format = "binary";
+          sopsFile = ../../secrets/bareksa/aiven.truststore.jks;
+          owner = user.name;
+        };
+        "bareksa/aiven/kafka/truststore/password" = {
+          sopsFile = ../../secrets/bareksa.yaml;
+          owner = user.name;
+        };
+        "bareksa/aiven/kafka/host" = {
+          sopsFile = ../../secrets/bareksa.yaml;
+          owner = user.name;
+        };
+      };
+
+      templates."kafka-ui.config.yaml" = {
+        owner = user.name;
+        content = builtins.readFile ((pkgs.formats.yaml { }).generate "kafka-ui.config.yaml" settings);
+      };
+    };
+
     virtualisation.oci-containers.containers."${name}" = {
       image = "provectuslabs/kafka-ui:latest";
+      user = "${uid}:${gid}";
       hostname = name;
-      autoStart = true;
+      # this will be activated on demand via systemd-socket-activation.
+      # Meaning when kafka-ui.bareksa.local is accessed, the container will be started.
+      autoStart = false;
       extraOptions = [
         "--network=podman"
         "--ip=${ip}"
@@ -36,16 +89,42 @@ in
       };
 
       volumes = [
-        "${(pkgs.formats.yaml { }).generate "config.yaml" settings}:/config.yaml"
+        "${config.sops.templates."kafka-ui.config.yaml".path}:/config.yaml"
+        "${config.sops.secrets."aiven.bareksa.p12".path}:/aiven.bareksa.p12"
+        "${config.sops.secrets."aiven.keystore.jks".path}:/aiven.keystore.jks"
       ];
     };
 
-    services.nginx.virtualHosts."${domain}".locations = {
-      "/" = {
-        proxyPass = "http://${ip}:8080";
+    systemd.sockets."podman-${name}-proxy" = {
+      listenStreams = [ socketAddress ];
+      wantedBy = [ "sockets.target" ];
+    };
+    systemd.services."podman-${name}".unitConfig.StopWhenUnneeded = true;
+    systemd.services."podman-${name}-proxy" = {
+      unitConfig = {
+        Requires = [
+          "podman-${name}.service"
+          "podman-${name}-proxy.socket"
+        ];
+        After = [
+          "podman-${name}.service"
+          "podman-${name}-proxy.socket"
+        ];
+      };
+      serviceConfig = {
+        ExecStart = "${pkgs.systemd}/lib/systemd/systemd-socket-proxyd --exit-idle-time=30s ${ip}:8080";
       };
     };
 
-    networking.extraHosts = "127.0.0.1 ${domain}";
+    services.nginx.virtualHosts."${domain}".locations."/".proxyPass = "http://${socketAddress}";
+
+    # 127.0.0.1 ${domain} will force browsers to resolve kafka-ui.bareksa.local to
+    # nginx, and nginx will proxy the request to the Kafka UI container.
+    networking.extraHosts = ''
+      127.0.0.1 ${domain}
+      192.168.50.102 kafka-host-1 kafka-cluster-jkt-1
+      192.168.50.103 kafka-host-2 kafka-cluster-jkt-2
+      192.168.50.104 kafka-host-3 kafka-cluster-jkt-3
+    '';
   };
 }
