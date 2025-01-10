@@ -8,8 +8,10 @@ in
       enable = true;
       settings = {
         main = {
+          dpi-aware = "yes";
           font = "Hack Nerd Font Mono:size=12";
           include = lib.mkIf config.profile.hyprland.enable "${config.home.homeDirectory}/.config/foot/colors.ini";
+          selection-target = "both";
         };
         mouse = {
           hide-when-typing = "yes";
@@ -17,6 +19,9 @@ in
         cursor = {
           style = "beam";
           blink = "yes";
+        };
+        bell = {
+          notify = "yes";
         };
       };
     };
