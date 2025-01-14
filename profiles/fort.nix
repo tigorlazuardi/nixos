@@ -88,6 +88,7 @@
 
     home.programs = {
       foot.enable = true;
+      foot.font = "Hack Nerd Font Mono:size=8";
       zellij.enable = false;
       bruno.enable = true;
       elisa.enable = true;

@@ -9,7 +9,7 @@ in
       settings = {
         main = {
           dpi-aware = "yes";
-          font = "Hack Nerd Font Mono:size=12";
+          font = cfg.font;
           include = lib.mkIf config.profile.hyprland.enable "${config.home.homeDirectory}/.config/foot/colors.ini";
           selection-target = "both";
         };

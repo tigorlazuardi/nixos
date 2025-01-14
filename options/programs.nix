@@ -110,7 +110,13 @@
           };
         };
       };
-      foot.enable = lib.mkEnableOption "foot";
+      foot = {
+        enable = lib.mkEnableOption "foot";
+        font = lib.mkOption {
+          type = lib.types.str;
+          default = "Hack Nerd Font Mono:size=12";
+        };
+      };
       bruno.enable = lib.mkEnableOption "bruno";
       zoom.enable = lib.mkEnableOption "zoom";
       elisa.enable = lib.mkEnableOption "elisa";
