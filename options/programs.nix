@@ -72,6 +72,7 @@
 
     cockpit.enable = lib.mkEnableOption "cockpit";
     home.programs = {
+      bloomrpc.enable = lib.mkEnableOption "bloomrpc";
       zathura.enable = lib.mkEnableOption "zathura";
       floorp.enable = lib.mkEnableOption "floorp";
       java.enable = lib.mkEnableOption "java";

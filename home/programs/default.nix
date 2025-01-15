@@ -2,6 +2,7 @@
 {
   imports = [
     ./bitwarden.nix
+    ./bloomrpc.nix
     ./bruno.nix
     ./chromium.nix
     ./dbeaver.nix
