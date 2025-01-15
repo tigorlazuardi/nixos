@@ -95,6 +95,8 @@ in
       luajitPackages.tiktoken_core # For copilot chat
       luajitPackages.luarocks
       lua51Packages.lua
+
+      marksman
     ];
   };
 }
