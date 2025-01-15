@@ -97,6 +97,7 @@ in
       lua51Packages.lua
 
       marksman
+      markdownlint-cli2
     ];
   };
 }
