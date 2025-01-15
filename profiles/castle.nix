@@ -108,6 +108,7 @@ in
     nextcloud.enable = false;
 
     home.programs = {
+      bloomrpc.enable = true;
       zathura.enable = true;
       bruno.enable = true;
       krita.enable = true;
