@@ -98,6 +98,8 @@ in
 
       marksman
       markdownlint-cli2
+
+      sqlfluff
     ];
   };
 }
