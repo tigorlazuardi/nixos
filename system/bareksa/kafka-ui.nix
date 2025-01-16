@@ -7,8 +7,8 @@
 let
   ip = "10.88.244.1";
   socketAddress = "127.0.0.1:48901";
-  name = "bareksa-kafka-ui";
-  domain = "kafka-ui.bareksa.local";
+  name = "bareksa-kafka";
+  domain = "kafka.bareksa.local";
   settings = {
     kafka = {
       clusters = [
@@ -65,9 +65,9 @@ in
         };
       };
 
-      templates."kafka-ui.config.yaml" = {
+      templates."kafka.config.yaml" = {
         owner = user.name;
-        content = builtins.readFile ((pkgs.formats.yaml { }).generate "kafka-ui.config.yaml" settings);
+        content = builtins.readFile ((pkgs.formats.yaml { }).generate "kafka.config.yaml" settings);
       };
     };
 
@@ -76,7 +76,7 @@ in
       user = "${uid}:${gid}";
       hostname = name;
       # this will be activated on demand via systemd-socket-activation.
-      # Meaning when kafka-ui.bareksa.local is accessed, the container will be started.
+      # Meaning when kafka.bareksa.local is accessed, the container will be started.
       autoStart = false;
       extraOptions = [
         "--network=podman"
@@ -89,7 +89,7 @@ in
       };
 
       volumes = [
-        "${config.sops.templates."kafka-ui.config.yaml".path}:/config.yaml"
+        "${config.sops.templates."kafka.config.yaml".path}:/config.yaml"
         "${config.sops.secrets."aiven.bareksa.p12".path}:/aiven.bareksa.p12"
         "${config.sops.secrets."aiven.keystore.jks".path}:/aiven.keystore.jks"
       ];
@@ -133,7 +133,7 @@ in
       "@loop".proxyPass = "http://localhost:80";
     };
 
-    # 127.0.0.1 ${domain} will force browsers to resolve kafka-ui.bareksa.local to
+    # 127.0.0.1 ${domain} will force browsers to resolve kafka.bareksa.local to
     # nginx, and nginx will proxy the request to the Kafka UI container.
     networking.extraHosts = ''
       127.0.0.1 ${domain}
