@@ -5,14 +5,19 @@
     extra-substituters = [
       "https://nix-community.cachix.org"
       "https://nixpkgs-wayland.cachix.org"
+      "https://walker.cachix.org"
+      "https://walker-git.cachix.org"
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
+      "walker.cachix.org-1:fG8q+uAaMqhsMxWjwvk0IMb4mFPFLqHjuvfwQxE4oJM="
+      "walker-git.cachix.org-1:vmC0ocfPWh0S/vRAQGtChuiZBTAe4wiKDeyyXM0/7pM="
     ];
   };
   inputs = {
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
+    walker.url = "github:abenz1267/walker?ref=v0.12.2";
     nur.url = "github:nix-community/NUR";
     ags-agenda.url = "git+https://git.tigor.web.id/tigor/AGS?ref=main";
     neovim-nightly-overlay = {
@@ -89,6 +94,7 @@
           home-manager.sharedModules = [
             nix-index-database.hmModules.nix-index
             inputs.sops-nix.homeManagerModules.sops
+            inputs.walker.homeManagerModules.default
           ];
         }
       ];

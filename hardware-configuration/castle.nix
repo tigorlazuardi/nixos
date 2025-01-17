@@ -54,7 +54,6 @@ in
   environment.systemPackages = with pkgs; [ lact ];
   systemd.packages = with pkgs; [ lact ];
   systemd.services.lactd.wantedBy = [ "multi-user.target" ];
-  environment.variables.GSK_RENDERER = "ngl";
 
   system.fsPackages = [
     pkgs.bindfs
