@@ -100,6 +100,8 @@ in
       markdownlint-cli2
 
       sqlfluff
+
+      grpcurl
     ];
   };
 }
