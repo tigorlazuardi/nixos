@@ -11,10 +11,10 @@ in
   config = lib.mkIf cfg.enable {
     profile.home.programs.foot.enable = lib.mkForce true;
 
-    home.packages = [
-      pkgs.wl-clipboard
-      pkgs.kcalc
-      pkgs.font-manager
+    home.packages = with pkgs; [
+      wl-clipboard
+      kcalc
+      font-manager
     ];
     wayland.windowManager.hyprland = {
       enable = true;
@@ -78,7 +78,8 @@ in
           "$mod, E, exec, nautilus"
           "$mod, B, exec, zen"
           "$mod, BackSpace, exec, wlogout"
-          "$mod, S, exec, foot ssh homeserver@vpn.tigor.web.id"
+          "$mod, Y, exec, foot ssh homeserver@vpn.tigor.web.id"
+          "$mod, S, exec, walker"
 
           # Workspaces
           "$mod, 1, workspace, 1"
@@ -189,14 +190,15 @@ in
           ''size 90% 90%,class:^(lazygit)$''
           ''stayfocused,class:^(lazygit)$''
         ];
+
+        exec-once = [
+          "foot --server"
+          "nm-applet"
+          "pasystray"
+        ];
       };
       extraConfig = # hyprlang
         ''
-          exec-once=foot --server
-
-          exec-once=nm-applet
-          exec-once=pasystray
-
           source=${config.home.homeDirectory}/.cache/wallust/hyprland.conf
         '';
     };

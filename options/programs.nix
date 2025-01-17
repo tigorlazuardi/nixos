@@ -1,4 +1,7 @@
 { lib, ... }:
+let
+  inherit (lib) mkOption types;
+in
 {
   options.profile = {
     discord = {
@@ -72,6 +75,24 @@
 
     cockpit.enable = lib.mkEnableOption "cockpit";
     home.programs = {
+      rofi = {
+        bookmarks = mkOption {
+          type = types.listOf (
+            types.submodule {
+              options = {
+                text = mkOption { type = types.str; };
+                command = mkOption { type = types.str; };
+              };
+            }
+          );
+          default = [
+            {
+              text = "Youtube";
+              command = "xdg-open 'https://www.youtube.com'";
+            }
+          ];
+        };
+      };
       bloomrpc.enable = lib.mkEnableOption "bloomrpc";
       zathura.enable = lib.mkEnableOption "zathura";
       floorp.enable = lib.mkEnableOption "floorp";

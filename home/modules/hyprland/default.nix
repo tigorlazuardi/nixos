@@ -25,6 +25,7 @@ in
     ./ntfy-sh.nix
     ./gnome-keyring.nix
     ./kdeconnect.nix
+    ./walker.nix
 
     ./wallust
   ];
