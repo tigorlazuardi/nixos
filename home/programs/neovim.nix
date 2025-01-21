@@ -102,6 +102,9 @@ in
       sqlfluff
 
       grpcurl
+
+      pandoc
+      live-server
     ];
   };
 }

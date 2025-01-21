@@ -17,7 +17,7 @@
   };
   inputs = {
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
-    walker.url = "github:abenz1267/walker?ref=v0.12.2";
+    walker.url = "github:abenz1267/walker?tag=v0.12.8";
     nur.url = "github:nix-community/NUR";
     ags-agenda.url = "git+https://git.tigor.web.id/tigor/AGS?ref=main";
     neovim-nightly-overlay = {

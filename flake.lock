@@ -631,16 +631,15 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1736882799,
-        "narHash": "sha256-6t0ZiaAguvqQXViottX8gw22K4ZXTdO3RosWWJlgr9o=",
+        "lastModified": 1737400159,
+        "narHash": "sha256-J8eChLYb1zrLeSI4vHTT7sZyjs0OJ7nH0lGQ2X4BoUI=",
         "owner": "abenz1267",
         "repo": "walker",
-        "rev": "1b8f9244b73aebef447aeb5f2b053763409396d7",
+        "rev": "1f80b10032e18bf9e2786b73f70e79e37c609c9c",
         "type": "github"
       },
       "original": {
         "owner": "abenz1267",
-        "ref": "v0.12.2",
         "repo": "walker",
         "type": "github"
       }
@@ -650,11 +649,11 @@
         "nixpkgs": "nixpkgs_6"
       },
       "locked": {
-        "lastModified": 1736520301,
-        "narHash": "sha256-yfbnywGJyx1n+xRet1P5T+6gOUVSbR0p9XasU/q7XjY=",
+        "lastModified": 1737429513,
+        "narHash": "sha256-QJ5t9U9Q5e9XXrC0PX0+AHti3kk1xUkeBVF2mWsKyxY=",
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
-        "rev": "0c7995b493e72c642766fa7668651a5351299eb8",
+        "rev": "8e563d3f575d0630f72cc446498a5cae3b5610b5",
         "type": "github"
       },
       "original": {

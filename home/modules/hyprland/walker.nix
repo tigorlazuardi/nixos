@@ -14,35 +14,33 @@ in
       enable = true;
       runAsService = true;
       config = {
-        builtins.websearch.prefix = "?";
         hotreload_theme = true;
+        builtins.windows.weight = 100;
         plugins = [
           {
-            name = "power";
-            placeholder = "Power";
-            switcher_only = true;
-            recalculate_score = true;
+            name = "projects";
+            placeholder = "Projects";
             show_icon_when_single = true;
-            prefix = "!";
-            entries = [
-              {
-                label = "Shutdown";
-                icon = "system-shutdown";
-                exec = "shutdown now";
-              }
-              {
-                label = "Reboot";
-                icon = "system-reboot";
-                exec = "reboot";
-              }
-              {
-                label = "Lock Screen";
-                icon = "system-lock-screen";
-                exec = "${getExe pkgs.playerctl} --all-players pause & hyprlock";
-              }
-            ];
+            src_once = "zoxide query --list";
+            weight = 20;
+            cmd = # sh
+              ''footclient --title="Project: %RESULT%" --working-directory="%RESULT%"'';
           }
         ];
+        keys = {
+          next = [
+            "down"
+            "ctrl n"
+          ];
+          prev = [
+            "up"
+            "ctrl p"
+          ];
+          accept_typeahead = [
+            "tab"
+            "ctrl y"
+          ];
+        };
       };
     };
 
