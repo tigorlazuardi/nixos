@@ -65,6 +65,14 @@ in
       path = "${config.home.homeDirectory}/.config/github-copilot/hosts.json";
     };
 
+    sops.secrets."bareksa/gemini/api_key" = {
+      sopsFile = ../../secrets/bareksa.yaml;
+    };
+
+    home.sessionVariables = {
+      GEMINI_API_KEY_FILE = "${config.sops.secrets."bareksa/gemini/api_key".path}";
+    };
+
     home.packages = with pkgs; [
       stylua
       docker-compose-language-service
