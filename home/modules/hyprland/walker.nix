@@ -21,7 +21,7 @@ in
             name = "projects";
             placeholder = "Projects";
             show_icon_when_single = true;
-            src_once = "zoxide query --list";
+            src = "zoxide query --list";
             weight = 20;
             cmd = # sh
               ''footclient --title="Project: %RESULT%" --working-directory="%RESULT%"'';
