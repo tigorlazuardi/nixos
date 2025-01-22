@@ -1,12 +1,10 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
   cfg = config.profile.hyprland;
-  inherit (lib.meta) getExe;
 in
 {
   config = lib.mkIf cfg.enable {
@@ -18,7 +16,7 @@ in
         builtins.windows.weight = 100;
         plugins = [
           {
-            name = "projects";
+            name = "Projects";
             placeholder = "Projects";
             show_icon_when_single = true;
             src = "zoxide query --list";
@@ -43,6 +41,14 @@ in
         };
       };
     };
+
+    # Restart walker when the config file changes. We have to
+    # target the source path in the store.
+    #
+    # https://github.com/abenz1267/walker/blob/master/nix/hm-module.nix#L71
+    systemd.user.services.walker.Unit.X-Restart-Triggers = [
+      "${config.xdg.configFile."walker/config.toml".source}"
+    ];
 
     wayland.windowManager.hyprland.settings = {
       bind = [
