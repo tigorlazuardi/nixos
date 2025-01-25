@@ -55,7 +55,7 @@ in
       dunst.monitor = "1";
       hypridle = {
         lockTimeout = 3600;
-        suspendTimeout = 7200;
+        suspendTimeout = 86400; # 24 hours
       };
     };
     discord = {
