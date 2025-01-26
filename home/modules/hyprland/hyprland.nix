@@ -15,6 +15,7 @@ in
       wl-clipboard
       kcalc
       font-manager
+      vivaldi
     ];
     wayland.windowManager.hyprland = {
       enable = true;
@@ -76,7 +77,7 @@ in
           # Programs
           ''$mod, RETURN, exec, footclient''
           "$mod, E, exec, nautilus"
-          "$mod, B, exec, zen"
+          "$mod, B, exec, vivaldi"
           "$mod, BackSpace, exec, wlogout"
           "$mod, Y, exec, foot ssh homeserver@vpn.tigor.web.id"
           "$mod, S, exec, walker"

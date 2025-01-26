@@ -26,7 +26,9 @@ in
     username = user.name;
     homeDirectory = "/home/${user.name}";
     stateVersion = stateVersion;
-    packages = with pkgs; [ btop ];
+    packages = with pkgs; [
+      btop
+    ];
   };
   programs.home-manager.enable = true;
   systemd.user.sessionVariables = {
@@ -51,10 +53,5 @@ in
         path = "${config.home.homeDirectory}/.ssh/id_ed25519";
         mode = "0400";
       };
-      # "netrc" = {
-      #   sopsFile = ../secrets/netrc.yaml;
-      #   path = "${config.home.homeDirectory}/.netrc";
-      #   mode = "0400";
-      # };
     };
 }
