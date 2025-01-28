@@ -1,5 +1,6 @@
 {
   config,
+  unstable,
   lib,
   ...
 }:
@@ -10,6 +11,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.walker = {
       enable = true;
+      package = unstable.walker;
       runAsService = true;
       config = {
         hotreload_theme = true;

@@ -96,6 +96,11 @@
     nixd
   ];
 
+  boot.kernel.sysctl = {
+    "net.core.wmem_max" = 8 * 1024 * 1024; # QUIC server recommended values
+    "net.core.rmem_max" = 8 * 1024 * 1024; # QUIC server recommended values
+  };
+
   nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
 
   services.dbus.implementation = "broker";
