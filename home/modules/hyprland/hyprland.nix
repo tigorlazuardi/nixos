@@ -80,7 +80,6 @@ in
           "$mod, B, exec, vivaldi"
           "$mod, BackSpace, exec, wlogout"
           "$mod, Y, exec, foot ssh homeserver@vpn.tigor.web.id"
-          "$mod, S, exec, walker"
 
           # Workspaces
           "$mod, 1, workspace, 1"

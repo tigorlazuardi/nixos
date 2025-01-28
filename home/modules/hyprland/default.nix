@@ -26,8 +26,6 @@ in
     ./gnome-keyring.nix
     ./kdeconnect.nix
     ./walker.nix
-
-    ./wallust
   ];
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [

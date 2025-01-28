@@ -16,6 +16,10 @@ in
       config = {
         hotreload_theme = true;
         builtins.windows.weight = 100;
+        builtins.clipboard = {
+          prefix = ''"'';
+          always_put_new_on_top = true;
+        };
         plugins = [
           {
             name = "Projects";
@@ -54,7 +58,8 @@ in
 
     wayland.windowManager.hyprland.settings = {
       bind = [
-        "$mod, S, exec, walker"
+        "$mod, D, exec, walker"
+        "$mod, semicolon, exec, walker"
       ];
     };
   };
