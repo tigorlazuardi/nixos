@@ -12,6 +12,7 @@ in
       autoStart = true;
       environment = {
         TZ = "Asia/Jakarta";
+        LOG_LEVEL = "debug";
       };
       extraOptions = [
         "--ip=${ip}"
