@@ -79,6 +79,7 @@ in
               "windows"
               "steam-deck"
               "oppo-find-x8"
+              "living-room-system"
             ];
           };
           "/nas/Syncthing/Sync/Windows" = {
