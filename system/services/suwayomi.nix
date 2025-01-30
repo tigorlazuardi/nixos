@@ -70,7 +70,7 @@ in
           updateMangas = true;
 
           flareSolverrEnabled = true;
-          flareSolverrUrl = "http://0.0.0.0:${toString config.services.flaresolverr.port}";
+          flareSolverrUrl = "https://${config.profile.services.flaresolverr.domain}";
           flareSolverrTimeout = 60; # seconds.
           flareSolverrSessionName = "suwayomi";
           flareSolverrSessionTtl = 15; # minutes.

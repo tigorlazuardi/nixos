@@ -31,7 +31,13 @@ in
     photoprism.enable = mkEnableOption "photoprism";
     navidrome.enable = mkEnableOption "navidrome";
     suwayomi.enable = mkEnableOption "suwayomi";
-    flaresolverr.enable = mkEnableOption "flaresolverr";
+    flaresolverr = {
+      enable = mkEnableOption "flaresolverr";
+      domain = mkOption {
+        type = types.str;
+        default = "flaresolverr.tigor.web.id";
+      };
+    };
 
     ntfy-sh.enable = mkEnableOption "ntfy-sh";
     ntfy-sh.client = {
