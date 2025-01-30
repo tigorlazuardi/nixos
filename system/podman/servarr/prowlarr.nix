@@ -40,6 +40,8 @@ in
         PUID = uid;
         PGID = gid;
         TZ = "Asia/Jakarta";
+        LOG_LEVEL = "debug";
+        LOG_HTML = "true";
       };
       volumes = [ "${configVolume}:/config" ];
       extraOptions = [
