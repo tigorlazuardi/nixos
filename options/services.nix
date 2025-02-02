@@ -9,6 +9,7 @@ let
 in
 {
   options.profile.services = {
+    ollama.enable = mkEnableOption "ollama";
     ollama.models = mkOption {
       type = types.listOf types.str;
       default = [ ];
