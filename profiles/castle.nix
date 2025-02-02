@@ -7,6 +7,8 @@ in
   imports = [ ../options ];
 
   profile = {
+    wine.enable = true;
+
     environment.bareksa.enable = true;
     hostname = "castle";
     user = {

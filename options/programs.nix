@@ -13,6 +13,8 @@ in
       };
     };
 
+    wine.enable = lib.mkEnableOption "wine";
+
     slack = {
       enable = lib.mkEnableOption "slack";
       autostart = lib.mkEnableOption "slack autostart";

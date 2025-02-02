@@ -20,6 +20,7 @@
     ./steam.nix
     ./sudo.nix
     ./vial.nix
+    ./wine.nix
     ./yazi.nix
   ];
 }
