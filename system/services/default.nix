@@ -24,5 +24,7 @@
     ./suwayomi.nix
     ./technitium.nix
     ./wireguard.nix
+
+    ./ollama.nix
   ];
 }

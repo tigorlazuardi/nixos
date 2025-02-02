@@ -129,5 +129,6 @@ in
     podman.enable = true;
     services.ntfy-sh.client.enable = true;
     services.resolved.enable = true;
+    services.ollama.models = [ "qwen2.5-coder:7b" ];
   };
 }

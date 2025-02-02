@@ -9,6 +9,10 @@ let
 in
 {
   options.profile.services = {
+    ollama.models = mkOption {
+      type = types.listOf types.str;
+      default = [ ];
+    };
     adguardhome.enable = mkEnableOption "adguardhome";
     caddy.enable = mkEnableOption "caddy";
     nginx.enable = mkEnableOption "nginx";

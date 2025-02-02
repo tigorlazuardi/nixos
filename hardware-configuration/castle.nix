@@ -51,6 +51,14 @@ in
     ];
   };
 
+  hardware.amdgpu.opencl.enable = true;
+
+  services.ollama = {
+    package = pkgs.ollama-rocm;
+    acceleration = "rocm";
+    rocmOverrideGfx = "10.3.0";
+  };
+
   environment.systemPackages = with pkgs; [ lact ];
   systemd.packages = with pkgs; [ lact ];
   systemd.services.lactd.wantedBy = [ "multi-user.target" ];
