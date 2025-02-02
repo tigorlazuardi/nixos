@@ -10,9 +10,19 @@ in
 {
   options.profile.services = {
     ollama.enable = mkEnableOption "ollama";
-    ollama.models = mkOption {
-      type = types.listOf types.str;
-      default = [ ];
+    ollama.models = {
+      codeCompletion = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+      };
+      codeInstruction = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+      };
+      chat = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+      };
     };
     adguardhome.enable = mkEnableOption "adguardhome";
     caddy.enable = mkEnableOption "caddy";
