@@ -130,10 +130,6 @@ in
     services.ntfy-sh.client.enable = true;
     services.resolved.enable = true;
     services.ollama.enable = true;
-    services.ollama.models = {
-      chat = "deepseek-r1:8b";
-      codeCompletion = "qwen2.5-coder:3b";
-      codeInstruction = "qwen2.5-coder:7b";
-    };
+    services.ollama.model = "qwen2.5-coder:7b";
   };
 }

@@ -6,18 +6,15 @@
 let
   cfg = config.profile.services.ollama;
   domain = "ollama.local";
-  inherit (lib.lists) optional;
-  models = cfg.models;
 in
 {
   config = lib.mkIf cfg.enable {
     services.ollama = {
       enable = true;
-      loadModels =
-        [ ]
-        ++ optional (models.codeCompletion != null) models.codeCompletion
-        ++ optional (models.codeInstruction != null) models.codeInstruction
-        ++ optional (models.chat != null) models.chat;
+      environmentVariables = {
+        OLLAMA_KV_CACHE_TYPE = "f16";
+      };
+      loadModels = [ cfg.model ];
     };
 
     services.open-webui = {
@@ -37,13 +34,35 @@ in
       127.0.0.1 ${domain}
     '';
 
-    environment.variables.OLLAMA_CHAT_MODEL = lib.mkIf (models.chat != null) models.chat;
-    environment.variables.OLLAMA_CODE_COMPLETION_MODEL = lib.mkIf (
-      models.codeCompletion != null
-    ) models.codeCompletion;
-    environment.variables.OLLAMA_CODE_INSTRUCTION_MODEL = lib.mkIf (
-      models.codeInstruction != null
-    ) models.codeInstruction;
+    systemd.services.ollama-model-runner = {
+      unitConfig = {
+        After = [
+          "ollama.service"
+          "ollama-model-loader.service"
+        ];
+        BindsTo = [ "ollama.service" ];
+        Description = "Run Ollama model";
+      };
+      serviceConfig = {
+        ExecStart = "${config.services.ollama.package}/bin/ollama run ${cfg.model}";
+        ExecStop = "${config.services.ollama.package}/bin/ollama stop ${cfg.model}";
+        Restart = "on-failure";
+        RestartSec = "1s";
+        RestartMaxDelaySec = "2h";
+        RestartSteps = "10";
+        Type = "simple";
+        DynamicUser = true;
+      };
+      wantedBy = [ "multi-user.target" ];
+      environment = {
+        HOME = "/var/lib/ollama";
+        HSA_OVERRIDE_GFX_VERSION = "10.3.0";
+        OLLAMA_HOST = "127.0.0.1:11434";
+        OLLAMA_MODELS = "/var/lib/ollama/models";
+      };
+    };
+
+    environment.variables.OLLAMA_MODEL = cfg.model;
 
     environment.variables.OLLAMA_API_BASE_URL = "http://127.0.0.1:11434";
   };
