@@ -95,6 +95,7 @@
             nix-index-database.hmModules.nix-index
             inputs.sops-nix.homeManagerModules.sops
             inputs.walker.homeManagerModules.default
+            { programs.nix-index.enable = true; }
           ];
         }
       ];
