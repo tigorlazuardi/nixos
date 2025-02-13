@@ -14,4 +14,12 @@ in
       config.sops.secrets."bareksa/openvpn".path
     }";
   };
+
+  home.file.".config/containers/containers.conf".source =
+    (pkgs.formats.toml { }).generate "containers.conf"
+      {
+        containers = {
+          netns = "host";
+        };
+      };
 }
