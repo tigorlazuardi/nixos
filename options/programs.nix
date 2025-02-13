@@ -77,6 +77,7 @@ in
 
     cockpit.enable = lib.mkEnableOption "cockpit";
     home.programs = {
+      cursor.enable = lib.mkEnableOption "cursor";
       rofi = {
         bookmarks = mkOption {
           type = types.listOf (

@@ -5,6 +5,7 @@
     ./bloomrpc.nix
     ./bruno.nix
     ./chromium.nix
+    ./cursor.nix
     ./dbeaver.nix
     ./discord.nix
     ./easyeffects.nix
