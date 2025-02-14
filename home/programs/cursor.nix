@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  unstable,
   ...
 }:
 let
@@ -9,8 +10,8 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
-      code-cursor
+    home.packages = [
+      unstable.code-cursor
     ];
   };
 }
