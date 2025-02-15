@@ -47,6 +47,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixCats.url = "github:BirdeeHub/nixCats-nvim";
   };
   outputs =
     inputs@{

@@ -16,6 +16,7 @@ in
     ./modules
     ./games
     ./environments
+    ./nvim
 
     ./direnv.nix
     ./secrets.nix
