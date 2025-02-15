@@ -454,6 +454,22 @@
         "type": "github"
       }
     },
+    "lzn-auto-require-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1731009353,
+        "narHash": "sha256-KC1z+zC9vKODllZVpBu+udzM12oYJaS8e6LdXWtQ89U=",
+        "owner": "horriblename",
+        "repo": "lzn-auto-require",
+        "rev": "ef746afb55467984ef3200d9709c8059ee0257d0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "horriblename",
+        "repo": "lzn-auto-require",
+        "type": "github"
+      }
+    },
     "neovim-nightly-overlay": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -767,6 +783,7 @@
         "catppuccin-nvim": "catppuccin-nvim",
         "home-manager": "home-manager",
         "hyprland-contrib": "hyprland-contrib",
+        "lzn-auto-require-nvim": "lzn-auto-require-nvim",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-flatpak": "nix-flatpak",
         "nix-index-database": "nix-index-database",

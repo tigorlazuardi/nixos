@@ -23,19 +23,6 @@
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
     };
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      # If using a stable channel you can use `url = "github:nix-community/nixvim/nixos-<version>"`
-      # inputs.nixpkgs.follows = "nixpkgs";
-    };
-    snacks-nvim = {
-      url = "github:folke/snacks.nvim";
-      flake = false;
-    };
-    trouble-nvim = {
-      url = "github:folke/trouble.nvim";
-      flake = false;
-    };
     catppuccin-nvim = {
       url = "github:catppuccin/nvim";
       flake = false;
@@ -64,6 +51,25 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    #### Nix Vim
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      # If using a stable channel you can use `url = "github:nix-community/nixvim/nixos-<version>"`
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
+    snacks-nvim = {
+      url = "github:folke/snacks.nvim";
+      flake = false;
+    };
+    trouble-nvim = {
+      url = "github:folke/trouble.nvim";
+      flake = false;
+    };
+    lzn-auto-require-nvim = {
+      url = "github:horriblename/lzn-auto-require";
+      flake = false;
+    };
   };
   outputs =
     inputs@{
