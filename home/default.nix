@@ -38,10 +38,6 @@ in
     ];
   };
   programs.home-manager.enable = true;
-  systemd.user.sessionVariables = {
-    XDG_CONFIG_HOME = "/home/${user.name}/.config";
-    NIXPKGS_ALLOW_UNFREE = "1";
-  };
 
   # This allows user rootless podman to use network's host by default.
   home.file.".config/containers/containers.conf".source =
@@ -69,5 +65,12 @@ in
         path = "${config.home.homeDirectory}/.ssh/id_ed25519";
         mode = "0400";
       };
+      "ai/anthropic/api_key".sopsFile = ../secrets/ai.yaml;
     };
+
+  systemd.user.sessionVariables = {
+    XDG_CONFIG_HOME = "/home/${user.name}/.config";
+    NIXPKGS_ALLOW_UNFREE = "1";
+    ANTHROPIC_API_KEY_FILE = config.sops.secrets."ai/anthropic/api_key".path;
+  };
 }
