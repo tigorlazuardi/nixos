@@ -23,6 +23,23 @@
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
     };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      # If using a stable channel you can use `url = "github:nix-community/nixvim/nixos-<version>"`
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
+    snacks-nvim = {
+      url = "github:folke/snacks.nvim";
+      flake = false;
+    };
+    trouble-nvim = {
+      url = "github:folke/trouble.nvim";
+      flake = false;
+    };
+    catppuccin-nvim = {
+      url = "github:catppuccin/nvim";
+      flake = false;
+    };
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     hyprland-contrib = {
       url = "github:hyprwm/contrib";
@@ -64,6 +81,7 @@
       system = "x86_64-linux";
       commonModules = [
         nur.modules.nixos.default
+        inputs.nixvim.nixosModules.nixvim
         nix-flatpak.nixosModules.nix-flatpak
         home-manager.nixosModules.home-manager
         nix-index-database.nixosModules.nix-index
@@ -95,6 +113,7 @@
             nix-index-database.hmModules.nix-index
             inputs.sops-nix.homeManagerModules.sops
             inputs.walker.homeManagerModules.default
+            inputs.nixvim.homeManagerModules.nixvim
             { programs.nix-index.enable = true; }
           ];
         }

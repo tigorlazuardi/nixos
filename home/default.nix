@@ -20,6 +20,8 @@ in
     ./direnv.nix
     ./secrets.nix
     ./ideavimrc.nix
+
+    ../nixvim
   ];
 
   home = {
