@@ -64,6 +64,22 @@
         "type": "github"
       }
     },
+    "blink-cmp-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1739641916,
+        "narHash": "sha256-VKewnfkr72Wq61FaxKxXsuU/TJ9xXlVZDyOtcT3KIIw=",
+        "owner": "Saghen",
+        "repo": "blink.cmp",
+        "rev": "035e1bae395b2b34c6cf0234f4270bf9481905b4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Saghen",
+        "repo": "blink.cmp",
+        "type": "github"
+      }
+    },
     "catppuccin-nvim": {
       "flake": false,
       "locked": {
@@ -780,6 +796,7 @@
     "root": {
       "inputs": {
         "ags-agenda": "ags-agenda",
+        "blink-cmp-nvim": "blink-cmp-nvim",
         "catppuccin-nvim": "catppuccin-nvim",
         "home-manager": "home-manager",
         "hyprland-contrib": "hyprland-contrib",

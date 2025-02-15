@@ -70,6 +70,10 @@
       url = "github:horriblename/lzn-auto-require";
       flake = false;
     };
+    blink-cmp-nvim = {
+      url = "github:Saghen/blink.cmp";
+      flake = false;
+    };
   };
   outputs =
     inputs@{

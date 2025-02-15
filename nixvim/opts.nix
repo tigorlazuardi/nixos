@@ -5,7 +5,7 @@
     ''
       vim.env.SSH_TTY and "" or "unnamedplus"
     '';
-  conceallevel = 2;
+  # conceallevel = 2;
   confirm = true;
   cursorline = true;
   expandtab = true;
