@@ -1,6 +1,8 @@
 require("snacks").setup {
     bigfile = { enabled = true },
-    dashboard = { enabled = true },
+    -- Dashboard broke because it calls lazy.stats. Which
+    -- we don't use.
+    dashboard = { enabled = false },
     explorer = { enabled = true, replace_netrw = true },
     indent = { enabled = true },
     input = { enabled = true },

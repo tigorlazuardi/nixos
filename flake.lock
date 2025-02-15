@@ -517,7 +517,9 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
         "rust-overlay": "rust-overlay",
+        "snacks-nvim": "snacks-nvim",
         "sops-nix": "sops-nix",
+        "trouble-nvim": "trouble-nvim",
         "walker": "walker",
         "zen-browser": "zen-browser"
       }
@@ -539,6 +541,22 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "snacks-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1739631618,
+        "narHash": "sha256-N/dez1LZWSljdfuBej19E5q+6bj4c5SxT0z7Vl+P2KU=",
+        "owner": "folke",
+        "repo": "snacks.nvim",
+        "rev": "57445057395fd1f5b315defa367c57651ea2e5f2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "folke",
+        "repo": "snacks.nvim",
         "type": "github"
       }
     },
@@ -616,6 +634,22 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "trouble-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1739392872,
+        "narHash": "sha256-au9wp88a0CutEf2f8Bi0vFTUR0zvQKgFX1vMVg4myGI=",
+        "owner": "folke",
+        "repo": "trouble.nvim",
+        "rev": "85bedb7eb7fa331a2ccbecb9202d8abba64d37b3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "folke",
+        "repo": "trouble.nvim",
         "type": "github"
       }
     },

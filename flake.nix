@@ -48,6 +48,16 @@
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
+
+    ########### Neovim Edge Plugins
+    snacks-nvim = {
+      url = "github:folke/snacks.nvim";
+      flake = false;
+    };
+    trouble-nvim = {
+      url = "github:folke/trouble.nvim";
+      flake = false;
+    };
   };
   outputs =
     inputs@{

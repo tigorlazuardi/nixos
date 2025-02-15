@@ -1,6 +1,7 @@
 {
   inputs,
   unstable,
+  pkgs,
   ...
 }:
 {
@@ -21,7 +22,6 @@
           { ... }:
           {
             environmentVariables.default = {
-              CATTESTVAR = "It worked!";
             };
             lspsAndRuntimeDeps.default = with unstable; [
               fd
@@ -32,6 +32,13 @@
               nvim-treesitter-textobjects
               nvim-treesitter-endwise
               nvim-ts-autotag
+              blink-cmp
+              yanky-nvim
+              (pkgs.vimUtils.buildVimPlugin {
+                name = "trouble.nvim";
+                src = inputs.trouble-nvim;
+                version = inputs.trouble-nvim.shortRev;
+              })
             ];
             startupPlugins.default = with unstable.vimPlugins; [
               catppuccin-nvim
@@ -39,16 +46,15 @@
               lzn-auto-require
               nvim-treesitter
               nvim-treesitter.withAllGrammars
-              snacks-nvim
-              # (pkgs.vimUtils.buildVimPlugin {
-              #   name = "snacks-nvim";
-              #   src = pkgs.fetchFromGitHub {
-              #     owner = "folke";
-              #     repo = "snacks.nvim";
-              #     rev = "26d51af25109a38a1ae19d03df8b214e670f52b6"; # 2025-02-15
-              #     hash = "sha256-ivd3rnYxR98Td97T7CSJ1PKVA/mkRIHFKHGmZp6vBdY=";
-              #   };
-              # })
+              (pkgs.vimUtils.buildVimPlugin {
+                name = "snacks.nvim";
+                src = inputs.snacks-nvim;
+                version = inputs.snacks-nvim.shortRev;
+                nvimSkipModule = [
+                  # Broke because it requires lazy.stats
+                  "snacks.dashboard"
+                ];
+              })
             ];
           }
         );
