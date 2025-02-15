@@ -12,6 +12,8 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [ unstable.neovide ];
 
+    programs.zsh.shellAliases.n = "neovide";
+
     home.file.".config/neovide/config.toml".source =
       let
         toml = pkgs.formats.toml { };

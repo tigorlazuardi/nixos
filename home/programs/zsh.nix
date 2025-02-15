@@ -44,7 +44,6 @@ in
       du = "${pkgs.dust}/bin/dust";
       dry = "sudo nixos-rebuild dry-activate --flake $HOME/dotfiles";
       jq = "${pkgs.gojq}/bin/gojq";
-      n = lib.mkIf config.profile.neovide.enable "neovide";
       v = "nvim";
       cd = "z";
       grep = "${pkgs.ripgrep}/bin/rg";
