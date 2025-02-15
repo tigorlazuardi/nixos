@@ -9,7 +9,7 @@ let
   cfg = config.profile.neovim;
   inherit (lib) mkIf;
   repository = "git@github.com:tigorlazuardi/nvim.git";
-  nvimCloneDir = "${config.home.homeDirectory}/.config/nvim";
+  nvimCloneDir = "${config.home.homeDirectory}/.config/nvim_lazy";
 in
 {
   config = mkIf cfg.enable {
