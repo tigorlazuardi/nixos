@@ -3,6 +3,7 @@
   imports = [
     ./snacks.nix
     ./blink.nix
+    ./ufo.nix
   ];
 
   programs.nixvim = {
@@ -18,13 +19,8 @@
         require('lzn-auto-require').enable()
       '';
     plugins = {
+      # Core plugins.
       lz-n.enable = true;
-      nvim-ufo = {
-        enable = true;
-        lazyLoad.settings = {
-          event = [ "BufRead" ];
-        };
-      };
       mini = {
         enable = true;
         lazyLoad.enable = true;

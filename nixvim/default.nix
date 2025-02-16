@@ -14,6 +14,14 @@
       ripgrep
       fd
       universal-ctags
+
+      go
+      gopls
+      gotools
+      go-tools
+      gofumpt
+      gomodifytags
+      impl
     ];
     globals = import ./globals.nix;
     opts = import ./opts.nix;

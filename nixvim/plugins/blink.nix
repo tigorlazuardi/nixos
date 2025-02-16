@@ -1,10 +1,16 @@
 {
+  inputs,
+  pkgs,
   unstable,
   ...
 }:
 {
   programs.nixvim = {
     plugins = {
+      friendly-snippets = {
+        enable = true;
+        autoLoad = false;
+      };
       blink-cmp = {
         enable = true;
         package = unstable.vimPlugins.blink-cmp;
@@ -82,23 +88,8 @@
               "snippets"
               "buffer"
             ];
-            cmdline.__raw = # lua
-              ''
-                function()
-                    local type = vim.fn.getcmdtype()
-                    -- Search forward and backward
-                    if type == "/" or type == "?" then
-                        return { "buffer" }
-                    end
-                    -- Commands
-                    if type == ":" then
-                        return { "cmdline" }
-                    end
-                    return {}
-                end
-              '';
-            keymap.preset = "default";
           };
+          keymap.preset = "super-tab";
         };
         lazyLoad.settings = {
           event = [ "InsertEnter" ];

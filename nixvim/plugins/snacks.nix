@@ -30,7 +30,7 @@
           enabled = true;
         };
         notifier = {
-          enabled = true;
+          enabled = false;
         };
         quickfile = {
           enabled = true;
