@@ -1,12 +1,16 @@
 { pkgs, inputs, ... }:
 {
   imports = [
+    ./coding
+
     ./blink.nix
     ./fidget.nix
-    ./lspconfig.nix
+    ./git.nix
+    ./mini.nix
     ./snacks.nix
+    ./treesitter.nix
     ./ufo.nix
-    ./coding
+    ./yanky.nix
   ];
 
   programs.nixvim = {
@@ -21,17 +25,7 @@
       ''
         require('lzn-auto-require').enable()
       '';
-    plugins = {
-      # Core plugins.
-      lz-n.enable = true;
-      mini = {
-        enable = true;
-        lazyLoad.enable = true;
-        lazyLoad.settings.ft = [ ];
-        modules = {
-          icons = { };
-        };
-      };
-    };
+    # Must be enabled for lazyLoading settings to work
+    plugins.lz-n.enable = true;
   };
 }

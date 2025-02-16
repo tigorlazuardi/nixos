@@ -7,13 +7,6 @@
   programs.nixvim = {
     enable = true;
     colorschemes.catppuccin.enable = true;
-    extraConfigLuaPre = # lua
-      ''
-        vim.keymap.set("", "<Space>", "<Nop>", {})
-      '';
-    plugins = {
-      treesitter.enable = true;
-    };
     extraPackages = with pkgs; [
       ripgrep
       fd
@@ -27,7 +20,16 @@
       gomodifytags
       impl
     ];
-    globals = import ./globals.nix;
+    # Space key has to be set to NOP for setting leader key to space to work.
+    extraConfigLuaPre = /* lua */
+      ''
+        vim.keymap.set("", "<Space>", "<Nop>", {})
+      '';
+    globals = {
+      # Set leader key to space.
+      mapleader = " ";
+      maplocalleader = "\\";
+    };
     opts = import ./opts.nix;
   };
 }

@@ -5,15 +5,27 @@
 }:
 {
   programs.nixvim = {
+    extraPackages = with pkgs; [
+      lazygit
+    ];
     keymaps = [
       {
         action = "<cmd>lua Snacks.explorer()<cr>";
         key = "<leader>e";
         mode = "n";
-        options = {
-          silent = true;
-          desc = "(Snacks) Open Explorer";
-        };
+        options.desc = "(Snacks) Open Explorer";
+      }
+      {
+        action = "<cmd>lua Snacks.bufdelete()<cr>";
+        key = "<leader>bd";
+        mode = "n";
+        options.desc = "Buffer Delete";
+      }
+      {
+        action = "<cmd>lua Snacks.lazygit()<cr>";
+        key = "<leader>z";
+        mode = "n";
+        options.desc = "Open Lazygit";
       }
     ];
     opts.statuscolumn = ''
