@@ -3,11 +3,13 @@
   imports = [
     ./coding
 
+    ./arrow.nix
     ./blink.nix
     ./fidget.nix
     ./git.nix
     ./mini.nix
     ./snacks.nix
+    ./tiny-inline-diagnostics.nix
     ./treesitter.nix
     ./ufo.nix
     ./yanky.nix

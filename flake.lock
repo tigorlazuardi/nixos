@@ -64,22 +64,6 @@
         "type": "github"
       }
     },
-    "blink-cmp-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1739641916,
-        "narHash": "sha256-VKewnfkr72Wq61FaxKxXsuU/TJ9xXlVZDyOtcT3KIIw=",
-        "owner": "Saghen",
-        "repo": "blink.cmp",
-        "rev": "035e1bae395b2b34c6cf0234f4270bf9481905b4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Saghen",
-        "repo": "blink.cmp",
-        "type": "github"
-      }
-    },
     "catppuccin-nvim": {
       "flake": false,
       "locked": {
@@ -796,7 +780,6 @@
     "root": {
       "inputs": {
         "ags-agenda": "ags-agenda",
-        "blink-cmp-nvim": "blink-cmp-nvim",
         "catppuccin-nvim": "catppuccin-nvim",
         "home-manager": "home-manager",
         "hyprland-contrib": "hyprland-contrib",
@@ -812,6 +795,7 @@
         "rust-overlay": "rust-overlay",
         "snacks-nvim": "snacks-nvim",
         "sops-nix": "sops-nix",
+        "tiny-inline-diagnostic-nvim": "tiny-inline-diagnostic-nvim",
         "trouble-nvim": "trouble-nvim",
         "walker": "walker",
         "zen-browser": "zen-browser"
@@ -900,6 +884,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default-linux",
+        "type": "github"
+      }
+    },
+    "tiny-inline-diagnostic-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1738756980,
+        "narHash": "sha256-M4CD2usIp6IR4EKdYvHxuf6kitE60/8RTS8F/5GRWT0=",
+        "owner": "rachartier",
+        "repo": "tiny-inline-diagnostic.nvim",
+        "rev": "576351d53c1f6bda70252c3aaa710b01472024aa",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rachartier",
+        "repo": "tiny-inline-diagnostic.nvim",
         "type": "github"
       }
     },

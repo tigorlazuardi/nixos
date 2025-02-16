@@ -1,3 +1,4 @@
+{ unstable, ... }:
 {
   imports = [
     ./lua.nix
@@ -32,6 +33,15 @@
           lsp_format = "fallback";
         };
       };
+    };
+    plugins.lint = {
+      enable = true;
+      package = unstable.vimPlugins.nvim-lint;
+      lazyLoad.settings.event = [
+        "BufWritePost"
+        "BufNewFile"
+        "InsertLeave"
+      ];
     };
   };
 }

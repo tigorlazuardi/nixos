@@ -70,8 +70,8 @@
       url = "github:horriblename/lzn-auto-require";
       flake = false;
     };
-    blink-cmp-nvim = {
-      url = "github:Saghen/blink.cmp";
+    tiny-inline-diagnostic-nvim = {
+      url = "github:rachartier/tiny-inline-diagnostic.nvim";
       flake = false;
     };
   };
