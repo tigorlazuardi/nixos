@@ -87,6 +87,7 @@
     podman.enable = true;
 
     home.programs = {
+      cursor.enable = true;
       bloomrpc.enable = true;
       foot.enable = true;
       foot.font = "Hack Nerd Font Mono:size=8";
