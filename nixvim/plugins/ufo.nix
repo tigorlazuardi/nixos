@@ -14,6 +14,7 @@
       {
         action = ''<cmd>lua require('ufo').openAllFolds()<CR>'';
         key = "zR";
+        mode = "n";
         options = {
           silent = true;
           desc = "(UFO) Open All Folders";
@@ -22,6 +23,7 @@
       {
         action = ''<cmd>lua require('ufo').closeAllFolds()<CR>'';
         key = "zM";
+        mode = "n";
         options = {
           silent = true;
           desc = "(UFO) Close All Folders";

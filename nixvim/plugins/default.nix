@@ -1,9 +1,12 @@
 { pkgs, inputs, ... }:
 {
   imports = [
-    ./snacks.nix
     ./blink.nix
+    ./fidget.nix
+    ./lspconfig.nix
+    ./snacks.nix
     ./ufo.nix
+    ./coding
   ];
 
   programs.nixvim = {

@@ -5,6 +5,17 @@
 }:
 {
   programs.nixvim = {
+    keymaps = [
+      {
+        action = "<cmd>lua Snacks.explorer()<cr>";
+        key = "<leader>e";
+        mode = "n";
+        options = {
+          silent = true;
+          desc = "(Snacks) Open Explorer";
+        };
+      }
+    ];
     opts.statuscolumn = ''
       %!v:lua.require'snacks.statuscolumn'.get()
     '';

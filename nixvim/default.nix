@@ -7,6 +7,10 @@
   programs.nixvim = {
     enable = true;
     colorschemes.catppuccin.enable = true;
+    extraConfigLuaPre = # lua
+      ''
+        vim.keymap.set("", "<Space>", "<Nop>", {})
+      '';
     plugins = {
       treesitter.enable = true;
     };
