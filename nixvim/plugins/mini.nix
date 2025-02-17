@@ -1,8 +1,40 @@
 { unstable, ... }:
 {
+  programs.nixvim.extraConfigLua = ''
+    local map_split = function(buf_id, lhs, direction)
+        local mf = require "mini.files"
+        local rhs = function()
+            -- Make new window and set it as target
+            local new_target_window
+            vim.api.nvim_win_call(mf.get_explorer_state().target_window, function()
+                vim.cmd(direction .. " split")
+                new_target_window = vim.api.nvim_get_current_win()
+            end)
+
+            mf.set_target_window(new_target_window)
+        end
+
+        -- Adding `desc` will result into `show_help` entries
+        local desc = "Split " .. direction
+        vim.keymap.set("n", lhs, rhs, { buffer = buf_id, desc = desc })
+    end
+    vim.api.nvim_create_autocmd("User", {
+        pattern = "MiniFilesBufferCreate",
+        callback = function(args)
+            local mf = require "mini.files"
+            local buf_id = args.data.buf_id
+            -- Tweak keys to your liking
+            map_split(buf_id, "gs", "belowright horizontal")
+            map_split(buf_id, "gv", "belowright vertical")
+            vim.keymap.set("n", "<cr>", function()
+                mf.go_in { close_on_file = true }
+            end, { buffer = buf_id, desc = "Open file or directory" })
+        end,
+    })
+  '';
   programs.nixvim.keymaps = [
     {
-      action = "<cmd>lua if not MiniFiles.close() then MiniFiles.open() end<cr>";
+      action = "<cmd>lua if not MiniFiles.close() then MiniFiles.open(vim.api.nvim_buf_get_name(0), false) end<cr>";
       key = "-";
       mode = "n";
       options.desc = "(Mini) Open Files";
@@ -16,7 +48,12 @@
       icons = { };
       pairs = { };
       comment = { };
-      files = { };
+      files = {
+        windows = {
+          preview = true;
+          width_preview = 50;
+        };
+      };
       diff = {
         view = {
           style = "sign";

@@ -2,7 +2,7 @@
 {
   programs.nixvim = {
     plugins.fidget = {
-      enable = true;
+      enable = false;
       package = unstable.vimPlugins.fidget-nvim;
       luaConfig.post = # lua
         ''

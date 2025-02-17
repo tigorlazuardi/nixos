@@ -1,5 +1,7 @@
 { unstable, ... }:
 {
+  # smartindent settings are interfering with treesitter
+  programs.nixvim.opts.smartindent = unstable.lib.mkForce false;
   programs.nixvim.plugins = {
     treesitter = {
       enable = true;
@@ -7,6 +9,7 @@
       treesitterPackage = unstable.tree-sitter;
       settings = {
         highlight.enable = true;
+        indent.enable = true;
       };
     };
     treesitter-context = {

@@ -15,6 +15,7 @@
     ./treesitter.nix
     ./ufo.nix
     ./yanky.nix
+    ./which-key.nix
   ];
 
   programs.nixvim = {

@@ -33,10 +33,35 @@
         mode = "n";
         options.desc = "File Picker";
       }
+      {
+        action = "<cmd>lua Snacks.picker.grep()<cr>";
+        key = "<leader>sg";
+        mode = "n";
+        options.desc = "Search";
+      }
     ];
     opts.statuscolumn = ''
       %!v:lua.require'snacks.statuscolumn'.get()
     '';
+    autoCmd = [
+      {
+        callback.__raw = ''
+          function(ev)
+            local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+            vim.notify(vim.lsp.status(), "info", {
+              id = "lsp_progress",
+              title = "LSP Progress",
+              opts = function(notif)
+                notif.icon = ev.data.params.value.kind == "end" and " "
+                  or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
+              end,
+            })
+          end
+        '';
+        event = "LspProgress";
+      }
+
+    ];
     plugins.snacks = {
       enable = true;
       settings = {
@@ -59,7 +84,9 @@
           enabled = true;
         };
         notifier = {
-          enabled = false;
+          enabled = true;
+          style = "minimal";
+          top_down = false;
         };
         quickfile = {
           enabled = true;

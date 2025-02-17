@@ -21,10 +21,15 @@
       impl
     ];
     # Space key has to be set to NOP for setting leader key to space to work.
-    extraConfigLuaPre = /* lua */
+    #
+    # Also sets <leader>Q as macro key so no accidental macro presses
+    extraConfigLuaPre = # lua
       ''
         vim.keymap.set("", "<Space>", "<Nop>", {})
+        vim.keymap.set("", "q", "<Nop>", {})
+        vim.keymap.set("", "<leader>Q", "q", {desc = "Record Macro"})
       '';
+    keymaps = import ./keymaps.nix;
     globals = {
       # Set leader key to space.
       mapleader = " ";

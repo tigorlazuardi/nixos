@@ -91,7 +91,7 @@
               "buffer"
             ];
           };
-          keymap.preset = "super-tab";
+          keymap.preset = "default";
         };
         lazyLoad.settings = {
           event = [ "InsertEnter" ];
