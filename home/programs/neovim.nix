@@ -97,7 +97,6 @@ in
       deno
 
       # Golang debuggers
-      unstable.delve
       gdlv
 
       luajitPackages.tiktoken_core # For copilot chat

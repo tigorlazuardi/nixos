@@ -1,9 +1,10 @@
 { unstable, ... }:
 {
   imports = [
+    ./go.nix
     ./lua.nix
-    ./nix.nix
     ./markdown.nix
+    ./nix.nix
   ];
 
   programs.nixvim = {
