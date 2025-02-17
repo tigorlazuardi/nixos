@@ -1,5 +1,13 @@
 { unstable, ... }:
 {
+  programs.nixvim.keymaps = [
+    {
+      action = "<cmd>lua if not MiniFiles.close() then MiniFiles.open() end<cr>";
+      key = "-";
+      mode = "n";
+      options.desc = "(Mini) Open Files";
+    }
+  ];
   programs.nixvim.plugins.mini = {
     enable = true;
     package = unstable.vimPlugins.mini-nvim;
@@ -8,6 +16,7 @@
       icons = { };
       pairs = { };
       comment = { };
+      files = { };
       diff = {
         view = {
           style = "sign";
