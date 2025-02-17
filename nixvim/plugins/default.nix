@@ -8,6 +8,7 @@
     ./fidget.nix
     ./git.nix
     ./mini.nix
+    ./persistence.nix
     ./snacks.nix
     ./tiny-inline-diagnostics.nix
     ./treesitter.nix
