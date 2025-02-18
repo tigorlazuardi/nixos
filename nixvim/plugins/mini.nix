@@ -48,6 +48,7 @@
       icons = { };
       pairs = { };
       comment = { };
+      tabline = { };
       files = {
         windows = {
           preview = true;

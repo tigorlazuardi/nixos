@@ -1,3 +1,13 @@
+let
+  map = mode: key: action: options: {
+    inherit
+      key
+      action
+      mode
+      options
+      ;
+  };
+in
 [
   {
     action = "<gv";
@@ -98,5 +108,35 @@
       expr = true;
       silent = true;
     };
+    # Jump to buffers.
   }
+  {
+    key = "<s-h>";
+    action = "<cmd>bprevious<cr>";
+    mode = [ "n" ];
+    options.desc = "Prev Buffer";
+  }
+  {
+    key = "<s-l>";
+    action = "<cmd>bnext<cr>";
+    mode = [ "n" ];
+    options.desc = "Next Buffer";
+  }
+  # Jump Windows
+  (map [ "n" ] "<c-h>" "<c-w>h" {
+    desc = "Go to Left Window";
+    remap = true;
+  })
+  (map [ "n" ] "<c-l>" "<c-w>l" {
+    desc = "Go to Right Window";
+    remap = true;
+  })
+  (map [ "n" ] "<c-k>" "<c-w>k" {
+    desc = "Go to Up Window";
+    remap = true;
+  })
+  (map [ "n" ] "<c-j>" "<c-w>j" {
+    desc = "Go to Down Window";
+    remap = true;
+  })
 ]

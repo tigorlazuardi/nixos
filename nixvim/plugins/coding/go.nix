@@ -8,6 +8,7 @@
       go
       gofumpt
       golangci-lint
+      gomodifytags
     ];
     autoCmd = [
       {

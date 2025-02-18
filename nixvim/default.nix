@@ -10,15 +10,6 @@
     extraPackages = with pkgs; [
       ripgrep
       fd
-      universal-ctags
-
-      go
-      gopls
-      gotools
-      go-tools
-      gofumpt
-      gomodifytags
-      impl
     ];
     # Space key has to be set to NOP for setting leader key to space to work.
     #

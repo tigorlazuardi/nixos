@@ -342,6 +342,22 @@
         "type": "github"
       }
     },
+    "gitsigns-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1739632191,
+        "narHash": "sha256-zniJtZLIO1dxcrInUG8sqQaCQqtztDObW0+yKLOb1yo=",
+        "owner": "lewis6991",
+        "repo": "gitsigns.nvim",
+        "rev": "8b00147519d6f8353867d5d0b55f587306b0cfb6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lewis6991",
+        "repo": "gitsigns.nvim",
+        "type": "github"
+      }
+    },
     "hercules-ci-effects": {
       "inputs": {
         "flake-parts": "flake-parts_2",
@@ -781,6 +797,7 @@
       "inputs": {
         "ags-agenda": "ags-agenda",
         "catppuccin-nvim": "catppuccin-nvim",
+        "gitsigns-nvim": "gitsigns-nvim",
         "home-manager": "home-manager",
         "hyprland-contrib": "hyprland-contrib",
         "lzn-auto-require-nvim": "lzn-auto-require-nvim",

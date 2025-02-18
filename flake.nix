@@ -74,6 +74,10 @@
       url = "github:rachartier/tiny-inline-diagnostic.nvim";
       flake = false;
     };
+    gitsigns-nvim = {
+      url = "github:lewis6991/gitsigns.nvim";
+      flake = false;
+    };
   };
   outputs =
     inputs@{

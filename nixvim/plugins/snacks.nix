@@ -22,6 +22,12 @@
         options.desc = "Buffer Delete";
       }
       {
+        action = "<cmd>lua Snacks.bufdelete.other()<cr>";
+        key = "<leader>bo";
+        mode = "n";
+        options.desc = "Buffer Delete Others";
+      }
+      {
         action = "<cmd>lua Snacks.lazygit()<cr>";
         key = "<leader>z";
         mode = "n";
@@ -60,7 +66,6 @@
         '';
         event = "LspProgress";
       }
-
     ];
     plugins.snacks = {
       enable = true;

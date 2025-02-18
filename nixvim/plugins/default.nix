@@ -6,7 +6,8 @@
     ./arrow.nix
     ./blink.nix
     ./fidget.nix
-    ./git.nix
+    ./gitsigns.nix
+    ./grug-far.nix
     ./mini.nix
     ./noice.nix
     ./persistence.nix
