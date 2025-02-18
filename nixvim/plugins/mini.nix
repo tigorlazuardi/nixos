@@ -107,12 +107,12 @@
           "__unkeyed-2.actions" = [
             {
               name = "F. Find Files";
-              action = "lua Snacks.picker.files()";
+              action = "FzfLua files";
               section = "Actions";
             }
             {
               name = "G. Find Text";
-              action = "lua Snacks.picker.grep()";
+              action = "FzfLua grep";
               section = "Actions";
             }
           ];

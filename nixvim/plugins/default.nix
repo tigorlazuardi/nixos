@@ -6,6 +6,7 @@
     ./arrow.nix
     ./blink.nix
     ./fidget.nix
+    ./fzf-lua.nix
     ./gitsigns.nix
     ./grug-far.nix
     ./mini.nix

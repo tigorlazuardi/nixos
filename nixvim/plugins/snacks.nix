@@ -33,18 +33,6 @@
         mode = "n";
         options.desc = "Open Lazygit";
       }
-      {
-        action = "<cmd>lua Snacks.picker.files()<cr>";
-        key = "<leader><leader>";
-        mode = "n";
-        options.desc = "File Picker";
-      }
-      {
-        action = "<cmd>lua Snacks.picker.grep()<cr>";
-        key = "<leader>sg";
-        mode = "n";
-        options.desc = "Search";
-      }
     ];
     opts.statuscolumn = ''
       %!v:lua.require'snacks.statuscolumn'.get()
