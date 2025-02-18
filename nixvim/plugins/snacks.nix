@@ -1,6 +1,7 @@
 {
   inputs,
   pkgs,
+  lib,
   ...
 }:
 {
@@ -8,32 +9,79 @@
     extraPackages = with pkgs; [
       lazygit
     ];
-    keymaps = [
-      {
-        action = "<cmd>lua Snacks.explorer()<cr>";
-        key = "<leader>e";
-        mode = "n";
-        options.desc = "(Snacks) Open Explorer";
-      }
-      {
-        action = "<cmd>lua Snacks.bufdelete()<cr>";
-        key = "<leader>bd";
-        mode = "n";
-        options.desc = "Buffer Delete";
-      }
-      {
-        action = "<cmd>lua Snacks.bufdelete.other()<cr>";
-        key = "<leader>bo";
-        mode = "n";
-        options.desc = "Buffer Delete Others";
-      }
-      {
-        action = "<cmd>lua Snacks.lazygit()<cr>";
-        key = "<leader>z";
-        mode = "n";
-        options.desc = "Open Lazygit";
-      }
-    ];
+    keymaps =
+      let
+        map =
+          key: action:
+          {
+            mode ? [ "n" ],
+            ...
+          }@options:
+          {
+            inherit key action mode;
+            options = lib.attrsets.filterAttrs (k: _: k != "mode") options;
+          };
+      in
+      [
+        (map "<leader>e" "<cmd>lua Snacks.explorer()<cr>" { desc = "(Snacks) Open Explorer"; })
+        (map "<leader><leader>" "<cmd>lua Snacks.picker.files()<cr>" { desc = "(Snacks) Find Files"; })
+        (map "<leader>bd" "<cmd>lua Snacks.bufdelete()<cr>" { desc = "(Snacks) Buffer Delete"; })
+        (map "<leader>bo" "<cmd>lua Snacks.bufdelete.other()<cr>" {
+          desc = "(Snacks) Buffer Delete Others";
+        })
+        (map "<leader>z" "<cmd>lua Snacks.lazygit()<cr>" { desc = "(Snacks) Open Lazygit"; })
+        ### Searches
+        (map "<leader>ff" "<cmd>lua Snacks.picker.files()<cr>" { desc = "(Snacks) Find Files"; })
+        (map "<leader>:" "<cmd>lua Snacks.picker.command_history()<cr>" { desc = "Command History"; })
+        (map "<leader>fp" "<cmd>lua Snacks.picker.projects()<cr>" { desc = "Projects"; })
+        (map "<leader>sg" "<cmd>lua Snacks.picker.grep()<cr>" { desc = "Find Text"; })
+        (map "<leader>sb" "<cmd>lua Snacks.picker.lines()<cr>" { desc = "Find Line in Buffer"; })
+        (map "<leader>sB" "<cmd>lua Snacks.picker.grep_buffer()<cr>" {
+          desc = "Find Text in Open Buffers";
+        })
+        (map "<cr>" "<cmd>lua Snacks.picker.smart()<cr>" { desc = "Smart Find Files"; })
+        (map "*" "<cmd>lua Snacks.picker.grep_word()<cr>" { desc = "Grep word under cursor"; })
+        (map "<leader>sk" "<cmd>lua Snacks.picker.keymaps()<cr>" { desc = "Keymaps"; })
+        (map "<F1>" "<cmd>lua Snacks.picker.help()<cr>" { desc = "Help"; })
+        (map "<leader>si" "<cmd>lua Snacks.picker.icons()<cr>" { desc = "Icons"; })
+
+        ### LSP Mappings
+        (map "gd" "<cmd>lua Snacks.picker.lsp_definitions()<cr>" { desc = "LSP Definitions"; })
+        (map "gD" "<cmd>lua Snacks.picker.lsp_declarations()<cr>" { desc = "LSP Declarations"; })
+        (map "gI" "<cmd>lua Snacks.picker.lsp_implementations()<cr>" { desc = "LSP Implementations"; })
+        (map "gr" "<cmd>lua Snacks.picker.lsp_references()<cr>" { desc = "LSP References"; })
+        (map "gy" "<cmd>lua Snacks.picker.lsp_type_definitions()<cr>" { desc = "LSP Type Definitions"; })
+        (map "<leader>ss" "<cmd>lua Snacks.picker.lsp_symbols()<cr>" {
+          desc = "LSP Document Symbols";
+        })
+        (map "<leader>sS" "<cmd>lua Snacks.picker.lsp_workspace_symbols()<cr>" {
+          desc = "LSP Workspace Symbols";
+        })
+
+        ### Diagnostics
+        (map "<leader>sD" "<cmd>lua Snacks.picker.diagnostics_buffer()<cr>" {
+          desc = "Diagnostics (buffer)";
+        })
+        (map "<leader>sd" "<cmd>lua Snacks.picker.diagnostics()<cr>" { desc = "Diagnostics"; })
+
+        ### Others
+        (map "<F5>" "<cmd>lua Snacks.terminal()<cr>" { desc = "Toggle Terminal"; })
+        (map "[[" "<cmd>lua Snacks.words.jump(vim.v.count1)<cr>" {
+          desc = "Next Reference";
+          mode = [
+            "n"
+            "t"
+          ];
+        })
+        (map "<leader>B" "<cmd>lua Snacks.gitbrowse()<cr>" { desc = "Gitbrowse"; })
+        (map "]]" "<cmd>lua Snacks.words.jump(-vim.v.count1)<cr>" {
+          desc = "Prev Reference";
+          mode = [
+            "n"
+            "t"
+          ];
+        })
+      ];
     opts.statuscolumn = ''
       %!v:lua.require'snacks.statuscolumn'.get()
     '';
@@ -75,6 +123,24 @@
         };
         picker = {
           enabled = true;
+          sources = {
+            explorer = {
+              hidden = true;
+              ignored = true;
+            };
+          };
+          actions.trouble_open.__raw = ''
+            function(...)
+              return require("trouble.sources.snacks").actions.trouble_open.action(...)
+            end
+          '';
+          win.input.keys."<a-t>" = {
+            __unkeyed-1 = "trouble_open";
+            mode = [
+              "n"
+              "i"
+            ];
+          };
         };
         notifier = {
           enabled = true;

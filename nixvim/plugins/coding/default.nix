@@ -60,6 +60,11 @@
     plugins.lint = {
       enable = true;
       package = unstable.vimPlugins.nvim-lint;
+      autoCmd.event = [
+        "BufWritePost"
+        "BufReadPost"
+        "InsertLeave"
+      ];
       lazyLoad.settings.event = [
         "BufWritePost"
         "BufNewFile"

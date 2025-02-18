@@ -28,10 +28,7 @@
       "goimports"
       "gofumpt"
     ];
-    plugins.lsp.servers.golangci_lint_ls = {
-      enable = true;
-      package = unstable.golangci-lint-langserver;
-    };
+    plugins.lint.lintersByFt.go = [ "golangcilint" ];
     plugins.lsp.servers.gopls = {
       enable = true;
       package = unstable.gopls;

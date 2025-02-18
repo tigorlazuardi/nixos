@@ -1,6 +1,6 @@
 {
   programs.nixvim.plugins.arrow = {
-    enable = true;
+    enable = false;
     settings = {
       show_icons = true;
       leader_key = "<cr>";
