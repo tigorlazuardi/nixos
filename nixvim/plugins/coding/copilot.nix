@@ -2,6 +2,28 @@
 {
   programs.nixvim = {
     plugins = {
+      # Copilot only initialized upon InsertEnter,
+      # but it will take a few seconds to load.
+      #
+      # There will be error messages when copilot.lua
+      # has not finishing initializing yet.
+      #
+      # So we just need to silence it.
+      #
+      # Issue: https://github.com/zbirenbaum/copilot.lua/issues/321
+      noice.settings.routes = [
+        {
+          filter = {
+            event = "msg_show";
+            any = [
+              { find = "Agent service not initialized"; }
+            ];
+          };
+          opts = {
+            skip = true;
+          };
+        }
+      ];
       copilot-lua = {
         enable = true;
         lazyLoad.settings.event = [ "InsertEnter" ];
