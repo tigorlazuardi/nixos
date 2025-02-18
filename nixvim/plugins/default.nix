@@ -9,6 +9,7 @@
     ./fzf-lua.nix
     ./gitsigns.nix
     ./grug-far.nix
+    ./lualine.nix
     ./mini.nix
     ./noice.nix
     ./persistence.nix
