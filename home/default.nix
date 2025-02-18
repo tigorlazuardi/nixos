@@ -71,7 +71,7 @@ in
       };
     };
 
-  systemd.user.sessionVariables = {
+  home.sessionVariables = {
     XDG_CONFIG_HOME = "/home/${user.name}/.config";
     NIXPKGS_ALLOW_UNFREE = "1";
     GEMINI_API_KEY_FILE = config.sops.secrets."ai/gemini/api_key".path;
