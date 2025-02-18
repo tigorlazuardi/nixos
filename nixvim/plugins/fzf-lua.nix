@@ -21,6 +21,10 @@
     ];
     extraPlugins = with unstable; [
       {
+        plugin = vimPlugins.vim-gutentags;
+        optional = true;
+      }
+      {
         plugin =
           let
             src = fetchFromGitHub {
@@ -39,7 +43,19 @@
       }
     ];
     extraConfigLua = ''
-
+      require('lz.n').load({
+        {
+          "ctags-lsp.nvim",
+          event = { "BufReadPost", "BufNewFile", "BufWritePost" };
+          after = function()
+            require("lspconfig").ctags_lsp.setup({})
+          end;
+        };
+        {
+          "vim-gutentags",
+          event = { "BufReadPost", "BufNewFile", "BufWritePost" };
+        }
+      })
     '';
     plugins.fzf-lua = {
       package = unstable.vimPlugins.fzf-lua;
