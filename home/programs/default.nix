@@ -1,6 +1,7 @@
 { ... }:
 {
   imports = [
+    ./aider.nix
     ./bitwarden.nix
     ./bloomrpc.nix
     ./bruno.nix

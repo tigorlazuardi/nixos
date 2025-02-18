@@ -112,7 +112,7 @@
             }
             {
               name = "G. Find Text";
-              action = "FzfLua grep";
+              action = "FzfLua live_grep_native";
               section = "Actions";
             }
           ];

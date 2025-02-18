@@ -793,6 +793,22 @@
         "type": "github"
       }
     },
+    "nvim-aider": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1739085002,
+        "narHash": "sha256-OTSLFrROzHXemFAk7VAAJwpolZ0Ws2WJ0j5qgs5aW0A=",
+        "owner": "GeorgesAlkhouri",
+        "repo": "nvim-aider",
+        "rev": "3b45451afd776b234734b2ebfbb882e08e441dfc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "GeorgesAlkhouri",
+        "repo": "nvim-aider",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "ags-agenda": "ags-agenda",
@@ -809,6 +825,7 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
         "nur": "nur",
+        "nvim-aider": "nvim-aider",
         "rust-overlay": "rust-overlay",
         "snacks-nvim": "snacks-nvim",
         "sops-nix": "sops-nix",

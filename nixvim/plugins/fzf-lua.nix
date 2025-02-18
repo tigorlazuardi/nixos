@@ -6,7 +6,41 @@
       ripgrep
       ueberzug
       delta
+      universal-ctags
+      (buildGoModule rec {
+        pname = "ctags-lsp";
+        version = "0.6.1";
+        src = fetchFromGitHub {
+          owner = "netmute";
+          repo = "ctags-lsp";
+          rev = "v${version}";
+          hash = "sha256-wSccfhVp1PDn/gj46r8BNskEuBuRIx1wydYAW1PV4cg=";
+        };
+        vendorHash = null;
+      })
     ];
+    extraPlugins = with unstable; [
+      {
+        plugin =
+          let
+            src = fetchFromGitHub {
+              owner = "netmute";
+              repo = "ctags-lsp.nvim";
+              rev = "aaae7b5d8dc7aeb836c63301b8eb7311af49bb2a";
+              hash = "sha256-AlTDny/eaBJpxnIenU5ynaRUkPrXJLh4CduiOzdCAxo=";
+            };
+          in
+          vimUtils.buildVimPlugin {
+            pname = "ctags-lsp.nvim";
+            version = src.rev;
+            inherit src;
+          };
+        optional = true;
+      }
+    ];
+    extraConfigLua = ''
+
+    '';
     plugins.fzf-lua = {
       package = unstable.vimPlugins.fzf-lua;
       enable = true;
@@ -100,7 +134,7 @@
           in
           [
             (map "<leader><leader>" "<cmd>FzfLua files<cr>" { desc = "Search Files"; })
-            (map "<leader>sg" "<cmd>FzfLua grep<cr>" { desc = "Grep"; })
+            (map "<leader>sg" "<cmd>FzfLua live_grep_native<cr>" { desc = "Grep"; })
             (map "<leader>st" "<cmd>FzfLua tags_grep_cword<cr>" { desc = "Tags: grep under word"; })
             (map "<leader>sT" "<cmd>FzfLua tags<cr>" { desc = "Tags: grep"; })
             (map "gr" "<cmd>FzfLua lsp_references<cr>" { desc = "LSP References"; })

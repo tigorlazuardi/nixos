@@ -1,6 +1,7 @@
 { unstable, ... }:
 {
   imports = [
+    ./copilot.nix
     ./go.nix
     ./lua.nix
     ./markdown.nix
@@ -60,7 +61,7 @@
       lazyLoad.settings.event = [
         "BufWritePost"
         "BufNewFile"
-        "InsertLeave"
+        "InsertEnter"
       ];
     };
   };

@@ -78,6 +78,10 @@
       url = "github:lewis6991/gitsigns.nvim";
       flake = false;
     };
+    nvim-aider = {
+      url = "github:GeorgesAlkhouri/nvim-aider";
+      flake = false;
+    };
   };
   outputs =
     inputs@{

@@ -1,10 +1,23 @@
 { unstable, ... }:
 {
   programs.nixvim = {
+    autoCmd = [
+      {
+        callback.__raw = ''
+          function()
+            vim.highlight.on_yank { higroup = "visual", timeout = 150 }
+          end
+        '';
+        event = "TextYankPost";
+      }
+    ];
     plugins.yanky = {
       enable = true;
       package = unstable.vimPlugins.yanky-nvim;
-      settings.highlight.timer = 150;
+      settings.highlight = {
+        timer = 150;
+        on_yank = false;
+      };
       lazyLoad.settings.keys = [
         {
           __unkeyed-1 = "y";
