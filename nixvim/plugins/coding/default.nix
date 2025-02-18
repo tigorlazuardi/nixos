@@ -1,6 +1,7 @@
 { unstable, ... }:
 {
   imports = [
+    ./aider.nix
     ./copilot.nix
     ./go.nix
     ./lua.nix
