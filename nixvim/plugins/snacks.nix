@@ -66,7 +66,7 @@
 
         ### Others
         (map "<F5>" "<cmd>lua Snacks.terminal()<cr>" { desc = "Toggle Terminal"; })
-        (map "[[" "<cmd>lua Snacks.words.jump(vim.v.count1)<cr>" {
+        (map "]]" "<cmd>lua Snacks.words.jump(vim.v.count1)<cr>" {
           desc = "Next Reference";
           mode = [
             "n"
@@ -74,7 +74,7 @@
           ];
         })
         (map "<leader>B" "<cmd>lua Snacks.gitbrowse()<cr>" { desc = "Gitbrowse"; })
-        (map "]]" "<cmd>lua Snacks.words.jump(-vim.v.count1)<cr>" {
+        (map "[[" "<cmd>lua Snacks.words.jump(-vim.v.count1)<cr>" {
           desc = "Prev Reference";
           mode = [
             "n"
@@ -167,13 +167,6 @@
         pname = "snacks-nvim";
         src = inputs.snacks-nvim;
         version = inputs.snacks-nvim.shortRev;
-        dependencies = [
-          (pkgs.vimUtils.buildVimPlugin {
-            pname = "trouble-nvim";
-            src = inputs.trouble-nvim;
-            version = inputs.trouble-nvim.shortRev;
-          })
-        ];
       };
     };
   };

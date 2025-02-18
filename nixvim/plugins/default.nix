@@ -5,18 +5,16 @@
 
     ./arrow.nix
     ./blink.nix
-    ./fidget.nix
-    ./fzf-lua.nix
     ./gitsigns.nix
     ./grug-far.nix
     ./lualine.nix
     ./mini.nix
-    ./neo-tree.nix
     ./noice.nix
     ./persistence.nix
     ./snacks.nix
     ./tiny-inline-diagnostics.nix
     ./treesitter.nix
+    ./trouble.nix
     ./ufo.nix
     ./yanky.nix
     ./which-key.nix
