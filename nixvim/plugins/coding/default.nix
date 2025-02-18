@@ -2,6 +2,7 @@
 {
   imports = [
     ./aider.nix
+    ./codecompanion.nix
     ./copilot.nix
     ./go.nix
     ./lua.nix
