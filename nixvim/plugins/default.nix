@@ -14,6 +14,7 @@
     ./protobuf.nix
     ./snacks.nix
     ./tiny-inline-diagnostics.nix
+    ./telescope.nix
     ./treesitter.nix
     ./trouble.nix
     ./ufo.nix

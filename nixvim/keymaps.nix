@@ -155,4 +155,9 @@ in
     desc = "Go to Right Window";
     remap = true;
   })
+
+  # Basic LSP
+  (map [ "n" ] "<F2>" "<cmd>lua vim.lsp.buf.rename()<cr>" {
+    desc = "Rename Symbol";
+  })
 ]
