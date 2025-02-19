@@ -9,6 +9,11 @@
         enable = true;
         autoLoad = false;
       };
+      blink-ripgrep = {
+        enable = true;
+        lazyLoad.settings.ft = [ ];
+        package = unstable.vimPlugins.blink-ripgrep-nvim;
+      };
       blink-cmp = {
         enable = true;
         package = unstable.vimPlugins.blink-cmp;
@@ -88,8 +93,36 @@
               "lsp"
               "path"
               "snippets"
-              "buffer"
+              "ripgrep"
             ];
+            providers.ripgrep = {
+              module = "blink-ripgrep";
+              name = "Ripgrep";
+              score_offset = -1;
+              max_items = 20;
+              transform_items.__raw = ''
+                function(_, items)
+                  for _, item in ipairs(items) do
+                    item.labelDetails = {
+                      description = "(rg)";
+                    }
+                  end
+                  return items
+                end
+              '';
+              opts = {
+                prefix_min_len = 3;
+                context_size = 5;
+                max_filesize = "200K";
+                project_root_marker = [
+                  ".git"
+                  "go.mod"
+                  "package.json"
+                  ".root"
+                  ".envrc"
+                ];
+              };
+            };
           };
           keymap.preset = "default";
         };

@@ -5,6 +5,7 @@
 
     ./arrow.nix
     ./blink.nix
+    ./dadbod.nix
     ./gitsigns.nix
     ./grug-far.nix
     ./lualine.nix

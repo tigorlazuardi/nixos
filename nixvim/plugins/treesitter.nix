@@ -12,6 +12,35 @@
         indent.enable = true;
       };
     };
+    ts-autotag = {
+      enable = true;
+      package = unstable.vimPlugins.nvim-ts-autotag;
+      settings = {
+        opts.enable_close_on_slash = true;
+      };
+      lazyLoad.settings.ft = [
+        "html"
+        "gohtml"
+        "javascriptreact"
+        "typescriptreact"
+        "svelte"
+        "vue"
+        "tmpl"
+        "astro"
+        "markdown"
+        "php"
+        "twig"
+        "blade"
+        "xml"
+      ];
+    };
+    ts-comments = {
+      enable = true;
+      package = unstable.vimPlugins.ts-comments-nvim;
+      settings = {
+        opts.ignore_whitespace = true;
+      };
+    };
     treesitter-context = {
       enable = true;
       package = unstable.vimPlugins.nvim-treesitter-context;

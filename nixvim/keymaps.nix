@@ -165,7 +165,7 @@ in
       function()
         local severityError = { severity = vim.diagnostic.severity.ERROR }
         if vim.diagnostic.get_next_pos(severityError) then
-          vim.dianoistic.goto_next(severityError) 
+          vim.diagnostic.goto_next(severityError) 
           return
         end
         local severityWarning = { severity = vim.diagnostic.severity.WARNING } 
@@ -181,12 +181,12 @@ in
       function()
         local severityError = { severity = vim.diagnostic.severity.ERROR }
         if vim.diagnostic.get_prev_pos(severityError) then
-          vim.dianoistic.goto_prev(severityError) 
+          vim.diagnostic.goto_prev(severityError) 
           return
         end
         local severityWarning = { severity = vim.diagnostic.severity.WARNING } 
         if vim.diagnostic.get_prev_pos(severityWarning) then
-          vim.dianoistic.goto_prev(severityWarning) 
+          vim.diagnostic.goto_prev(severityWarning) 
           return
         end
       end
