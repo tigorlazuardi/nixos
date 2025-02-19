@@ -18,19 +18,20 @@
           "AiderTerminalToggle", "AiderHealth",
         },
         keys = {
-          { "<leader>aa", "<cmd>AiderTerminalToggle<cr>", desc = "Open Aider" },
-          { "<leader>as", "<cmd>AiderTerminalSend<cr>", desc = "Send to Aider", mode = { "n", "v" } },
-          { "<leader>ac", "<cmd>AiderQuickSendCommand<cr>", desc = "Send Command To Aider" },
-          { "<leader>ab", "<cmd>AiderQuickSendBuffer<cr>", desc = "Send Buffer To Aider" },
-          { "<leader>a+", "<cmd>AiderQuickAddFile<cr>", desc = "Add File to Aider" },
-          { "<leader>a-", "<cmd>AiderQuickDropFile<cr>", desc = "Drop File from Aider" },
-          { "<leader>ar", "<cmd>AiderQuickReadOnlyFile<cr>", desc = "Add File as Read-Only" },
-          -- Example nvim-tree.lua integration if needed
-          { "<leader>a+", "<cmd>AiderTreeAddFile<cr>", desc = "Add File from Tree to Aider", ft = "NvimTree" },
-          { "<leader>a-", "<cmd>AiderTreeDropFile<cr>", desc = "Drop File from Tree from Aider", ft = "NvimTree" },
+          { "<localleader>a", "<cmd>AiderTerminalToggle<cr>", desc = "Toggle Aider" },
+          { "<localleader>A", "<cmd>AiderTerminalSend<cr>", desc = "Send to Aider", mode = { "n", "v" } },
+          { "<localleader>s", "<cmd>AiderQuickAddFile<cr>", desc = "Add File to Aider" },
+          { "<localleader>S", "<cmd>AiderQuickDropFile<cr>", desc = "Drop File from Aider" },
+          { "<localleader>e", "<cmd>AiderQuickSendCommand<cr>", desc = "Send Command To Aider" },
+          { "<localleader>b", "<cmd>AiderQuickSendBuffer<cr>", desc = "Send Buffer To Aider" },
+          { "<localleader>r", "<cmd>AiderQuickReadOnlyFile<cr>", desc = "Add File as Read-Only" },
         },
         after = function()
-          require('nvim_aider').setup({})
+          require('nvim_aider').setup({
+            win = {
+              position = "right";
+            };
+          })
         end
       })
     '';

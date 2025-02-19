@@ -50,23 +50,17 @@
             };
         in
         [
-          (map "<c-a>" "<cmd>CodeCompanionActions<cr>" {
+          (map "<localleader>c" "<cmd>CodeCompanionActions<cr>" {
             desc = "Code Companion Actions";
             mode = [
               "n"
               "v"
             ];
           })
-          (map "<localleader>a" "<cmd>CodeCompanionChat Toggle<cr>" {
+          (map "<localleader>C" "<cmd>CodeCompanionChat Toggle<cr>" {
             desc = "Code Companion Chat";
             mode = [
               "n"
-              "v"
-            ];
-          })
-          (map "ga" "<cmd>CodeCompanionChat Add<cr>" {
-            desc = "Code Companion Add";
-            mode = [
               "v"
             ];
           })
