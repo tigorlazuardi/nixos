@@ -48,6 +48,78 @@
             })
             (map "<leader>xq" "<cmd>Trouble qflist toggle<cr>" { desc = "Quickfix list"; })
             (map "<leader>xl" "<cmd>Trouble loclist toggle<cr>" { desc = "Location List"; })
+            (map "[[" {
+              __raw = ''
+                function()
+                  local trouble = require('trouble')
+                  local active = trouble._find_last()
+                  if not active then
+                    return
+                  end
+                  local items = trouble.get_items(active.mode)
+                  local cursor = vim.api.nvim_win_get_cursor(0)
+                  local cursorRow = cursor[1]
+                  local cursorCol = cursor[2]
+                  local buf_id = vim.api.nvim_win_get_buf(0)
+                  local prev
+                  for _, item in ipairs(items) do
+                    if item.buf == buf_id then
+                      local pos = item.pos
+                      local itemRow = pos[1]
+                      local itemCol = pos[2]
+                      if itemRow > cursorRow then
+                        break
+                      end
+                      if itemRow < cursorRow then
+                        prev = item
+                      end
+                      if itemRow == cursorRow and itemCol ~= cursorCol and itemCol < cursorCol then
+                        prev = item
+                        break
+                      end
+                    end
+                  end
+                  if prev ~= nil then
+                    vim.api.nvim_win_set_cursor(0, { prev.pos[1], prev.pos[2] - 2 })
+                  end
+                end
+              '';
+            } { desc = "Previous Trouble Item"; })
+            (map "]]" {
+              __raw = ''
+                function()
+                  local trouble = require('trouble')
+                  local active = trouble._find_last()
+                  if not active then
+                    return
+                  end
+                  local items = trouble.get_items(active.mode)
+                  local cursor = vim.api.nvim_win_get_cursor(0)
+                  local cursorRow = cursor[1]
+                  local cursorCol = cursor[2] + 1
+                  local buf_id = vim.api.nvim_win_get_buf(0)
+                  local next
+                  for _, item in ipairs(items) do
+                    if item.buf == buf_id then
+                      local pos = item.pos
+                      local itemRow = pos[1]
+                      local itemCol = pos[2]
+                      if itemRow > cursorRow then
+                        next = item
+                        break
+                      end
+                      if itemRow == cursorRow and itemCol ~= cursorCol and itemCol > cursorCol then
+                        next = item
+                        break
+                      end
+                    end
+                  end
+                  if next ~= nil then
+                    vim.api.nvim_win_set_cursor(0, { next.pos[1], next.pos[2] - 1 })
+                  end
+                end
+              '';
+            } { desc = "Next Trouble Item"; })
           ];
       };
     };
@@ -56,6 +128,7 @@
         event = [
           "InsertLeave"
           "BufEnter"
+          "BufRead"
         ];
         callback.__raw = ''
           function()

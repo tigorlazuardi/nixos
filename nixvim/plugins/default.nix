@@ -11,6 +11,7 @@
     ./mini.nix
     ./noice.nix
     ./persistence.nix
+    ./protobuf.nix
     ./snacks.nix
     ./tiny-inline-diagnostics.nix
     ./treesitter.nix

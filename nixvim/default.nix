@@ -2,6 +2,8 @@
 {
   imports = [
     ./plugins
+
+    ./autocmd.nix
   ];
   # Dependencies are not defined here, but whoever imports this module.
   programs.nixvim = {
