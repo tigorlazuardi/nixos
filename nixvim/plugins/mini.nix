@@ -46,7 +46,6 @@
     mockDevIcons = true;
     modules = {
       icons = { };
-      pairs = { };
       comment = { };
       tabline = { };
       files = {

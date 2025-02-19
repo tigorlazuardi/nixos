@@ -486,6 +486,22 @@
         "type": "github"
       }
     },
+    "neotab-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1733176083,
+        "narHash": "sha256-5IJQwZxDGDMM6KBWKU/EZwa5wciHeTXOZgHPCRmlxJk=",
+        "owner": "kawre",
+        "repo": "neotab.nvim",
+        "rev": "f6ed1ef49f32586f5db95edae5d6f264c8180d85",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kawre",
+        "repo": "neotab.nvim",
+        "type": "github"
+      }
+    },
     "neotest": {
       "flake": false,
       "locked": {
@@ -865,6 +881,7 @@
         "home-manager": "home-manager",
         "hyprland-contrib": "hyprland-contrib",
         "lzn-auto-require-nvim": "lzn-auto-require-nvim",
+        "neotab-nvim": "neotab-nvim",
         "neotest": "neotest",
         "neotest-golang": "neotest-golang",
         "neovim-nightly-overlay": "neovim-nightly-overlay",

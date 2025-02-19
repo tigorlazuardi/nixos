@@ -1,7 +1,65 @@
-{ unstable, ... }:
+{ unstable, inputs, ... }:
 {
   # smartindent settings are interfering with treesitter
   programs.nixvim.opts.smartindent = unstable.lib.mkForce false;
+  programs.nixvim.extraPlugins = [
+    {
+      plugin = unstable.vimPlugins.nvim-treesitter-endwise;
+      optional = true;
+    }
+    {
+      plugin = unstable.vimPlugins.ultimate-autopair-nvim;
+      optional = true;
+    }
+    {
+      plugin = unstable.vimUtils.buildVimPlugin {
+        pname = "neotab.nvim";
+        src = inputs.neotab-nvim;
+        version = inputs.neotab-nvim.shortRev;
+      };
+      optional = true;
+    }
+  ];
+  programs.nixvim.extraConfigLua = ''
+    require("lz.n").load {
+      {
+        "nvim-treesitter-endwise";
+        event = "InsertEnter";
+      };
+      {
+        "ultimate-autopair.nvim";
+        event = "InsertEnter";
+        after = function()
+          require("ultimate-autopair").setup {}
+        end  
+      };
+      {
+        "neotab.nvim";
+        event = "InsertEnter";
+        after = function()
+          require("neotab").setup {
+            tabkey = "";
+            smart_puncuators = {
+              enabled = true;
+              semicolon = {
+                enabled = true;
+                ft = { "cs", "c", "cpp", "java", "nix", "rust" }
+              }
+            }
+          }
+          vim.keymap.set("i", "<tab>", function()
+            if require("copilot.suggestion").is_visible() then
+              require("copilot.suggestion").accept()
+            else 
+              require("neotab").tabout()
+            end
+          end, {
+            silent = true;
+          })
+        end
+      };
+    }
+  '';
   programs.nixvim.plugins = {
     treesitter = {
       enable = true;

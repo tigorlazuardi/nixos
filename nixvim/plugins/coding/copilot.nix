@@ -40,15 +40,6 @@
           filetypes."*" = true;
         };
         luaConfig.post = ''
-          vim.keymap.set("i", '<Tab>', function()
-            if require("copilot.suggestion").is_visible() then
-              require("copilot.suggestion").accept()
-            end
-            return "<tab>"
-          end, {
-            silent = true,
-            expr = true;
-          })
           vim.keymap.set("i", '<c-e>', function()
             if require("copilot.suggestion").is_visible() then
               require("copilot.suggestion").dismiss()

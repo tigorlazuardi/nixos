@@ -98,7 +98,10 @@
       url = "github:rachartier/tiny-code-action.nvim";
       flake = false;
     };
-
+    neotab-nvim = {
+      url = "github:kawre/neotab.nvim";
+      flake = false;
+    };
   };
 
   outputs =
