@@ -78,6 +78,7 @@
     plugins.lsp.servers.gopls = {
       enable = true;
       package = unstable.gopls;
+      rootDir.__raw = ''require('lspconfig').util.root_pattern('go.mod', '.git', 'go.work')'';
     };
 
     plugins.none-ls.sources.code_actions = {
