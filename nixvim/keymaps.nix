@@ -139,4 +139,20 @@ in
     desc = "Go to Down Window";
     remap = true;
   })
+  (map [ "t" ] "<c-j>" "<c-\\><c-n><c-w>j" {
+    desc = "Go to Down Window";
+    remap = true;
+  })
+  (map [ "t" ] "<c-k>" "<c-\\><c-n><c-w>k" {
+    desc = "Go to Up Window";
+    remap = true;
+  })
+  (map [ "t" ] "<c-h>" "<c-\\><c-n><c-w>h" {
+    desc = "Go to Left Window";
+    remap = true;
+  })
+  (map [ "t" ] "<c-l>" "<c-\\><c-n><c-w>l" {
+    desc = "Go to Right Window";
+    remap = true;
+  })
 ]

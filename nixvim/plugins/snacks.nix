@@ -66,21 +66,11 @@
 
         ### Others
         (map "<F5>" "<cmd>lua Snacks.terminal()<cr>" { desc = "Toggle Terminal"; })
-        (map "]]" "<cmd>lua Snacks.words.jump(vim.v.count1)<cr>" {
-          desc = "Next Reference";
-          mode = [
-            "n"
-            "t"
-          ];
+        (map "<F5>" "<cmd>close<cr>" {
+          desc = "Hide Terminal";
+          mode = [ "t" ];
         })
         (map "<leader>B" "<cmd>lua Snacks.gitbrowse()<cr>" { desc = "Gitbrowse"; })
-        (map "[[" "<cmd>lua Snacks.words.jump(-vim.v.count1)<cr>" {
-          desc = "Prev Reference";
-          mode = [
-            "n"
-            "t"
-          ];
-        })
       ];
     opts.statuscolumn = ''
       %!v:lua.require'snacks.statuscolumn'.get()

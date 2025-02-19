@@ -88,6 +88,46 @@
         '';
         desc = "close some filetypes with <q>";
       }
+      {
+        event = [ "FileType" ];
+        pattern = [ "man" ];
+        group = "XManUnlisted";
+        callback.__raw = ''
+          function(event)
+            vim.bo[event.buf].buflisted = false
+          end  
+        '';
+        desc = "Force man pages to be unlisted in buffer list";
+      }
+      {
+        event = [ "FileType" ];
+        pattern = [
+          "json"
+          "jsonc"
+          "json5"
+        ];
+        callback.__raw = ''
+          function()
+            vim.opt_local.conceallevel = 0 
+          end
+        '';
+        group = "XJsonConceal";
+        desc = "Fix JSON Coneal Level";
+      }
+      {
+        event = [ "BufWritePre" ];
+        group = "XAutoCreateDirs";
+        callback.__raw = ''
+          function(event)
+            if event.match:match("^%w%w+:[\\/][\\/]") then
+              return
+            end
+            local file = vim.uv.fs_realpath(event.match) or event.match
+            vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
+          end
+        '';
+        desc = "Create intermediate directories before writing a file if they don't exist";
+      }
     ];
     autoGroups =
       let
