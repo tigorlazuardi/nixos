@@ -1,4 +1,4 @@
-{ unstable, pkgs, ... }:
+{ unstable, ... }:
 {
   programs.nixvim = {
     extraPackages = with unstable; [
@@ -78,6 +78,11 @@
     plugins.lsp.servers.gopls = {
       enable = true;
       package = unstable.gopls;
+    };
+
+    plugins.none-ls.sources.code_actions = {
+      impl.enable = true;
+      gomodifytags.enable = true;
     };
   };
 }

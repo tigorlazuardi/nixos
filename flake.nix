@@ -94,6 +94,11 @@
       url = "github:fredrikaverpil/neotest-golang";
       flake = false;
     };
+    tiny-code-action = {
+      url = "github:rachartier/tiny-code-action.nvim";
+      flake = false;
+    };
+
   };
 
   outputs =

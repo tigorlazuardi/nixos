@@ -9,6 +9,8 @@
     ./markdown.nix
     ./neotest.nix
     ./nix.nix
+    ./none-ls.nix
+    ./tiny-code-action.nix
   ];
 
   programs.nixvim = {

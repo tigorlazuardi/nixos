@@ -160,4 +160,37 @@ in
   (map [ "n" ] "<F2>" "<cmd>lua vim.lsp.buf.rename()<cr>" {
     desc = "Rename Symbol";
   })
+  (map [ "n" ] "]]" {
+    __raw = ''
+      function()
+        local severityError = { severity = vim.diagnostic.severity.ERROR }
+        if vim.diagnostic.get_next_pos(severityError) then
+          vim.dianoistic.goto_next(severityError) 
+          return
+        end
+        local severityWarning = { severity = vim.diagnostic.severity.WARNING } 
+        if vim.diagnostic.get_next_pos(severityWarning) then
+          vim.dianoistic.goto_next(severityWarning) 
+          return
+        end
+      end
+    '';
+  } { desc = "Next Diagnostic (Error/Warning)"; })
+  (map [ "n" ] "[[" {
+    __raw = ''
+      function()
+        local severityError = { severity = vim.diagnostic.severity.ERROR }
+        if vim.diagnostic.get_prev_pos(severityError) then
+          vim.dianoistic.goto_prev(severityError) 
+          return
+        end
+        local severityWarning = { severity = vim.diagnostic.severity.WARNING } 
+        if vim.diagnostic.get_prev_pos(severityWarning) then
+          vim.dianoistic.goto_prev(severityWarning) 
+          return
+        end
+      end
+    '';
+
+  } { desc = "Previous Diagnostic (Error/Warning)"; })
 ]

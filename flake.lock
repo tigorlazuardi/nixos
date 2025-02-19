@@ -880,6 +880,7 @@
         "rust-overlay": "rust-overlay",
         "snacks-nvim": "snacks-nvim",
         "sops-nix": "sops-nix",
+        "tiny-code-action": "tiny-code-action",
         "tiny-inline-diagnostic-nvim": "tiny-inline-diagnostic-nvim",
         "trouble-nvim": "trouble-nvim",
         "walker": "walker",
@@ -969,6 +970,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default-linux",
+        "type": "github"
+      }
+    },
+    "tiny-code-action": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1737572076,
+        "narHash": "sha256-t0esErIlle/oYwNpt2VkdaYpTDlhyMTqDc7e0EYHy2w=",
+        "owner": "rachartier",
+        "repo": "tiny-code-action.nvim",
+        "rev": "34d8a0053a833dbc51b2eecc1170bd35aa18baa4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rachartier",
+        "repo": "tiny-code-action.nvim",
         "type": "github"
       }
     },
