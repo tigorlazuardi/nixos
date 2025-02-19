@@ -1,4 +1,4 @@
-{ unstable, ... }:
+{ unstable, pkgs, ... }:
 {
   programs.nixvim = {
     extraPackages = with unstable; [
@@ -9,6 +9,7 @@
       gofumpt
       golangci-lint
       gomodifytags
+      delve
     ];
     autoCmd = [
       {

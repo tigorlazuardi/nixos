@@ -82,7 +82,20 @@
       url = "github:GeorgesAlkhouri/nvim-aider";
       flake = false;
     };
+    neotest = {
+      url = "github:nvim-neotest/neotest";
+      flake = false;
+    };
+    nvim-nio = {
+      url = "github:nvim-neotest/nvim-nio";
+      flake = false;
+    };
+    neotest-golang = {
+      url = "github:fredrikaverpil/neotest-golang";
+      flake = false;
+    };
   };
+
   outputs =
     inputs@{
       nur,

@@ -7,6 +7,7 @@
     ./go.nix
     ./lua.nix
     ./markdown.nix
+    ./neotest.nix
     ./nix.nix
   ];
 
