@@ -54,7 +54,8 @@
   splitbelow = true;
   splitkeep = "screen";
   splitright = true;
-  tabstop = 2;
+  tabstop = 4;
+  softtabstop = 4;
   termguicolors = true;
   timeoutlen.__raw = # lua
     ''

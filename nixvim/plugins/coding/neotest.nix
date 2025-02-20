@@ -28,7 +28,6 @@
     plugins.neotest = {
       enable = true;
       package = unstable.vimPlugins.neotest;
-      lazyLoad.settings.ft = [ "go" ];
       lazyLoad.settings.keys =
         let
           map =
@@ -91,43 +90,17 @@
             '';
           } { desc = "Toggle Test Watch"; })
         ];
-      lazyLoad.settings.after.__raw = ''
-        function()
-          local opts = {
-            -- Can be a list of adapters like what neotest expects,
-            -- or a list of adapter names,
-            -- or a table of adapter names, mapped to adapter configs.
-            -- The adapter will then be automatically loaded with the config.
-            adapters = {
-              require("neotest-golang")({}),
-            },
-            status = { virtual_text = true },
-            output = { open_on_run = true },
-            quickfix = {
-              open = function()
-                if LazyVim.has("trouble.nvim") then
-                  require("trouble").open({ mode = "quickfix", focus = false })
-                else
-                  vim.cmd("copen")
-                end
-              end,
-            },
-          }
-
-          local neotest_ns = vim.api.nvim_create_namespace("neotest")
-          vim.diagnostic.config({
-            virtual_text = {
-              format = function(diagnostic)
-                -- Replace newline and tab characters with space for more compact diagnostics
-                local message = diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
-                return message
-              end,
-            },
-          }, neotest_ns)
-          opts.consumers = opts.consumers or {}
-          -- Refresh and auto close trouble after running tests
-          ---@type neotest.Consumer
-          opts.consumers.trouble = function(client)
+      settings = {
+        status.virtual_text = true;
+        output.open_on_run = true;
+        quickfix.open = # lua
+          ''
+            function()
+              require("trouble").open({ mode = "quickfix", focus = false })
+            end
+          '';
+        consumers.trouble.__raw = ''
+          function(client)
             client.listeners.results = function(adapter_id, results, partial)
               if partial then
                 return
@@ -152,8 +125,19 @@
               return {}
             end
           end
-          require("neotest").setup(opts)
-        end
+        '';
+      };
+      luaConfig.post = ''
+        local neotest_ns = vim.api.nvim_create_namespace("neotest")
+        vim.diagnostic.config({
+          virtual_text = {
+            format = function(diagnostic)
+              -- Replace newline and tab characters with space for more compact diagnostics
+              local message = diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+              return message
+            end,
+          },
+        }, neotest_ns)
       '';
     };
   };

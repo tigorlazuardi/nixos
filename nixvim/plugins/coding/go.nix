@@ -78,9 +78,47 @@
     plugins.lsp.servers.gopls = {
       enable = true;
       package = unstable.gopls;
+      settings = {
+        gopls = {
+          gofumpt = true;
+          codelenses = {
+            gc_details = false;
+            generate = true;
+            regenerate_cgo = true;
+            run_govulncheck = true;
+            test = true;
+            tidy = true;
+            upgrade_dependency = true;
+            vendor = true;
+          };
+          analyses = {
+            nilness = true;
+            unusedparams = true;
+            shadow = true;
+            fillreturns = true;
+            nonewvars = true;
+            unusedwrite = true;
+          };
+          usePlaceholders = true;
+          completeUnimported = true;
+          staticcheck = true;
+          directoryFilters = [
+            "-.git"
+            "-.vscode"
+            "-.idea"
+            "-.vscode-test"
+            "-node_modules"
+          ];
+          experimentalWorkspaceModule = true;
+          semanticTokens = true;
+        };
+      };
       rootDir.__raw = ''require('lspconfig').util.root_pattern('go.mod', '.git', 'go.work')'';
     };
-
+    plugins.neotest.adapters.golang = {
+      enable = true;
+      package = unstable.vimPlugins.neotest-golang;
+    };
     plugins.none-ls.sources.code_actions = {
       impl.enable = true;
       gomodifytags.enable = true;
