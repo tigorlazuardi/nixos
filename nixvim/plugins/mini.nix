@@ -75,9 +75,6 @@
           "__unkeyed-1.adding_bullet" = {
             __raw = "require('mini.starter').gen_hook.adding_bullet()";
           };
-          "__unkeyed-2.indexing" = {
-            __raw = ''require('mini.starter').gen_hook.indexing('all', { 'Builtin actions', 'Sessions', 'Actions' })'';
-          };
           "__unkeyed-3.padding" = {
             __raw = "require('mini.starter').gen_hook.aligning('center', 'center')";
           };
@@ -122,9 +119,6 @@
           ];
           "__unkeyed-3.builtin_actions" = {
             __raw = "require('mini.starter').sections.builtin_actions()";
-          };
-          "__unkeyed-4.recent_files_current_directory" = {
-            __raw = "require('mini.starter').sections.recent_files(10, true)";
           };
         };
       };
