@@ -6,7 +6,6 @@
       go-tools
       impl
       go
-      gofumpt
       golangci-lint
       gomodifytags
       delve
@@ -70,11 +69,6 @@
       }
     '';
 
-    plugins.conform-nvim.settings.formatters_by_ft.go = [
-      "goimports"
-      "gofumpt"
-    ];
-    plugins.lint.lintersByFt.go = [ "golangcilint" ];
     plugins.lsp.servers.gopls = {
       enable = true;
       package = unstable.gopls;
@@ -119,9 +113,25 @@
       enable = true;
       package = unstable.vimPlugins.neotest-golang;
     };
-    plugins.none-ls.sources.code_actions = {
-      impl.enable = true;
-      gomodifytags.enable = true;
+    plugins.none-ls.sources = {
+      code_actions = {
+        impl.enable = true;
+        gomodifytags.enable = true;
+      };
+      diagnostics.golangci_lint = {
+        enable = true;
+        package = unstable.golangci-lint;
+      };
+      formatting = {
+        gofumpt = {
+          enable = true;
+          package = unstable.gofumpt;
+        };
+        goimports = {
+          enable = true;
+          package = unstable.gotools;
+        };
+      };
     };
   };
 }

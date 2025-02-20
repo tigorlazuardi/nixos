@@ -1,9 +1,15 @@
 { unstable, pkgs, ... }:
 {
   programs.nixvim = {
-    plugins.lsp.servers.buf_ls = {
-      enable = true;
-      package = unstable.buf;
+    plugins.none-ls.sources = {
+      diagnostics.buf = {
+        enable = true;
+        package = unstable.buf;
+      };
+      formatting.buf = {
+        enable = true;
+        package = unstable.buf;
+      };
     };
     extraPackages = with pkgs; [
       protobuf_27

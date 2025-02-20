@@ -11,6 +11,7 @@
     ./nix.nix
     ./none-ls.nix
     ./tiny-code-action.nix
+    ./typescript.nix
   ];
 
   programs.nixvim = {
