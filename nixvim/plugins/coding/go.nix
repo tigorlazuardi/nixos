@@ -1,4 +1,4 @@
-{ unstable, ... }:
+{ unstable, config, ... }:
 {
   programs.nixvim = {
     extraPackages = with unstable; [
@@ -8,6 +8,7 @@
       golangci-lint
       gomodifytags
       delve
+      wgo
     ];
     autoCmd = [
       {
@@ -44,6 +45,14 @@
     ];
 
     extraConfigLua = ''
+      vim.filetype.add {
+          extension = {
+              templ = "templ",
+              gotmpl = "gotmpl",
+              gotxt = "gotmpl",
+          },
+      }
+
       require('lz.n').load {
         "goimpl.nvim",
         ft = "go",
@@ -101,12 +110,26 @@
             "-.idea"
             "-.vscode-test"
             "-node_modules"
+            "-.direnv"
           ];
           experimentalWorkspaceModule = true;
-          semanticTokens = true;
+          semanticTokens = false;
         };
       };
-      rootDir.__raw = ''require('lspconfig').util.root_pattern('go.mod', '.git', 'go.work')'';
+      rootDir.__raw = ''
+        function(fname)
+          local util = require 'lspconfig.util'
+          local mod_cache = [[${config.home.homeDirectory}/go/pkg/mod]]
+          if fname:sub(1, #mod_cache) == mod_cache then
+            local clients = util.get_lsp_clients { name = 'gopls' }
+            if #clients > 0 then
+              return clients[#clients].config.root_dir
+            end
+          end
+          return util.root_pattern('go.mod', '.git', 'go.work')(fname)
+        end
+      '';
+
     };
     plugins.neotest.adapters.golang = {
       enable = true;
