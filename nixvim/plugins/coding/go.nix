@@ -87,7 +87,7 @@
           analyses = {
             nilness = true;
             unusedparams = true;
-            shadow = true;
+            shadow = false;
             fillreturns = true;
             nonewvars = true;
             unusedwrite = true;
