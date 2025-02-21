@@ -5,7 +5,6 @@
       gotools
       go-tools
       impl
-      go
       golangci-lint
       gomodifytags
       delve
