@@ -20,7 +20,7 @@
                   pattern = { "*.js", "*.ts" }; 
                   group = vim.api.nvim_create_augroup("SvelteOnJsOrTsFileChanged", { clear = true; }),
                   callback = function(ctx)
-                    client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
+                    client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
                   end;
                   desc = "Notify svelte when a typescript/javscript file is changed";
                 })
