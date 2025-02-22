@@ -1,18 +1,13 @@
-{ unstable, pkgs, ... }:
+{ pkgs, ... }:
 {
   programs.nixvim = {
-    plugins.none-ls.sources = {
-      diagnostics.buf = {
-        enable = true;
-        package = unstable.buf;
-      };
-      formatting.buf = {
-        enable = true;
-        package = unstable.buf;
-      };
-    };
+    plugins.lsp.servers.buf_ls.enable = true;
+    plugins.conform-nvim.settings.formatters_by_ft.protobuf = [
+      "buf"
+    ];
     extraPackages = with pkgs; [
       protobuf_27
+      buf
       protoc-gen-go
       protoc-gen-connect-go
       protoc-gen-doc

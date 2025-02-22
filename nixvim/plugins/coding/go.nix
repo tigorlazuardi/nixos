@@ -1,5 +1,4 @@
-{ unstable, config, ... }:
-{
+{ unstable, ... }: {
   programs.nixvim = {
     extraPackages = with unstable; [
       gotools
@@ -9,40 +8,35 @@
       gomodifytags
       delve
       wgo
+      gofumpt
     ];
-    autoCmd = [
-      {
-        callback.__raw = ''
-          function()
-            vim.opt_local.tabstop = 4;
-            vim.opt_local.shiftwidth = 4;
-            vim.opt_local.softtabstop = 4;
-          end
-        '';
-        event = "FileType";
-        pattern = "go";
-      }
-    ];
+    autoCmd = [{
+      callback.__raw = ''
+        function()
+          vim.opt_local.tabstop = 4;
+          vim.opt_local.shiftwidth = 4;
+          vim.opt_local.softtabstop = 4;
+        end
+      '';
+      event = "FileType";
+      pattern = "go";
+    }];
 
-    extraPlugins = [
-      {
-        plugin =
-          let
-            src = unstable.fetchFromGitHub {
-              owner = "edolphin-ydf";
-              repo = "goimpl.nvim";
-              rev = "61257826f31a79870bb13d56c4edd09b1291c0b8";
-              hash = "sha256-4kmvNdyA+by/jgo9CGNljND3AcLYgw0byfIQsSz8M2Y=";
-            };
-          in
-          unstable.vimUtils.buildVimPlugin {
-            pname = "goimpl.nvim";
-            version = src.rev;
-            inherit src;
-          };
-        optional = true;
-      }
-    ];
+    extraPlugins = [{
+      plugin = let
+        src = unstable.fetchFromGitHub {
+          owner = "edolphin-ydf";
+          repo = "goimpl.nvim";
+          rev = "61257826f31a79870bb13d56c4edd09b1291c0b8";
+          hash = "sha256-4kmvNdyA+by/jgo9CGNljND3AcLYgw0byfIQsSz8M2Y=";
+        };
+      in unstable.vimUtils.buildVimPlugin {
+        pname = "goimpl.nvim";
+        version = src.rev;
+        inherit src;
+      };
+      optional = true;
+    }];
 
     extraConfigLua = ''
       vim.filetype.add {
@@ -124,21 +118,7 @@
       enable = true;
       package = unstable.vimPlugins.neotest-golang;
     };
-    plugins.none-ls.sources = {
-      code_actions = {
-        impl.enable = true;
-        gomodifytags.enable = true;
-      };
-      formatting = {
-        gofumpt = {
-          enable = true;
-          package = unstable.gofumpt;
-        };
-        goimports = {
-          enable = true;
-          package = unstable.gotools;
-        };
-      };
-    };
+    plugins.conform-nvim.settings.formatters_by_ft.go =
+      [ "goimports" "gofumpt" ];
   };
 }

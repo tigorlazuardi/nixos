@@ -1,9 +1,6 @@
-{ unstable, ... }:
-{
+{ unstable, ... }: {
   programs.nixvim = {
-    extraPackages = with unstable; [
-      lua-language-server
-    ];
+    extraPackages = with unstable; [ lua-language-server ];
 
     plugins = {
       lazydev = {

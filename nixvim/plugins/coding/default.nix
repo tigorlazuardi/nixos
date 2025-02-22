@@ -9,7 +9,6 @@
     ./markdown.nix
     ./neotest.nix
     ./nix.nix
-    ./none-ls.nix
     ./svelte.nix
     ./tiny-code-action.nix
     ./typescript.nix
