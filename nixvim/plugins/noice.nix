@@ -33,7 +33,7 @@
         redirect.view = "split";
         views.split = {
           position = "right";
-          size = "25%";
+          size = "33%";
         };
         hover.silent = true;
         presets = {

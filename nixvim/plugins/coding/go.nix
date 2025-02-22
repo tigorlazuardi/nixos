@@ -140,10 +140,6 @@
         impl.enable = true;
         gomodifytags.enable = true;
       };
-      diagnostics.golangci_lint = {
-        enable = true;
-        package = unstable.golangci-lint;
-      };
       formatting = {
         gofumpt = {
           enable = true;
