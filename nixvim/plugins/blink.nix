@@ -5,10 +5,7 @@
 {
   programs.nixvim = {
     plugins = {
-      friendly-snippets = {
-        enable = true;
-        autoLoad = false;
-      };
+      friendly-snippets.enable = true;
       blink-ripgrep = {
         enable = true;
         lazyLoad.settings.ft = [ ];

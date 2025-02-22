@@ -35,6 +35,9 @@
             };
           };
         };
+        extraOptions.capabilities.__raw = ''
+          require("blink.cmp").get_lsp_capabilities({}, true)
+        '';
       };
     };
   };

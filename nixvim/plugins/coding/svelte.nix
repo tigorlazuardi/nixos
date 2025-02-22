@@ -34,7 +34,15 @@
       svelte = {
         enable = true;
         package = unstable.svelte-language-server;
-        extraOptions.capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true;
+        extraOptions.capabilities.__raw = ''
+          require("blink.cmp").get_lsp_capabilities({
+            workspace = {
+              didChangeWatchedFiles = {
+                dynamicRegistration = true;
+              };
+            };
+          }, true)
+        '';
       };
       vtsls.settings.vtsls.tsserver.globalPlugins = [
         {

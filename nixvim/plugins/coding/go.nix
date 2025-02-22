@@ -116,20 +116,9 @@
           semanticTokens = false;
         };
       };
-      rootDir.__raw = ''
-        function(fname)
-          local util = require 'lspconfig.util'
-          local mod_cache = [[${config.home.homeDirectory}/go/pkg/mod]]
-          if fname:sub(1, #mod_cache) == mod_cache then
-            local clients = util.get_lsp_clients { name = 'gopls' }
-            if #clients > 0 then
-              return clients[#clients].config.root_dir
-            end
-          end
-          return util.root_pattern('go.mod', '.git', 'go.work')(fname)
-        end
+      extraOptions.capabilities.__raw = ''
+        require("blink.cmp").get_lsp_capabilities({}, true)
       '';
-
     };
     plugins.neotest.adapters.golang = {
       enable = true;
