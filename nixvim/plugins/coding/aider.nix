@@ -12,10 +12,11 @@
       }
     ];
     extraConfigLua = ''
-      require('lz.n').load({
+      require("lz.n").load {
         "nvim-aider",
         cmd = {
-          "AiderTerminalToggle", "AiderHealth",
+          "AiderTerminalToggle",
+          "AiderHealth",
         },
         keys = {
           { "<localleader>a", "<cmd>AiderTerminalToggle<cr>", desc = "Toggle Aider" },
@@ -27,13 +28,13 @@
           { "<localleader>r", "<cmd>AiderQuickReadOnlyFile<cr>", desc = "Add File as Read-Only" },
         },
         after = function()
-          require('nvim_aider').setup({
+          require("nvim_aider").setup {
             win = {
-              position = "right";
-            };
-          })
-        end
-      })
+              position = "right",
+            },
+          }
+        end,
+      }
     '';
   };
 }

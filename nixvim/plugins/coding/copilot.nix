@@ -15,9 +15,7 @@
         {
           filter = {
             event = "msg_show";
-            any = [
-              { find = "Agent service not initialized"; }
-            ];
+            any = [ { find = "Agent service not initialized"; } ];
           };
           opts = {
             skip = true;
@@ -40,14 +38,14 @@
           filetypes."*" = true;
         };
         luaConfig.post = ''
-          vim.keymap.set("i", '<c-e>', function()
+          vim.keymap.set("i", "<c-e>", function()
             if require("copilot.suggestion").is_visible() then
               require("copilot.suggestion").dismiss()
             end
             return "<c-e>"
           end, {
             silent = true,
-            expr = true;
+            expr = true,
           })
         '';
       };

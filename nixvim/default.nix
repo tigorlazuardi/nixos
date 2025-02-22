@@ -23,7 +23,7 @@
       ''
         vim.keymap.set("", "<Space>", "<Nop>", {})
         vim.keymap.set("", "q", "<Nop>", {})
-        vim.keymap.set("", "<leader>Q", "q", {desc = "Record Macro"})
+        vim.keymap.set("", "<leader>Q", "q", { desc = "Record Macro" })
       '';
     # Neovide config
     extraConfigLua = ''
@@ -38,15 +38,15 @@
         vim.g.neovide_window_blurred = true
 
         vim.keymap.set("n", "<c-->", function()
-            font_size = font_size - 1
-            vim.o.guifont = font .. ":h" .. font_size
-            vim.notify("Font Set: " .. font .. ":h" .. font_size)
+          font_size = font_size - 1
+          vim.o.guifont = font .. ":h" .. font_size
+          vim.notify("Font Set: " .. font .. ":h" .. font_size)
         end, { desc = "Decrease font size" })
 
         vim.keymap.set("n", "<c-=>", function()
-            font_size = font_size + 1
-            vim.o.guifont = font .. ":h" .. font_size
-            vim.notify("Font Set: " .. font .. ":h" .. font_size)
+          font_size = font_size + 1
+          vim.o.guifont = font .. ":h" .. font_size
+          vim.notify("Font Set: " .. font .. ":h" .. font_size)
         end, { desc = "Increase font size" })
       end
     '';

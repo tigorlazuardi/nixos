@@ -34,7 +34,7 @@
     ];
     extraConfigLuaPost = # lua
       ''
-        require('lzn-auto-require').enable()
+        require("lzn-auto-require").enable()
       '';
     # Must be enabled for lazyLoading settings to work
     plugins.lz-n.enable = true;

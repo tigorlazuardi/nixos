@@ -23,41 +23,39 @@
   programs.nixvim.extraConfigLua = ''
     require("lz.n").load {
       {
-        "nvim-treesitter-endwise";
-        event = "InsertEnter";
-      };
+        "nvim-treesitter-endwise",
+        event = "InsertEnter",
+      },
       {
-        "ultimate-autopair.nvim";
-        event = "InsertEnter";
-        after = function()
-          require("ultimate-autopair").setup {}
-        end  
-      };
+        "ultimate-autopair.nvim",
+        event = "InsertEnter",
+        after = function() require("ultimate-autopair").setup {} end,
+      },
       {
-        "neotab.nvim";
-        event = "InsertEnter";
+        "neotab.nvim",
+        event = "InsertEnter",
         after = function()
           require("neotab").setup {
-            tabkey = "";
+            tabkey = "",
             smart_puncuators = {
-              enabled = true;
+              enabled = true,
               semicolon = {
-                enabled = true;
-                ft = { "cs", "c", "cpp", "java", "nix", "rust" }
-              }
-            }
+                enabled = true,
+                ft = { "cs", "c", "cpp", "java", "nix", "rust" },
+              },
+            },
           }
           vim.keymap.set("i", "<tab>", function()
             if require("copilot.suggestion").is_visible() then
               require("copilot.suggestion").accept()
-            else 
+            else
               require("neotab").tabout()
             end
           end, {
-            silent = true;
+            silent = true,
           })
-        end
-      };
+        end,
+      },
     }
   '';
   programs.nixvim.plugins = {

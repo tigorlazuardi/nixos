@@ -2,7 +2,6 @@
   pkgs,
   unstable,
   inputs,
-  lib,
   ...
 }:
 {
@@ -128,7 +127,7 @@
         '';
       };
       luaConfig.post = ''
-        local neotest_ns = vim.api.nvim_create_namespace("neotest")
+        local neotest_ns = vim.api.nvim_create_namespace "neotest"
         vim.diagnostic.config({
           virtual_text = {
             format = function(diagnostic)

@@ -17,7 +17,7 @@
   programs.nixvim = {
     # Diagnostic will color the number if exist.
     extraConfigLua = ''
-      vim.diagnostic.config({
+      vim.diagnostic.config {
         signs = {
           text = {
             [vim.diagnostic.severity.ERROR] = "",
@@ -26,13 +26,13 @@
             [vim.diagnostic.severity.HINT] = "",
           },
           numhl = {
-            [vim.diagnostic.severity.WARN] = 'WarningMsg',
-            [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
-            [vim.diagnostic.severity.INFO] = 'DiagnosticInfo',
-            [vim.diagnostic.severity.HINT] = 'DiagnosticHint',
+            [vim.diagnostic.severity.WARN] = "WarningMsg",
+            [vim.diagnostic.severity.ERROR] = "ErrorMsg",
+            [vim.diagnostic.severity.INFO] = "DiagnosticInfo",
+            [vim.diagnostic.severity.HINT] = "DiagnosticHint",
           },
         },
-      })
+      }
     '';
     # Lspconfig
     plugins.lsp = {
@@ -53,6 +53,27 @@
       luaConfig.post = # lua
         ''
           vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+          require("conform").formatters.injected = {
+            options = {
+              lang_to_ft = {
+                bash = "sh",
+              },
+              lang_to_ext = {
+                bash = "sh",
+                c_sharp = "cs",
+                elixir = "exs",
+                javascript = "js",
+                julia = "jl",
+                latex = "tex",
+                markdown = "md",
+                python = "py",
+                ruby = "rb",
+                rust = "rs",
+                teal = "tl",
+                typescript = "ts",
+              },
+            },
+          }
         '';
       settings = {
         format_on_save = {

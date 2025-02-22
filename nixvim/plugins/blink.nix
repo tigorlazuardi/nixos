@@ -1,7 +1,4 @@
-{
-  unstable,
-  ...
-}:
+{ unstable, ... }:
 {
   programs.nixvim = {
     plugins = {

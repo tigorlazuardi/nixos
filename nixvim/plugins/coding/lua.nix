@@ -1,12 +1,17 @@
-{ unstable, ... }: {
+{ unstable, ... }:
+{
   programs.nixvim = {
-    extraPackages = with unstable; [ lua-language-server ];
+    extraPackages = with unstable; [
+      lua-language-server
+      stylua
+    ];
 
     plugins = {
       lazydev = {
         enable = true;
         lazyLoad.settings.ft = [ "lua" ];
       };
+      conform-nvim.settings.formatters_by_ft.lua = [ "stylua" ];
       blink-cmp.settings.sources = {
         default = [ "lazydev" ];
         providers = {

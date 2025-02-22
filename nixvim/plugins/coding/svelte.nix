@@ -38,9 +38,9 @@
           require("blink.cmp").get_lsp_capabilities({
             workspace = {
               didChangeWatchedFiles = {
-                dynamicRegistration = true;
-              };
-            };
+                dynamicRegistration = true,
+              },
+            },
           }, true)
         '';
       };

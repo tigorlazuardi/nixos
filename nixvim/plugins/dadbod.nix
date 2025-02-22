@@ -16,19 +16,18 @@
       }
     ];
     extraConfigLua = ''
-      require("lz.n").load({
-        { "vim-dadbod" };
-        { "vim-dadbod-ui",
-          cmd = {"DB"; "DBUIToggle"; "DBUIAddConnection"; "DBUIFindBuffer"},
-          before = function()
-            vim.g.db_ui_use_nerd_fonts = 1
-          end
-        };
+      require("lz.n").load {
+        { "vim-dadbod" },
+        {
+          "vim-dadbod-ui",
+          cmd = { "DB", "DBUIToggle", "DBUIAddConnection", "DBUIFindBuffer" },
+          before = function() vim.g.db_ui_use_nerd_fonts = 1 end,
+        },
         {
           "vim-dadbod-completion",
-          ft = {"sql"; "mysql"; "plsql"; "pgsql"; "sqlite"};
-        }
-      })
+          ft = { "sql", "mysql", "plsql", "pgsql", "sqlite" },
+        },
+      }
     '';
     plugins.blink-cmp.settings.sources = {
       per_filetype.sql = [

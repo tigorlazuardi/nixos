@@ -3,10 +3,10 @@
   programs.nixvim = {
     extraConfigLua = # lua
       ''
-        require('lz.n').load({
-            "gitignore.nvim",
-            cmd = "Gitignore",
-        })
+        require("lz.n").load {
+          "gitignore.nvim",
+          cmd = "Gitignore",
+        }
       '';
     plugins = {
       gitsigns = {
@@ -16,9 +16,7 @@
           version = inputs.gitsigns-nvim.shortRev;
           src = inputs.gitsigns-nvim;
         };
-        lazyLoad.settings.event = [
-          "BufReadPost"
-        ];
+        lazyLoad.settings.event = [ "BufReadPost" ];
         settings = {
           signs = {
             add.text = "▎";

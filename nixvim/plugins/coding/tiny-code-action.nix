@@ -11,15 +11,18 @@
       }
     ];
     extraConfigLua = ''
-      require('lz.n').load {
-        'tiny-code-action.nvim',
-        event = "LspAttach";
+      require("lz.n").load {
+        "tiny-code-action.nvim",
+        event = "LspAttach",
         after = function()
-          require("tiny-code-action").setup({})
-          vim.keymap.set("n", "<leader>ca", function()
-            require("tiny-code-action").code_action()
-          end, { noremap = true, silent = true, desc = "Code Action" })
-        end
+          require("tiny-code-action").setup {}
+          vim.keymap.set(
+            "n",
+            "<leader>ca",
+            function() require("tiny-code-action").code_action() end,
+            { noremap = true, silent = true, desc = "Code Action" }
+          )
+        end,
       }
     '';
   };
