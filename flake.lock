@@ -825,6 +825,22 @@
         "type": "github"
       }
     },
+    "nvim-treesitter-endwise": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1739189531,
+        "narHash": "sha256-LRmIEHSbi9TauvA3flv+zDEXVPER0b7ISRx482rBQdI=",
+        "owner": "brianhuster",
+        "repo": "nvim-treesitter-endwise",
+        "rev": "d29aab84ac0449065c69b1e29a99d05b92f27e6d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "brianhuster",
+        "repo": "nvim-treesitter-endwise",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "ags-agenda": "ags-agenda",
@@ -843,6 +859,7 @@
         "nixvim": "nixvim",
         "nur": "nur",
         "nvim-aider": "nvim-aider",
+        "nvim-treesitter-endwise": "nvim-treesitter-endwise",
         "rust-overlay": "rust-overlay",
         "snacks-nvim": "snacks-nvim",
         "sops-nix": "sops-nix",

@@ -70,6 +70,7 @@
           desc = "Hide Terminal";
           mode = [ "t" ];
         })
+        (map "<F3>" "<cmd>lua Snacks.picker()<cr>" { desc = "Picker"; })
         (map "<leader>B" "<cmd>lua Snacks.gitbrowse()<cr>" { desc = "Gitbrowse"; })
       ];
     opts.statuscolumn = ''

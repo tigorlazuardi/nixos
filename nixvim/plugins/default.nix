@@ -17,7 +17,6 @@
     ./tiny-inline-diagnostics.nix
     ./telescope.nix
     ./treesitter.nix
-    ./treesitter-diagnostic.nix
     ./trouble.nix
     ./ufo.nix
     ./yanky.nix

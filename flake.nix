@@ -90,6 +90,10 @@
       url = "github:kawre/neotab.nvim";
       flake = false;
     };
+    nvim-treesitter-endwise = {
+      url = "github:brianhuster/nvim-treesitter-endwise";
+      flake = false;
+    };
   };
 
   outputs =

@@ -4,12 +4,15 @@
   programs.nixvim.extraConfigLua = ''
     do
       --- language-independent query for syntax errors and missing elements
-      local error_query = vim.treesitter.query.parse("query", "[(ERROR)(MISSING)] @a")
+      local error_query = vim.treesitter.query.parse("query", "[(ERROR)] @a")
       local namespace = vim.api.nvim_create_namespace "treesitter.diagnostics"
 
       --- @param args vim.api.keyset.create_autocmd.callback_args
       local function diagnose(args)
         if not vim.diagnostic.is_enabled { bufnr = args.buf } then
+          return
+        end
+        if not args.buf then
           return
         end
         -- don't diagnose strange stuff
@@ -84,12 +87,10 @@
 
       local autocmd_group = vim.api.nvim_create_augroup("editor.treesitter", { clear = true })
 
-      vim.api.nvim_create_autocmd({ "TextChanged", "InsertLeave", "BufEnter" }, {
+      vim.api.nvim_create_autocmd({ "TextChanged", "InsertLeave", "BufEnter", "BufWritePost" }, {
         desc = "treesitter diagnostics",
         group = autocmd_group,
-        callback = function(ctx)
-          vim.schedule_wrap(function() diagnose(ctx) end)
-        end,
+        callback = vim.schedule_wrap(diagnose),
       })
     end
   '';

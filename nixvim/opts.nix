@@ -1,10 +1,9 @@
 {
   # https://www.lazyvim.org/configuration/general
   autowrite = true;
-  clipboard.__raw = # lua
-    ''
-      vim.env.SSH_TTY and "" or "unnamedplus"
-    '';
+  clipboard.__raw = ''
+    vim.env.SSH_TTY and "" or "unnamedplus"
+  '';
   # conceallevel = 2;
   confirm = true;
   cursorline = true;
@@ -30,7 +29,6 @@
   number = true;
   pumblend = 10;
   pumheight = 10;
-  relativenumber = true;
   scrolloff = 5;
   sessionoptions = [
     "buffers"
@@ -63,7 +61,7 @@
     '';
   undofile = true;
   undolevels = 10000;
-  updatetime = 200;
+  updatetime = 400;
   virtualedit = "block";
   wildmode = "longest:full,full";
   winminwidth = 5;

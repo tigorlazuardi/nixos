@@ -1,11 +1,17 @@
 { unstable, inputs, ... }:
 {
+  imports = [
+    ./treesitter-diagnostic.nix
+  ];
   # smartindent settings are interfering with treesitter
   programs.nixvim.opts.smartindent = unstable.lib.mkForce false;
   programs.nixvim.extraPlugins = [
     {
-      plugin = unstable.vimPlugins.nvim-treesitter-endwise;
-      optional = true;
+      plugin = unstable.vimUtils.buildVimPlugin {
+        pname = "treesitter-endwise";
+        src = inputs.nvim-treesitter-endwise;
+        version = inputs.nvim-treesitter-endwise.shortRev;
+      };
     }
     {
       plugin = unstable.vimPlugins.ultimate-autopair-nvim;
@@ -23,13 +29,25 @@
   programs.nixvim.extraConfigLua = ''
     require("lz.n").load {
       {
-        "nvim-treesitter-endwise",
-        event = "InsertEnter",
-      },
-      {
         "ultimate-autopair.nvim",
         event = "InsertEnter",
-        after = function() require("ultimate-autopair").setup {} end,
+        after = function()
+          local ua = require "ultimate-autopair"
+          local opts = {
+            fastwarp = {
+              map = "<c-l>",
+              rmap = "<c-h>",
+              cmap = "<c-l>",
+              rcmap = "<c-h",
+            },
+            close = {
+              enable = true,
+              map = "<c-j>",
+              cmap = "<c-j>",
+            },
+          }
+          ua.setup(opts)
+        end,
       },
       {
         "neotab.nvim",
@@ -46,11 +64,15 @@
             },
           }
           vim.keymap.set("i", "<tab>", function()
+            if vim.snippet.active { direction = 1 } then
+              vim.snippet.jump(1)
+              return
+            end
             if require("copilot.suggestion").is_visible() then
               require("copilot.suggestion").accept()
-            else
-              require("neotab").tabout()
+              return
             end
+            require("neotab").tabout()
           end, {
             silent = true,
           })
@@ -66,6 +88,16 @@
       settings = {
         highlight.enable = true;
         indent.enable = true;
+        endwise.enable = true;
+        incremental_selection = {
+          enable = true;
+          keymaps = {
+            init_selection = "<C-space>";
+            node_incremental = "<C-space>";
+            scope_incremental = false;
+            node_decremental = "<bs>";
+          };
+        };
       };
     };
     ts-autotag = {
@@ -90,6 +122,11 @@
         "xml"
       ];
     };
+    nvim-autopairs = {
+      enable = true;
+      package = unstable.vimPlugins.nvim-autopairs;
+      lazyLoad.settings.ft = [ "InsertEnter" ];
+    };
     ts-comments = {
       enable = true;
       package = unstable.vimPlugins.ts-comments-nvim;
@@ -110,15 +147,60 @@
         "BufNewFile"
       ];
     };
+    treesitter-textobjects = {
+      enable = true;
+      package = unstable.vimPlugins.nvim-treesitter-textobjects;
+      move = {
+        enable = true;
+        gotoNextStart = {
+          "f" = "@function.outer";
+          "]c" = "@class.outer";
+          "]a" = "@parameter.inner";
+        };
+        gotoNextEnd = {
+          "]F" = "@function.outer";
+          "]C" = "@class.outer";
+          "]A" = "@parameter.inner";
+        };
+        gotoPreviousStart = {
+          "[f" = "@function.outer";
+          "[c" = "@class.outer";
+          "[a" = "@parameter.inner";
+        };
+        gotoPreviousEnd = {
+          "[F" = "@function.outer";
+          "[C" = "@class.outer";
+          "[A" = "@parameter.inner";
+        };
+      };
+      select = {
+        enable = true;
+        lookahead = true;
+        keymaps = {
+          af = "@function.outer";
+          "if" = "@function.inner";
+          ac = "@class.outer";
+          ic = "@class.inner";
+        };
+      };
+    };
     ts-context-commentstring = {
       enable = true;
       extraOptions.enable_autocmd = false;
     };
-    mini.modules.comment.options.custom_commentstring.__raw = # lua
-      ''
-        function()
-          return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
-        end
-      '';
+    vim-matchup = {
+      enable = true;
+      package = unstable.vimPlugins.vim-matchup;
+      settings = {
+        matchparen_offscreen = {
+          method = "popup";
+        };
+      };
+    };
+    mini.modules.comment.options.custom_commentstring.__raw = ''
+      function()
+        return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
+      end
+    '';
   };
 }
