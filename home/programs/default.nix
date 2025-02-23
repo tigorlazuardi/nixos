@@ -26,7 +26,6 @@
     ./mpv.nix
     ./neocal.nix
     ./neovide.nix
-    ./neovim.nix
     ./nextcloud.nix
     ./nnn.nix
     ./node.nix

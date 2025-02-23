@@ -64,22 +64,6 @@
         "type": "github"
       }
     },
-    "catppuccin-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1740072675,
-        "narHash": "sha256-c3VWOdfNJ9+OFjMoYB22z+EOt046KBbYCF6Z63BMWIQ=",
-        "owner": "catppuccin",
-        "repo": "nvim",
-        "rev": "4bb938bbba41d306db18bf0eb0633a5f28fd7ba0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "catppuccin",
-        "repo": "nvim",
-        "type": "github"
-      }
-    },
     "devshell": {
       "inputs": {
         "nixpkgs": [
@@ -518,22 +502,6 @@
         "type": "github"
       }
     },
-    "neotest-golang": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1739907554,
-        "narHash": "sha256-b8xAwIQf68zzXSVG0Ff7eDKsMAP45+xRNz7FOD+sgDk=",
-        "owner": "fredrikaverpil",
-        "repo": "neotest-golang",
-        "rev": "131e0402e63966692d340861c58756853913ada3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "fredrikaverpil",
-        "repo": "neotest-golang",
-        "type": "github"
-      }
-    },
     "neovim-nightly-overlay": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -857,33 +825,15 @@
         "type": "github"
       }
     },
-    "nvim-nio": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1737405073,
-        "narHash": "sha256-eDbzJAGdUBhTwuD0Nt9FihZj1MmVdQfn/GKIybuu5a8=",
-        "owner": "nvim-neotest",
-        "repo": "nvim-nio",
-        "rev": "21f5324bfac14e22ba26553caf69ec76ae8a7662",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nvim-neotest",
-        "repo": "nvim-nio",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "ags-agenda": "ags-agenda",
-        "catppuccin-nvim": "catppuccin-nvim",
         "gitsigns-nvim": "gitsigns-nvim",
         "home-manager": "home-manager",
         "hyprland-contrib": "hyprland-contrib",
         "lzn-auto-require-nvim": "lzn-auto-require-nvim",
         "neotab-nvim": "neotab-nvim",
         "neotest": "neotest",
-        "neotest-golang": "neotest-golang",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-flatpak": "nix-flatpak",
         "nix-index-database": "nix-index-database",
@@ -893,7 +843,6 @@
         "nixvim": "nixvim",
         "nur": "nur",
         "nvim-aider": "nvim-aider",
-        "nvim-nio": "nvim-nio",
         "rust-overlay": "rust-overlay",
         "snacks-nvim": "snacks-nvim",
         "sops-nix": "sops-nix",

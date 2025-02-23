@@ -1,29 +1,9 @@
 {
-  pkgs,
   unstable,
-  inputs,
   ...
 }:
 {
   programs.nixvim = {
-    extraPlugins = [
-      {
-        plugin = pkgs.vimUtils.buildVimPlugin {
-          pname = "neotest-golang";
-          version = inputs.neotest-golang.shortRev;
-          src = inputs.neotest-golang;
-        };
-        optional = true;
-      }
-      {
-        plugin = pkgs.vimUtils.buildVimPlugin {
-          pname = "nio";
-          version = inputs.nvim-nio.shortRev;
-          src = inputs.nvim-nio;
-        };
-        optional = true;
-      }
-    ];
     plugins.neotest = {
       enable = true;
       package = unstable.vimPlugins.neotest;

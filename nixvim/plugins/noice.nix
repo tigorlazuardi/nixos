@@ -1,5 +1,17 @@
 { unstable, ... }:
 {
+  programs.nixvim.keymaps = [
+    {
+      key = "<S-Enter>";
+      action.__raw = ''
+        function()
+          require('noice').redirect(vim.fn.getcmdline())
+        end
+      '';
+      mode = "c";
+      options.desc = "Redirect CMDLine";
+    }
+  ];
   programs.nixvim.plugins = {
     notify = {
       enable = true;
@@ -13,17 +25,6 @@
     noice = {
       enable = true;
       package = unstable.vimPlugins.noice-nvim;
-      lazyLoad.settings = {
-        event = [ "DeferredUIEnter" ];
-        keys = [
-          {
-            __unkeyed-1 = "<S-Enter>";
-            __unkeyed-2.__raw = "function() require('noice').redirect(vim.fn.getcmdline()) end";
-            desc = "Redirect CMDLine";
-            mode = "c";
-          }
-        ];
-      };
       settings = {
         lsp.override = {
           "vim.lsp.util.convert_input_to_markdown_lines" = true;
@@ -43,6 +44,17 @@
           long_message_to_split = true;
           inc_rename = false;
         };
+        routes = [
+          # temporarily disable vim.tbl_islist is deprecated until neovim
+          # 0.11 stable is released
+          {
+            filter = {
+              event = "msg_show";
+              find = "vim.tbl_islist is deprecated";
+            };
+            opts.skip = true;
+          }
+        ];
       };
     };
   };

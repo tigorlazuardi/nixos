@@ -218,7 +218,6 @@
             "-node_modules"
             "-.direnv"
           ];
-          experimentalWorkspaceModule = true;
           semanticTokens = false;
         };
       };

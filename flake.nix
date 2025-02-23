@@ -23,10 +23,6 @@
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
     };
-    catppuccin-nvim = {
-      url = "github:catppuccin/nvim";
-      flake = false;
-    };
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     hyprland-contrib = {
       url = "github:hyprwm/contrib";
@@ -84,14 +80,6 @@
     };
     neotest = {
       url = "github:nvim-neotest/neotest";
-      flake = false;
-    };
-    nvim-nio = {
-      url = "github:nvim-neotest/nvim-nio";
-      flake = false;
-    };
-    neotest-golang = {
-      url = "github:fredrikaverpil/neotest-golang";
       flake = false;
     };
     tiny-code-action = {

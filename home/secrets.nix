@@ -9,6 +9,7 @@
       "docker/config" = {
         path = "${config.home.homeDirectory}/.docker/config.json";
       };
+      "copilot".path = "${config.home.homeDirectory}/.config/github-copilot/hosts.json";
     };
   };
 }

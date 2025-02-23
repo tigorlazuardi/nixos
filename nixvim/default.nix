@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   imports = [
     ./plugins
@@ -12,6 +12,7 @@
       enable = true;
       settings.transparent_background.__raw = "vim.g.neovide or false";
     };
+    package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
     extraPackages = with pkgs; [
       ripgrep
       fd
