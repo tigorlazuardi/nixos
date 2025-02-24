@@ -51,7 +51,6 @@
       icons = { };
       comment = { };
       tabline = { };
-      base16 = { };
       files = {
         windows = {
           preview = true;
