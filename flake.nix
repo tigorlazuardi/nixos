@@ -48,6 +48,8 @@
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
+    stylix.url = "github:danth/stylix/release-24.11";
+
     #### Nix Vim
     nixvim = {
       url = "github:nix-community/nixvim";
@@ -94,6 +96,7 @@
       url = "github:brianhuster/nvim-treesitter-endwise";
       flake = false;
     };
+
   };
 
   outputs =
@@ -116,6 +119,7 @@
         nix-flatpak.nixosModules.nix-flatpak
         home-manager.nixosModules.home-manager
         nix-index-database.nixosModules.nix-index
+        inputs.stylix.nixosModules.stylix
         {
           programs.command-not-found.enable = false;
           programs.nix-index-database.comma.enable = true;

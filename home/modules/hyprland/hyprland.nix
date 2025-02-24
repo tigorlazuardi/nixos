@@ -75,7 +75,7 @@ in
         # https://wiki.hyprland.org/Configuring/Binds
         bind = [
           # Programs
-          ''$mod, RETURN, exec, footclient''
+          ''$mod, RETURN, exec, kitty''
           "$mod, E, exec, nautilus"
           "$mod, B, exec, vivaldi"
           "$mod, BackSpace, exec, wlogout"
@@ -155,7 +155,7 @@ in
           disable_splash_rendering = true;
           focus_on_activate = true;
           enable_swallow = true;
-          swallow_regex = "^(foot|footclient)$";
+          swallow_regex = "^(foot|footclient|kitty|ghostty)$";
         };
 
         animations = {

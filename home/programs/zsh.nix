@@ -66,10 +66,10 @@ in
       ''
         export ZSH_CACHE_DIR=$HOME/.cache/zsh
 
-        _ZSH_COLOR_SCHEME_FILE=$HOME/.cache/wallust/sequences
-        if [ -f "$_ZSH_COLOR_SCHEME_FILE" ]; then
-            (cat "$_ZSH_COLOR_SCHEME_FILE" &)
-        fi
+        # _ZSH_COLOR_SCHEME_FILE=$HOME/.cache/wallust/sequences
+        # if [ -f "$_ZSH_COLOR_SCHEME_FILE" ]; then
+        #     (cat "$_ZSH_COLOR_SCHEME_FILE" &)
+        # fi
 
         mkdir -p $ZSH_CACHE_DIR/completions
         fpath+=$ZSH_CACHE_DIR/completions

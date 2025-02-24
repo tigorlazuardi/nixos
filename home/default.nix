@@ -20,6 +20,7 @@ in
     ./direnv.nix
     ./secrets.nix
     ./ideavimrc.nix
+    ./stylix.nix
 
     ../nixvim
   ];
