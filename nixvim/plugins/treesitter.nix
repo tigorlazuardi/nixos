@@ -39,6 +39,7 @@
               rmap = "<c-h>",
               cmap = "<c-l>",
               rcmap = "<c-h",
+              nocursormove = false,
             },
             close = {
               enable = true,
@@ -46,7 +47,9 @@
               cmap = "<c-j>",
             },
           }
-          ua.setup(opts)
+          ua.init {
+            ua.extend_default(conf),
+          }
         end,
       },
       {
@@ -75,6 +78,7 @@
             require("neotab").tabout()
           end, {
             silent = true,
+            desc = "Jump to next snippet / Accept Copilot Suggestion / Tabout / Tab",
           })
         end,
       },
@@ -122,11 +126,14 @@
         "xml"
       ];
     };
-    nvim-autopairs = {
-      enable = true;
-      package = unstable.vimPlugins.nvim-autopairs;
-      lazyLoad.settings.ft = [ "InsertEnter" ];
-    };
+    # nvim-autopairs = {
+    #   enable = true;
+    #   package = unstable.vimPlugins.nvim-autopairs;
+    #   lazyLoad.settings.ft = [ "InsertEnter" ];
+    #   settings = {
+    #     ignored_next_char = ''[=[[%%%'%[%\"%.%%$]]=]'';
+    #   };
+    # };
     ts-comments = {
       enable = true;
       package = unstable.vimPlugins.ts-comments-nvim;
@@ -153,7 +160,7 @@
       move = {
         enable = true;
         gotoNextStart = {
-          "f" = "@function.outer";
+          "]f" = "@function.outer";
           "]c" = "@class.outer";
           "]a" = "@parameter.inner";
         };
