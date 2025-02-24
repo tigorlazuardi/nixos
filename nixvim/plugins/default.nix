@@ -6,6 +6,7 @@
     ./arrow.nix
     ./blink.nix
     ./dadbod.nix
+    ./fugitive.nix
     ./gitsigns.nix
     ./grug-far.nix
     ./lualine.nix
@@ -14,13 +15,13 @@
     ./persistence.nix
     ./protobuf.nix
     ./snacks.nix
-    ./tiny-inline-diagnostics.nix
     ./telescope.nix
+    ./tiny-inline-diagnostics.nix
     ./treesitter.nix
     ./trouble.nix
     ./ufo.nix
-    ./yanky.nix
     ./which-key.nix
+    ./yanky.nix
   ];
 
   programs.nixvim = {
