@@ -46,10 +46,22 @@
               map = "<c-j>",
               cmap = "<c-j>",
             },
+            -- {
+            --   {
+            --     "=",
+            --     ";",
+            --     ft = { "nix" },
+            --     cond = function(fn)
+            --       return not fn.in_node({}, {
+            --         "comment",
+            --         "string_fragment",
+            --       })
+            --     end,
+            --     multiline = false,
+            --   },
+            -- },
           }
-          ua.init {
-            ua.extend_default(conf),
-          }
+          ua.setup(opts)
         end,
       },
       {
