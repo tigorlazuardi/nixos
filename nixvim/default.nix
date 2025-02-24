@@ -8,10 +8,10 @@
   # Dependencies are not defined here, but whoever imports this module.
   programs.nixvim = {
     enable = true;
-    colorschemes.catppuccin = {
-      enable = true;
-      settings.transparent_background.__raw = "vim.g.neovide or false";
-    };
+    # colorschemes.catppuccin = {
+    #   enable = true;
+    #   settings.transparent_background.__raw = "vim.g.neovide or false";
+    # };
     package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
     extraPackages = with pkgs; [
       ripgrep

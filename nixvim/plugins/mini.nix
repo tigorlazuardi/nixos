@@ -45,12 +45,13 @@
   ];
   programs.nixvim.plugins.mini = {
     enable = true;
-    package = unstable.vimPlugins.mini-nvim;
+    # package = unstable.vimPlugins.mini-nvim;
     mockDevIcons = true;
     modules = {
       icons = { };
       comment = { };
       tabline = { };
+      base16 = { };
       files = {
         windows = {
           preview = true;
@@ -75,12 +76,8 @@
       };
       starter = {
         content_hooks = {
-          "__unkeyed-1.adding_bullet" = {
-            __raw = ''require("mini.starter").gen_hook.adding_bullet()'';
-          };
-          "__unkeyed-3.padding" = {
-            __raw = ''require("mini.starter").gen_hook.aligning("center", "center")'';
-          };
+          "__unkeyed-1.adding_bullet".__raw = ''require("mini.starter").gen_hook.adding_bullet()'';
+          "__unkeyed-3.padding".__raw = ''require("mini.starter").gen_hook.aligning("center", "center")'';
         };
         evaluate_single = true;
         header = ''

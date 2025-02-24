@@ -10,6 +10,10 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     targets = {
       lazygit.enable = true;
+      nixvim.transparentBackground = {
+        main = true;
+        signColumn = true;
+      };
     };
     opacity = {
       applications = 1.0;

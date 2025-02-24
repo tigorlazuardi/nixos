@@ -21,11 +21,8 @@ let
         echo "$image_file" > "${wallpaperDir}/origin.txt"
         cp "$image_file" "$target"
         swww img "$target"
-        ${unstable.wallust}/bin/wallust run "$target"
         ${pkgs.graphicsmagick}/bin/gm convert -resize 75% -blur 50x30 "$target" "$blur_target"
         ${pkgs.imagemagick}/bin/magick "$target" -resize 25% -gravity Center -extent 1:1 "$square_target"
-
-        ${config.profile.hyprland.postDraw}
       '';
 in
 {

@@ -86,12 +86,6 @@ in
         ''swaync-client --inhibitor-remove "xdg-desktop-portal-hyprland"'';
     };
 
-    profile.hyprland.postDraw =
-      #sh
-      ''
-        swaync-client --reload-css
-      '';
-
     home.packages = with pkgs; [ libnotify ];
 
     home.file.".config/wallust/templates/swaync_base16.css".text =
