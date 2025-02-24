@@ -119,7 +119,6 @@
         nix-flatpak.nixosModules.nix-flatpak
         home-manager.nixosModules.home-manager
         nix-index-database.nixosModules.nix-index
-        inputs.stylix.nixosModules.stylix
         {
           programs.command-not-found.enable = false;
           programs.nix-index-database.comma.enable = true;

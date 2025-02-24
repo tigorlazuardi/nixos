@@ -114,32 +114,6 @@ in
           hash = "sha256-8xdBPdKSiwB7iRU8DJdTHY+BjfR9D3FtyVtDL9tNiy4=";
         };
       };
-      ".config/yazi/theme.toml".source =
-        let
-          catppuccin-theme = pkgs.fetchFromGitHub {
-            owner = "catppuccin";
-            repo = "yazi";
-            rev = "37dec9bf1f7e52e0d593c225827b9dbc71ce504c";
-            hash = "sha256-oJo52hMSK7mr5f0DtnyaN1FVOSKKUOHWCT80V1qfyrU=";
-          };
-        in
-        "${catppuccin-theme}/themes/mocha.toml";
-      # ".config/yazi/init.lua".text = /*lua*/ ''
-      #   require("bookmarks"):setup({
-      #       last_directory = { enable = false, persist = false },
-      #       persist = "none",
-      #       desc_format = "full",
-      #       notify = {
-      #           enable = false,
-      #           timeout = 1,
-      #           message = {
-      #               new = "New bookmark '<key>' -> '<folder>'",
-      #               delete = "Deleted bookmark in '<key>'",
-      #               delete_all = "Deleted all bookmarks",
-      #           },
-      #       },
-      #   })
-      # '';
     };
   };
 }

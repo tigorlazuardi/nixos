@@ -27,7 +27,6 @@ in
           gaps_in = 10;
           gaps_out = 14;
           border_size = 3;
-          "col.active_border" = "rgba(ffffffff)";
           layout = "dwindle";
         };
 

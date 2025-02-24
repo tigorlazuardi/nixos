@@ -15,10 +15,10 @@ in
         general = {
           ignore_empty_input = true;
         };
-        background = {
-          monitor = "";
-          path = "${config.home.homeDirectory}/.cache/wallpaper/blurred.png";
-        };
+        # background = {
+        #   monitor = "";
+        #   path = "${config.home.homeDirectory}/.cache/wallpaper/blurred.png";
+        # };
         input-field = {
           monitor = "";
           size = "200, 50";
@@ -27,16 +27,16 @@ in
           dots_spacing = 0.15;
           dots_center = true;
           dots_rounding = -1;
-          outer_color = "rgb(151515)";
-          inner_color = "rgb(FFFFFF)";
-          font_color = "rgb(10, 10, 10)";
+          # outer_color = "rgb(151515)";
+          # inner_color = "rgb(FFFFFF)";
+          # font_color = "rgb(10, 10, 10)";
           fade_on_empty = false;
           fade_timeout = 1000;
           placeholder_text = "<i>Input Password...</i>";
           hide_input = false;
           rounding = -1;
-          check_color = "rgb(204, 136, 34)";
-          fail_color = "rgb(204, 34, 34)";
+          # check_color = "rgb(204, 136, 34)";
+          # fail_color = "rgb(204, 34, 34)";
           fail_text = "<i>$FAIL <b>($ATTEMPTS)</b></i>";
           fail_transition = 300;
           capslock_color = -1;

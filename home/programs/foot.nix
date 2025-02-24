@@ -8,9 +8,9 @@ in
       enable = true;
       settings = {
         main = {
-          dpi-aware = "yes";
-          font = cfg.font;
-          include = lib.mkIf config.profile.hyprland.enable "${config.home.homeDirectory}/.config/foot/colors.ini";
+          # dpi-aware = "yes";
+          # font = cfg.font;
+          # include = lib.mkIf config.profile.hyprland.enable "${config.home.homeDirectory}/.config/foot/colors.ini";
           selection-target = "both";
         };
         mouse = {
