@@ -1,4 +1,9 @@
-{ unstable, ... }:
+{
+  unstable,
+  pkgs,
+  config,
+  ...
+}:
 {
   programs.nixvim = {
     extraFiles."queries/go/injections.scm".text =
@@ -105,7 +110,7 @@
           (#gsub! @injection.language "/%*%s*([%w%p]+)%s*%*/" "%1")
         )
       '';
-    extraPackages = with unstable; [
+    extraPackages = with pkgs; [
       gotools
       go-tools
       impl
@@ -169,7 +174,12 @@
             callback = function(ctx)
               local client = vim.lsp.get_client_by_id(ctx.data.client_id) or {}
               if client.name == "gopls" then
-                vim.api.nvim_buf_create_user_command(ctx.buf, "Impl", [[Telescope goimpl]], {})
+                vim.api.nvim_buf_create_user_command(
+                  ctx.buf,
+                  "Impl",
+                  [[Telescope goimpl]],
+                  {}
+                )
                 vim.keymap.set(
                   "n",
                   "<leader>ci",
@@ -185,7 +195,6 @@
 
     plugins.lsp.servers.gopls = {
       enable = true;
-      package = unstable.gopls;
       settings = {
         gopls = {
           gofumpt = true;
@@ -207,6 +216,8 @@
             nonewvars = true;
             unusedwrite = true;
           };
+          experimentalWorkspaceModule = true;
+          experimentalTemplateSupport = true;
           usePlaceholders = false;
           completeUnimported = true;
           staticcheck = true;
@@ -221,9 +232,24 @@
           semanticTokens = false;
         };
       };
-      extraOptions.capabilities.__raw = ''
-        require("blink.cmp").get_lsp_capabilities({}, true)
-      '';
+      extraOptions = {
+        capabilities.__raw = ''
+          require("blink.cmp").get_lsp_capabilities({}, true)
+        '';
+        root_dir = # lua
+          ''
+            function(fname)
+              local mod_cache = [[${config.home.homeDirectory}/go/pkg/mod]]
+              if fname:sub(1, #mod_cache) == mod_cache then
+                local clients = vim.lsp.get_active_clients { name = "gopls" }
+                if #clients > 0 then
+                  return clients[#clients].config.root_dir
+                end
+              end
+              return require("lspconfig.util").root_pattern("go.mod", ".git", "go.work")(fname)
+            end
+          '';
+      };
     };
     plugins.neotest.adapters.golang = {
       enable = true;

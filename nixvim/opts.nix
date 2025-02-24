@@ -61,7 +61,7 @@
     '';
   undofile = true;
   undolevels = 10000;
-  updatetime = 400;
+  updatetime = 200;
   virtualedit = "block";
   wildmode = "longest:full,full";
   winminwidth = 5;

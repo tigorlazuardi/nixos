@@ -1,8 +1,8 @@
 { unstable, inputs, ... }:
 {
-  imports = [
-    ./treesitter-diagnostic.nix
-  ];
+  # imports = [
+  #   ./treesitter-diagnostic.nix
+  # ];
   # smartindent settings are interfering with treesitter
   programs.nixvim.opts.smartindent = unstable.lib.mkForce false;
   programs.nixvim.extraPlugins = [
