@@ -10,10 +10,11 @@ in
 {
   home.packages = with pkgs; [
     eza
-    bat
     gojq
     tre-command
   ];
+  programs.bat.enable = true;
+  programs.btop.enable = true;
   programs.zsh = {
     enable = true;
     envExtra = # bash
