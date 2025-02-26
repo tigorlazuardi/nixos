@@ -29,6 +29,15 @@
               })
             end
           '';
+          deepseek.__raw = ''
+            function()
+              return require("codecompanion.adapters").extend("deepseek", {
+                env = {
+                  api_key = ([[cmd:cat %s]]):format(os.getenv "DEEPSEEK_API_KEY_FILE");
+                }
+              })
+            end
+          '';
         };
       };
       lazyLoad.settings.cmd = [
