@@ -8,7 +8,7 @@ let
   cfg = config.profile.hyprland;
 in
 {
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf false {
     home.packages = [ unstable.hyprpaper ];
 
     home.file.".config/hypr/hyprpaper.conf".text =

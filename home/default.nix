@@ -17,6 +17,7 @@ in
     ./games
     ./environments
 
+    ./catppuccin.nix
     ./direnv.nix
     ./secrets.nix
     ./ideavimrc.nix

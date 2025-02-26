@@ -5,16 +5,12 @@
   ];
 
   stylix = {
-    enable = true;
+    enable = false;
     image = ../home/modules/hyprland/wallpaper.jpeg;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     targets = {
       lazygit.enable = true;
       nixvim.enable = false;
-      # nixvim.transparentBackground = {
-      #   main = true;
-      #   signColumn = true;
-      # };
     };
     opacity = {
       applications = 1.0;

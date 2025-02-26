@@ -49,6 +49,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     stylix.url = "github:danth/stylix/release-24.11";
+    catppuccin.url = "github:catppuccin/nix";
 
     #### Nix Vim
     nixvim = {
