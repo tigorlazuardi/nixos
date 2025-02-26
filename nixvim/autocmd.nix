@@ -69,6 +69,7 @@
           "spectre_panel"
           "startuptime"
           "tsplayground"
+          "fugitive"
         ];
         group = "XCloseWithQ";
         callback.__raw = ''
