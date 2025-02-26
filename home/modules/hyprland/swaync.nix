@@ -24,12 +24,14 @@ in
             url = "https://raw.githubusercontent.com/zDyanTB/HyprNova/5c2b4634a6971aaf995b4fc69cd74f8bbf0b84d0/.config/swaync/themes/nova-dark/central_control.css";
             hash = "sha256-XzFea04G4DCxDUF/XOqUkKei+Xv9bmdnSVU4/Sjtefc=";
           };
+          catppuccin-theme = pkgs.fetchurl {
+            url = "https://github.com/catppuccin/swaync/releases/download/v0.2.3/mocha.css";
+            hash = "sha256-Hie/vDt15nGCy4XWERGy1tUIecROw17GOoasT97kIfc=";
+          };
         in
         # css
         ''
-          @import '${config.home.homeDirectory}/.cache/wallust/swaync_base16.css';
-          @import '${controlCenterCss}';
-          @import '${notificationCss}';
+          @import '${catppuccin-theme}'
 
           .control-center {
             background: alpha(@background, 0.9);
@@ -53,7 +55,6 @@ in
             button-text = " 󰎟 ";
           };
         };
-
         scripts = {
           _10-hyprland-ytptube = {
             app-name = "ytptube";
@@ -66,6 +67,7 @@ in
           };
         };
       };
+
     };
 
     systemd.user.services.swaync.Service.Environment = [ "G_MESSAGES_DEBUG=all" ];

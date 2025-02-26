@@ -224,6 +224,8 @@ in
             padding: 0.4rem 0.4rem;
             font-weight: bold;
             transition: all 0.2s ease-in-out;
+            border: 2px solid transparent;
+            border-style: none none solid none;
           }
 
           #workspaces button.active {
