@@ -41,8 +41,10 @@
               local function map(mode, l, r, desc)
                 vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
               end
+              
+              -- Current Line Blame is too dark to read.
+              vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", { link = "SnacksIndentBlank" })
 
-              -- stylua: ignore start
               map("n", "]h", function()
                 if vim.wo.diff then
                   vim.cmd.normal({ "]c", bang = true })
