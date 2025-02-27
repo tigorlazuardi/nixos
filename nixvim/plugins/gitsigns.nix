@@ -43,7 +43,7 @@
               end
               
               -- Current Line Blame is too dark to read.
-              vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", { link = "SnacksIndentBlank" })
+              vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", { link = "Comment" })
 
               map("n", "]h", function()
                 if vim.wo.diff then
