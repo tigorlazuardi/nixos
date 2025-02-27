@@ -39,7 +39,7 @@ in
 
     # Some toolings will lookup for $GOROOT env.
     home.sessionVariables = {
-      GOROOT = "${config.programs.go.package}/share/go";
+      # GOROOT = "${config.programs.go.package}/share/go";
       GOPATH = "${config.home.homeDirectory}/go";
       GOEXPERIMENT = "rangefunc";
     };
