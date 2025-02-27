@@ -33,6 +33,11 @@ in
         ''
           @import '${catppuccin-theme}'
 
+          * {
+            all: unset;
+            font-family: "JetBrainsMono Nerd Font";
+          }
+
           .control-center {
             background: alpha(@background, 0.9);
           }
