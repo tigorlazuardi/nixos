@@ -27,6 +27,10 @@ in
         background_opacity = 0.8;
         background_blur = 40;
         cursor_blink_interval = toString 0.5;
+
+        # Clipboard
+        copy_on_select = true;
+        strip_trailing_spaces = "smart";
       };
       keybindings = {
         "ctrl+a>enter" = "launch --location=vsplit --cwd=current";
