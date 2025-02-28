@@ -9,6 +9,7 @@
   # Dependencies are not defined here, but whoever imports this module.
   programs.nixvim = {
     enable = true;
+    defaultEditor = true;
     colorschemes.catppuccin = {
       enable = true;
       settings = {
