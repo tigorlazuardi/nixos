@@ -2,6 +2,7 @@
   config,
   profile-path,
   pkgs,
+  inputs,
   ...
 }:
 let
@@ -23,6 +24,9 @@ in
     ./ideavimrc.nix
     ./stylix.nix
 
+    inputs.sops-nix.homeManagerModules.sops
+    inputs.nixvim.homeManagerModules.nixvim
+    inputs.nix-index-database.hmModules.nix-index
     ../nixvim
   ];
 
@@ -41,6 +45,7 @@ in
       '')
     ];
   };
+  programs.nix-index.enable = true;
   programs.home-manager.enable = true;
 
   # This allows user rootless podman to use network's host by default.

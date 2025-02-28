@@ -239,7 +239,7 @@
         root_dir = # lua
           ''
             function(fname)
-              local mod_cache = [[${config.home.homeDirectory}/go/pkg/mod]]
+              local mod_cache = [[/home/${config.profile.user.name}/go/pkg/mod]]
               if fname:sub(1, #mod_cache) == mod_cache then
                 local clients = vim.lsp.get_active_clients { name = "gopls" }
                 if #clients > 0 then

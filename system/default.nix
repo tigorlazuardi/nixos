@@ -18,7 +18,24 @@
     ./user.nix
     ./keyboard.nix
     ./bareksa
+
+    inputs.sops-nix.nixosModules.sops
+    inputs.nur.modules.nixos.default
+    inputs.nixvim.nixosModules.nixvim
+    inputs.nix-flatpak.nixosModules.nix-flatpak
+    inputs.home-manager.nixosModules.home-manager
+    inputs.nix-index-database.nixosModules.nix-index
+    inputs.stylix.nixosModules.stylix
+    ../nixvim
   ];
+
+  nixpkgs.overlays = [
+    inputs.nur.overlays.default
+    inputs.rust-overlay.overlays.default
+  ];
+
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
 
   security.sudo.wheelNeedsPassword = config.profile.security.sudo.wheelNeedsPassword;
   networking.hostName = config.profile.hostname;
@@ -32,6 +49,15 @@
     "nix-command"
     "flakes"
   ];
+  nix.settings = {
+    substituters = [
+      "https://cache.nixos.org/"
+      "https://nix-community.cachix.org"
+    ];
+    trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
+  };
+  programs.command-not-found.enable = false;
+  programs.nix-index-database.comma.enable = true;
   nix.extraOptions = ''
     http-connections = 8
     connect-timeout = 5

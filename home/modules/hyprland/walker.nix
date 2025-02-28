@@ -2,12 +2,16 @@
   config,
   unstable,
   lib,
+  inputs,
   ...
 }:
 let
   cfg = config.profile.hyprland;
 in
 {
+  imports = [
+    inputs.walker.homeManagerModules.default
+  ];
   config = lib.mkIf cfg.enable {
     programs.walker = {
       enable = true;

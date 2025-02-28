@@ -1,9 +1,5 @@
 { inputs, pkgs, ... }:
 {
-  imports = [
-    inputs.stylix.homeManagerModules.stylix
-  ];
-
   stylix = {
     enable = false;
     image = ../home/modules/hyprland/wallpaper.jpeg;

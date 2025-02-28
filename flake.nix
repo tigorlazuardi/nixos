@@ -102,57 +102,11 @@
 
   outputs =
     inputs@{
-      nur,
       nixpkgs,
-      home-manager,
-      sops-nix,
-      neovim-nightly-overlay,
-      nix-index-database,
-      rust-overlay,
-      nix-flatpak,
       ...
     }:
     let
       system = "x86_64-linux";
-      commonModules = [
-        nur.modules.nixos.default
-        inputs.nixvim.nixosModules.nixvim
-        nix-flatpak.nixosModules.nix-flatpak
-        home-manager.nixosModules.home-manager
-        nix-index-database.nixosModules.nix-index
-        {
-          programs.command-not-found.enable = false;
-          programs.nix-index-database.comma.enable = true;
-        }
-        {
-          nixpkgs.overlays = [
-            neovim-nightly-overlay.overlays.default
-            nur.overlays.default
-            rust-overlay.overlays.default
-          ] ++ import ./overlays { inherit system inputs; };
-        }
-        {
-          nix.settings = {
-            substituters = [
-              "https://cache.nixos.org/"
-              "https://nix-community.cachix.org"
-            ];
-            trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
-          };
-        }
-        sops-nix.nixosModules.sops
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.sharedModules = [
-            nix-index-database.hmModules.nix-index
-            inputs.sops-nix.homeManagerModules.sops
-            inputs.walker.homeManagerModules.default
-            inputs.nixvim.homeManagerModules.nixvim
-            { programs.nix-index.enable = true; }
-          ];
-        }
-      ];
       unstable = import inputs.nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
@@ -181,7 +135,7 @@
               home-manager.extraSpecialArgs = specialArgs;
               home-manager.users.${user} = import ./home;
             }
-          ] ++ commonModules;
+          ];
           specialArgs = specialArgs;
         }
       );
