@@ -6,6 +6,7 @@
     ./arrow.nix
     ./blink.nix
     ./dadbod.nix
+    ./flash.nix
     ./fugitive.nix
     ./gitsigns.nix
     ./grug-far.nix
