@@ -7,5 +7,6 @@
     enable = true;
     flavor = "mocha";
     gtk.enable = true;
+    zellij.enable = false;
   };
 }
