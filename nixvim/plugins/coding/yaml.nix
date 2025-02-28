@@ -42,6 +42,16 @@
                 value: (block_node (block_scalar) @injection.content)
               )
             )
+            ; Top level document
+            (
+              (comment) @injection.language .
+              (document (
+                block_node (
+                  block_mapping . (
+                    block_mapping_pair
+                    _ (block_node (block_scalar) @injection.content)
+              ))))
+            )
           ]
           (#offset! @injection.content 0 1 0 0)
           (#gsub! @injection.language "#%s*([%w%p]+)%s*" "%1")
