@@ -45,9 +45,24 @@ let
     installPhase = ''
       runHook preInstall
 
-      tgtDir=Future-Cyan-Hyprcursor_Theme
-      mkdir -p "$out/share/icons/$tgtDir"
-      cp -R "./$tgtDir" "$out/share/icons/$tgtDir/"
+      mkdir -p $out/share/icons
+      cp -R "./Future-Cyan-Hyprcursor_Theme" "$out/share/icons"
+
+      runHook postInstall
+    '';
+  });
+  nordzy-hyprcursors-white = pkgs.stdenv.mkDerivation (finalAttrs: rec {
+    pname = "nordzy-hyprcursors-white";
+    version = "2.3.0";
+    src = pkgs.fetchzip {
+      url = "https://github.com/guillaumeboehm/Nordzy-cursors/releases/download/v${version}/Nordzy-hyprcursors-white.tar.gz";
+      sha256 = "sha256-lTqMh5xukMn5LgFz5toVfSwuXsPDERcpnUGuzH8af8k=";
+    };
+    installPhase = ''
+      runHook preInstall
+
+      mkdir -p $out/share/icons
+      cp -R . $out/share/icons
 
       runHook postInstall
     '';
@@ -58,9 +73,11 @@ in
     home.packages = [
       rose-pine-hyprcursor
       future-cyan-hyprcursor
+      nordzy-hyprcursors-white
     ];
     home.sessionVariables = {
-      HYPRCURSOR_THEME = "rose-pine-hyprcursor";
+      HYPRCURSOR_THEME = "Future-Cyan-Hyprcursor_Theme";
+      HYPRCURSOR_SIZE = "28";
     };
   };
 }
