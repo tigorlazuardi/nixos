@@ -64,9 +64,6 @@ in
       sopsFile = ../secrets/ssh.yaml;
     in
     {
-      "ai/gemini/api_key".sopsFile = ../secrets/ai.yaml;
-      "ai/anthropic/api_key".sopsFile = ../secrets/ai.yaml;
-      "ai/deepseek/api_key".sopsFile = ../secrets/ai.yaml;
       "ssh/id_ed25519/public" = {
         inherit sopsFile;
         path = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
@@ -82,8 +79,5 @@ in
   home.sessionVariables = {
     XDG_CONFIG_HOME = "/home/${user.name}/.config";
     NIXPKGS_ALLOW_UNFREE = "1";
-    GEMINI_API_KEY_FILE = config.sops.secrets."ai/gemini/api_key".path;
-    ANTHROPIC_API_KEY_FILE = config.sops.secrets."ai/anthropic/api_key".path;
-    DEEPSEEK_API_KEY_FILE = config.sops.secrets."ai/deepseek/api_key".path;
   };
 }

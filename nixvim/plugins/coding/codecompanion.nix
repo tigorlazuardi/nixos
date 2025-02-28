@@ -1,5 +1,11 @@
-{ unstable, ... }:
+{ config, unstable, ... }:
+let
+  secretFile = ../../../secrets/ai.yaml;
+in
 {
+  sops.secrets."ai/gemini/api_key".sopsFile = secretFile;
+  sops.secrets."ai/anthropic/api_key".sopsFile = secretFile;
+  sops.secrets."ai/deepseek/api_key".sopsFile = secretFile;
   programs.nixvim = {
     plugins.codecompanion = {
       enable = true;
@@ -15,7 +21,7 @@
             function()
               return require("codecompanion.adapters").extend("anthropic", {
                 env = {
-                  api_key = ([[cmd:cat %s]]):format(os.getenv "ANTHROPIC_API_KEY_FILE");
+                  api_key = [[cmd:cat ${config.sops.secrets."ai/anthropic/api_key".path}]],
                 }
               })
             end
@@ -24,7 +30,7 @@
             function()
               return require("codecompanion.adapters").extend("gemini", {
                 env = {
-                  api_key = ([[cmd:cat %s]]):format(os.getenv "GEMINI_API_KEY_FILE");
+                  api_key = [[cmd:cat ${config.sops.secrets."ai/gemini/api_key".path}]],
                 }
               })
             end
@@ -33,7 +39,7 @@
             function()
               return require("codecompanion.adapters").extend("deepseek", {
                 env = {
-                  api_key = ([[cmd:cat %s]]):format(os.getenv "DEEPSEEK_API_KEY_FILE");
+                  api_key = [[cmd:cat ${config.sops.secrets."ai/deepseek/api_key".path}]],
                 }
               })
             end

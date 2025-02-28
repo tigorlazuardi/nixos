@@ -15,10 +15,10 @@ in
         general = {
           ignore_empty_input = true;
         };
-        # background = {
-        #   monitor = "";
-        #   path = "${config.home.homeDirectory}/.cache/wallpaper/blurred.png";
-        # };
+        background = {
+          monitor = "";
+          path = "${config.home.homeDirectory}/.cache/wallpaper/blurred.png";
+        };
         input-field = {
           monitor = "";
           size = "200, 50";
