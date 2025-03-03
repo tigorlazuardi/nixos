@@ -6,46 +6,31 @@
 }:
 let
   cfg = config.profile.hyprland;
+  flavor = "mocha";
+  catppuccin-theme = pkgs.stdenv.mkDerivation rec {
+    pname = "catppuccin-theme-swaync";
+    version = "0.2.3";
+    src = pkgs.fetchurl {
+      url = "https://github.com/catppuccin/swaync/releases/download/v${version}/${flavor}.css";
+      hash = "sha256-Hie/vDt15nGCy4XWERGy1tUIecROw17GOoasT97kIfc=";
+    };
+    phases = [ "installPhase" ];
+
+    installPhase = ''
+      runHook preInstall
+      mkdir -p $out
+      cp $src $out/${flavor}.css
+      sed -i 's#Ubuntu Nerd Font#JetBrainsMono Nerd Font#' $out/${flavor}.css
+      runHook postInstall
+    '';
+  };
 in
 {
   config = lib.mkIf cfg.enable {
     services.swaync = {
       enable = true;
       # pkill swaync && GTK_DEBUG=interactive swaync - launch swaync with gtk debugger
-      style =
-        let
-          # Origin: "https://github.com/zDyanTB/HyprNova/blob/5c2b4634a6971aaf995b4fc69cd74f8bbf0b84d0/.config/swaync/themes/nova-dark/notifications.css";
-          notificationCss = pkgs.fetchurl {
-            url = "https://raw.githubusercontent.com/zDyanTB/HyprNova/5c2b4634a6971aaf995b4fc69cd74f8bbf0b84d0/.config/swaync/themes/nova-dark/notifications.css";
-            hash = "sha256-QIM60RX/OedhfkMKngj540d/9wj4E54ncv24nueYlyk=";
-          };
-          # Origin: https://github.com/zDyanTB/HyprNova/blob/5c2b4634a6971aaf995b4fc69cd74f8bbf0b84d0/.config/swaync/themes/nova-dark/central_control.css
-          controlCenterCss = pkgs.fetchurl {
-            url = "https://raw.githubusercontent.com/zDyanTB/HyprNova/5c2b4634a6971aaf995b4fc69cd74f8bbf0b84d0/.config/swaync/themes/nova-dark/central_control.css";
-            hash = "sha256-XzFea04G4DCxDUF/XOqUkKei+Xv9bmdnSVU4/Sjtefc=";
-          };
-          catppuccin-theme = pkgs.fetchurl {
-            url = "https://github.com/catppuccin/swaync/releases/download/v0.2.3/mocha.css";
-            hash = "sha256-Hie/vDt15nGCy4XWERGy1tUIecROw17GOoasT97kIfc=";
-          };
-        in
-        # css
-        ''
-          @import '${catppuccin-theme}'
-
-          * {
-            all: unset;
-            font-family: "JetBrainsMono Nerd Font";
-          }
-
-          .control-center {
-            background: alpha(@background, 0.9);
-          }
-
-          .floating-notifications.background .notification-row .notification-background {
-            background: alpha(@background, 0.9);
-          }
-        '';
+      style = builtins.readFile "${catppuccin-theme}/${flavor}.css";
       settings = {
         positionX = "center";
         positionY = "top";
