@@ -5,6 +5,7 @@
 
     ./autocmd.nix
     ./neovide.nix
+    ./keymaps.nix
   ];
   # Dependencies are not defined here, but whoever imports this module.
   programs.nixvim = {
@@ -34,6 +35,7 @@
     extraPackages = with pkgs; [
       ripgrep
       fd
+      wgo
     ];
     # Space key has to be set to NOP for setting leader key to space to work.
     #
@@ -44,7 +46,6 @@
         vim.keymap.set("", "q", "<Nop>", {})
         vim.keymap.set("", "<leader>Q", "q", { desc = "Record Macro" })
       '';
-    keymaps = import ./keymaps.nix;
     globals = {
       # Set leader key to space.
       mapleader = " ";
