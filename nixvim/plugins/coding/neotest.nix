@@ -72,12 +72,13 @@
       settings = {
         status.virtual_text = true;
         output.open_on_run = true;
-        quickfix.open = # lua
-          ''
-            function()
+        quickfix.__raw = ''
+          {
+            open = function()
               require("trouble").open({ mode = "quickfix", focus = false })
-            end
-          '';
+            end,
+          }
+        '';
         consumers.trouble.__raw = ''
           function(client)
             client.listeners.results = function(adapter_id, results, partial)
@@ -112,7 +113,11 @@
           virtual_text = {
             format = function(diagnostic)
               -- Replace newline and tab characters with space for more compact diagnostics
-              local message = diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+              local message = diagnostic.message
+                :gsub("\n", " ")
+                :gsub("\t", " ")
+                :gsub("%s+", " ")
+                :gsub("^%s+", "")
               return message
             end,
           },
