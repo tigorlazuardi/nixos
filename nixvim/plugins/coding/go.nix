@@ -236,7 +236,7 @@
         capabilities.__raw = ''
           require("blink.cmp").get_lsp_capabilities({}, true)
         '';
-        root_dir = # lua
+        root_dir.__raw = # lua
           ''
             function(fname)
               local mod_cache = [[/home/${config.profile.user.name}/go/pkg/mod]]
