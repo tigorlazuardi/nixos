@@ -37,17 +37,17 @@
           };
           filetypes."*" = true;
         };
-        luaConfig.post = ''
-          vim.keymap.set("i", "<c-e>", function()
-            if require("copilot.suggestion").is_visible() then
-              require("copilot.suggestion").dismiss()
-            end
-            return "<c-e>"
-          end, {
-            silent = true,
-            expr = true,
-          })
-        '';
+        # luaConfig.post = ''
+        #   vim.keymap.set("i", "<c-e>", function()
+        #     if require("copilot.suggestion").is_visible() then
+        #       require("copilot.suggestion").dismiss()
+        #     end
+        #     return "<c-e>"
+        #   end, {
+        #     silent = true,
+        #     expr = true,
+        #   })
+        # '';
       };
     };
   };
