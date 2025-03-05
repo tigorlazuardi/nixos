@@ -33,21 +33,20 @@
             auto_trigger = true;
             hide_during_completion = false;
             keymap.accept = "<a-l>";
-            keymap.dismiss = "";
           };
           filetypes."*" = true;
         };
-        # luaConfig.post = ''
-        #   vim.keymap.set("i", "<c-e>", function()
-        #     if require("copilot.suggestion").is_visible() then
-        #       require("copilot.suggestion").dismiss()
-        #     end
-        #     return "<c-e>"
-        #   end, {
-        #     silent = true,
-        #     expr = true,
-        #   })
-        # '';
+        luaConfig.post = ''
+          vim.keymap.set("i", "<c-e>", function()
+            if require("copilot.suggestion").is_visible() then
+              require("copilot.suggestion").dismiss()
+            end
+            return "<c-e>"
+          end, {
+            silent = true,
+            expr = true,
+          })
+        '';
       };
     };
   };

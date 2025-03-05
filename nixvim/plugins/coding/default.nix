@@ -11,6 +11,7 @@
     ./markdown.nix
     ./neotest.nix
     ./nix.nix
+    ./nvim-docs-view.nix
     ./svelte.nix
     ./tiny-code-action.nix
     ./typescript.nix

@@ -70,6 +70,7 @@
           "startuptime"
           "tsplayground"
           "fugitive"
+          "nvim-docs-view"
         ];
         group = "XCloseWithQ";
         callback.__raw = ''
