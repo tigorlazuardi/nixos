@@ -32,11 +32,11 @@
         # (map "<leader>z" "<cmd>lua Snacks.lazygit()<cr>" { desc = "(Snacks) Open Lazygit"; })
         ### Searches
         (map "<leader>ff" "<cmd>lua Snacks.picker.files()<cr>" { desc = "(Snacks) Find Files"; })
-        (map "<leader>fb" "<cmd>lua Snacks.picker.lines()<cr>" { desc = "(Snacks) Find Text in File"; })
         (map "<leader>:" "<cmd>lua Snacks.picker.command_history()<cr>" { desc = "Command History"; })
         (map "<leader>fp" "<cmd>lua Snacks.picker.projects()<cr>" { desc = "Projects"; })
-        (map "<leader>fg" "<cmd>lua Snacks.picker.grep()<cr>" { desc = "Find Text"; })
-        (map "<leader>fB" "<cmd>lua Snacks.picker.grep_buffer()<cr>" {
+        (map "<leader>sb" "<cmd>lua Snacks.picker.lines()<cr>" { desc = "(Snacks) Find Text in File"; })
+        (map "<leader>sg" "<cmd>lua Snacks.picker.grep()<cr>" { desc = "Find Text"; })
+        (map "<leader>sB" "<cmd>lua Snacks.picker.grep_buffer()<cr>" {
           desc = "Find Text in Open Buffers";
         })
         (map "<cr>" "<cmd>lua Snacks.picker.grep()<cr>" { desc = "Find Text"; })
