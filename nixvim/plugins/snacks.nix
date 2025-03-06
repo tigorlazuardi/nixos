@@ -32,14 +32,14 @@
         # (map "<leader>z" "<cmd>lua Snacks.lazygit()<cr>" { desc = "(Snacks) Open Lazygit"; })
         ### Searches
         (map "<leader>ff" "<cmd>lua Snacks.picker.files()<cr>" { desc = "(Snacks) Find Files"; })
+        (map "<leader>fb" "<cmd>lua Snacks.picker.lines()<cr>" { desc = "(Snacks) Find Text in File"; })
         (map "<leader>:" "<cmd>lua Snacks.picker.command_history()<cr>" { desc = "Command History"; })
         (map "<leader>fp" "<cmd>lua Snacks.picker.projects()<cr>" { desc = "Projects"; })
-        (map "<leader>sg" "<cmd>lua Snacks.picker.grep()<cr>" { desc = "Find Text"; })
-        (map "<leader>sb" "<cmd>lua Snacks.picker.lines()<cr>" { desc = "Find Line in Buffer"; })
-        (map "<leader>sB" "<cmd>lua Snacks.picker.grep_buffer()<cr>" {
+        (map "<leader>fg" "<cmd>lua Snacks.picker.grep()<cr>" { desc = "Find Text"; })
+        (map "<leader>fB" "<cmd>lua Snacks.picker.grep_buffer()<cr>" {
           desc = "Find Text in Open Buffers";
         })
-        (map "<cr>" "<cmd>lua Snacks.picker.smart()<cr>" { desc = "Smart Find Files"; })
+        (map "<cr>" "<cmd>lua Snacks.picker.grep()<cr>" { desc = "Find Text"; })
         (map "*" "<cmd>lua Snacks.picker.grep_word()<cr>" { desc = "Grep word under cursor"; })
         (map "<leader>sk" "<cmd>lua Snacks.picker.keymaps()<cr>" { desc = "Keymaps"; })
         (map "<F1>" "<cmd>lua Snacks.picker.help()<cr>" { desc = "Help"; })
@@ -119,6 +119,27 @@
               hidden = true;
               ignored = true;
             };
+            files = {
+              hidden = true;
+              ignored = true;
+              exclude = [
+                ".git/**/*"
+                "node_modules/**/*"
+                "vendor/**/*"
+                "target/**/*"
+                "dist/**/*"
+                "build/**/*"
+                "out/**/*"
+                "tmp/**/*"
+                "deps/**/*"
+                "logs/**/*"
+                "log/**/*"
+                "cache/**/*"
+                ".direnv/**/*"
+              ];
+            };
+            buffers.hidden = true;
+            grep.hidden = true;
           };
           actions.trouble_open.__raw = ''
             function(...)

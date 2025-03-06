@@ -15,20 +15,20 @@
       enable = true;
       settings = {
         transparent_background = true;
-        # integrations = {
-        #   blink_cmp = true;
-        #   grug_far = true;
-        #   neotest = true;
-        #   noice = true;
-        #   ufo = true;
-        #   snacks = {
-        #     enabled = true;
-        #     indent_scope_color = "lavender";
-        #   };
-        #   lsp_trouble = true;
-        #   vim-dadbod-ui = true;
-        #   which_key = true;
-        # };
+        integrations = {
+          blink_cmp = true;
+          grug_far = true;
+          neotest = true;
+          noice = true;
+          ufo = true;
+          snacks = {
+            enabled = true;
+            indent_scope_color = "lavender";
+          };
+          lsp_trouble = true;
+          dadbod_ui = true;
+          which_key = true;
+        };
       };
     };
     package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;

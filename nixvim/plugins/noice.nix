@@ -36,6 +36,7 @@
           position = "right";
           size = "33%";
         };
+        cmdline.view = "cmdline";
         hover.silent = true;
         presets = {
           lsp_doc_border = true;
