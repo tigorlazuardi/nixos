@@ -9,6 +9,7 @@
     ./cursor.nix
     ./dbeaver.nix
     ./discord.nix
+    ./dolphin.nix
     ./easyeffects.nix
     ./elisa.nix
     ./foot.nix

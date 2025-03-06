@@ -78,6 +78,7 @@ in
     cockpit.enable = lib.mkEnableOption "cockpit";
     home.programs = {
       cursor.enable = lib.mkEnableOption "cursor";
+      dolphin.enable = lib.mkEnableOption "dolphin";
       rofi = {
         bookmarks = mkOption {
           type = types.listOf (

@@ -122,6 +122,7 @@ in
       java.enable = true;
       neocal.enable = true;
       ghostty.enable = true;
+      dolphin.enable = true;
     };
 
     programs.mongodb-compass.enable = true;
