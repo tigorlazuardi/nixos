@@ -35,6 +35,7 @@ in
       gofumpt
       impl
       golangci-lint
+      wgo
     ];
 
     # Some toolings will lookup for $GOROOT env.
