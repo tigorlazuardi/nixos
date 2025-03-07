@@ -1,6 +1,7 @@
 {
   config,
   unstable,
+  pkgs,
   lib,
   inputs,
   ...
@@ -32,8 +33,25 @@ in
             src = "zoxide query --list";
             weight = 20;
             cmd = # sh
-              ''footclient --title="Project: %RESULT%" --working-directory="%RESULT%"'';
+              ''kitty --title="Project: %RESULT%" --working-directory="%RESULT%"'';
           }
+          (
+            let
+              pactl = lib.meta.getExe' pkgs.pulseaudio "pactl";
+              jq = lib.meta.getExe' pkgs.jq "jq";
+            in
+            {
+              name = "audio";
+              placeholder = "Select Audio Output";
+              show_icon_when_single = true;
+              src = # sh
+                "${pactl} -f json list sinks | ${jq} -r '.[].description'";
+              cmd = # sh
+                ''
+                  ${pactl} -f json list sinks | ${jq} -r '.[] | select(.description == "%RESULT%") | .name' | xargs -I % ${pactl} set-default-sink %;
+                '';
+            }
+          )
         ];
         keys = {
           next = [
@@ -63,6 +81,7 @@ in
     wayland.windowManager.hyprland.settings = {
       bind = [
         "$mod, D, exec, walker"
+        "$mod, A, exec, walker --modules audio"
         "$mod, semicolon, exec, walker"
       ];
     };
