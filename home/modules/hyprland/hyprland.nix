@@ -20,9 +20,10 @@ in
     ];
     wayland.windowManager.hyprland = {
       enable = true;
-      systemd.variables = [ "--all" ];
+      systemd.enable = false; # managed with uwsm
+      # systemd.variables = [ "--all" ];
       settings = {
-        env = [ "DBUS_SESSION_BUS_ADDRESS,unix:path=/run/user/${toString config.profile.user.uid}/bus" ];
+        # env = [ "DBUS_SESSION_BUS_ADDRESS,unix:path=/run/user/${toString config.profile.user.uid}/bus" ];
         # window decors
         general = {
           gaps_in = 10;

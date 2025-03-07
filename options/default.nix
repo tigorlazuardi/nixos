@@ -8,6 +8,7 @@
     ./games.nix
     ./environments.nix
     ./flatpak.nix
+    ./hardware.nix
   ];
   options.profile = {
 

@@ -6,6 +6,7 @@
 }:
 let
   cfg = config.profile.hyprland;
+  inherit (lib.meta) getExe;
 in
 {
   config = lib.mkIf cfg.enable {
@@ -13,6 +14,10 @@ in
     programs.hyprland = {
       enable = true;
       xwayland.enable = true;
+      withUWSM = true;
+    };
+    programs.uwsm = {
+      enable = true;
     };
     services.gvfs.enable = true; # Mount, trash, and other functionalities
     services.tumbler.enable = true; # Thumbnail support for images
@@ -44,11 +49,19 @@ in
         gnome-keyring
         seahorse
 
-        greetd.tuigreet
+        # greetd.tuigreet
 
         libappindicator-gtk2
         libappindicator
-        catppuccin-sddm
+
+        # theme packages
+        (catppuccin-gtk.override {
+          accents = [ "mauve" ];
+          size = "compact";
+          variant = "mocha";
+        })
+        bibata-cursors
+        papirus-icon-theme
       ];
     };
 
@@ -76,30 +89,46 @@ in
 
     programs.file-roller.enable = true;
 
-    services.greetd = lib.mkIf (cfg.displayManager == "tuigreet") {
+    programs.regreet = {
       enable = true;
-      restart = true;
       settings = {
-        terminal = {
-          vt = 5;
-        };
-        default_session = {
-          command = ''tuigreet --remember --cmd "Hyprland"'';
-          user = "tigor";
+        background.path = ../../home/modules/hyprland/wallpaper.jpeg;
+        GTK = {
+          cursor_theme_name = lib.mkForce "Bibata-Modern-Classic";
+          font_name = lib.mkForce "Jost * 12";
+          icon_theme_name = lib.mkForce "Papirus-Dark";
+          theme_name = lib.mkForce "Catppuccin-Mocha-Compact-Mauve-Dark";
         };
       };
     };
 
-    boot.kernelParams = [ "console=tty1" ];
-
-    services.displayManager.sddm = lib.mkIf (cfg.displayManager == "sddm") {
+    services.greetd = {
       enable = true;
-      wayland.enable = true;
-      theme = "catppuccin-mocha";
+      restart = true;
+      settings.default_session =
+        let
+          hyprlandConfig =
+            pkgs.writeText "hyprlandGreeter.conf"
+              # hyprlang
+              ''
+                exec-once = ${getExe config.programs.regreet.package}; hyprctl dispatch exit
+                misc {
+                    disable_hyprland_logo = true
+                    disable_splash_rendering = true
+                    disable_hyprland_qtutils_check = true
+                }
+              '';
+        in
+        {
+          command = "Hyprland --config ${hyprlandConfig}";
+        };
     };
 
     xdg.portal.xdgOpenUsePortal = true;
 
     services.libinput.enable = true;
+
+    # unlock GPG keyring on login
+    security.pam.services.greetd.gnupg.enable = true;
   };
 }
