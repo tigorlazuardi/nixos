@@ -24,7 +24,6 @@ in
     ./swayosd.nix
     ./swaync.nix
     ./ntfy-sh.nix
-    ./gnome-keyring.nix
     ./kdeconnect.nix
     ./walker.nix
   ];

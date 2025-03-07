@@ -22,6 +22,7 @@ in
     services.gvfs.enable = true; # Mount, trash, and other functionalities
     services.tumbler.enable = true; # Thumbnail support for images
     services.gnome.sushi.enable = true; # File previewer
+    services.gnome.gnome-keyring.enable = true; # Keyring management
 
     environment = {
       sessionVariables = {
@@ -129,6 +130,9 @@ in
     services.libinput.enable = true;
 
     # unlock GPG keyring on login
-    security.pam.services.greetd.gnupg.enable = true;
+    security.pam.services.greetd = {
+      gnupg.enable = true;
+      enableGnomeKeyring = true;
+    };
   };
 }
