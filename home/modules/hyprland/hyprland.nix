@@ -10,6 +10,7 @@ in
 {
   config = lib.mkIf cfg.enable {
     profile.home.programs.foot.enable = lib.mkForce true;
+    profile.home.programs.nemo.enable = lib.mkForce true;
 
     home.packages = with pkgs; [
       wl-clipboard
@@ -75,7 +76,7 @@ in
         bind = [
           # Programs
           ''$mod, RETURN, exec, kitty''
-          "$mod, E, exec, nautilus"
+          "$mod, E, exec, nemo"
           "$mod, B, exec, vivaldi"
           "$mod, BackSpace, exec, wlogout"
           "$mod, Y, exec, foot ssh homeserver@vpn.tigor.web.id"

@@ -115,14 +115,15 @@ in
       zathura.enable = true;
       bruno.enable = true;
       krita.enable = true;
-      zoom.enable = true;
+      zoom.enable = false;
       elisa.enable = true;
       obsidian.enable = true;
       jetbrains.idea.enable = false;
       java.enable = true;
-      neocal.enable = true;
-      ghostty.enable = true;
-      dolphin.enable = true;
+      nemo.enable = true;
+      neocal.enable = false;
+      ghostty.enable = false;
+      dolphin.enable = false;
     };
 
     programs.mongodb-compass.enable = true;

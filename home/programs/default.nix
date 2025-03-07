@@ -25,6 +25,7 @@
     ./microsoft-edge.nix
     ./mongodb-compass.nix
     ./mpv.nix
+    ./nemo.nix
     ./neocal.nix
     ./neovide.nix
     ./nextcloud.nix

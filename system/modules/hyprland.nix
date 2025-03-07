@@ -16,7 +16,6 @@ in
     };
     services.gvfs.enable = true; # Mount, trash, and other functionalities
     services.tumbler.enable = true; # Thumbnail support for images
-    programs.nautilus-open-any-terminal.enable = true;
     services.gnome.sushi.enable = true; # File previewer
 
     environment = {
@@ -29,7 +28,6 @@ in
         poppler # .pdf filees
         ffmpegthumbnailer # video thumbnailer
         mcomix # comicbook archives
-        nautilus # file manager
 
         gwenview
 
