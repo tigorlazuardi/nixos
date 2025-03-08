@@ -24,13 +24,23 @@ let
       runHook postInstall
     '';
   };
+  rose-pine-repo = pkgs.fetchFromGitHub {
+    owner = "rose-pine";
+    repo = "swaync";
+    rev = "fc17ee01916a5e4424af5c5b29272383fcdfc4f3";
+    hash = "sha256-BLJCr7cB1nwUVe48gQX6ZBHdlJn2fZ7dBQgnADYG2I0=";
+  };
 in
 {
   config = lib.mkIf cfg.enable {
     services.swaync = {
       enable = true;
       # pkill swaync && GTK_DEBUG=interactive swaync - launch swaync with gtk debugger
-      style = builtins.readFile "${catppuccin-theme}/${flavor}.css";
+      # style = builtins.readFile "${catppuccin-theme}/${flavor}.css";
+      style = # css
+        ''
+          @import url("${rose-pine-repo}/theme/rose-pine.css");
+        '';
       settings = {
         positionX = "center";
         positionY = "top";
@@ -80,40 +90,38 @@ in
 
     home.packages = with pkgs; [ libnotify ];
 
-    home.file.".config/wallust/templates/swaync_base16.css".text =
-      #css
-      ''
-        @define-color foreground {{foreground}};
-        @define-color background {{background}};
-        @define-color cursor {{cursor}};
-
-        @define-color color0 {{color0}};
-        @define-color color1 {{color1}};
-        @define-color color2 {{color2}};
-        @define-color color3 {{color3}};
-        @define-color color4 {{color4}};
-        @define-color color5 {{color5}};
-        @define-color color6 {{color6}};
-        @define-color color7 {{color7}};
-        @define-color color8 {{color8}};
-        @define-color color9 {{color9}};
-        @define-color color10 {{color10}};
-        @define-color color11 {{color11}};
-        @define-color color12 {{color12}};
-        @define-color color13 {{color13}};
-        @define-color color14 {{color14}};
-        @define-color color15 {{color15}};
-      '';
-
-    profile.hyprland.wallust.settings.templates =
-      let
-        out = config.home.homeDirectory + "/.cache/wallust";
-      in
-      {
-        swaync = {
-          template = "swaync_base16.css";
-          target = "${out}/swaync_base16.css";
-        };
-      };
+    # home.file.".config/wallust/templates/swaync_base16.css".text =
+    # #css
+    # ''
+    # @define-color foreground {{foreground}};
+    # @define-color background {{background}};
+    # @define-color cursor {{cursor}};
+    # @define-color color0 {{color0}};
+    # @define-color color1 {{color1}};
+    # @define-color color2 {{color2}};
+    # @define-color color3 {{color3}};
+    # @define-color color4 {{color4}};
+    # @define-color color5 {{color5}};
+    # @define-color color6 {{color6}};
+    # @define-color color7 {{color7}};
+    # @define-color color8 {{color8}};
+    # @define-color color9 {{color9}};
+    # @define-color color10 {{color10}};
+    # @define-color color11 {{color11}};
+    # @define-color color12 {{color12}};
+    # @define-color color13 {{color13}};
+    # @define-color color14 {{color14}};
+    # @define-color color15 {{color15}};
+    # '';
+    # profile.hyprland.wallust.settings.templates =
+    #   let
+    #     out = config.home.homeDirectory + "/.cache/wallust";
+    #   in
+    #   {
+    #     swaync = {
+    #       template = "swaync_base16.css";
+    #       target = "${out}/swaync_base16.css";
+    #     };
+    #   };
   };
 }

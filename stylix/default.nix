@@ -1,8 +1,15 @@
-{ inputs, pkgs, ... }:
+{
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
 {
   imports = [
     inputs.stylix.homeManagerModules.stylix
   ];
+  programs.bat.enable = lib.mkForce true;
+  programs.zsh.shellAliases.cat = lib.mkForce "${pkgs.bat}/bin/bat --theme=base16-stylix";
   stylix = {
     enable = true;
     image = ../home/modules/hyprland/wallpaper.jpeg;
