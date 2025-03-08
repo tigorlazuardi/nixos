@@ -6,8 +6,8 @@
   stylix = {
     enable = true;
     image = ../home/modules/hyprland/wallpaper.jpeg;
-    polarity = "dark";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
     autoEnable = false;
     targets = {
       lazygit.enable = true;
