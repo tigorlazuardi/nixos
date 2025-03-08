@@ -6,31 +6,12 @@
     ./autocmd.nix
     ./neovide.nix
     ./keymaps.nix
+    ./colorscheme.nix
   ];
   # Dependencies are not defined here, but whoever imports this module.
   programs.nixvim = {
     enable = true;
     defaultEditor = true;
-    colorschemes.catppuccin = {
-      enable = true;
-      settings = {
-        transparent_background = true;
-        integrations = {
-          blink_cmp = true;
-          grug_far = true;
-          neotest = true;
-          noice = true;
-          ufo = true;
-          snacks = {
-            enabled = true;
-            indent_scope_color = "lavender";
-          };
-          lsp_trouble = true;
-          dadbod_ui = true;
-          which_key = true;
-        };
-      };
-    };
     package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
     extraPackages = with pkgs; [
       ripgrep
