@@ -6,6 +6,7 @@
   stylix = {
     enable = true;
     image = ../home/modules/hyprland/wallpaper.jpeg;
+    polarity = "dark";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     autoEnable = false;
     targets = {

@@ -193,7 +193,6 @@ in
         ];
 
         exec-once = [
-          "foot --server"
           "nm-applet"
           "pasystray"
         ];
