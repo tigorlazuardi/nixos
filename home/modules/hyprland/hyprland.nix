@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  unstable,
   config,
   ...
 }:
@@ -17,6 +18,8 @@ in
       kcalc
       font-manager
       vivaldi
+      unstable.hyprland-qt-support
+      hyprpolkitagent
     ];
     wayland.windowManager.hyprland = {
       enable = true;
@@ -194,7 +197,7 @@ in
 
         exec-once = [
           "nm-applet"
-          "pasystray"
+          # "pasystray"
         ];
       };
       extraConfig = # hyprlang

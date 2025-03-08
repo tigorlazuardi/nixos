@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  unstable,
   ...
 }:
 let
@@ -34,5 +33,9 @@ in
         ];
       };
     };
+    # uwsm affects when the WAYLAND_DISPLAY environment is set.
+    # It's a pain to manage this with systemd, so we'll just ignore the
+    # systemd check condirion.
+    systemd.user.services.hypridle.Unit.ConditionEnvironment = lib.mkForce [ ];
   };
 }
