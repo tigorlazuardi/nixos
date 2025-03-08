@@ -52,7 +52,7 @@ in
 
         # greetd.tuigreet
 
-        libappindicator-gtk2
+        # libappindicator-gtk2
         libappindicator
 
         # theme packages
