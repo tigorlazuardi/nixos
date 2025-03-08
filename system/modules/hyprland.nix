@@ -93,7 +93,10 @@ in
     programs.regreet = {
       enable = true;
       settings = {
-        background.path = ../../home/modules/hyprland/wallpaper.jpeg;
+        background = {
+          path = ../../home/modules/hyprland/wallpaper.jpeg;
+          fit = "Cover";
+        };
         GTK = {
           cursor_theme_name = lib.mkForce "Bibata-Modern-Classic";
           font_name = lib.mkForce "Jost * 12";

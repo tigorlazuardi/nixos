@@ -14,9 +14,7 @@
 
       nerdfonts
 
-      # (nerdfonts.override {
-      #   fonts = [ "FiraCode" "JetBrainsMono" "Iosevka" ];
-      # })
+      jost
     ];
 
     # use fonts specified by user rather than default ones
