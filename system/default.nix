@@ -25,7 +25,7 @@
     inputs.nix-flatpak.nixosModules.nix-flatpak
     inputs.home-manager.nixosModules.home-manager
     inputs.nix-index-database.nixosModules.nix-index
-    inputs.stylix.nixosModules.stylix
+    # inputs.stylix.nixosModules.stylix
     ../nixvim
   ];
 

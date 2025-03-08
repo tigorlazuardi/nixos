@@ -4,32 +4,32 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    catppuccin.wlogout.extraStyle = # css
-      ''
-        #lock {
-          background-image: image(url("${./wlogout-icons/lock.png}"));
-        }
-
-        #logout {
-          background-image: image(url("${./wlogout-icons/logout.png}"));
-        }
-
-        #suspend {
-          background-image: image(url("${./wlogout-icons/suspend.png}"));
-        }
-
-        #hibernate {
-          background-image: image(url("${./wlogout-icons/hibernate.png}"));
-        }
-
-        #shutdown {
-          background-image: image(url("${./wlogout-icons/shutdown.png}"));
-        }
-
-        #reboot {
-          background-image: image(url("${./wlogout-icons/reboot.png}"));
-        }
-      '';
+    # catppuccin.wlogout.extraStyle = # css
+    #   ''
+    #     #lock {
+    #       background-image: image(url("${./wlogout-icons/lock.png}"));
+    #     }
+    #
+    #     #logout {
+    #       background-image: image(url("${./wlogout-icons/logout.png}"));
+    #     }
+    #
+    #     #suspend {
+    #       background-image: image(url("${./wlogout-icons/suspend.png}"));
+    #     }
+    #
+    #     #hibernate {
+    #       background-image: image(url("${./wlogout-icons/hibernate.png}"));
+    #     }
+    #
+    #     #shutdown {
+    #       background-image: image(url("${./wlogout-icons/shutdown.png}"));
+    #     }
+    #
+    #     #reboot {
+    #       background-image: image(url("${./wlogout-icons/reboot.png}"));
+    #     }
+    #   '';
     programs.wlogout = {
       enable = true;
       layout = [

@@ -201,14 +201,13 @@ in
         # css
         ''
           * {
-              font-family: "Fira Sans Semibold", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
               border: none;
               border-radius: 0px;
-              color: @text;
+              color: @base05;
           }
 
           window#waybar {
-            background: alpha(@base, 0.6);
+            background: alpha(@base00, 0.6);
             padding-right: 0;
             margin-right: 0;
           }
@@ -230,40 +229,40 @@ in
 
           #workspaces button.active {
             padding: 0 0.8rem;
-            border: 2px solid @maroon;
-            background-color: alpha(@blue, 0.4);
+            border: 2px solid @base08;
+            background-color: alpha(@base0D, 0.4);
             border-style: none none solid none;
           }
 
           #workspaces button:hover {
             padding: 0 0.8rem;
             margin: 0;
-            border: 2px solid @blue;
-            background: alpha(@maroon, 0.4);
+            border: 2px solid @base0D;
+            background: alpha(@base08, 0.4);
             border: 0;
             border-style: none;
           }
 
           tooltip {
               border-radius: 1rem;
-              background-color: alpha(@base, 0.7);
+              background-color: alpha(@base00, 0.7);
               padding: 2rem;
               margin: 0px;
-              border: 1px solid @overlay2;
+              border: 1px solid @base04;
           }
 
           tooltip label {
-              color: @rosewater;
+              color: @base06;
               font-size: 0.9rem;
           }
 
           /* Window Title */
 
           #window {
-              background: linear-gradient(90deg, alpha(@maroon, 0.8) 0%, alpha(@maroon, 0.5) 35%, alpha(@maroon, 0) 100%);
+              background: linear-gradient(90deg, alpha(@base08, 0.8) 0%, alpha(@base08, 0.5) 35%, alpha(@base08, 0) 100%);
               margin: 0 0;
               padding: 0 0.4rem;
-              color: @text;
+              color: @base05;
               font-size: 0.9rem;
               font-weight: bold;
           }
@@ -277,7 +276,7 @@ in
               font-size: 1.3rem;
               font-weight: bold;
               opacity: 0.8;
-              color: @text;
+              color: @base05;
           }
 
           #idle_inhibitor.activated {
@@ -285,21 +284,21 @@ in
               font-size: 1.3rem;
               font-weight: bold;
               opacity: 0.8;
-              color: @maroon;
+              color: @base08;
           }
 
           #custom-exit {
               margin-right: 1rem;
               padding: 0 0.5rem;
               font-size: 1.3rem;
-              color: @text;
+              color: @base05;
           }
 
 
           #clock {
-              background: linear-gradient(90deg, alpha(@blue, 0) 0%, alpha(@blue, 0.5) 65%, alpha(@blue, 1) 100%);
+              background: linear-gradient(90deg, alpha(@base0D, 0) 0%, alpha(@base0D, 0.5) 65%, alpha(@base0D, 1) 100%);
               font-size: 1.1rem;
-              color: @text;
+              color: @base05;
               margin-top: 0;
               margin-bottom: 0;
               padding: 0.4rem;
@@ -309,19 +308,19 @@ in
           #pulseaudio {
               background-color: transparent;
               font-size: 1rem;
-              color: @text;
+              color: @base05;
               margin-right: 0.3rem;
           }
 
           #pulseaudio.muted {
-              color: @maroon;
+              color: @base08;
           }
 
           #bluetooth,
           #bluetooth.on,
           #bluetooth.connected {
               font-size: 1rem;
-              color: @text;
+              color: @base05;
               margin-right: 0.7rem;
           }
 
@@ -334,26 +333,26 @@ in
 
           #battery {
               font-size: 1rem;
-              color: @text;
+              color: @base05;
               margin-right: 1rem;
           }
 
           #battery.charging,
           #battery.plugged {
-              color: @text-base;
+              color: @base05;
           }
 
 
           @keyframes blink {
               to {
-                background-color: @blue;
-                color: @maroon;
+                background-color: @base0D;
+                color: @base08;
               }
           }
 
           #battery.critical:not(.charging) {
-              background-color: @red;
-              color: @text;
+              background-color: @base08;
+              color: @base05;
               animation-name: blink;
               animation-duration: 0.5s;
               animation-timing-function: linear;
@@ -362,13 +361,13 @@ in
           }
 
           #network {
-            color: @text;
+            color: @base05;
             margin-right: 1rem;
             font-size: 1rem;
           }
 
           #tray {
-              color: @text;
+              color: @base05;
               margin-right: 0.5rem;
           }
 
@@ -381,11 +380,10 @@ in
           }
 
           #custom-notification {
-            font-family: "NotoSansMono Nerd Font";
             margin-right: 1rem;
             margin-left: 1rem;
             font-size: 1.3rem;
-            color: @text;
+            color: @base05;
           }
         '';
     };

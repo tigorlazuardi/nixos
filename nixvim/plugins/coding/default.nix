@@ -5,6 +5,7 @@
     ./codecompanion.nix
     ./conform.nix
     ./copilot.nix
+    ./css.nix
     ./go.nix
     ./json.nix
     ./lua.nix

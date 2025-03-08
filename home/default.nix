@@ -22,12 +22,12 @@ in
     ./direnv.nix
     ./secrets.nix
     ./ideavimrc.nix
-    ./stylix.nix
 
     inputs.sops-nix.homeManagerModules.sops
     inputs.nixvim.homeManagerModules.nixvim
     inputs.nix-index-database.hmModules.nix-index
     ../nixvim
+    ../stylix
   ];
 
   home = {

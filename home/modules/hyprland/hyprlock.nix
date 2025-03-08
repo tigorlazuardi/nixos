@@ -17,7 +17,7 @@ in
         };
         background = {
           monitor = "";
-          path = "${config.home.homeDirectory}/.cache/wallpaper/blurred.png";
+          path = lib.mkForce "${config.home.homeDirectory}/.cache/wallpaper/blurred.png";
         };
         input-field = {
           monitor = "";

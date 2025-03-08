@@ -24,7 +24,7 @@ in
         tab_bar_edge = "top";
         tab_bar_margin_width = toString 0.2;
         tab_bar_style = "slant";
-        background_opacity = 0.8;
+        # background_opacity = 0.8;
         background_blur = 40;
         cursor_blink_interval = toString 0.5;
 
@@ -43,10 +43,10 @@ in
         "ctrl+a>w" = "close_window";
         "ctrl+a>r" = "start_resizing_window";
       };
-      font = {
-        name = "JetBrainsMono Nerd Font Mono";
-        size = 11;
-      };
+      # font = {
+      #   name = "JetBrainsMono Nerd Font Mono";
+      #   size = 11;
+      # };
     };
   };
 }
