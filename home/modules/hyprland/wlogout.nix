@@ -47,7 +47,15 @@ in
         }
         {
           label = "logout";
-          action = "hyprctl dispatch exit";
+          # According to the docs at https://github.com/Vladimir-csp/uwsm#how-to-stop
+          # There are 4 ways to stop the session. While using `loginctl terminate-user ""`
+          # seems to be the most thorough, it also seems to be the very aggressive option with the
+          # graphical glitches found when exiting the session.
+          #
+          # The `uwsm stop` is ideal, since this repo is single user / seat, so exiting the
+          # uwsm session will stop the login session, meaning all session data will be restarted on login anyway.
+          # This is the most graceful logout since it is handled by uwsm itself.
+          action = "uwsm stop";
           text = "Exit";
           keybind = "e";
         }
