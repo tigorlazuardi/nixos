@@ -15,7 +15,13 @@ in
     services.nginx.virtualHosts.${domain} = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;
-      locations."/".proxyPass = "http://${ip}:8080";
+      locations."/" = {
+        proxyPass = "http://${ip}:8080";
+        extraConfig = # nginx
+          ''
+            client_max_body_size 100M;
+          '';
+      };
     };
 
     security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
