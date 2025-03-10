@@ -92,7 +92,7 @@ in
       enable = true;
       settings = {
         background = {
-          path = ../../home/modules/hyprland/wallpaper.jpeg;
+          path = ../../assets/ImaginaryLandscapes_keqt85az8cce1.jpeg;
           fit = "Cover";
         };
       };
