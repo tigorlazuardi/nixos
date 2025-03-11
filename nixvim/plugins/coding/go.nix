@@ -120,6 +120,11 @@
       wgo
       gofumpt
     ];
+
+    # Somehow something sets PATH env to use older version of Go.
+    extraConfigLuaPost = ''
+      vim.env.PATH = "${pkgs.go}/bin" .. ":" .. vim.env.PATH
+    '';
     autoCmd = [
       {
         callback.__raw = # lua
