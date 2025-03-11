@@ -7,6 +7,7 @@
     ./copilot.nix
     ./css.nix
     ./go.nix
+    ./java.nix
     ./json.nix
     ./lua.nix
     ./markdown.nix
