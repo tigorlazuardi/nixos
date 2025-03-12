@@ -60,5 +60,6 @@ in
     ./valheim.nix
 
     ./metrics.nix
+    ./n8n.nix
   ];
 }

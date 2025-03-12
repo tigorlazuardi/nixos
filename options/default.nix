@@ -21,6 +21,8 @@
       default = "eth0";
     };
 
+    stylix.enable = lib.mkEnableOption "stylix";
+
     neovim.enable = lib.mkOption {
       type = lib.types.bool;
       default = true;

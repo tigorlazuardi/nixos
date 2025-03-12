@@ -40,6 +40,7 @@
       minecraft.enable = false;
       memos.enable = true;
       morphos.enable = true;
+      n8n.enable = true;
       soulseek.enable = true;
       valheim.enable = false;
     };
