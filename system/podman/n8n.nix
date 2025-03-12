@@ -43,6 +43,10 @@ in
       user = "${uid}:${gid}";
       environment = {
         TZ = "Asia/Jakarta";
+        N8N_HOST = domain;
+        NODE_ENV = "production";
+        WEBHOOK_URL = "https://${domain}";
+        GENERIC_TIMEZONE = "Asia/Jakarta";
       };
       volumes = [ "${rootVolume}:/home/node/.n8n" ];
       extraOptions = [
