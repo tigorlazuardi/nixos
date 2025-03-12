@@ -123,6 +123,7 @@
 
     # Somehow something sets PATH env to use older version of Go.
     extraConfigLuaPost = ''
+      vim.env.GOROOT = "${pkgs.go}/share/go"
       vim.env.PATH = "${pkgs.go}/bin" .. ":" .. vim.env.PATH
     '';
     autoCmd = [
@@ -259,6 +260,10 @@
     plugins.neotest.adapters.golang = {
       enable = true;
       package = unstable.vimPlugins.neotest-golang;
+    };
+    plugins.none-ls.sources.code_actions = {
+      gomodifytags.enable = true;
+      impl.enable = true;
     };
     plugins.conform-nvim.settings.formatters_by_ft.go = [
       "goimports"

@@ -13,6 +13,7 @@
     ./markdown.nix
     ./neotest.nix
     ./nix.nix
+    ./null-ls.nix
     ./nvim-docs-view.nix
     ./svelte.nix
     ./tiny-code-action.nix
