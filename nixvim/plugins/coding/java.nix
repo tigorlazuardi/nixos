@@ -37,6 +37,14 @@ in
                   [[${pkgs.vscode-extensions.vscjava.vscode-java-debug}/share/vscode/extensions/vscjava.vscode-java-debug/server/com.microsoft.java.debug.plugin-*.jar]],
                   1
                 ),
+                vim.fn.glob(
+                  [[${pkgs.vscode-extensions.vscjava.vscode-java-test}/share/vscode/extensions/vscjava.vscode-java-test/server/*.jar]],
+                  1
+                ),
+                vim.fn.glob(
+                  [[${pkgs.vscode-extensions.vscjava.vscode-maven}/share/vscode/extensions/vscjava.vscode-maven/jdtls.ext/*.jar]],
+                  1
+                ),
               },
             },
           }
