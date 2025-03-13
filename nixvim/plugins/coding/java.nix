@@ -18,9 +18,7 @@ in
         "nvim-jdtls",
         ft = "java",
         after = function()
-          local root_dir = require("lspconfig.configs.jdtls").root_dir
-          local fname = vim.api.nvim_buf_get_name(0)
-          local root = root_dir(fname)
+          local root = vim.fs.root(0, { ".git", "mvnw", "gradlew" })
           local project_name = vim.fs.basename(root)
           local cmd = {
             [[${lib.getExe pkgs.jdt-language-server}]],
