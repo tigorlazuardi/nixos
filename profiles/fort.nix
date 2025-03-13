@@ -3,6 +3,7 @@
   imports = [ ../options ];
 
   profile = {
+    stylix.enable = true;
     environment = {
       bareksa.enable = true;
     };

@@ -7,6 +7,7 @@ in
   imports = [ ../options ];
 
   profile = {
+    stylix.enable = true;
     wine.enable = true;
 
     environment.bareksa.enable = true;
