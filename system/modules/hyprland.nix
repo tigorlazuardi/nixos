@@ -92,7 +92,7 @@ in
       enable = true;
       settings = {
         background = {
-          path = ../../assets/ImaginaryLandscapes_keqt85az8cce1.jpeg;
+          path = ../../assets/kemonomimi_fapl2r7n2ync1.jpeg;
           fit = "Cover";
         };
       };
