@@ -12,7 +12,16 @@
         enable = true;
         package = unstable.vimPlugins.blink-cmp;
         settings = {
+          appearance.nerd_font_variant = "mono";
+          cmdline = {
+            enabled = true;
+            keymap = {
+              preset = "cmdline";
+            };
+            completion.menu.auto_show = true;
+          };
           completion = {
+            accept.auto_brackets.enabled = true;
             ghost_text.enabled = false;
             documentation = {
               auto_show = true;
@@ -22,6 +31,7 @@
             menu = {
               border = "rounded";
               draw = {
+                treesitter = [ "lsp" ];
                 columns = [
                   [ "kind_icon" ]
                   [
@@ -121,7 +131,10 @@
           keymap.preset = "default";
         };
         lazyLoad.settings = {
-          event = [ "InsertEnter" ];
+          event = [
+            "InsertEnter"
+            "CmdlineEnter"
+          ];
         };
       };
     };
