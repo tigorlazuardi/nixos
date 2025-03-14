@@ -967,6 +967,22 @@
         "type": "github"
       }
     },
+    "nvim-dap-view": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1741655554,
+        "narHash": "sha256-M4HZdthpnxQJYNpAUuo/grTGc4uWl2ynoKQoT1s8pzM=",
+        "owner": "igorlfs",
+        "repo": "nvim-dap-view",
+        "rev": "0a7e6395f5bdb79cee233cebd99639713b0a0de2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "igorlfs",
+        "repo": "nvim-dap-view",
+        "type": "github"
+      }
+    },
     "nvim-treesitter-endwise": {
       "flake": false,
       "locked": {
@@ -1002,6 +1018,7 @@
         "nixvim": "nixvim",
         "nur": "nur",
         "nvim-aider": "nvim-aider",
+        "nvim-dap-view": "nvim-dap-view",
         "nvim-treesitter-endwise": "nvim-treesitter-endwise",
         "rust-overlay": "rust-overlay",
         "snacks-nvim": "snacks-nvim",

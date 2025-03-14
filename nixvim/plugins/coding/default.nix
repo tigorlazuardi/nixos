@@ -6,6 +6,7 @@
     ./conform.nix
     ./copilot.nix
     ./css.nix
+    ./dap.nix
     ./go.nix
     ./java.nix
     ./json.nix

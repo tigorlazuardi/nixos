@@ -97,7 +97,10 @@
       url = "github:brianhuster/nvim-treesitter-endwise";
       flake = false;
     };
-
+    nvim-dap-view = {
+      url = "github:igorlfs/nvim-dap-view";
+      flake = false;
+    };
   };
 
   outputs =

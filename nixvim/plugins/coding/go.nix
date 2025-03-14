@@ -260,10 +260,18 @@
     plugins.neotest.adapters.golang = {
       enable = true;
       package = unstable.vimPlugins.neotest-golang;
+      settings = {
+        dap_go_enabled = true;
+      };
     };
     plugins.none-ls.sources.code_actions = {
       gomodifytags.enable = true;
       impl.enable = true;
+    };
+    plugins.dap-go = {
+      enable = true;
+      settings.delve.path = "${pkgs.delve}/bin/dlv";
+      lazyLoad.settings.ft = [ "manually_loaded" ];
     };
     plugins.conform-nvim.settings.formatters_by_ft.go = [
       "goimports"

@@ -5,7 +5,7 @@
       friendly-snippets.enable = true;
       blink-ripgrep = {
         enable = true;
-        lazyLoad.settings.ft = [ ];
+        lazyLoad.settings.ft = [ "manually_loaded" ];
         package = unstable.vimPlugins.blink-ripgrep-nvim;
       };
       blink-cmp = {

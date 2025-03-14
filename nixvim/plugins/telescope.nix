@@ -7,6 +7,6 @@
     # on demand.
     #
     # Snacks.nvim already replace the usecase of Telescope.
-    lazyLoad.settings.ft = [ ];
+    lazyLoad.settings.ft = [ "manually_loaded" ];
   };
 }

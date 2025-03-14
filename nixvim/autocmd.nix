@@ -71,6 +71,10 @@
           "tsplayground"
           "fugitive"
           "nvim-docs-view"
+          "dap-view"
+          "dap-view-term"
+          "dap-repl"
+          "dap-float"
         ];
         group = "XCloseWithQ";
         callback.__raw = ''

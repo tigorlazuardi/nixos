@@ -68,6 +68,18 @@
               function() require("neotest").watch.toggle(vim.fn.expand("%")) end
             '';
           } { desc = "Toggle Test Watch"; })
+          (map "<leader>td"
+            {
+              __raw = ''
+                function()
+                  require("neotest").run.run({ strategy = "dap" })
+                end
+              '';
+            }
+            {
+              desc = "Debug Nearest Test";
+            }
+          )
         ];
       settings = {
         status.virtual_text = true;

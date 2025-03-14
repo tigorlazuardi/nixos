@@ -17,7 +17,7 @@
       enable = true;
       # disable overriding vim.notify with require('notify')
       luaConfig.pre = unstable.lib.mkForce "";
-      lazyLoad.settings.ft = [ ];
+      lazyLoad.settings.ft = [ "manually_loaded" ];
       settings = {
         render = "minimal";
       };

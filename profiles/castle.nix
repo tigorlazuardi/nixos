@@ -119,7 +119,7 @@ in
       zoom.enable = false;
       elisa.enable = true;
       obsidian.enable = true;
-      jetbrains.idea.enable = false;
+      jetbrains.idea.enable = true;
       java.enable = true;
       nemo.enable = true;
       neocal.enable = false;
