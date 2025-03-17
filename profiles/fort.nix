@@ -15,6 +15,12 @@
     };
     system.stateVersion = "23.11";
 
+    networking.firewall.enable = true;
+    networking.firewall.allowedTCPPorts = [
+      80
+      443
+    ];
+
     hyprland = {
       enable = true;
       settings = {
