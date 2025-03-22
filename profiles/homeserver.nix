@@ -48,7 +48,7 @@
     home.programs.zellij = {
       enable = true;
       autoAttach = true;
-      mod = "Ctrl a";
+      mod = "Ctrl b";
       zjstatus.theme = ../home/programs/zellij/themes/zjstatus/catppuccin-mocha.nix;
     };
 
