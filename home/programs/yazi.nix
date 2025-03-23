@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  unstable,
   ...
 }:
 let
@@ -12,7 +13,60 @@ in
   config = mkIf cfg.enable {
     programs.yazi = {
       enable = true;
+      package = unstable.yazi;
+      initLua =
+        # lua
+        ''
+          require("bookmarks"):setup({
+          	last_directory = { enable = true, persist = true, mode = "dir" },
+          	persist = "all",
+          	desc_format = "full",
+          	file_pick_mode = "hover",
+          	custom_desc_input = false,
+          	notify = {
+          		enable = false,
+          		timeout = 1,
+          		message = {
+          			new = "New bookmark '<key>' -> '<folder>'",
+          			delete = "Deleted bookmark in '<key>'",
+          			delete_all = "Deleted all bookmarks",
+          		},
+          	},
+          })
+        '';
       enableZshIntegration = true;
+      keymap = {
+        manager = {
+          prepend_keymap = [
+            {
+              on = [ "m" ];
+              run = "plugin bookmarks save";
+              desc = "Save current position as a bookmark";
+            }
+            {
+              on = [ "'" ];
+              run = "plugin bookmarks jump";
+              desc = "Jump to a bookmark";
+            }
+            {
+              on = [
+                "b"
+                "d"
+              ];
+              run = "plugin bookmarks delete";
+              desc = "Delete a bookmark";
+            }
+            {
+              on = [
+                "b"
+                "D"
+              ];
+              run = "plugin bookmarks delete_all";
+              desc = "Delete all bookmarks";
+            }
+          ];
+        };
+      };
       settings = {
         manager = {
           # 1/8 width for parent, 4/8 width for current, 3/8 width for preview
@@ -96,22 +150,22 @@ in
       };
     };
     home.file = {
-      ".config/yazi/plugins/boorkmarks.yazi" = {
+      ".config/yazi/plugins/bookmarks.yazi" = {
         recursive = true;
         source = pkgs.fetchFromGitHub {
           owner = "dedukun";
           repo = "bookmarks.yazi";
-          rev = "0.2.5";
-          sha256 = "sha256-TSmZwy9jhf0D+6l4KbNQ6BjHbL0Vfo/yL3wt8bjo/EM=";
+          rev = "95b2c586f4a40da8b6a079ec9256058ad0292e47";
+          sha256 = "sha256-cNgcTa8s+tTqAvF10fmd+o5PBludiidRua/dXArquZI=";
         };
       };
       ".config/yazi/plugins/mediainfo.yazi" = {
         recursive = true;
         source = pkgs.fetchFromGitHub {
-          owner = "Ape";
+          owner = "boydaihungst";
           repo = "mediainfo.yazi";
-          rev = "c69314e80f5b45fe87a0e06a10d064ed54110439";
-          hash = "sha256-8xdBPdKSiwB7iRU8DJdTHY+BjfR9D3FtyVtDL9tNiy4=";
+          rev = "447fe95239a488459cfdbd12f3293d91ac6ae0d7";
+          hash = "sha256-U6rr3TrFTtnibrwJdJ4rN2Xco4Bt4QbwEVUTNXlWRps=";
         };
       };
     };
