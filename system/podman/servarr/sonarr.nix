@@ -33,6 +33,10 @@ in
       domain
       domain-anime
     ];
+    services.adguardhome.settings.user_rules = [
+      "192.168.100.5 ${domain}"
+      "192.168.100.5 ${domain-anime}"
+    ];
 
     services.nginx.virtualHosts.${domain-anime} = {
       useACMEHost = "tigor.web.id";
