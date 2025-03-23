@@ -57,6 +57,7 @@ in
     services.jellyfin = {
       enable = true;
       inherit dataDir;
+      openFirewall = true;
     };
 
     services.jellyseerr = mkIf cfg.jellyseerr.enable { enable = true; };
