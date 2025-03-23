@@ -33,6 +33,10 @@ in
 
     security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
 
+    services.adguardhome.settings.user_rules = [
+      "192.168.100.5 ${domain}"
+    ];
+
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${rootVolume}/{config,downloads,incomplete}
       chown ${uid}:${gid} ${rootVolume} ${rootVolume}/{config,downloads,incomplete}

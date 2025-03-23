@@ -2,6 +2,7 @@
 let
   cfg = config.profile.services.kavita;
   user = config.profile.user;
+  domain = "kavita.tigor.web.id";
   inherit (lib) mkIf;
 in
 {
@@ -21,7 +22,7 @@ in
       sopsFile = ../../secrets/kavita.yaml;
     };
 
-    services.nginx.virtualHosts."kavita.tigor.web.id" = {
+    services.nginx.virtualHosts."${domain}" = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations = {
@@ -32,7 +33,11 @@ in
       };
     };
 
-    security.acme.certs."tigor.web.id".extraDomainNames = [ "kavita.tigor.web.id" ];
+    services.adguardhome.settings.user_rules = [
+      "192.168.100.5 ${domain}"
+    ];
+
+    security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
     services.kavita = {
       enable = true;
       tokenKeyFile = config.sops.secrets."kavita/token".path;

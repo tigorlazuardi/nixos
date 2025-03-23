@@ -29,6 +29,7 @@ let
   ];
   serverPublicKey = "GDRUvnKUPNzwAloQ5fxvdHoVw4D1YbdCR0GyiOyyB38=";
   sopsFile = ../../secrets/wireguard.yaml;
+  domain = "vpn.tigor.web.id";
   inherit (lib) mkIf mergeAttrsList generators;
 in
 {
@@ -47,6 +48,10 @@ in
         };
       }) devices)
     );
+
+    services.adguardhome.settings.user_rules = [
+      "192.168.100.5 ${domain}"
+    ];
 
     sops.templates =
       let

@@ -104,6 +104,10 @@ in
       ];
     };
 
+    services.adguardhome.settings.user_rules = [
+      "192.168.100.5 ${domain}"
+    ];
+
     systemd.services.nextcloud-cron = {
       path = [
         pkgs.perl

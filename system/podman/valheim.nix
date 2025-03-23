@@ -57,6 +57,9 @@ lib.mkMerge [
     #     user = config.profile.user.name;
     #   };
     # };
+    services.adguardhome.settings.user_rules = [
+      "192.168.100.5 ${domain}"
+    ];
 
     virtualisation.oci-containers.containers.${name} = {
       inherit image;

@@ -124,14 +124,14 @@ in
         filtering = {
           filtering_enabled = true;
           rewrites = [
-            {
-              domain = "*.tigor.web.id";
-              answer = "192.168.100.5";
-            }
-            {
-              domain = "tigor.web.id";
-              answer = "192.168.100.5";
-            }
+            # {
+            #   domain = "*.tigor.web.id";
+            #   answer = "192.168.100.5";
+            # }
+            # {
+            #   domain = "tigor.web.id";
+            #   answer = "192.168.100.5";
+            # }
             {
               domain = "gitlab.bareksa.com";
               answer = "192.168.50.217";

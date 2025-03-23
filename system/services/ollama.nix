@@ -25,6 +25,10 @@ in
       };
     };
 
+    services.adguardhome.settings.user_rules = [
+      "192.168.100.5 ${domain}"
+    ];
+
     services.nginx.virtualHosts."${domain}" = {
       locations."/".proxyPass =
         "http://${config.services.open-webui.host}:${toString config.services.open-webui.port}";

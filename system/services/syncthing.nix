@@ -5,6 +5,7 @@ let
   uid = toString user.uid;
   gid = toString user.gid;
   dataDir = "/nas/Syncthing";
+  domain = "syncthing.tigor.web.id";
   inherit (lib) mkIf;
 in
 {
@@ -14,7 +15,7 @@ in
       chown ${uid}:${gid} ${dataDir}
     '';
 
-    services.nginx.virtualHosts."syncthing.tigor.web.id" = {
+    services.nginx.virtualHosts."${domain}" = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations = {
@@ -25,7 +26,11 @@ in
       };
     };
 
-    security.acme.certs."tigor.web.id".extraDomainNames = [ "syncthing.tigor.web.id" ];
+    services.adguardhome.settings.user_rules = [
+      "192.168.100.5 ${domain}"
+    ];
+
+    security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
     sops.secrets =
       let
         opts = {

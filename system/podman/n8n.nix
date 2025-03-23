@@ -34,6 +34,10 @@ in
       chown ${uid}:${gid} ${rootVolume}
     '';
 
+    services.adguardhome.settings.user_rules = [
+      "192.168.100.5 ${domain}"
+    ];
+
     security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
 
     virtualisation.oci-containers.containers.${name} = {

@@ -29,6 +29,9 @@ in
     };
 
     security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
+    services.adguardhome.settings.user_rules = [
+      "192.168.100.5 ${domain}"
+    ];
 
     sops.secrets."photoprism/admin_password" = {
       sopsFile = ../../secrets/photoprism.yaml;

@@ -26,6 +26,8 @@ in
       ];
     };
 
+    services.adguardhome.settings.user_rules = [ "192.168.100.5 flaresolverr.tigor.web.id" ];
+
     services.nginx.virtualHosts.${cfg.domain} = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;

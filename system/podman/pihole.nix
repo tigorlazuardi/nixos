@@ -30,6 +30,10 @@ in
       sopsFile = ../../secrets/pihole.yaml;
     };
 
+    services.adguardhome.settings.user_rules = [
+      "192.168.100.5 ${domain}"
+    ];
+
     networking.nameservers = [ piholeDNSIPBind ];
 
     # We have refresh the custom.list dns list when caddy virtual hosts changes,

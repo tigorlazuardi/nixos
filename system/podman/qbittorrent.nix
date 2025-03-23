@@ -58,6 +58,10 @@ lib.mkMerge [
       IOWeight = 50;
     };
 
+    services.adguardhome.settings.user_rules = [
+      "192.168.100.5 ${domain}"
+    ];
+
     virtualisation.oci-containers.containers.${name} =
       let
         finish-notify-script = pkgs.writeScriptBin "notify-finish.sh" (

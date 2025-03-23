@@ -85,6 +85,10 @@ lib.mkMerge [
       chown -R ${uid}:${gid} ${volume} /etc/podman/${name}
     '';
 
+    services.adguardhome.settings.user_rules = [
+      "192.168.100.5 ${domain}"
+    ];
+
     systemd.services."podman-${name}".restartTriggers = [ webhook ];
 
     environment.etc."podman/${name}/ytdlp.json" = {

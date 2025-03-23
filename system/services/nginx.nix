@@ -12,6 +12,7 @@ let
     strings
     lists
     ;
+  domain = "tigor.web.id";
 in
 {
   config = mkIf cfg.enable {
@@ -48,8 +49,11 @@ in
       After = lib.mkForce [ "network.target" ];
       Wants = lib.mkForce [ ];
     };
+    services.adguardhome.settings.user_rules = [
+      "192.168.100.5 ${domain}"
+    ];
 
-    environment.etc."nginx/static/tigor.web.id/index.html" = {
+    environment.etc."nginx/static/${domain}/index.html" = {
       text =
         let
           domains = attrsets.mapAttrsToList (
@@ -89,18 +93,18 @@ in
       group = "nginx";
     };
 
-    services.nginx.virtualHosts."tigor.web.id" = {
-      useACMEHost = "tigor.web.id";
+    services.nginx.virtualHosts."${domain}" = {
+      useACMEHost = domain;
       forceSSL = true;
       locations."/" = {
-        root = "/etc/nginx/static/tigor.web.id";
+        root = "/etc/nginx/static/${domain}";
         tryFiles = "$uri $uri/ $uri.html =404";
       };
     };
 
-    systemd.timers."acme-tigor.web.id".timerConfig.OnCalendar = lib.mkForce "*-*-1,15 04:00:00";
+    systemd.timers."acme-${domain}".timerConfig.OnCalendar = lib.mkForce "*-*-1,15 04:00:00";
 
-    security.acme.certs."tigor.web.id" = {
+    security.acme.certs."${domain}" = {
       webroot = "/var/lib/acme/acme-challenge";
       group = "nginx";
     };

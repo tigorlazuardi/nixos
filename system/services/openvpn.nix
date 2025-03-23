@@ -30,6 +30,10 @@ in
     networking.firewall.trustedInterfaces = [ vpn-dev ];
     networking.firewall.allowedUDPPorts = [ port ];
 
+    services.adguardhome.settings.user_rules = [
+      "192.168.100.5 ${domain}"
+    ];
+
     sops = {
       # Activate the secrets.
       secrets =

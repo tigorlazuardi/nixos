@@ -2,11 +2,12 @@
 let
   cfg = config.profile.services.navidrome;
   user = config.profile.user;
+  domain = "navidrome.tigor.web.id";
   inherit (lib) mkIf;
 in
 {
   config = mkIf cfg.enable {
-    services.nginx.virtualHosts."navidrome.tigor.web.id" = {
+    services.nginx.virtualHosts."${domain}" = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations = {
@@ -17,7 +18,11 @@ in
       };
     };
 
-    security.acme.certs."tigor.web.id".extraDomainNames = [ "navidrome.tigor.web.id" ];
+    security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
+
+    services.adguardhome.settings.user_rules = [
+      "192.168.100.5 ${domain}"
+    ];
 
     users.groups.navidrome.members = [ user.name ];
     users.groups.${user.name}.members = [ "navidrome" ];

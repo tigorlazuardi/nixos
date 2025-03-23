@@ -29,6 +29,9 @@ let
 in
 {
   config = mkIf (podman.enable && podman.${name}.enable) {
+    services.adguardhome.settings.user_rules = [
+      "192.168.100.5 ${domain}"
+    ];
     # Minecraft only autoupdates at startup
     #
     # To keep up with the update, restart the server at 4am everyday.

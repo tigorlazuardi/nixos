@@ -6,11 +6,12 @@
 }:
 let
   cfg = config.profile.services.forgejo;
+  domain = "git.tigor.web.id";
   inherit (lib) mkIf;
 in
 {
   config = mkIf cfg.enable {
-    services.nginx.virtualHosts."git.tigor.web.id" = {
+    services.nginx.virtualHosts."${domain}" = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations = {
@@ -42,14 +43,16 @@ in
       };
     };
 
-    security.acme.certs."tigor.web.id".extraDomainNames = [ "git.tigor.web.id" ];
+    security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
+
+    services.adguardhome.settings.user_rules = [ "192.168.100.5 ${domain}" ];
 
     services.forgejo = {
       enable = true;
       settings = {
         server = rec {
           PROTOCOL = "http+unix";
-          DOMAIN = "git.tigor.web.id";
+          DOMAIN = domain;
           HTTP_PORT = 443;
           ROOT_URL = "https://${DOMAIN}:${toString HTTP_PORT}";
         };
