@@ -42,7 +42,7 @@ in
       useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations."/" = {
-        proxyPass = "http://${ip}:8989";
+        proxyPass = "http://${ip-anime}:8990";
         proxyWebsockets = true;
       };
     };
