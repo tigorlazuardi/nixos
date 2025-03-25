@@ -116,11 +116,18 @@ in
         fpath+=$ZSH_CACHE_DIR/completions
         fpath+=${pkgs.zsh-completions}/share/zsh/site-functions
       ''
-      (optionalString config.profile.podman.enable # bash
+      (optionalString config.profile.podman.enable # sh
         ''
           if [ ! -f $ZSH_CACHE_DIR/completions/_podman ]; then
               podman completion zsh > $ZSH_CACHE_DIR/completions/_podman
           fi
+
+          function pod-ips() {
+            for container in $(sudo podman ps -q); do
+              echo -n "$container: "
+              sudo podman inspect --format '{{.Name}} - {{.NetworkSettings.IPAddress}}' $container
+            done
+          }
         ''
       )
     ]);
