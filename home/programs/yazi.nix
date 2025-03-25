@@ -11,6 +11,7 @@ let
 in
 {
   config = mkIf cfg.enable {
+    programs.zsh.shellAliases.y = "yazi";
     programs.yazi = {
       enable = true;
       package = unstable.yazi;
