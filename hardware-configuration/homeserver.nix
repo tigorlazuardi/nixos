@@ -21,7 +21,7 @@ in
     [
       (modulesPath + "/installer/scan/not-detected.nix")
       hardware.common-cpu-amd
-      hardware.common-cpu-amd-zenpower
+      # hardware.common-cpu-amd-zenpower
       hardware.common-cpu-amd-pstate
       hardware.common-gpu-intel
     ];
