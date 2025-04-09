@@ -127,7 +127,7 @@ in
       # loop back to Nginx until the container is started.
       "@handle_502".extraConfig = # nginx
         ''
-          echo_sleep 5;
+          echo_sleep 1;
           echo_exec @loop;
         '';
       "@loop".proxyPass = "http://localhost:80";
