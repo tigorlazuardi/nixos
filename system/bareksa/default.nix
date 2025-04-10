@@ -2,7 +2,7 @@
 {
   imports = [
     ./kafka-ui.nix
-    ./mongo.nix
+    # ./mongo.nix
     ./nginx.nix
   ];
 }
