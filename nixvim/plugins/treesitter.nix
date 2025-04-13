@@ -100,7 +100,6 @@
     treesitter = {
       enable = true;
       package = unstable.vimPlugins.nvim-treesitter;
-      treesitterPackage = unstable.tree-sitter;
       settings = {
         highlight.enable = true;
         indent.enable = true;
