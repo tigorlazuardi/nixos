@@ -75,6 +75,7 @@
       couchdb.enable = false;
       technitium.enable = false;
       suwayomi.enable = true;
+      github-runner.enable = true;
     };
   };
 }

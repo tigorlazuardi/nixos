@@ -36,6 +36,7 @@ in
     photoprism.enable = mkEnableOption "photoprism";
     navidrome.enable = mkEnableOption "navidrome";
     suwayomi.enable = mkEnableOption "suwayomi";
+    github-runner.enable = mkEnableOption "github-runner";
     flaresolverr = {
       enable = mkEnableOption "flaresolverr";
       domain = mkOption {

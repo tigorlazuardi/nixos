@@ -9,6 +9,7 @@
     ./couchdb.nix
     ./flaresolverr.nix
     ./forgejo.nix
+    ./github-runner.nix
     ./jellyfin.nix
     ./kavita.nix
     ./navidrome.nix
