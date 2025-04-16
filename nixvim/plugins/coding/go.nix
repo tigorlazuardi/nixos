@@ -139,6 +139,23 @@
         event = "FileType";
         pattern = "go";
       }
+      {
+        callback.__raw = ''
+          function(ctx)
+              local clients = vim.lsp.get_clients({ bufnr = ctx.buf, name = "gopls" })
+              -- Gopls is not attached
+              if #clients == 0 then
+                return
+              end
+              vim.lsp.buf.format()
+              vim.lsp.buf.code_action { context = { only = { 'source.organizeImports' } }, apply = true }
+              vim.lsp.buf.code_action { context = { only = { 'source.fixAll' } }, apply = true }
+            end
+        '';
+        event = "BufWritePre";
+        pattern = "*.go";
+        desc = "Organize imports and format on save for Go files";
+      }
     ];
 
     extraPlugins = [
@@ -273,9 +290,12 @@
       settings.delve.path = "${pkgs.delve}/bin/dlv";
       lazyLoad.settings.ft = [ "manually_loaded" ];
     };
-    plugins.conform-nvim.settings.formatters_by_ft.go = [
-      "goimports"
-      "gofumpt"
+    # Disable annoying message when no code actions are available
+    plugins.noice.settings.routes = [
+      {
+        filter.find = "No code actions available";
+        opts.skip = true;
+      }
     ];
   };
 }
