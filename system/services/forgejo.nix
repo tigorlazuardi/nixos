@@ -7,6 +7,7 @@
 let
   cfg = config.profile.services.forgejo;
   domain = "git.tigor.web.id";
+  name = "forgejo";
   inherit (lib) mkIf;
 in
 {
@@ -15,11 +16,6 @@ in
       useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations = {
-        "/robots.txt".extraConfig = # nginx
-          ''
-            add_header Content-Type text/plain;
-            return 200 "User-agent: *\nDisallow: /";
-          '';
         "= /" = {
           extraConfig =
             #nginx
@@ -28,17 +24,10 @@ in
                   rewrite ^(.*)$ /tigor redirect;
               }
             '';
-          proxyPass = "http://unix:/run/forgejo/forgejo.sock";
+          proxyPass = "http://unix:/run/anubis/anubis-${name}.sock";
         };
         "/" = {
-          proxyPass = "http://unix:/run/forgejo/forgejo.sock";
-          extraConfig =
-            # nginx
-            ''
-              if ($http_user_agent ~* (netcrawl|npbot|malicious|meta-externalagent|Bytespider|DotBot|Googlebot)) {
-                  return 444;
-              }
-            '';
+          proxyPass = "http://unix:/run/anubis/anubis-${name}.sock";
         };
       };
     };
@@ -46,6 +35,10 @@ in
     security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
 
     services.adguardhome.settings.user_rules = [ "192.168.100.5 ${domain}" ];
+
+    services.anubis.instances."${name}".settings = {
+      TARGET = "unix:///run/forgejo/forgejo.sock";
+    };
 
     services.forgejo = {
       enable = true;

@@ -102,6 +102,7 @@ in
       };
     };
 
+    # Once every month, at 4 AM, renew the certificates.
     systemd.timers."acme-${domain}".timerConfig.OnCalendar = lib.mkForce "*-*-1,15 04:00:00";
 
     security.acme.certs."${domain}" = {

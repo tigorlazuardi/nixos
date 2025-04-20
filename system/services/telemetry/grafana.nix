@@ -7,7 +7,8 @@
 let
   cfg = config.profile.services.telemetry.grafana;
   inherit (lib) mkIf;
-  grafanaDomain = "grafana.tigor.web.id";
+  name = "grafana";
+  grafanaDomain = "${name}.tigor.web.id";
 in
 {
   config = mkIf cfg.enable {
@@ -33,7 +34,7 @@ in
       useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations."/" = {
-        proxyPass = "http://${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
+        proxyPass = "http://unix:/run/anubis/anubis-${name}.sock";
         proxyWebsockets = true;
       };
     };
@@ -41,6 +42,30 @@ in
     security.acme.certs."tigor.web.id".extraDomainNames = [
       grafanaDomain
     ];
+
+    services.anubis.instances."${name}".settings = {
+      TARGET =
+        let
+          server = config.services.grafana.settings.server;
+        in
+        "http://${server.http_addr}:${toString server.http_port}";
+    };
+
+    services.adguardhome.settings.user_rules = [
+      "192.168.100.5 ${grafanaDomain}"
+    ];
+
+    environment.etc."alloy/config.alloy".text =
+      # hocon
+      ''
+        prometheus.scrape "anubis_${name}" {
+            targets     = [{
+              __address__ = "127.0.0.1:33002",
+            }]
+            job_name   = "anubis_${name}"
+            forward_to  = [prometheus.remote_write.mimir.receiver]
+        }
+      '';
 
     services.grafana = {
       enable = true;
