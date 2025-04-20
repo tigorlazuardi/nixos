@@ -9,6 +9,7 @@ in
   profile = {
     stylix.enable = true;
     wine.enable = true;
+    bluetooth.enable = true;
 
     environment.bareksa.enable = true;
     hostname = "castle";
