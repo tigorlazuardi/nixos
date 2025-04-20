@@ -4,7 +4,6 @@
     ./telemetry
 
     ./adguard_home.nix
-    ./anubis.nix
     ./caddy.nix
     ./cockpit.nix
     ./couchdb.nix

@@ -146,6 +146,16 @@ in
             forward_to  = [prometheus.remote_write.mimir.receiver]
         }
 
+        prometheus.scrape "caddy" {
+            targets = [{
+                __address__ = "localhost:2019",
+            }]
+
+            job_name = "caddy"
+
+            forward_to  = [prometheus.remote_write.mimir.receiver]
+        }
+
         prometheus.remote_write "mimir" {
             endpoint {
                 url = "http://${mimirServer.http_listen_address}:${toString mimirServer.http_listen_port}/api/v1/push"

@@ -67,8 +67,12 @@ lib.mkMerge [
       useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations."/" = {
-        proxyPass = "http://unix:/run/anubis/anubis-${name}.sock";
+        proxyPass = "http://${ip}:8081";
         proxyWebsockets = true;
+        # extraConfig = # nginx
+        #   ''
+        #     auth_basic $auth_ip;
+        #   '';
       };
     };
 
@@ -84,8 +88,6 @@ lib.mkMerge [
     services.adguardhome.settings.user_rules = [
       "192.168.100.5 ${domain}"
     ];
-
-    services.anubis.instances."${name}".settings.TARGET = "http://${ip}:8081";
 
     systemd.services."podman-${name}".restartTriggers = [ webhook ];
 
