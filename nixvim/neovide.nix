@@ -21,6 +21,13 @@
         vim.o.guifont = font .. ":h" .. font_size
         vim.notify("Font Set: " .. font .. ":h" .. font_size)
       end, { desc = "Increase font size" })
+
+      vim.keymap.set(
+        { "n", "v", "s", "x", "o", "i", "l", "c", "t" },
+        "<C-S-v>",
+        function() vim.api.nvim_paste(vim.fn.getreg "+", true, -1) end,
+        { noremap = true, silent = true }
+      )
     end
   '';
 }
