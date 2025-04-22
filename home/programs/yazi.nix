@@ -10,6 +10,9 @@ let
 in
 {
   config = mkIf cfg.enable {
+    home.packages = with pkgs; [
+      duckdb
+    ];
     programs.zsh.shellAliases.y = "yazi";
     programs.yazi = {
       enable = true;
@@ -32,11 +35,39 @@ in
           		},
           	},
           })
+
+          require("duckdb"):setup()
         '';
       enableZshIntegration = true;
       keymap = {
         manager = {
           prepend_keymap = [
+            {
+              on = "H";
+              run = "plugin duckdb -1";
+              desc = "Scroll one column to the left";
+            }
+            {
+              on = "L";
+              run = "plugin duckdb +1";
+              desc = "Scroll one column to the right";
+            }
+            {
+              on = [
+                "g"
+                "o"
+              ];
+              run = "plugin duckdb -open";
+              desc = "open with duckdb";
+            }
+            {
+              on = [
+                "g"
+                "u"
+              ];
+              run = "plugin duckdb -ui";
+              desc = "open with duckdb ui";
+            }
             {
               on = [ "m" ];
               run = "plugin bookmarks save";
@@ -71,8 +102,8 @@ in
           # 1/8 width for parent, 4/8 width for current, 3/8 width for preview
           ratio = [
             1
-            4
             3
+            4
           ];
           sort_by = "natural";
           sort_sensitive = false;
@@ -137,12 +168,76 @@ in
         plugin = {
           prepend_previewers = [
             {
+              name = "*.csv";
+              run = "duckdb";
+            }
+            {
+              name = "*.tsv";
+              run = "duckdb";
+            }
+            {
+              name = "*.json";
+              run = "duckdb";
+            }
+            {
+              name = "*.parquet";
+              run = "duckdb";
+            }
+            {
+              name = "*.txt";
+              run = "duckdb";
+            }
+            {
+              name = "*.xlsx";
+              run = "duckdb";
+            }
+            {
+              name = "*.db";
+              run = "duckdb";
+            }
+            {
+              name = "*.duckdb";
+              run = "duckdb";
+            }
+            {
               mime = "{image,audio,video}/*";
               run = "mediainfo";
             }
             {
               mime = "application/x-subrip";
               run = "mediainfo";
+            }
+          ];
+          prepend_preloaders = [
+            {
+              name = "*.csv";
+              run = "duckdb";
+              multi = false;
+            }
+            {
+              name = "*.tsv";
+              run = "duckdb";
+              multi = false;
+            }
+            {
+              name = "*.json";
+              run = "duckdb";
+              multi = false;
+            }
+            {
+              name = "*.parquet";
+              run = "duckdb";
+              multi = false;
+            }
+            {
+              name = "*.txt";
+              run = "duckdb";
+              multi = false;
+            }
+            {
+              name = "*.xlsx";
+              run = "duckdb";
+              multi = false;
             }
           ];
         };
@@ -165,6 +260,15 @@ in
           repo = "mediainfo.yazi";
           rev = "447fe95239a488459cfdbd12f3293d91ac6ae0d7";
           hash = "sha256-U6rr3TrFTtnibrwJdJ4rN2Xco4Bt4QbwEVUTNXlWRps=";
+        };
+      };
+      ".config/yazi/plugins/duckdb.yazi" = {
+        recursive = true;
+        source = pkgs.fetchFromGitHub {
+          owner = "wylie102";
+          repo = "duckdb.yazi";
+          rev = "6259e2d26236854b966ebc71d28de0397ddbe4d8";
+          hash = "sha256-9DMqE/pihp4xT6Mo2xr51JJjudMRAesxD5JqQ4WXiM4=";
         };
       };
     };
