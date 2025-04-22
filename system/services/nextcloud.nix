@@ -31,7 +31,7 @@ in
     # will be stored.
     services.nextcloud = {
       enable = true;
-      package = pkgs.nextcloud30;
+      package = pkgs.nextcloud31;
       https = true;
       hostName = domain;
       config =
