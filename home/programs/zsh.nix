@@ -123,10 +123,7 @@ in
           fi
 
           function pod-ips() {
-            for container in $(sudo podman ps -q); do
-              echo -n "$container: "
-              sudo podman inspect --format '{{.Name}} - {{.NetworkSettings.IPAddress}}' $container
-            done
+            sudo podman inspect --format '{{.Name}} - {{.NetworkSettings.IPAddress}}' $(sudo podman ps -q) | sort -t . -k 3,4
           }
         ''
       )
