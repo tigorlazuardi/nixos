@@ -1,6 +1,6 @@
 {
-  unstable,
   config,
+  pkgs,
   ...
 }:
 {
@@ -8,5 +8,5 @@
     sopsFile = ../../secrets/ai.yaml;
     path = "${config.home.homeDirectory}/.aider.conf.yml";
   };
-  home.packages = with unstable; [ aider-chat ];
+  home.packages = with pkgs; [ aider-chat ];
 }

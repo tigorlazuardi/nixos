@@ -15,6 +15,8 @@
           pname = "gitsigns.nvim";
           version = inputs.gitsigns-nvim.shortRev;
           src = inputs.gitsigns-nvim;
+          doCheck = false;
+          doInstallCheck = false;
         };
         lazyLoad.settings.event = [ "BufReadPost" ];
         settings = {

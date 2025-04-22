@@ -1,8 +1,6 @@
-{ unstable, ... }:
 {
   programs.nixvim.plugins.persistence = {
     enable = true;
-    package = unstable.vimPlugins.persistence-nvim;
     lazyLoad.settings = {
       event = [
         "BufReadPre"

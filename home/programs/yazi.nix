@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  unstable,
   ...
 }:
 let
@@ -14,7 +13,6 @@ in
     programs.zsh.shellAliases.y = "yazi";
     programs.yazi = {
       enable = true;
-      package = unstable.yazi;
       initLua =
         # lua
         ''

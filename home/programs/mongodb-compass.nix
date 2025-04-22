@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  unstable,
+  pkgs,
   ...
 }:
 let
@@ -13,6 +13,6 @@ in
     sops.secrets."bareksa/mongodb-compass" = {
       inherit sopsFile;
     };
-    home.packages = [ unstable.mongodb-compass ];
+    home.packages = [ pkgs.mongodb-compass ];
   };
 }

@@ -12,6 +12,8 @@
           pname = "nvim-dap-view";
           src = inputs.nvim-dap-view;
           version = inputs.nvim-dap-view.shortRev;
+          doCheck = false;
+          doInstallCheck = false;
         };
         optional = true;
       }

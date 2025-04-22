@@ -1,7 +1,7 @@
-{ unstable, ... }:
+{ pkgs, ... }:
 {
   programs.nixvim = {
-    extraPackages = with unstable; [ shfmt ];
+    extraPackages = with pkgs; [ shfmt ];
     plugins.conform-nvim.settings.formatters_by_ft = {
       zsh = [ "shfmt" ];
       bash = [ "shfmt" ];

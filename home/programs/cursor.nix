@@ -2,7 +2,6 @@
   pkgs,
   config,
   lib,
-  unstable,
   ...
 }:
 let
@@ -11,12 +10,7 @@ in
 {
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      unstable.code-cursor
-      go
-      gopls
-      go-tools
-      gotools
-      impl
+      code-cursor
     ];
   };
 }

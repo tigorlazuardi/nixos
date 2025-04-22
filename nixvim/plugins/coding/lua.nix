@@ -1,7 +1,7 @@
-{ unstable, ... }:
+{ pkgs, ... }:
 {
   programs.nixvim = {
-    extraPackages = with unstable; [
+    extraPackages = with pkgs; [
       lua-language-server
       stylua
     ];

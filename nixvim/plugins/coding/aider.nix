@@ -7,6 +7,8 @@
           pname = "nvim-aider";
           version = inputs.nvim-aider.shortRev;
           src = inputs.nvim-aider;
+          doCheck = false;
+          doInstallCheck = false;
         };
         optional = true;
       }

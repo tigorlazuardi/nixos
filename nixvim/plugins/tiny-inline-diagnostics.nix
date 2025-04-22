@@ -7,6 +7,8 @@
           pname = "tiny-inline-diagnostic.nvim";
           version = inputs.tiny-inline-diagnostic-nvim.shortRev;
           src = inputs.tiny-inline-diagnostic-nvim;
+          doCheck = false;
+          doInstallCheck = false;
         };
         optional = true;
       }

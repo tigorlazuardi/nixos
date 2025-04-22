@@ -1,7 +1,7 @@
-{ unstable, ... }:
+{ pkgs, ... }:
 {
   programs.nixvim = {
-    extraPackages = with unstable; [ prettierd ];
+    extraPackages = with pkgs; [ prettierd ];
     plugins = {
       conform-nvim.settings.formatters_by_ft = {
         javascript = [ "prettierd" ];
@@ -13,7 +13,6 @@
       };
       lsp.servers.vtsls = {
         enable = true;
-        package = unstable.vtsls;
         settings = {
           complete_function_calls = true;
           vtsls = {

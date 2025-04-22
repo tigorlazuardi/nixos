@@ -120,7 +120,7 @@ in
       zoom.enable = false;
       elisa.enable = true;
       obsidian.enable = true;
-      jetbrains.idea.enable = true;
+      jetbrains.idea.enable = false;
       java.enable = true;
       nemo.enable = true;
       neocal.enable = false;
@@ -134,7 +134,7 @@ in
     podman.enable = true;
     services.ntfy-sh.client.enable = true;
     services.resolved.enable = true;
-    services.ollama.enable = true;
+    services.ollama.enable = false;
     services.ollama.model = "qwen2.5-coder:7b";
   };
 }

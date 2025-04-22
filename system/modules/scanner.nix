@@ -11,7 +11,7 @@ in
 {
   config = lib.mkIf cfg.enable {
     users.users.${username}.extraGroups = [ "scanner" ];
-    environment.systemPackages = with pkgs; [ skanlite ];
+    environment.systemPackages = with pkgs; [ kdePackages.skanlite ];
     hardware.sane = {
       enable = true;
       brscan4.enable = true; # Brother Scanner

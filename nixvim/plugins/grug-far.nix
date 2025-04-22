@@ -1,8 +1,8 @@
-{ unstable, ... }:
+{ pkgs, ... }:
 {
   programs.nixvim.plugins.grug-far = {
     enable = true;
-    package = unstable.vimPlugins.grug-far-nvim;
+    package = pkgs.vimPlugins.grug-far-nvim;
     lazyLoad.settings = {
       cmd = [ "GrugFar" ];
       keys = [

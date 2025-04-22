@@ -28,10 +28,10 @@
       url = "github:hyprwm/contrib";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs.url = "nixpkgs/nixos-24.11";
-    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    # nixpkgs.url = "nixpkgs/nixos-24.11";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {
@@ -48,15 +48,11 @@
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    stylix.url = "github:danth/stylix/release-24.11";
+    stylix.url = "github:danth/stylix";
     catppuccin.url = "github:catppuccin/nix";
 
     #### Nix Vim
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      # If using a stable channel you can use `url = "github:nix-community/nixvim/nixos-<version>"`
-      # inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixvim.url = "github:nix-community/nixvim";
     snacks-nvim = {
       url = "github:folke/snacks.nvim";
       flake = false;
@@ -110,10 +106,6 @@
     }:
     let
       system = "x86_64-linux";
-      unstable = import inputs.nixpkgs-unstable {
-        inherit system;
-        config.allowUnfree = true;
-      };
       mkNixosConfiguration = (
         {
           profile-path,
@@ -124,7 +116,6 @@
           specialArgs = {
             inherit
               inputs
-              unstable
               profile-path
               hardware-configuration
               ;

@@ -4,7 +4,7 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    hardware.pulseaudio.enable = false;
+    # services.pulseaudio.enable = true;
     security.rtkit.enable = true;
     services.pipewire = {
       enable = true;

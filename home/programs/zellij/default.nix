@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  unstable,
   ...
 }:
 let
@@ -21,13 +20,12 @@ in
 {
   config = lib.mkIf cfg.enable {
     programs.zellij.enable = true;
-    programs.zellij.package = unstable.zellij;
 
     systemd.user = {
       services.zellij-cleanup = {
         Service = {
           Description = "Zellij cleanup killed sessions";
-          ExecStart = "${unstable.zellij}/bin/zellij delete-all-sessions --yes";
+          ExecStart = "${pkgs.zellij}/bin/zellij delete-all-sessions --yes";
         };
       };
       timers.zellij-cleanup = {

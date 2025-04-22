@@ -1,4 +1,4 @@
-{ unstable, ... }:
+{ pkgs, ... }:
 {
   programs.nixvim.keymaps = [
     {
@@ -16,7 +16,7 @@
     notify = {
       enable = true;
       # disable overriding vim.notify with require('notify')
-      luaConfig.pre = unstable.lib.mkForce "";
+      luaConfig.pre = pkgs.lib.mkForce "";
       lazyLoad.settings.ft = [ "manually_loaded" ];
       settings = {
         render = "minimal";
@@ -24,7 +24,6 @@
     };
     noice = {
       enable = true;
-      package = unstable.vimPlugins.noice-nvim;
       settings = {
         lsp.override = {
           "vim.lsp.util.convert_input_to_markdown_lines" = true;

@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  unstable,
   ...
 }:
 let
@@ -11,16 +10,10 @@ let
   otelcolGRPCListenAddress = "192.168.100.5:4317";
 in
 {
-  # imports = [
-  #   # Grafana Alloy is still in unstable options.
-  #   "${inputs.nixpkgs-unstable}/nixos/modules/services/monitoring/alloy.nix"
-  # ];
-
   config = lib.mkIf cfg.enable {
     services.alloy = {
       enable = true;
       extraFlags = [ ''--server.http.listen-addr=${webguiListenAddress}'' ];
-      package = unstable.grafana-alloy;
     };
 
     systemd.services.alloy.serviceConfig = {

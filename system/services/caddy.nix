@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  unstable,
   ...
 }:
 let
@@ -17,7 +16,6 @@ in
   config = mkIf cfg.enable {
     services.caddy = {
       enable = true;
-      package = unstable.caddy;
     };
 
     sops = {

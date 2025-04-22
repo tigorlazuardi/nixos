@@ -1,4 +1,4 @@
-{ config, unstable, ... }:
+{ config, ... }:
 let
   secretFile = ../../../secrets/ai.yaml;
 in
@@ -9,7 +9,6 @@ in
   programs.nixvim = {
     plugins.codecompanion = {
       enable = true;
-      package = unstable.vimPlugins.codecompanion-nvim;
       settings = {
         strategies = {
           chat.adapter = "anthropic";

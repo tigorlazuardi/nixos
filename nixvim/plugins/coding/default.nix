@@ -1,4 +1,4 @@
-{ unstable, lib, ... }:
+{ lib, ... }:
 {
   imports = [
     ./aider.nix
@@ -53,7 +53,6 @@
     };
     plugins.lint = {
       enable = true;
-      package = unstable.vimPlugins.nvim-lint;
       lintersByFt = lib.mkDefault { };
       autoCmd.event = [
         "BufWritePost"

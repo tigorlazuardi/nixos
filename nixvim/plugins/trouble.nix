@@ -7,6 +7,8 @@
         pname = "trouble.nvim";
         src = inputs.trouble-nvim;
         version = inputs.trouble-nvim.shortRev;
+        doCheck = false;
+        doInstallCheck = false;
       };
       settings = {
         modes = {

@@ -7,6 +7,8 @@
           pname = "tiny-code-action.nvim";
           src = inputs.tiny-code-action;
           version = inputs.tiny-code-action.shortRev;
+          doCheck = false;
+          doInstallCheck = false;
         };
       }
     ];

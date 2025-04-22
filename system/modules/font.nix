@@ -1,21 +1,22 @@
 { pkgs, ... }:
 {
   fonts = {
-    packages = with pkgs; [
-      # icon fonts
-      material-design-icons
+    packages =
+      with pkgs;
+      [
+        # icon fonts
+        material-design-icons
 
-      # normal fonts
-      noto-fonts
-      noto-fonts-cjk-sans
-      noto-fonts-emoji
-      noto-fonts-color-emoji
-      dejavu_fonts
+        # normal fonts
+        noto-fonts
+        noto-fonts-cjk-sans
+        noto-fonts-emoji
+        noto-fonts-color-emoji
+        dejavu_fonts
 
-      nerdfonts
-
-      jost
-    ];
+        jost
+      ]
+      ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
     # use fonts specified by user rather than default ones
     enableDefaultPackages = false;

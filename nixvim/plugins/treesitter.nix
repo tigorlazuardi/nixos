@@ -1,27 +1,31 @@
-{ unstable, inputs, ... }:
+{ pkgs, inputs, ... }:
 {
   # imports = [
   #   ./treesitter-diagnostic.nix
   # ];
   # smartindent settings are interfering with treesitter
-  programs.nixvim.opts.smartindent = unstable.lib.mkForce false;
+  programs.nixvim.opts.smartindent = pkgs.lib.mkForce false;
   programs.nixvim.extraPlugins = [
     {
-      plugin = unstable.vimUtils.buildVimPlugin {
+      plugin = pkgs.vimUtils.buildVimPlugin {
         pname = "treesitter-endwise";
         src = inputs.nvim-treesitter-endwise;
         version = inputs.nvim-treesitter-endwise.shortRev;
+        doCheck = false;
+        doInstallCheck = false;
       };
     }
     {
-      plugin = unstable.vimPlugins.ultimate-autopair-nvim;
+      plugin = pkgs.vimPlugins.ultimate-autopair-nvim;
       optional = true;
     }
     {
-      plugin = unstable.vimUtils.buildVimPlugin {
+      plugin = pkgs.vimUtils.buildVimPlugin {
         pname = "neotab.nvim";
         src = inputs.neotab-nvim;
         version = inputs.neotab-nvim.shortRev;
+        doCheck = false;
+        doInstallCheck = false;
       };
       optional = true;
     }
@@ -99,7 +103,7 @@
   programs.nixvim.plugins = {
     treesitter = {
       enable = true;
-      package = unstable.vimPlugins.nvim-treesitter;
+      package = pkgs.vimPlugins.nvim-treesitter;
       settings = {
         highlight.enable = true;
         indent.enable = true;
@@ -117,7 +121,7 @@
     };
     ts-autotag = {
       enable = true;
-      package = unstable.vimPlugins.nvim-ts-autotag;
+      package = pkgs.vimPlugins.nvim-ts-autotag;
       settings = {
         opts.enable_close_on_slash = true;
       };
@@ -139,7 +143,6 @@
     };
     # nvim-autopairs = {
     #   enable = true;
-    #   package = unstable.vimPlugins.nvim-autopairs;
     #   lazyLoad.settings.ft = [ "InsertEnter" ];
     #   settings = {
     #     ignored_next_char = ''[=[[%%%'%[%\"%.%%$]]=]'';
@@ -147,14 +150,12 @@
     # };
     ts-comments = {
       enable = true;
-      package = unstable.vimPlugins.ts-comments-nvim;
       settings = {
         opts.ignore_whitespace = true;
       };
     };
     treesitter-context = {
       enable = true;
-      package = unstable.vimPlugins.nvim-treesitter-context;
       settings = {
         enable = true;
         max_lines = 1;
@@ -167,7 +168,6 @@
     };
     treesitter-textobjects = {
       enable = true;
-      package = unstable.vimPlugins.nvim-treesitter-textobjects;
       move = {
         enable = true;
         gotoNextStart = {
@@ -208,7 +208,6 @@
     };
     vim-matchup = {
       enable = true;
-      package = unstable.vimPlugins.vim-matchup;
       settings = {
         matchparen_offscreen = {
           method = "popup";

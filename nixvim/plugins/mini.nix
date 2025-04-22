@@ -1,4 +1,3 @@
-{ unstable, ... }:
 {
   programs.nixvim.extraConfigLua = ''
     local map_split = function(buf_id, lhs, direction)
@@ -45,7 +44,6 @@
   ];
   programs.nixvim.plugins.mini = {
     enable = true;
-    # package = unstable.vimPlugins.mini-nvim;
     mockDevIcons = true;
     modules = {
       icons = { };

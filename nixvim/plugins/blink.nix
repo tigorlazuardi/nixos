@@ -1,4 +1,4 @@
-{ unstable, ... }:
+{ ... }:
 {
   programs.nixvim = {
     plugins = {
@@ -6,11 +6,9 @@
       blink-ripgrep = {
         enable = true;
         lazyLoad.settings.ft = [ "manually_loaded" ];
-        package = unstable.vimPlugins.blink-ripgrep-nvim;
       };
       blink-cmp = {
         enable = true;
-        package = unstable.vimPlugins.blink-cmp;
         settings = {
           appearance.nerd_font_variant = "mono";
           cmdline = {

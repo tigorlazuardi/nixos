@@ -12,6 +12,8 @@
             rev = version;
             hash = "sha256-aZmxPwfoDNLpQX6A+X0vcAsGNkn1X/7gJs41yJekwt8=";
           };
+          doCheck = false;
+          doInstallCheck = false;
         };
         optional = true;
       }

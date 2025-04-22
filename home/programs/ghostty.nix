@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  unstable,
   ...
 }:
 let
@@ -12,7 +11,6 @@ in
   config = mkIf cfg.enable {
     programs.ghostty = {
       enable = true;
-      package = unstable.ghostty;
       settings = {
         font-family = "Hack Nerd Font Mono";
         font-size = 11;

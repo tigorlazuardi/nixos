@@ -35,7 +35,7 @@ in
         ffmpegthumbnailer # video thumbnailer
         mcomix # comicbook archives
 
-        gwenview
+        kdePackages.gwenview
 
         # Hyprland Programs
         meson

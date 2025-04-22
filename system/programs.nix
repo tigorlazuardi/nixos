@@ -1,7 +1,6 @@
 {
   inputs,
   pkgs,
-  unstable,
   ...
 }:
 {
@@ -11,7 +10,6 @@
     # viAlias = true;
     # vimAlias = true;
     package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
-    # package = unstable.neovim-unwrapped;
   };
 
   environment.systemPackages = with pkgs; [

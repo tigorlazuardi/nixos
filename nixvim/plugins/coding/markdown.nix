@@ -1,7 +1,7 @@
-{ unstable, ... }:
+{ pkgs, ... }:
 {
   programs.nixvim = {
-    extraPackages = with unstable; [ prettierd ];
+    extraPackages = with pkgs; [ prettierd ];
     extraConfigLua = # lua
       ''
         require("lz.n").load {

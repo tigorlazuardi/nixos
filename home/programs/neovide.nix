@@ -1,6 +1,5 @@
 {
   config,
-  unstable,
   pkgs,
   lib,
   ...
@@ -10,7 +9,7 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    home.packages = [ unstable.neovide ];
+    home.packages = [ pkgs.neovide ];
 
     programs.zsh.shellAliases.n = "neovide";
 

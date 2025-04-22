@@ -1,17 +1,17 @@
-{ unstable, ... }:
+{ pkgs, ... }:
 {
   programs.nixvim = {
     extraPlugins = [
       {
-        plugin = unstable.vimPlugins.vim-dadbod;
+        plugin = pkgs.vimPlugins.vim-dadbod;
         optional = true;
       }
       {
-        plugin = unstable.vimPlugins.vim-dadbod-completion;
+        plugin = pkgs.vimPlugins.vim-dadbod-completion;
         optional = true;
       }
       {
-        plugin = unstable.vimPlugins.vim-dadbod-ui;
+        plugin = pkgs.vimPlugins.vim-dadbod-ui;
         optional = true;
       }
     ];

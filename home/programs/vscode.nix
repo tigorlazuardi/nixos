@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  unstable,
+  pkgs,
   ...
 }:
 let
@@ -11,8 +11,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.vscode = {
       enable = true;
-      package = unstable.vscode;
-      extensions = with unstable.vscode-extensions; [
+      profiles.default.extensions = with pkgs.vscode-extensions; [
         dracula-theme.theme-dracula
         golang.go
         esbenp.prettier-vscode

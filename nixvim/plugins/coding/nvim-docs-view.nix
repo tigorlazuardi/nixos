@@ -12,6 +12,8 @@
             rev = "1b97f8f954d74c46061bf289b6cea9232484c12c";
             hash = "sha256-b5aH8Tj+tMk0BjNCgdeCEeR26oQ9NCobj98P7IDgIPY=";
           };
+          doCheck = false;
+          doInstallCheck = false;
         };
       }
     ];

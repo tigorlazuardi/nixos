@@ -1,4 +1,4 @@
-{ unstable, ... }:
+{ ... }:
 {
   programs.nixvim = {
     plugins = {
@@ -25,7 +25,6 @@
       copilot-lua = {
         enable = true;
         lazyLoad.settings.event = [ "InsertEnter" ];
-        package = unstable.vimPlugins.copilot-lua;
         settings = {
           panel.enabled = false;
           suggestion = {

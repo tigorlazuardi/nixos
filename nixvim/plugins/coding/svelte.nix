@@ -1,4 +1,4 @@
-{ unstable, ... }:
+{ pkgs, ... }:
 {
   programs.nixvim = {
     autoCmd = [
@@ -33,7 +33,6 @@
     plugins.lsp.servers = {
       svelte = {
         enable = true;
-        package = unstable.svelte-language-server;
         extraOptions.capabilities.__raw = ''
           require("blink.cmp").get_lsp_capabilities({
             workspace = {
@@ -47,7 +46,7 @@
       vtsls.settings.vtsls.tsserver.globalPlugins = [
         {
           name = "typescript-svelte-plugin";
-          location = "${unstable.vscode-extensions.svelte.svelte-vscode}/share/vscode/extensions/svelte.svelte-vscode/node_modules/typescript-svelte-plugin";
+          location = "${pkgs.vscode-extensions.svelte.svelte-vscode}/share/vscode/extensions/svelte.svelte-vscode/node_modules/typescript-svelte-plugin";
           enableForWorkspaceTypeScriptVersions = true;
         }
       ];

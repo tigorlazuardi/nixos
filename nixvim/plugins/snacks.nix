@@ -179,6 +179,8 @@
         pname = "snacks-nvim";
         src = inputs.snacks-nvim;
         version = inputs.snacks-nvim.shortRev;
+        doCheck = false;
+        doInstallCheck = false;
       };
     };
   };

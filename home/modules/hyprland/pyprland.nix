@@ -1,7 +1,6 @@
 {
   lib,
   pkgs,
-  unstable,
   config,
   ...
 }:
@@ -27,9 +26,9 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    home.packages = [
-      unstable.pyprland
-      pkgs.swww
+    home.packages = with pkgs; [
+      pyprland
+      swww
     ];
     home.file.".config/hypr/pyprland.toml".source =
       let

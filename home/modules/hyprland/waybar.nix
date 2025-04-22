@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  unstable,
   pkgs,
   ...
 }:
@@ -162,7 +161,6 @@ in
       "wl-paste --watch cliphist store"
     ];
     programs.waybar = {
-      package = unstable.waybar;
       enable = true;
       settings = {
         mainBar = {
@@ -201,9 +199,9 @@ in
         # css
         ''
           * {
-              border: none;
-              border-radius: 0px;
-              color: @base05;
+            border: none;
+            border-radius: 0px;
+            color: @base05;
           }
 
           window#waybar {
@@ -211,7 +209,6 @@ in
             padding-right: 0;
             margin-right: 0;
           }
-
 
           #workspaces {
             margin: 0 0.4rem;
@@ -244,120 +241,127 @@ in
           }
 
           tooltip {
-              border-radius: 1rem;
-              background-color: alpha(@base00, 0.7);
-              padding: 2rem;
-              margin: 0px;
-              border: 1px solid @base04;
+            border-radius: 1rem;
+            background-color: alpha(@base00, 0.7);
+            padding: 2rem;
+            margin: 0px;
+            border: 1px solid @base04;
           }
 
           tooltip label {
-              color: @base06;
-              font-size: 0.9rem;
+            color: @base06;
+            font-size: 0.9rem;
           }
 
           /* Window Title */
 
           #window {
-              background: linear-gradient(90deg, alpha(@base08, 0.8) 0%, alpha(@base08, 0.5) 35%, alpha(@base08, 0) 100%);
-              margin: 0 0;
-              padding: 0 0.4rem;
-              color: @base05;
-              font-size: 0.9rem;
-              font-weight: bold;
+            background: linear-gradient(
+              90deg,
+              alpha(@base08, 0.8) 0%,
+              alpha(@base08, 0.5) 35%,
+              alpha(@base08, 0) 100%
+            );
+            margin: 0 0;
+            padding: 0 0.4rem;
+            color: @base05;
+            font-size: 0.9rem;
+            font-weight: bold;
           }
 
           window#waybar.empty #window {
-              background-color: transparent;
+            background-color: transparent;
           }
 
           #idle_inhibitor {
-              margin-right: 1rem;
-              font-size: 1.3rem;
-              font-weight: bold;
-              opacity: 0.8;
-              color: @base05;
+            margin-right: 1rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            opacity: 0.8;
+            color: @base05;
           }
 
           #idle_inhibitor.activated {
-              margin-right: 1rem;
-              font-size: 1.3rem;
-              font-weight: bold;
-              opacity: 0.8;
-              color: @base08;
+            margin-right: 1rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            opacity: 0.8;
+            color: @base08;
           }
 
           #custom-exit {
-              margin-right: 1rem;
-              padding: 0 0.5rem;
-              font-size: 1.3rem;
-              color: @base05;
+            margin-right: 1rem;
+            padding: 0 0.5rem;
+            font-size: 1.3rem;
+            color: @base05;
           }
 
-
           #clock {
-              background: linear-gradient(90deg, alpha(@base0D, 0) 0%, alpha(@base0D, 0.5) 65%, alpha(@base0D, 1) 100%);
-              font-size: 1.1rem;
-              color: @base05;
-              margin-top: 0;
-              margin-bottom: 0;
-              padding: 0.4rem;
-              font-weight: bold;
+            background: linear-gradient(
+              90deg,
+              alpha(@base0D, 0) 0%,
+              alpha(@base0D, 0.5) 65%,
+              alpha(@base0D, 1) 100%
+            );
+            font-size: 1.1rem;
+            color: @base05;
+            margin-top: 0;
+            margin-bottom: 0;
+            padding: 0.4rem;
+            font-weight: bold;
           }
 
           #pulseaudio {
-              background-color: transparent;
-              font-size: 1rem;
-              color: @base05;
-              margin-right: 0.3rem;
+            background-color: transparent;
+            font-size: 1rem;
+            color: @base05;
+            margin-right: 0.3rem;
           }
 
           #pulseaudio.muted {
-              color: @base08;
+            color: @base08;
           }
 
           #bluetooth,
           #bluetooth.on,
           #bluetooth.connected {
-              font-size: 1rem;
-              color: @base05;
-              margin-right: 0.7rem;
+            font-size: 1rem;
+            color: @base05;
+            margin-right: 0.7rem;
           }
 
           #bluetooth.off {
-              background-color: transparent;
-              padding: 0px;
-              margin: 0px;
+            background-color: transparent;
+            padding: 0px;
+            margin: 0px;
           }
 
-
           #battery {
-              font-size: 1rem;
-              color: @base05;
-              margin-right: 1rem;
+            font-size: 1rem;
+            color: @base05;
+            margin-right: 1rem;
           }
 
           #battery.charging,
           #battery.plugged {
-              color: @base05;
+            color: @base05;
           }
 
-
           @keyframes blink {
-              to {
-                background-color: @base0D;
-                color: @base08;
-              }
+            to {
+              background-color: @base0D;
+              color: @base08;
+            }
           }
 
           #battery.critical:not(.charging) {
-              background-color: @base08;
-              color: @base05;
-              animation-name: blink;
-              animation-duration: 0.5s;
-              animation-timing-function: linear;
-              animation-iteration-count: infinite;
-              animation-direction: alternate;
+            background-color: @base08;
+            color: @base05;
+            animation-name: blink;
+            animation-duration: 0.5s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
           }
 
           #network {
@@ -367,16 +371,16 @@ in
           }
 
           #tray {
-              color: @base05;
-              margin-right: 0.5rem;
+            color: @base05;
+            margin-right: 0.5rem;
           }
 
           #tray > .passive {
-              -gtk-icon-effect: dim;
+            -gtk-icon-effect: dim;
           }
 
           #tray > .needs-attention {
-              -gtk-icon-effect: highlight;
+            -gtk-icon-effect: highlight;
           }
 
           #custom-notification {

@@ -1,6 +1,6 @@
 {
   lib,
-  unstable,
+  pkgs,
   config,
   ...
 }:
@@ -9,7 +9,7 @@ let
 in
 {
   config = lib.mkIf false {
-    home.packages = [ unstable.hyprpaper ];
+    home.packages = [ pkgs.hyprpaper ];
 
     home.file.".config/hypr/hyprpaper.conf".text =
       let

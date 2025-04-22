@@ -1,5 +1,4 @@
 {
-  unstable,
   pkgs,
   config,
   ...
@@ -162,17 +161,19 @@
       {
         plugin =
           let
-            src = unstable.fetchFromGitHub {
+            src = pkgs.fetchFromGitHub {
               owner = "edolphin-ydf";
               repo = "goimpl.nvim";
               rev = "61257826f31a79870bb13d56c4edd09b1291c0b8";
               hash = "sha256-4kmvNdyA+by/jgo9CGNljND3AcLYgw0byfIQsSz8M2Y=";
             };
           in
-          unstable.vimUtils.buildVimPlugin {
+          pkgs.vimUtils.buildVimPlugin {
             pname = "goimpl.nvim";
             version = src.rev;
             inherit src;
+            doCheck = false;
+            doInstallCheck = false;
           };
         optional = true;
       }
@@ -276,7 +277,7 @@
     };
     plugins.neotest.adapters.golang = {
       enable = true;
-      package = unstable.vimPlugins.neotest-golang;
+      package = pkgs.vimPlugins.neotest-golang;
       settings = {
         dap_go_enabled = true;
       };

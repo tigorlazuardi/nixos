@@ -1,7 +1,6 @@
 {
   lib,
   pkgs,
-  unstable,
   config,
   ...
 }:
@@ -15,10 +14,9 @@ in
 
     home.packages = with pkgs; [
       wl-clipboard
-      kcalc
       font-manager
       vivaldi
-      unstable.hyprland-qt-support
+      hyprland-qt-support
       hyprpolkitagent
     ];
     wayland.windowManager.hyprland = {

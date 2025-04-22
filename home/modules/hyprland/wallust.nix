@@ -1,6 +1,5 @@
 {
   pkgs,
-  unstable,
   lib,
   config,
   ...
@@ -39,9 +38,9 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    home.packages = [
-      pkgs.imagemagick
-      unstable.wallust
+    home.packages = with pkgs; [
+      imagemagick
+      wallust
     ];
 
     wayland.windowManager.hyprland.settings.exec-once = lib.mkOrder 10 [

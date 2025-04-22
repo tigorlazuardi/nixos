@@ -1,6 +1,5 @@
 {
   config,
-  unstable,
   pkgs,
   lib,
   inputs,
@@ -16,7 +15,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.walker = {
       enable = true;
-      package = unstable.walker;
+      package = pkgs.walker;
       runAsService = true;
       config = {
         hotreload_theme = true;

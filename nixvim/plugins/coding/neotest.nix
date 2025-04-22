@@ -1,12 +1,7 @@
 {
-  unstable,
-  ...
-}:
-{
   programs.nixvim = {
     plugins.neotest = {
       enable = true;
-      package = unstable.vimPlugins.neotest;
       lazyLoad.settings.keys =
         let
           map =

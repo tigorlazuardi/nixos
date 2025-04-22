@@ -21,14 +21,12 @@
       '';
     };
     extraPackages = with pkgs; [
-      protobuf_27
+      protobuf
       buf
       protoc-gen-go
       protoc-gen-connect-go
       protoc-gen-doc
       protoc-gen-es
-      protoc-gen-connect-es
-      protoc-gen-validate
     ];
   };
 }

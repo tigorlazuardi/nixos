@@ -31,6 +31,8 @@
         pname = "lzn-auto-require";
         src = inputs.lzn-auto-require-nvim;
         version = inputs.lzn-auto-require-nvim.shortRev;
+        doCheck = false;
+        doInstallCheck = false;
       })
     ];
     extraConfigLuaPost = # lua

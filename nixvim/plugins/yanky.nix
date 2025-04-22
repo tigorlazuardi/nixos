@@ -1,4 +1,3 @@
-{ unstable, ... }:
 {
   programs.nixvim = {
     autoCmd = [
@@ -13,7 +12,6 @@
     ];
     plugins.yanky = {
       enable = true;
-      package = unstable.vimPlugins.yanky-nvim;
       settings.highlight = {
         timer = 150;
         on_yank = false;
