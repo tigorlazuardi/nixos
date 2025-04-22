@@ -17,23 +17,13 @@ in
       useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations = {
-        "/robots.txt".extraConfig = # nginx
-          ''
-            add_header Content-Type text/plain;
-            return 200 "User-agent: *\nDisallow: /";
-          '';
         "/" = {
-          proxyPass = "http://${ip}:8080";
-          extraConfig =
-            # nginx
-            ''
-              if ($http_user_agent ~* (netcrawl|npbot|malicious|meta-externalagent|Bytespider|DotBot|Googlebot)) {
-                  return 444;
-              }
-            '';
+          proxyPass = "http://unix:${config.services.anubis.instances.redmage.settings.BIND}";
         };
       };
     };
+
+    services.anubis.instances.redmage.settings.TARGET = "http://${ip}:8080";
 
     services.adguardhome.settings.user_rules = [
       "192.168.100.5 ${domain}"

@@ -14,34 +14,28 @@ in
     services.nginx.virtualHosts."${domain}" = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;
-      locations = {
-        "/robots.txt".extraConfig = # nginx
-          ''
-            add_header Content-Type text/plain;
-            return 200 "User-agent: *\nDisallow: /";
-          '';
-        "= /" = {
-          extraConfig =
-            #nginx
-            ''
-              if ($http_cookie !~ "gitea_incredible") {
-                  rewrite ^(.*)$ /tigor redirect;
-              }
-            '';
-          proxyPass = "http://unix:/run/forgejo/forgejo.sock";
+      locations =
+        let
+          anubisSettings = config.services.anubis.instances.forgejo.settings;
+        in
+        {
+          "= /" = {
+            extraConfig =
+              #nginx
+              ''
+                if ($http_cookie !~ "gitea_incredible") {
+                    rewrite ^(.*)$ /tigor redirect;
+                }
+              '';
+            proxyPass = "http://unix:${anubisSettings.BIND}";
+          };
+          "/" = {
+            proxyPass = "http://unix:${anubisSettings.BIND}";
+          };
         };
-        "/" = {
-          proxyPass = "http://unix:/run/forgejo/forgejo.sock";
-          extraConfig =
-            # nginx
-            ''
-              if ($http_user_agent ~* (netcrawl|npbot|malicious|meta-externalagent|Bytespider|DotBot|Googlebot)) {
-                  return 444;
-              }
-            '';
-        };
-      };
     };
+
+    services.anubis.instances.forgejo.settings.TARGET = "unix:///run/forgejo/forgejo.sock";
 
     security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
 
