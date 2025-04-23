@@ -33,7 +33,12 @@ in
       useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations."/" = {
-        proxyPass = "http://unix:${config.services.anubis.instances.grafana.settings.BIND}";
+        proxyPass =
+          let
+            server = config.services.grafana.settings.server;
+          in
+          "http://${server.http_addr}:${toString server.http_port}";
+        # "http://unix:${config.services.anubis.instances.grafana.settings.BIND}";
         proxyWebsockets = true;
       };
     };
@@ -46,11 +51,11 @@ in
       "192.168.100.5 ${grafanaDomain}"
     ];
 
-    services.anubis.instances.grafana.settings.TARGET =
-      let
-        server = config.services.grafana.settings.server;
-      in
-      "http://${server.http_addr}:${toString server.http_port}";
+    # services.anubis.instances.grafana.settings.TARGET =
+    #   let
+    #     server = config.services.grafana.settings.server;
+    #   in
+    #   "http://${server.http_addr}:${toString server.http_port}";
 
     services.grafana = {
       enable = true;
