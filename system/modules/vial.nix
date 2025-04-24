@@ -12,11 +12,13 @@ in
     services.udev.packages = with pkgs; [
       vial
       via
+      qmk-udev-rules
     ];
 
     environment.systemPackages = with pkgs; [
       vial
       via
+      qmk
     ];
 
     services.udev.extraRules = ''
