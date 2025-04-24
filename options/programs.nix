@@ -29,7 +29,7 @@ in
       autostart = lib.mkEnableOption "whatsapp autostart";
       window_rule = lib.mkOption {
         type = lib.types.str;
-        default = "workspace 5 silent,class:(whatsapp-for-linux)";
+        default = "workspace 5 silent,class:(wasistlos)";
       };
     };
 
