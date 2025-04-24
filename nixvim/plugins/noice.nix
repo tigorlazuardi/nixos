@@ -54,6 +54,13 @@
             };
             opts.skip = true;
           }
+          {
+            filter = {
+              event = "msg_show";
+              find = "client.supports_method is deprecated";
+            };
+            opts.skip = true;
+          }
         ];
       };
     };

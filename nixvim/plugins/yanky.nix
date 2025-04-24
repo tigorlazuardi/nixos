@@ -4,7 +4,7 @@
       {
         callback.__raw = ''
           function()
-            vim.highlight.on_yank { higroup = "visual", timeout = 150 }
+            vim.hl.on_yank { higroup = "visual", timeout = 150 }
           end
         '';
         event = "TextYankPost";
