@@ -182,7 +182,7 @@
               end
               local severityWarning = { severity = vim.diagnostic.severity.WARNING } 
               if vim.diagnostic.get_next_pos(severityWarning) then
-                vim.dianoistic.goto_next(severityWarning) 
+                vim.diagnostic.goto_next(severityWarning) 
                 return
               end
             end
