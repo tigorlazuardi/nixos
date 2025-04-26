@@ -12,7 +12,7 @@ let
   gid = toString user.gid;
 in
 {
-  config = mkIf (podman.enable && podman.${name}.enable) {
+  config = mkIf podman.${name}.enable {
     services.nginx.virtualHosts.${domain} = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;
@@ -24,12 +24,6 @@ in
     };
 
     services.anubis.instances.redmage.settings.TARGET = "http://${ip}:8080";
-
-    services.adguardhome.settings.user_rules = [
-      "192.168.100.5 ${domain}"
-    ];
-
-    security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
 
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${rootVolume}/db

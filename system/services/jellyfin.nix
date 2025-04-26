@@ -20,11 +20,6 @@ in
       chmod -R 0777 /nas/mediaserver
     '';
 
-    services.adguardhome.settings.user_rules = [
-      "192.168.100.5 ${domain}"
-      "192.168.100.5 ${domain-jellyseerr}"
-    ];
-
     services.nginx.virtualHosts."${domain}" = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;
@@ -45,11 +40,6 @@ in
         };
       };
     };
-
-    security.acme.certs."tigor.web.id".extraDomainNames = [
-      domain
-      domain-jellyseerr
-    ];
 
     services.nginx.virtualHosts."${domain-jellyseerr}" = mkIf cfg.jellyseerr.enable {
       useACMEHost = "tigor.web.id";

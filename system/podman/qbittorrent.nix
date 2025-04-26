@@ -28,8 +28,6 @@ lib.mkMerge [
       };
     };
 
-    security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
-
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${volume}/{config,downloads,progress,watch}
       chown ${uid}:${gid} ${volume} ${volume}/{config,downloads,progress,watch}
@@ -57,10 +55,6 @@ lib.mkMerge [
       CPUQuota = "25%";
       IOWeight = 50;
     };
-
-    services.adguardhome.settings.user_rules = [
-      "192.168.100.5 ${domain}"
-    ];
 
     virtualisation.oci-containers.containers.${name} =
       let

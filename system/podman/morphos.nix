@@ -24,12 +24,6 @@ in
       };
     };
 
-    security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
-
-    services.adguardhome.settings.user_rules = [
-      "192.168.100.5 ${domain}"
-    ];
-
     virtualisation.oci-containers.containers.${name} = {
       inherit image;
       hostname = name;

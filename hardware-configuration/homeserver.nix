@@ -164,7 +164,27 @@ in
       };
     };
 
-    security.acme.certs."tigor.web.id".extraDomainNames = [ "public.tigor.web.id" ];
+    services.nginx.virtualHosts."public2.tigor.web.id" = {
+      useACMEHost = "tigor.web.id";
+      forceSSL = true;
+      locations."/" = {
+        root = "/nas/torrents/downloads/games/windows";
+        tryFiles = "$uri $uri/ $uri.html =404";
+        extraConfig = ''
+          fancyindex on;
+          fancyindex_localtime on;
+        '';
+      };
+    };
+
+    security.acme.certs."tigor.web.id".extraDomainNames =
+      let
+        confs = lib.filterAttrs (
+          _: conf: conf.forceSSL && conf.useACMEHost == "tigor.web.id"
+        ) config.services.nginx.virtualHosts;
+        domains = lib.attrsets.mapAttrsToList (name: _: name) confs;
+      in
+      domains;
 
     systemd.tmpfiles.settings = {
       "100-nas-public-dir" = {

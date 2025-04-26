@@ -21,10 +21,6 @@ in
       };
     };
 
-    security.acme.certs."tigor.web.id".extraDomainNames = [
-      "adguard.tigor.web.id"
-    ];
-
     sops.secrets =
       let
         opts = {
@@ -98,9 +94,14 @@ in
             "tls://8.8.8.8"
           ];
         };
-        user_rules = [
-          "@@||stats.grafana.org^" # Allow Grafana to collect stats of my Grafana instance.
-        ];
+        user_rules =
+          [
+            "@@||stats.grafana.org^" # Allow Grafana to collect stats of my Grafana instance.
+            "192.168.100.5 vpn.tigor.web.id"
+          ]
+          ++ lib.attrsets.mapAttrsToList (
+            name: _: "192.168.100.5 ${lib.strings.removePrefix "https://" name}"
+          ) config.services.nginx.virtualHosts;
         filters = [
           {
             enabled = true;

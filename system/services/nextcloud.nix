@@ -104,10 +104,6 @@ in
       ];
     };
 
-    services.adguardhome.settings.user_rules = [
-      "192.168.100.5 ${domain}"
-    ];
-
     systemd.services.nextcloud-cron = {
       path = [
         pkgs.perl
@@ -125,6 +121,5 @@ in
       useACMEHost = "tigor.web.id";
     };
 
-    security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
   };
 }

@@ -24,15 +24,9 @@ in
       };
     };
 
-    security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
-
     sops.secrets."pihole/env" = {
       sopsFile = ../../secrets/pihole.yaml;
     };
-
-    services.adguardhome.settings.user_rules = [
-      "192.168.100.5 ${domain}"
-    ];
 
     networking.nameservers = [ piholeDNSIPBind ];
 

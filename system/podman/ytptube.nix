@@ -76,18 +76,10 @@ lib.mkMerge [
       };
     };
 
-    security.acme.certs."tigor.web.id".extraDomainNames = [
-      domain
-    ];
-
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${volume}
       chown -R ${uid}:${gid} ${volume} /etc/podman/${name}
     '';
-
-    services.adguardhome.settings.user_rules = [
-      "192.168.100.5 ${domain}"
-    ];
 
     systemd.services."podman-${name}".restartTriggers = [ webhook ];
 

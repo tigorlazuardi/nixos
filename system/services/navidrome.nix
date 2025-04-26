@@ -26,16 +26,6 @@ in
         "${extraDomain}" = opts;
       };
 
-    security.acme.certs."tigor.web.id".extraDomainNames = [
-      domain
-      extraDomain
-    ];
-
-    services.adguardhome.settings.user_rules = [
-      "192.168.100.5 ${domain}"
-      "192.168.100.5 ${extraDomain}"
-    ];
-
     users.groups.navidrome.members = [ user.name ];
     users.groups.${user.name}.members = [ "navidrome" ];
 

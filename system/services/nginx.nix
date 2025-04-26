@@ -49,9 +49,6 @@ in
       After = lib.mkForce [ "network.target" ];
       Wants = lib.mkForce [ ];
     };
-    services.adguardhome.settings.user_rules = [
-      "192.168.100.5 ${domain}"
-    ];
 
     environment.etc."nginx/static/${domain}/index.html" = {
       text =

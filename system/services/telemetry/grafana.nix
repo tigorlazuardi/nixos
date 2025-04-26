@@ -43,20 +43,6 @@ in
       };
     };
 
-    security.acme.certs."tigor.web.id".extraDomainNames = [
-      grafanaDomain
-    ];
-
-    services.adguardhome.settings.user_rules = [
-      "192.168.100.5 ${grafanaDomain}"
-    ];
-
-    # services.anubis.instances.grafana.settings.TARGET =
-    #   let
-    #     server = config.services.grafana.settings.server;
-    #   in
-    #   "http://${server.http_addr}:${toString server.http_port}";
-
     services.grafana = {
       enable = true;
       package = pkgs.grafana;

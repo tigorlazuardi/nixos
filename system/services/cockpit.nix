@@ -28,10 +28,6 @@ in
       };
     };
 
-    security.acme.certs."tigor.web.id".extraDomainNames = [ "cockpit.tigor.web.id" ];
-
-    services.adguardhome.settings.user_rules = [ "192.168.100.5 cockpit.tigor.web.id" ];
-
     services.udisks2.enable = true;
     services.cockpit = {
       enable = true;

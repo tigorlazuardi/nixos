@@ -33,11 +33,6 @@ in
       };
     };
 
-    services.adguardhome.settings.user_rules = [
-      "192.168.100.5 ${domain}"
-    ];
-
-    security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
     services.kavita = {
       enable = true;
       tokenKeyFile = config.sops.secrets."kavita/token".path;

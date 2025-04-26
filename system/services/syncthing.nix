@@ -26,11 +26,6 @@ in
       };
     };
 
-    services.adguardhome.settings.user_rules = [
-      "192.168.100.5 ${domain}"
-    ];
-
-    security.acme.certs."tigor.web.id".extraDomainNames = [ domain ];
     sops.secrets =
       let
         opts = {

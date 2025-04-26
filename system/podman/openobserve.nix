@@ -27,10 +27,6 @@ in
       chown ${uid}:${gid} ${rootVolume} ${rootVolume}/data
     '';
 
-    services.adguardhome.settings.user_rules = [
-      "192.168.100.5 ${domain}"
-    ];
-
     sops.secrets."openobserve/env".sopsFile = ../../secrets/openobserve.yaml;
 
     virtualisation.oci-containers.containers.${name} = {
