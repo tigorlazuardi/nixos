@@ -244,7 +244,7 @@
           experimentalTemplateSupport = true;
           usePlaceholders = false;
           completeUnimported = true;
-          staticcheck = true;
+          # staticcheck = true;
           directoryFilters = [
             "-.git"
             "-.vscode"
