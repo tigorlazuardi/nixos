@@ -5,6 +5,7 @@
 
     ./arrow.nix
     ./blink.nix
+    ./bufresize.nix
     ./dadbod.nix
     ./flash.nix
     ./fugitive.nix

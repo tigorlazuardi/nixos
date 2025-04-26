@@ -19,18 +19,6 @@
         desc = "Check if we need to reload the file when it changed";
       }
       {
-        event = [ "VimResized" ];
-        group = "XResizeSplits";
-        callback.__raw = ''
-          function()
-            local current_tab = vim.fn.tabpagenr()
-            vim.cmd("tabdo wincmd =")
-            vim.cmd("tabnext " .. current_tab)
-          end
-        '';
-        desc = "resize splits if window got resized";
-      }
-      {
         event = [ "BufReadPost" ];
         group = "XLastLoc";
         callback.__raw = ''
