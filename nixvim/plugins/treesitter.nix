@@ -87,10 +87,6 @@
               vim.snippet.jump(1)
               return
             end
-            if require("copilot.suggestion").is_visible() then
-              require("copilot.suggestion").accept()
-              return
-            end
             require("neotab").tabout()
           end, {
             silent = true,
