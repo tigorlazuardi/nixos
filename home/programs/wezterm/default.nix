@@ -21,7 +21,7 @@ in
         '';
     };
 
-    programs.zsh.initExtra = # bash
+    programs.zsh.initContent = # bash
       ''
         if [ -n "$WEZTERM_PANE" ]; then
             alias ssh="wezterm ssh"

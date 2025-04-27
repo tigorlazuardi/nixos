@@ -26,7 +26,7 @@ in
       };
     };
 
-    programs.zsh.initExtra = # bash
+    programs.zsh.initContent = # bash
       ''
         function osc7-pwd() {
             emulate -L zsh # also sets localoptions for us

@@ -42,14 +42,9 @@ in
       };
     };
 
-    # Uses initExtraFirst instead of initExtra
-    # to avoid loading of zsh plugins before zellij loads.
-    #
-    # Let zsh inside zellij that loads zsh plugins.
-    #
     # The lib.mkOrder is used to ensure zellij is
     # autoloaded first after zshenv.
-    programs.zsh.initExtraFirst = lib.mkOrder 50 (
+    programs.zsh.initContent = lib.mkOrder 50 (
       if cfg.autoAttach then
         # bash
         ''

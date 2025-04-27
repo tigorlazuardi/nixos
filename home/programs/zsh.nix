@@ -62,115 +62,112 @@ in
       size = 40000;
     };
     syntaxHighlighting.enable = false;
-    initExtraFirst = lib.mkOrder 9999 (concatStrings [
-      # sh
-      ''
-        # create a zkbd compatible hash;
-        # to add other keys to this hash, see: man 5 terminfo
-        typeset -g -A key
-
-        key[Home]="''${terminfo[khome]}"
-        key[End]="''${terminfo[kend]}"
-        key[Insert]="''${terminfo[kich1]}"
-        key[Backspace]="''${terminfo[kbs]}"
-        key[Delete]="''${terminfo[kdch1]}"
-        key[Up]="''${terminfo[kcuu1]}"
-        key[Down]="''${terminfo[kcud1]}"
-        key[Left]="''${terminfo[kcub1]}"
-        key[Right]="''${terminfo[kcuf1]}"
-        key[PageUp]="''${terminfo[kpp]}"
-        key[PageDown]="''${terminfo[knp]}"
-        key[Shift-Tab]="''${terminfo[kcbt]}"
-
-        # setup key accordingly
-        [[ -n "''${key[Home]}"      ]] && bindkey -- "''${key[Home]}"       beginning-of-line
-        [[ -n "''${key[End]}"       ]] && bindkey -- "''${key[End]}"        end-of-line
-        [[ -n "''${key[Insert]}"    ]] && bindkey -- "''${key[Insert]}"     overwrite-mode
-        [[ -n "''${key[Backspace]}" ]] && bindkey -- "''${key[Backspace]}"  backward-delete-char
-        [[ -n "''${key[Delete]}"    ]] && bindkey -- "''${key[Delete]}"     delete-char
-        [[ -n "''${key[Up]}"        ]] && bindkey -- "''${key[Up]}"         up-line-or-history
-        [[ -n "''${key[Down]}"      ]] && bindkey -- "''${key[Down]}"       down-line-or-history
-        [[ -n "''${key[Left]}"      ]] && bindkey -- "''${key[Left]}"       backward-char
-        [[ -n "''${key[Right]}"     ]] && bindkey -- "''${key[Right]}"      forward-char
-        [[ -n "''${key[PageUp]}"    ]] && bindkey -- "''${key[PageUp]}"     beginning-of-buffer-or-history
-        [[ -n "''${key[PageDown]}"  ]] && bindkey -- "''${key[PageDown]}"   end-of-buffer-or-history
-        [[ -n "''${key[Shift-Tab]}" ]] && bindkey -- "''${key[Shift-Tab]}"  reverse-menu-complete
-
-        # Finally, make sure the terminal is in application mode, when zle is
-        # active. Only then are the values from $terminfo valid.
-        if (( ''${+terminfo[smkx]} && ''${+terminfo[rmkx]} )); then
-            autoload -Uz add-zle-hook-widget
-            function zle_application_mode_start { echoti smkx }
-            function zle_application_mode_stop { echoti rmkx }
-            add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
-            add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
-        fi
-        export ZSH_CACHE_DIR=$HOME/.cache/zsh
-
-        # _ZSH_COLOR_SCHEME_FILE=$HOME/.cache/wallust/sequences
-        # if [ -f "$_ZSH_COLOR_SCHEME_FILE" ]; then
-        #     (cat "$_ZSH_COLOR_SCHEME_FILE" &)
-        # fi
-
-        mkdir -p $ZSH_CACHE_DIR/completions
-        fpath+=$ZSH_CACHE_DIR/completions
-        fpath+=${pkgs.zsh-completions}/share/zsh/site-functions
-      ''
-      (optionalString config.profile.podman.enable # sh
-        ''
-          if [ ! -f $ZSH_CACHE_DIR/completions/_podman ]; then
-              podman completion zsh > $ZSH_CACHE_DIR/completions/_podman
-          fi
-
-          function pod-ips() {
-            sudo podman inspect --format '{{.Name}} - {{.NetworkSettings.IPAddress}}' $(sudo podman ps -q) | sort -t . -k 3,4
-          }
-        ''
-      )
-    ]);
-    initExtra = concatStrings [
+    initContent =
       # bash
       ''
-        packfiles() {
-          find $(NIXPKGS_ALLOW_UNFREE=1 nix build "nixpkgs#$1" --impure --no-link --print-out-paths) 
+          packfiles() {
+            find $(NIXPKGS_ALLOW_UNFREE=1 nix build "nixpkgs#$1" --impure --no-link --print-out-paths) 
+          }
+
+          build() {
+              nix build --impure --expr "with import <nixpkgs> {}; callPackage $1 {}"
+          }
+
+          nf() {
+              local selected=$(zoxide query --list | fzf)
+              if [ -n "$selected" ]; then
+                  cd "$selected"
+                  neovide
+              fi
+          }
+
+          # Completion settings
+          ## Case insensitive completion
+          zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+          # FZF Tab configurations
+          #
+          # disable sort when completing `git checkout`
+          zstyle ':completion:*:git-checkout:*' sort false
+          # set descriptions format to enable group support
+          # NOTE: don't use escape sequences here, fzf-tab will ignore them
+          zstyle ':completion:*:descriptions' format '[%d]'
+          # set list-colors to enable filename colorizing
+          zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
+          # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+          zstyle ':completion:*' menu no
+          # preview directory's content with eza when completing cd
+          zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+          # preview directory's content with eza when completing z
+          zstyle ':fzf-tab:complete:z:*' fzf-preview 'eza -1 --color=always $realpath'
+          # switch group using `<` and `>`
+          zstyle ':fzf-tab:*' switch-group '<' '>'
+
+          # create a zkbd compatible hash;
+          # to add other keys to this hash, see: man 5 terminfo
+          typeset -g -A key
+
+          key[Home]="''${terminfo[khome]}"
+          key[End]="''${terminfo[kend]}"
+          key[Insert]="''${terminfo[kich1]}"
+          key[Backspace]="''${terminfo[kbs]}"
+          key[Delete]="''${terminfo[kdch1]}"
+          key[Up]="''${terminfo[kcuu1]}"
+          key[Down]="''${terminfo[kcud1]}"
+          key[Left]="''${terminfo[kcub1]}"
+          key[Right]="''${terminfo[kcuf1]}"
+          key[PageUp]="''${terminfo[kpp]}"
+          key[PageDown]="''${terminfo[knp]}"
+          key[Shift-Tab]="''${terminfo[kcbt]}"
+
+          # setup key accordingly
+          [[ -n "''${key[Home]}"      ]] && bindkey -- "''${key[Home]}"       beginning-of-line
+          [[ -n "''${key[End]}"       ]] && bindkey -- "''${key[End]}"        end-of-line
+          [[ -n "''${key[Insert]}"    ]] && bindkey -- "''${key[Insert]}"     overwrite-mode
+          [[ -n "''${key[Backspace]}" ]] && bindkey -- "''${key[Backspace]}"  backward-delete-char
+          [[ -n "''${key[Delete]}"    ]] && bindkey -- "''${key[Delete]}"     delete-char
+          [[ -n "''${key[Up]}"        ]] && bindkey -- "''${key[Up]}"         up-line-or-history
+          [[ -n "''${key[Down]}"      ]] && bindkey -- "''${key[Down]}"       down-line-or-history
+          [[ -n "''${key[Left]}"      ]] && bindkey -- "''${key[Left]}"       backward-char
+          [[ -n "''${key[Right]}"     ]] && bindkey -- "''${key[Right]}"      forward-char
+          [[ -n "''${key[PageUp]}"    ]] && bindkey -- "''${key[PageUp]}"     beginning-of-buffer-or-history
+          [[ -n "''${key[PageDown]}"  ]] && bindkey -- "''${key[PageDown]}"   end-of-buffer-or-history
+          [[ -n "''${key[Shift-Tab]}" ]] && bindkey -- "''${key[Shift-Tab]}"  reverse-menu-complete
+
+          # Finally, make sure the terminal is in application mode, when zle is
+          # active. Only then are the values from $terminfo valid.
+          if (( ''${+terminfo[smkx]} && ''${+terminfo[rmkx]} )); then
+              autoload -Uz add-zle-hook-widget
+              function zle_application_mode_start { echoti smkx }
+              function zle_application_mode_stop { echoti rmkx }
+              add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
+              add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
+          fi
+          export ZSH_CACHE_DIR=$HOME/.cache/zsh
+
+          # _ZSH_COLOR_SCHEME_FILE=$HOME/.cache/wallust/sequences
+          # if [ -f "$_ZSH_COLOR_SCHEME_FILE" ]; then
+          #     (cat "$_ZSH_COLOR_SCHEME_FILE" &)
+          # fi
+
+          mkdir -p $ZSH_CACHE_DIR/completions
+          fpath+=$ZSH_CACHE_DIR/completions
+          fpath+=${pkgs.zsh-completions}/share/zsh/site-functions
+
+        ${
+          (optionalString config.profile.podman.enable # sh
+            ''
+              if [ ! -f $ZSH_CACHE_DIR/completions/_podman ]; then
+                  podman completion zsh > $ZSH_CACHE_DIR/completions/_podman
+              fi
+
+              function pod-ips() {
+                sudo podman inspect --format '{{.Name}} - {{.NetworkSettings.IPAddress}}' $(sudo podman ps -q) | sort -t . -k 3,4
+              }
+            ''
+          )
         }
-
-        build() {
-            nix build --impure --expr "with import <nixpkgs> {}; callPackage $1 {}"
-        }
-
-        nf() {
-            local selected=$(zoxide query --list | fzf)
-            if [ -n "$selected" ]; then
-                cd "$selected"
-                neovide
-            fi
-        }
-
-        # Completion settings
-        ## Case insensitive completion
-        zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-
-        # FZF Tab configurations
-        #
-        # disable sort when completing `git checkout`
-        zstyle ':completion:*:git-checkout:*' sort false
-        # set descriptions format to enable group support
-        # NOTE: don't use escape sequences here, fzf-tab will ignore them
-        zstyle ':completion:*:descriptions' format '[%d]'
-        # set list-colors to enable filename colorizing
-        zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
-        # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
-        zstyle ':completion:*' menu no
-        # preview directory's content with eza when completing cd
-        zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-        # preview directory's content with eza when completing z
-        zstyle ':fzf-tab:complete:z:*' fzf-preview 'eza -1 --color=always $realpath'
-        # switch group using `<` and `>`
-        zstyle ':fzf-tab:*' switch-group '<' '>'
-
-      ''
-    ];
+      '';
 
     plugins = [
       {

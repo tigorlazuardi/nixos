@@ -112,7 +112,7 @@
     flake = "/home/${config.profile.user.name}/dotfiles";
   };
 
-  environment.variables.FLAKE = "/home/${config.profile.user.name}/dotfiles";
+  environment.variables.NH_FLAKE = "/home/${config.profile.user.name}/dotfiles";
 
   environment.systemPackages = with pkgs; [
     # Tools for nh

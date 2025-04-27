@@ -4,7 +4,7 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    programs.zsh.initExtra = # bash
+    programs.zsh.initContent = # bash
       ''
         if [[ "$TERM" == "xterm-kitty" ]]; then
             alias ssh="kitty +kitten ssh"
