@@ -37,6 +37,7 @@ in
     navidrome.enable = mkEnableOption "navidrome";
     suwayomi.enable = mkEnableOption "suwayomi";
     github-runner.enable = mkEnableOption "github-runner";
+    homepage-dashboard.enable = mkEnableOption "homepage-dashboard";
     flaresolverr = {
       enable = mkEnableOption "flaresolverr";
       domain = mkOption {

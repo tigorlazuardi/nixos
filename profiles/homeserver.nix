@@ -76,6 +76,7 @@
       technitium.enable = false;
       suwayomi.enable = true;
       github-runner.enable = true;
+      homepage-dashboard.enable = true;
     };
   };
 }

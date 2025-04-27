@@ -53,6 +53,20 @@ in
       };
     };
 
+    services.homepage-dashboard.services = lib.mkOrder 50 [
+      {
+        Git = [
+          {
+            Forgejo = rec {
+              description = "Git repository for my personal projects";
+              href = "https://${domain}";
+              icon = "si-forgejo";
+            };
+          }
+        ];
+      }
+    ];
+
     sops.secrets."forgejo/runners/global" = {
       sopsFile = ../../secrets/forgejo.yaml;
     };

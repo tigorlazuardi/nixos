@@ -50,54 +50,54 @@ in
       Wants = lib.mkForce [ ];
     };
 
-    environment.etc."nginx/static/${domain}/index.html" = {
-      text =
-        let
-          domains = attrsets.mapAttrsToList (
-            name: _: strings.removePrefix "https://" name
-          ) config.services.nginx.virtualHosts;
-          sortedDomains = lists.sort (a: b: a < b) domains;
-          list = map (
-            domain: # html
-            ''
-              <div class="col-12 col-sm-6 col-md-4 col-lg-3 text-center align-middle">
-                  <a href="https://${domain}">${domain}</a>
-              </div>
-            '') sortedDomains;
-          items = strings.concatStringsSep "\n" list;
-        in
-        # html
-        ''
-          <!DOCTYPE html>
-          <html>
-              <head>
-                  <title>Hosted Sites</title>
-                  <link
-                    rel="stylesheet"
-                    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-                    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-                    crossorigin="anonymous">
-              </head>
-              <body class="container">
-                  <h1 class="text-center">Hosted Sites</h1>
-                  <div class="row g-4">
-                      ${items}
-                  </div>
-              </body>
-          </html>
-        '';
-      user = "nginx";
-      group = "nginx";
-    };
-
-    services.nginx.virtualHosts."${domain}" = {
-      useACMEHost = domain;
-      forceSSL = true;
-      locations."/" = {
-        root = "/etc/nginx/static/${domain}";
-        tryFiles = "$uri $uri/ $uri.html =404";
-      };
-    };
+    # environment.etc."nginx/static/${domain}/index.html" = {
+    #   text =
+    #     let
+    #       domains = attrsets.mapAttrsToList (
+    #         name: _: strings.removePrefix "https://" name
+    #       ) config.services.nginx.virtualHosts;
+    #       sortedDomains = lists.sort (a: b: a < b) domains;
+    #       list = map (
+    #         domain: # html
+    #         ''
+    #           <div class="col-12 col-sm-6 col-md-4 col-lg-3 text-center align-middle">
+    #               <a href="https://${domain}">${domain}</a>
+    #           </div>
+    #         '') sortedDomains;
+    #       items = strings.concatStringsSep "\n" list;
+    #     in
+    #     # html
+    #     ''
+    #       <!DOCTYPE html>
+    #       <html>
+    #           <head>
+    #               <title>Hosted Sites</title>
+    #               <link
+    #                 rel="stylesheet"
+    #                 href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    #                 integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    #                 crossorigin="anonymous">
+    #           </head>
+    #           <body class="container">
+    #               <h1 class="text-center">Hosted Sites</h1>
+    #               <div class="row g-4">
+    #                   ${items}
+    #               </div>
+    #           </body>
+    #       </html>
+    #     '';
+    #   user = "nginx";
+    #   group = "nginx";
+    # };
+    #
+    # services.nginx.virtualHosts."${domain}" = {
+    #   useACMEHost = domain;
+    #   forceSSL = true;
+    #   locations."/" = {
+    #     root = "/etc/nginx/static/${domain}";
+    #     tryFiles = "$uri $uri/ $uri.html =404";
+    #   };
+    # };
 
     systemd.timers."acme-${domain}".timerConfig.OnCalendar = lib.mkForce "*-*-1,15 04:00:00";
 

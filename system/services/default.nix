@@ -11,6 +11,7 @@
     ./flaresolverr.nix
     ./forgejo.nix
     ./github-runner.nix
+    ./homepage-dashboard.nix
     ./jellyfin.nix
     ./kavita.nix
     ./navidrome.nix
