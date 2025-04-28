@@ -13,16 +13,13 @@ in
       sopsFile = ../../secrets/homepage.yaml;
     };
     services.homepage-dashboard = {
+      package = pkgs.homepage-dashboard.overrideAttrs { enableLocalIcons = true; };
       enable = true;
       settings = {
         title = "Tigor's Homeserver";
         description = "A front face for my personal server";
         startUrl = "https://tigor.web.id";
-        useEqualHeights = true;
-        quicklaunch = {
-          searchDescription = true;
-          showSearchSuggestions = true;
-        };
+        disableUpdateCheck = true;
         layout = {
           "Git & Personal Projects" = {
             iconStyle = "theme";
@@ -33,10 +30,15 @@ in
             style = "row";
             columns = 4;
           };
-          "Media Player" = {
+          Media = {
             iconStyle = "theme";
             style = "row";
             columns = 2;
+          };
+          "Media Collector" = {
+            iconStyle = "theme";
+            style = "row";
+            columns = 4;
           };
           Monitoring = {
             iconStyle = "theme";
@@ -57,7 +59,7 @@ in
                 Forgejo = {
                   description = "Git repository for my personal projects";
                   href = "https://git.tigor.web.id";
-                  icon = "si-forgejo";
+                  icon = "forgejo.svg";
                 };
               })
               ++ (optional config.profile.podman.redmage.enable {
@@ -69,38 +71,99 @@ in
               });
           }
           {
-            "Media Player" =
+            "Media" =
               [ ]
               ++ (optional config.profile.services.navidrome.enable {
                 Navidrome = {
                   description = "Self-hosted music server and streaming service";
                   href = "https://music.tigor.web.id";
-                  icon = "mdi-music-box";
+                  icon = "navidrome.svg";
                 };
               })
               ++ (optional config.profile.services.jellyfin.enable {
                 Jellyfin = {
                   description = "Media server for movies, tv shows, and downloaded videos";
                   href = "https://jellyfin.tigor.web.id";
-                  icon = "si-jellyfin";
+                  icon = "jellyfin.svg";
+                };
+              })
+              ++ (optional config.profile.services.suwayomi.enable {
+                Suwayomi = {
+                  description = "Manga collection, reader, and downloader. NSFW Warning!";
+                  href = "https://manga.tigor.web.id";
+                  icon = "suwayomi.svg";
+                };
+              })
+              ++ (optional config.profile.services.kavita.enable {
+                Kavita = {
+                  description = "Collection of books and web novels";
+                  href = "https://kavita.tigor.web.id";
+                  icon = "kavita.svg";
                 };
               });
           }
           {
             "Media Collector" =
               [ ]
+              ++ (optional config.profile.services.jellyfin.enable {
+                Jellyseerr = {
+                  description = "Front end for Radarr, Sonarr, and Links collection to Jellyfin";
+                  href = "https://jellyseerr.tigor.web.id";
+                  icon = "jellyseerr.svg";
+                };
+              })
+              ++ (optional config.profile.podman.soulseek.enable {
+                "Soulseek (Nicotine)" = {
+                  description = "Peer-to-peer music sharing client";
+                  href = "https://soulseek.tigor.web.id";
+                  icon = "soulseek.png";
+                };
+              })
+              ++ (optional config.profile.podman.servarr.radarr.enable {
+                Radarr = {
+                  description = "Movie torrent searcher and scraper";
+                  href = "https://radarr.tigor.web.id";
+                  icon = "radarr.svg";
+                };
+              })
+              ++ (optional config.profile.podman.servarr.sonarr.enable {
+                "Sonarr (Anime)" = {
+                  description = "Anime torrent searcher and scraper";
+                  href = "https://sonarr-anime.tigor.web.id";
+                  icon = "sonarr.svg";
+                };
+              })
+              ++ (optional config.profile.podman.servarr.sonarr.enable {
+                Sonarr = {
+                  description = "TV Shows torrent searcher and scraper";
+                  href = "https://sonarr.tigor.web.id";
+                  icon = "sonarr.svg";
+                };
+              })
               ++ (optional config.profile.podman.servarr.prowlarr.enable {
-                Prowlarr = {
+                Prowlarr = rec {
                   description = "Torrent Indexer for movies, tv shows, and other media types";
                   href = "https://prowlarr.tigor.web.id";
-                  icon =
-                    let
-                      logo = pkgs.fetchurl {
-                        url = "https://prowlarr.com/logo/128.png";
-                        hash = "sha256-prO4wlh3EN80S1Xuq0MU5CE6m8co3UI7NdbtAkwEwWk=";
-                      };
-                    in
-                    "${logo}";
+                  icon = "prowlarr.svg";
+                  widget = {
+                    type = "prowlarr";
+                    url = href;
+                    key = "{{HOMEPAGE_VAR_PROWLARR_API_KEY}}";
+                  };
+                };
+              })
+              ++ (optional config.profile.podman.servarr.bazarr.enable {
+                Bazarr = {
+                  description = "Subtitle downloader for movies and tv shows";
+                  href = "https://bazarr.tigor.web.id";
+                  icon = "bazarr.svg";
+                };
+              })
+              ++ (optional config.profile.podman.ytptube.enable {
+                Ytptube = {
+                  description = "Frontend for yt-dlp. Download videos from Youtube and other sites. NSFW Warning!";
+                  href = "https://ytptube.tigor.web.id";
+                  icon = "youtube-dl.svg";
                 };
               });
           }
@@ -109,16 +172,22 @@ in
               [ ]
               ++ (optional config.profile.services.adguardhome.enable {
                 "Adguard Home" = {
-                  description = "Network filter, ad blocker, and recursive DNS Server";
+                  description = "Network filter, router-wide ad blocker, and recursive DNS Server to reduce outbound traffic";
                   href = "https://adguard.tigor.web.id";
-                  icon = "si-adguard";
+                  icon = "adguard-home.svg";
+                  widget = {
+                    type = "adguard";
+                    url = "https://adguard.tigor.web.id";
+                    username = "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}";
+                    password = "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}";
+                  };
                 };
               })
               ++ (optional config.profile.podman.qbittorrent.enable {
                 QBittorrent = rec {
                   description = "Torrent client";
                   href = "https://qbittorrent.tigor.web.id";
-                  icon = "si-qbittorrent";
+                  icon = "qbittorrent.svg";
                   widget = {
                     type = "qbittorrent";
                     url = href;
@@ -127,20 +196,12 @@ in
                     enableLeechProgress = true;
                   };
                 };
-
               })
               ++ (optional config.profile.services.syncthing.enable {
                 Syncthing = {
                   description = "Data synchronization for multiple devices";
                   href = "https://syncthing.tigor.web.id";
-                  icon = "si-syncthing";
-                };
-              })
-              ++ (optional config.profile.podman.ytptube.enable {
-                Ytptube = {
-                  description = "Frontend for yt-dlp. Download videos from Youtube and other sites. NSFW Warning!";
-                  href = "https://ytptube.tigor.web.id";
-                  icon = "si-youtube";
+                  icon = "syncthing.svg";
                 };
               })
               ++ (optional config.profile.podman.morphos.enable {
@@ -158,22 +219,35 @@ in
                 Grafana = {
                   description = "Homeserver in-depth monitoring dashboard";
                   href = "https://grafana.tigor.web.id";
-                  icon = "si-grafana";
+                  icon = "grafana.svg";
                 };
               })
               ++ (optional config.profile.services.ntfy-sh.enable {
                 Ntfy-sh = {
                   description = "Notification services across devices";
                   href = "https://ntfy.tigor.web.id";
-                  icon = "si-ntfy";
+                  icon = "ntfy.svg";
                 };
               });
           }
         ];
       widgets = [
         {
+          greeting = {
+            text_size = "2xl";
+            text = "Tigor's Homeserver";
+          };
+        }
+        {
+          search = {
+            provider = "google";
+            focus = true;
+            showSearchSuggestions = true;
+            target = "_blank";
+          };
+        }
+        {
           resources = {
-            label = "System";
             cpu = true;
             memory = true;
             cputemp = true;
