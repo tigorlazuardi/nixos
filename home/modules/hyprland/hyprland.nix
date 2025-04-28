@@ -27,8 +27,8 @@ in
         # env = [ "DBUS_SESSION_BUS_ADDRESS,unix:path=/run/user/${toString config.profile.user.uid}/bus" ];
         # window decors
         general = {
-          gaps_in = 10;
-          gaps_out = 14;
+          gaps_in = 2;
+          gaps_out = 5;
           border_size = 3;
           layout = "dwindle";
         };
