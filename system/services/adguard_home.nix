@@ -7,10 +7,11 @@
 let
   cfg = config.profile.services.adguardhome;
   inherit (lib) mkIf;
+  domain = "adguard.tigor.web.id";
 in
 {
   config = mkIf cfg.enable {
-    services.nginx.virtualHosts."adguard.tigor.web.id" = {
+    services.nginx.virtualHosts."${domain}" = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations = {
