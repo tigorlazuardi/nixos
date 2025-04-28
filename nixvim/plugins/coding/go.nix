@@ -262,15 +262,17 @@
         '';
         root_dir.__raw = # lua
           ''
-            function(fname)
+            function(bufnr, on_dir)
               local mod_cache = [[/home/${config.profile.user.name}/go/pkg/mod]]
+              local fname = vim.api.nvim_buf_get_name(bufnr)
               if fname:sub(1, #mod_cache) == mod_cache then
                 local clients = vim.lsp.get_active_clients { name = "gopls" }
                 if #clients > 0 then
-                  return clients[#clients].config.root_dir
+                  on_dir(clients[#clients].config.root_dir)
+                  return
                 end
               end
-              return require("lspconfig.util").root_pattern("go.mod", ".git", "go.work")(fname)
+              on_dir(vim.fs.root(bufnr, {"go.mod", ".git", "go.work"}))
             end
           '';
       };
