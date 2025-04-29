@@ -1075,7 +1075,8 @@
         "tiny-inline-diagnostic-nvim": "tiny-inline-diagnostic-nvim",
         "trouble-nvim": "trouble-nvim",
         "walker": "walker",
-        "zen-browser": "zen-browser"
+        "zen-browser": "zen-browser",
+        "zsh-autocomplete": "zsh-autocomplete"
       }
     },
     "rust-overlay": {
@@ -1443,6 +1444,22 @@
       "original": {
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
+        "type": "github"
+      }
+    },
+    "zsh-autocomplete": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1745471497,
+        "narHash": "sha256-YH5T9a9KbYbvY6FRBITlhXRmkTmnwGyCQpibLe3Dhwc=",
+        "owner": "marlonrichert",
+        "repo": "zsh-autocomplete",
+        "rev": "77a4f9c1343d12d7cb3ae1e7efc7c37397ccb6b0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "marlonrichert",
+        "repo": "zsh-autocomplete",
         "type": "github"
       }
     }

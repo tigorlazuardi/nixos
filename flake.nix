@@ -97,6 +97,10 @@
       url = "github:igorlfs/nvim-dap-view";
       flake = false;
     };
+    zsh-autocomplete = {
+      url = "github:marlonrichert/zsh-autocomplete";
+      flake = false;
+    };
   };
 
   outputs =

@@ -2,10 +2,11 @@
   pkgs,
   lib,
   config,
+  inputs,
   ...
 }:
 let
-  inherit (lib.strings) optionalString concatStrings;
+  inherit (lib.strings) optionalString;
 in
 {
   home.packages = with pkgs; [
@@ -25,7 +26,7 @@ in
         # thus making them saver for Root account to load them.
         unsetopt GLOBAL_RCS
       '';
-    autosuggestion.enable = true;
+    autosuggestion.enable = false;
     enableCompletion = false;
     defaultKeymap = "emacs";
     dirHashes = {
@@ -61,98 +62,97 @@ in
       save = 40000;
       size = 40000;
     };
-    syntaxHighlighting.enable = false;
     initContent =
       # bash
       ''
-          packfiles() {
-            find $(NIXPKGS_ALLOW_UNFREE=1 nix build "nixpkgs#$1" --impure --no-link --print-out-paths) 
-          }
+        packfiles() {
+          find $(NIXPKGS_ALLOW_UNFREE=1 nix build "nixpkgs#$1" --impure --no-link --print-out-paths) 
+        }
 
-          build() {
-              nix build --impure --expr "with import <nixpkgs> {}; callPackage $1 {}"
-          }
+        build() {
+            nix build --impure --expr "with import <nixpkgs> {}; callPackage $1 {}"
+        }
 
-          nf() {
-              local selected=$(zoxide query --list | fzf)
-              if [ -n "$selected" ]; then
-                  cd "$selected"
-                  neovide
-              fi
-          }
+        nf() {
+            local selected=$(zoxide query --list | fzf)
+            if [ -n "$selected" ]; then
+                cd "$selected"
+                neovide
+            fi
+        }
 
-          # Completion settings
-          ## Case insensitive completion
-          zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+        # Completion settings
+        ## Case insensitive completion
+        zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
-          # FZF Tab configurations
-          #
-          # disable sort when completing `git checkout`
-          zstyle ':completion:*:git-checkout:*' sort false
-          # set descriptions format to enable group support
-          # NOTE: don't use escape sequences here, fzf-tab will ignore them
-          zstyle ':completion:*:descriptions' format '[%d]'
-          # set list-colors to enable filename colorizing
-          zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
-          # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
-          zstyle ':completion:*' menu no
-          # preview directory's content with eza when completing cd
-          zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-          # preview directory's content with eza when completing z
-          zstyle ':fzf-tab:complete:z:*' fzf-preview 'eza -1 --color=always $realpath'
-          # switch group using `<` and `>`
-          zstyle ':fzf-tab:*' switch-group '<' '>'
+        # FZF Tab configurations
+        #
+        # disable sort when completing `git checkout`
+        zstyle ':completion:*:git-checkout:*' sort false
+        # set descriptions format to enable group support
+        # NOTE: don't use escape sequences here, fzf-tab will ignore them
+        zstyle ':completion:*:descriptions' format '[%d]'
+        # set list-colors to enable filename colorizing
+        zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
+        # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+        zstyle ':completion:*' menu no
+        # preview directory's content with eza when completing cd
+        zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+        # preview directory's content with eza when completing z
+        zstyle ':fzf-tab:complete:z:*' fzf-preview 'eza -1 --color=always $realpath'
+        # switch group using `<` and `>`
+        zstyle ':fzf-tab:*' switch-group '<' '>'
 
-          # create a zkbd compatible hash;
-          # to add other keys to this hash, see: man 5 terminfo
-          typeset -g -A key
+        # create a zkbd compatible hash;
+        # to add other keys to this hash, see: man 5 terminfo
+        typeset -g -A key
 
-          key[Home]="''${terminfo[khome]}"
-          key[End]="''${terminfo[kend]}"
-          key[Insert]="''${terminfo[kich1]}"
-          key[Backspace]="''${terminfo[kbs]}"
-          key[Delete]="''${terminfo[kdch1]}"
-          key[Up]="''${terminfo[kcuu1]}"
-          key[Down]="''${terminfo[kcud1]}"
-          key[Left]="''${terminfo[kcub1]}"
-          key[Right]="''${terminfo[kcuf1]}"
-          key[PageUp]="''${terminfo[kpp]}"
-          key[PageDown]="''${terminfo[knp]}"
-          key[Shift-Tab]="''${terminfo[kcbt]}"
+        key[Home]="''${terminfo[khome]}"
+        key[End]="''${terminfo[kend]}"
+        key[Insert]="''${terminfo[kich1]}"
+        key[Backspace]="''${terminfo[kbs]}"
+        key[Delete]="''${terminfo[kdch1]}"
+        key[Up]="''${terminfo[kcuu1]}"
+        key[Down]="''${terminfo[kcud1]}"
+        key[Left]="''${terminfo[kcub1]}"
+        key[Right]="''${terminfo[kcuf1]}"
+        key[PageUp]="''${terminfo[kpp]}"
+        key[PageDown]="''${terminfo[knp]}"
+        key[Shift-Tab]="''${terminfo[kcbt]}"
 
-          # setup key accordingly
-          [[ -n "''${key[Home]}"      ]] && bindkey -- "''${key[Home]}"       beginning-of-line
-          [[ -n "''${key[End]}"       ]] && bindkey -- "''${key[End]}"        end-of-line
-          [[ -n "''${key[Insert]}"    ]] && bindkey -- "''${key[Insert]}"     overwrite-mode
-          [[ -n "''${key[Backspace]}" ]] && bindkey -- "''${key[Backspace]}"  backward-delete-char
-          [[ -n "''${key[Delete]}"    ]] && bindkey -- "''${key[Delete]}"     delete-char
-          [[ -n "''${key[Up]}"        ]] && bindkey -- "''${key[Up]}"         up-line-or-history
-          [[ -n "''${key[Down]}"      ]] && bindkey -- "''${key[Down]}"       down-line-or-history
-          [[ -n "''${key[Left]}"      ]] && bindkey -- "''${key[Left]}"       backward-char
-          [[ -n "''${key[Right]}"     ]] && bindkey -- "''${key[Right]}"      forward-char
-          [[ -n "''${key[PageUp]}"    ]] && bindkey -- "''${key[PageUp]}"     beginning-of-buffer-or-history
-          [[ -n "''${key[PageDown]}"  ]] && bindkey -- "''${key[PageDown]}"   end-of-buffer-or-history
-          [[ -n "''${key[Shift-Tab]}" ]] && bindkey -- "''${key[Shift-Tab]}"  reverse-menu-complete
+        # setup key accordingly
+        [[ -n "''${key[Home]}"      ]] && bindkey -- "''${key[Home]}"       beginning-of-line
+        [[ -n "''${key[End]}"       ]] && bindkey -- "''${key[End]}"        end-of-line
+        [[ -n "''${key[Insert]}"    ]] && bindkey -- "''${key[Insert]}"     overwrite-mode
+        [[ -n "''${key[Backspace]}" ]] && bindkey -- "''${key[Backspace]}"  backward-delete-char
+        [[ -n "''${key[Delete]}"    ]] && bindkey -- "''${key[Delete]}"     delete-char
+        [[ -n "''${key[Up]}"        ]] && bindkey -- "''${key[Up]}"         up-line-or-history
+        [[ -n "''${key[Down]}"      ]] && bindkey -- "''${key[Down]}"       down-line-or-history
+        [[ -n "''${key[Left]}"      ]] && bindkey -- "''${key[Left]}"       backward-char
+        [[ -n "''${key[Right]}"     ]] && bindkey -- "''${key[Right]}"      forward-char
+        [[ -n "''${key[PageUp]}"    ]] && bindkey -- "''${key[PageUp]}"     beginning-of-buffer-or-history
+        [[ -n "''${key[PageDown]}"  ]] && bindkey -- "''${key[PageDown]}"   end-of-buffer-or-history
+        [[ -n "''${key[Shift-Tab]}" ]] && bindkey -- "''${key[Shift-Tab]}"  reverse-menu-complete
 
-          # Finally, make sure the terminal is in application mode, when zle is
-          # active. Only then are the values from $terminfo valid.
-          if (( ''${+terminfo[smkx]} && ''${+terminfo[rmkx]} )); then
-              autoload -Uz add-zle-hook-widget
-              function zle_application_mode_start { echoti smkx }
-              function zle_application_mode_stop { echoti rmkx }
-              add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
-              add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
-          fi
-          export ZSH_CACHE_DIR=$HOME/.cache/zsh
+        # Finally, make sure the terminal is in application mode, when zle is
+        # active. Only then are the values from $terminfo valid.
+        if (( ''${+terminfo[smkx]} && ''${+terminfo[rmkx]} )); then
+            autoload -Uz add-zle-hook-widget
+            function zle_application_mode_start { echoti smkx }
+            function zle_application_mode_stop { echoti rmkx }
+            add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
+            add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
+        fi
+        export ZSH_CACHE_DIR=$HOME/.cache/zsh
 
-          # _ZSH_COLOR_SCHEME_FILE=$HOME/.cache/wallust/sequences
-          # if [ -f "$_ZSH_COLOR_SCHEME_FILE" ]; then
-          #     (cat "$_ZSH_COLOR_SCHEME_FILE" &)
-          # fi
+        # _ZSH_COLOR_SCHEME_FILE=$HOME/.cache/wallust/sequences
+        # if [ -f "$_ZSH_COLOR_SCHEME_FILE" ]; then
+        #     (cat "$_ZSH_COLOR_SCHEME_FILE" &)
+        # fi
 
-          mkdir -p $ZSH_CACHE_DIR/completions
-          fpath+=$ZSH_CACHE_DIR/completions
-          fpath+=${pkgs.zsh-completions}/share/zsh/site-functions
+        mkdir -p $ZSH_CACHE_DIR/completions
+        fpath+=$ZSH_CACHE_DIR/completions
+        fpath+=${pkgs.zsh-completions}/share/zsh/site-functions
 
         ${
           (optionalString config.profile.podman.enable # sh
@@ -171,14 +171,29 @@ in
 
     plugins = [
       {
+        name = "zsh-f-sy-h";
+        src = pkgs.zsh-f-sy-h;
+        file = "share/zsh/site-functions/F-Sy-H.plugin.zsh";
+      }
+      {
+        name = "zsh-autocomplete";
+        src = pkgs.zsh-autocomplete.overrideAttrs (old: {
+          version = inputs.zsh-autocomplete.shortRev;
+          src = inputs.zsh-autocomplete;
+          installPhase = ''
+            ls -la
+            mkdir -p $out/share/zsh-autocomplete
+            install -D zsh-autocomplete.plugin.zsh $out/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+            cp -R Functions $out/share/zsh-autocomplete/Functions
+            cp -R Completions $out/share/zsh-autocomplete/Completions
+          '';
+        });
+        file = "share/zsh-autocomplete/zsh-autocomplete.plugin.zsh";
+      }
+      {
         name = "fzf-tab";
         src = pkgs.zsh-fzf-tab;
         file = "share/fzf-tab/fzf-tab.plugin.zsh";
-      }
-      {
-        name = "auto-suggestions";
-        src = pkgs.zsh-autosuggestions;
-        file = "share/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh";
       }
       {
         name = "zsh-nix-shell";
@@ -198,30 +213,9 @@ in
         file = "share/jq-zsh-plugin/jq.plugin.zsh";
       }
       {
-        name = "zsh-f-sy-h";
-        src = pkgs.zsh-f-sy-h;
-        file = "share/zsh/site-functions/F-Sy-H.plugin.zsh";
-      }
-      {
-        name = "zsh-autocomplete";
-        # bug fix crashes for zsh. Use old version for now.
-        src = pkgs.zsh-autocomplete.overrideAttrs (old: rec {
-          version = "23.05.24";
-          src = pkgs.fetchFromGitHub {
-            owner = "marlonrichert";
-            repo = "zsh-autocomplete";
-            rev = version;
-            sha256 = "sha256-/6V6IHwB5p0GT1u5SAiUa20LjFDSrMo731jFBq/bnpw=";
-          };
-          installPhase = ''
-            ls -la
-            mkdir -p $out/share/zsh-autocomplete
-            install -D zsh-autocomplete.plugin.zsh $out/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-            cp -R functions $out/share/zsh-autocomplete/functions
-            cp -R scripts $out/share/zsh-autocomplete/scripts
-          '';
-        });
-        file = "share/zsh-autocomplete/zsh-autocomplete.plugin.zsh";
+        name = "auto-suggestions";
+        src = pkgs.zsh-autosuggestions;
+        file = "share/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh";
       }
     ];
   };
