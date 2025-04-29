@@ -9,7 +9,7 @@ in
       autostart = lib.mkEnableOption "discord autostart";
       window_rule = lib.mkOption {
         type = lib.types.str;
-        default = "workspace 7 silent,class:((?=discord|vesktop))";
+        default = "workspace 7 silent,class:(vesktop)";
       };
     };
 
