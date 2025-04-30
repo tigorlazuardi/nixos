@@ -5,6 +5,24 @@
 }:
 {
   programs.nixvim = {
+    extraFiles."ftplugin/go.lua".text = # lua
+      ''
+        local bufnr = vim.api.nvim_get_current_buf()
+        vim.api.nvim_buf_create_user_command(bufnr, "GoModTidy", function()
+          local clients = vim.lsp.get_clients { bufnr = bufnr, name = "gopls" }
+          if #clients == 0 then
+            return
+          end
+          local gopls = clients[1]
+          vim.cmd [[noautocmd wall]]
+          local uri = vim.uri_from_bufnr(bufnr)
+          local arguments = { { URIs = { uri } } }
+          gopls.request_sync("workspace/executeCommand", {
+            command = "gopls.tidy",
+            arguments = arguments,
+          }, 2000, bufnr)
+        end, { desc = "Run go mod tidy" })
+      '';
     extraFiles."queries/go/injections.scm".text =
       # query
       ''
@@ -258,7 +276,13 @@
       };
       extraOptions = {
         capabilities.__raw = ''
-          require("blink.cmp").get_lsp_capabilities({}, true)
+          require("blink.cmp").get_lsp_capabilities({
+            workspace = {
+              didChangeWatchedFiles = {
+                dynamicRegistration = true,
+              },
+            },
+          }, true)
         '';
         root_dir.__raw = # lua
           ''
