@@ -1,6 +1,8 @@
 { ... }:
 {
   imports = [
+    ./zsh
+
     ./aider.nix
     ./bitwarden.nix
     ./bloomrpc.nix
@@ -43,7 +45,6 @@
     ./yazi.nix
     ./zathura.nix
     ./zoom.nix
-    ./zsh.nix
 
     ./wezterm
     ./zellij

@@ -2,13 +2,17 @@
   pkgs,
   lib,
   config,
-  inputs,
   ...
 }:
-let
-  inherit (lib.strings) optionalString;
-in
 {
+  imports = [
+    ./autosuggestions.nix
+    ./autocomplete.nix
+    ./syntax_highlighting.nix
+    ./history_substring_search.nix
+    ./nix_shell.nix
+    ./fzf.nix
+  ];
   home.packages = with pkgs; [
     eza
     gojq
@@ -26,7 +30,6 @@ in
         # thus making them saver for Root account to load them.
         unsetopt GLOBAL_RCS
       '';
-    autosuggestion.enable = false;
     enableCompletion = false;
     defaultKeymap = "emacs";
     dirHashes = {
@@ -34,23 +37,6 @@ in
       dl = "$HOME/Downloads";
       videos = "$HOME/Videos";
       pictures = "$HOME/Pictures";
-    };
-    shellAliases = {
-      ls = "${pkgs.eza}/bin/eza -lah";
-      cat = "${pkgs.bat}/bin/bat";
-      update = "nh os switch -- --accept-flake-config";
-      superupdate = "nh os switch --update -- --accept-flake-config";
-      uptest = "nh os test -- --accept-flake-config";
-      lg = "${pkgs.lazygit}/bin/lazygit";
-      g = "${pkgs.lazygit}/bin/lazygit";
-      du = "${pkgs.dust}/bin/dust";
-      dry = "sudo nixos-rebuild dry-activate --flake $HOME/dotfiles";
-      jq = "${pkgs.gojq}/bin/gojq";
-      v = "nvim";
-      cd = "z";
-      grep = "${pkgs.ripgrep}/bin/rg";
-      find = "${pkgs.fd}/bin/fd";
-      tree = "${pkgs.tre-command}/bin/tre";
     };
     dotDir = ".config/zsh";
     history = {
@@ -62,8 +48,7 @@ in
       save = 40000;
       size = 40000;
     };
-    initContent =
-      # bash
+    initContent = # sh
       ''
         packfiles() {
           find $(NIXPKGS_ALLOW_UNFREE=1 nix build "nixpkgs#$1" --impure --no-link --print-out-paths) 
@@ -85,23 +70,6 @@ in
         ## Case insensitive completion
         zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
-        # FZF Tab configurations
-        #
-        # disable sort when completing `git checkout`
-        zstyle ':completion:*:git-checkout:*' sort false
-        # set descriptions format to enable group support
-        # NOTE: don't use escape sequences here, fzf-tab will ignore them
-        zstyle ':completion:*:descriptions' format '[%d]'
-        # set list-colors to enable filename colorizing
-        zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
-        # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
-        zstyle ':completion:*' menu no
-        # preview directory's content with eza when completing cd
-        zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-        # preview directory's content with eza when completing z
-        zstyle ':fzf-tab:complete:z:*' fzf-preview 'eza -1 --color=always $realpath'
-        # switch group using `<` and `>`
-        zstyle ':fzf-tab:*' switch-group '<' '>'
 
         # create a zkbd compatible hash;
         # to add other keys to this hash, see: man 5 terminfo
@@ -155,7 +123,7 @@ in
         fpath+=${pkgs.zsh-completions}/share/zsh/site-functions
 
         ${
-          (optionalString config.profile.podman.enable # sh
+          (lib.optionalString config.profile.podman.enable # sh
             ''
               if [ ! -f $ZSH_CACHE_DIR/completions/_podman ]; then
                   podman completion zsh > $ZSH_CACHE_DIR/completions/_podman
@@ -169,54 +137,5 @@ in
         }
       '';
 
-    plugins = [
-      {
-        name = "zsh-f-sy-h";
-        src = pkgs.zsh-f-sy-h;
-        file = "share/zsh/site-functions/F-Sy-H.plugin.zsh";
-      }
-      {
-        name = "zsh-autocomplete";
-        src = pkgs.zsh-autocomplete.overrideAttrs (old: {
-          version = inputs.zsh-autocomplete.shortRev;
-          src = inputs.zsh-autocomplete;
-          installPhase = ''
-            ls -la
-            mkdir -p $out/share/zsh-autocomplete
-            install -D zsh-autocomplete.plugin.zsh $out/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-            cp -R Functions $out/share/zsh-autocomplete/Functions
-            cp -R Completions $out/share/zsh-autocomplete/Completions
-          '';
-        });
-        file = "share/zsh-autocomplete/zsh-autocomplete.plugin.zsh";
-      }
-      {
-        name = "fzf-tab";
-        src = pkgs.zsh-fzf-tab;
-        file = "share/fzf-tab/fzf-tab.plugin.zsh";
-      }
-      {
-        name = "zsh-nix-shell";
-        src = pkgs.zsh-nix-shell;
-        file = "share/zsh-nix-shell/nix-shell.plugin.zsh";
-      }
-      {
-        name = "zsh-history-substring-search";
-        src = pkgs.zsh-history-substring-search;
-        file = "share/zsh-history-substring-search/zsh-history-substring-search.zsh";
-      }
-      {
-        # type commands that will output json
-        # press alt-j
-        name = "jq-zsh-plugin";
-        src = pkgs.jq-zsh-plugin;
-        file = "share/jq-zsh-plugin/jq.plugin.zsh";
-      }
-      {
-        name = "auto-suggestions";
-        src = pkgs.zsh-autosuggestions;
-        file = "share/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh";
-      }
-    ];
   };
 }
