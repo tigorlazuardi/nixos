@@ -7,6 +7,7 @@
 let
   name = "qbittorrent";
   domain = "${name}.tigor.web.id";
+  altDomain = "vuetorrent.tigor.web.id";
   podman = config.profile.podman;
   qbittorrent = podman.qbittorrent;
   inherit (lib) mkIf;
@@ -18,15 +19,23 @@ let
   uid = toString user.uid;
   gid = toString user.gid;
 in
-lib.mkMerge [
-  (mkIf (podman.enable && qbittorrent.enable) {
-    services.nginx.virtualHosts.${domain} = {
-      useACMEHost = "tigor.web.id";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://${ip}:8080";
+{
+  config = mkIf qbittorrent.enable {
+    profile.services.ntfy-sh.client.settings.subscribe = [ { topic = "qbittorrent"; } ];
+    services.nginx.virtualHosts =
+      let
+        opts = {
+          useACMEHost = "tigor.web.id";
+          forceSSL = true;
+          locations."/" = {
+            proxyPass = "http://${ip}:8080";
+          };
+        };
+      in
+      {
+        "${domain}" = opts;
+        "${altDomain}" = opts;
       };
-    };
 
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${volume}/{config,downloads,progress,watch}
@@ -115,6 +124,7 @@ lib.mkMerge [
           "${volume}/watch:/watch"
           "${finish-notify-script}/bin/notify-finish.sh:/bin/notify-finish"
           "${start-notify-script}/bin/notify-start.sh:/bin/notify-start"
+          "${pkgs.vuetorrent}/share/vuetorrent:/webui/vuetorrent:ro"
         ];
         ports = [
           "6881:6881"
@@ -129,6 +139,5 @@ lib.mkMerge [
           "io.containers.autoupdate" = "registry";
         };
       };
-  })
-  { profile.services.ntfy-sh.client.settings.subscribe = [ { topic = "qbittorrent"; } ]; }
-]
+  };
+}
