@@ -25,6 +25,7 @@ in
     syncthing.enable = mkEnableOption "syncthing";
     openvpn.enable = mkEnableOption "openvpn";
     stubby.enable = mkEnableOption "stubby";
+    immich.enable = mkEnableOption "immich";
     jellyfin.enable = mkEnableOption "jellyfin";
     jellyfin.jellyseerr.enable = mkOption {
       type = types.bool;

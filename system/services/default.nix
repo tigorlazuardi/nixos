@@ -12,6 +12,7 @@
     ./forgejo.nix
     ./github-runner.nix
     ./homepage-dashboard.nix
+    ./immich.nix
     ./jellyfin.nix
     ./kavita.nix
     ./navidrome.nix

@@ -55,6 +55,7 @@
     services = {
       adguardhome.enable = true;
       caddy.enable = false;
+      immich.enable = true;
       nginx.enable = true;
       cockpit.enable = true;
       forgejo.enable = true;
