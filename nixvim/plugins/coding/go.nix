@@ -166,8 +166,15 @@
                 return
               end
               vim.lsp.buf.format()
-              vim.lsp.buf.code_action { context = { only = { 'source.organizeImports' } }, apply = true }
-              vim.lsp.buf.code_action { context = { only = { 'source.fixAll' } }, apply = true }
+              local params = vim.lsp.util.make_range_params()
+              params.context = { only = { "source.organizeImports" } }
+              local result = vim.lsp.buf_request_sync(ctx.buf, "textDocument/codeAction", params, 1000)
+              if not result then return end
+              if not result[1] then return end
+              if not result[1].result then return end
+              if not result[1].result[1] then return end
+              local edit = result[1].result[1].edit
+              vim.lsp.util.apply_workspace_edit(edit, 'utf-8')
             end
         '';
         event = "BufWritePre";
