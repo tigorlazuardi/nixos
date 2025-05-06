@@ -136,6 +136,7 @@
       delve
       wgo
       gofumpt
+      gotestsum
     ];
 
     # Somehow something sets PATH env to use older version of Go.
@@ -305,6 +306,11 @@
       package = pkgs.vimPlugins.neotest-golang;
       settings = {
         dap_go_enabled = true;
+        runner = "gotestsum";
+        go_test_args = [
+          "-v"
+          "-count=1"
+        ];
       };
     };
     plugins.none-ls.sources.code_actions = {
