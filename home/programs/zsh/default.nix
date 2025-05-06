@@ -10,6 +10,7 @@
     ./autocomplete.nix
     ./syntax_highlighting.nix
     ./history_substring_search.nix
+    ./powerlevel10k.nix
     ./nix_shell.nix
     ./fzf.nix
   ];
