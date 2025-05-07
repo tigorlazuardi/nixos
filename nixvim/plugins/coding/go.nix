@@ -166,7 +166,7 @@
                 return
               end
               vim.lsp.buf.format()
-              local params = vim.lsp.util.make_range_params()
+              local params = vim.lsp.util.make_range_params(0, "utf-8")
               params.context = { only = { "source.organizeImports" } }
               local result = vim.lsp.buf_request_sync(ctx.buf, "textDocument/codeAction", params, 1000)
               if not result then return end
