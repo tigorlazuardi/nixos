@@ -78,7 +78,7 @@ in
     avahi.enable = true;
     steam.enable = true;
     scanner.enable = true;
-    vial.enable = true;
+    vial.enable = false;
     printing.enable = true;
 
     firefox.enable = true;
