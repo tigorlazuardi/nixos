@@ -55,13 +55,14 @@ in
       openFirewall = true;
       settings = {
         dhcp = {
-          enabled = true;
+          enabled = false;
           dhcpv4 = {
             gateway_ip = "192.168.100.1";
             subnet_mask = "255.255.255.0";
             range_start = "192.168.100.20";
             range_end = "192.168.100.250";
           };
+          interface_name = "enp9s0";
         };
         http = {
           session_ttl = "24h";
