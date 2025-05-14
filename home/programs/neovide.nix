@@ -12,6 +12,7 @@ in
     home.packages = [ pkgs.neovide ];
 
     programs.zsh.shellAliases.n = "neovide";
+    programs.fish.shellAbbrs.n = "neovide";
 
     home.file.".config/neovide/config.toml".source =
       let

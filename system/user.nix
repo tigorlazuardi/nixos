@@ -16,8 +16,10 @@ in
       "networkmanager"
       "wheel"
     ];
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
   };
+
+  programs.fish.enable = true;
 
   users.groups.work = {
     name = "work";

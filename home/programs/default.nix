@@ -4,6 +4,7 @@
     ./zsh
 
     ./aider.nix
+    ./bash.nix
     ./bitwarden.nix
     ./bloomrpc.nix
     ./bruno.nix
@@ -14,6 +15,7 @@
     ./dolphin.nix
     ./easyeffects.nix
     ./elisa.nix
+    ./fish.nix
     ./foot.nix
     ./ghostty.nix
     ./git.nix
