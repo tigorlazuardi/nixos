@@ -14,4 +14,7 @@ in
       config.sops.secrets."bareksa/openvpn".path
     }";
   };
+  programs.fish.shellAbbrs.vpn-bareksa = "sudo ${pkgs.openvpn}/bin/openvpn --config ${
+    config.sops.secrets."bareksa/openvpn".path
+  }";
 }
