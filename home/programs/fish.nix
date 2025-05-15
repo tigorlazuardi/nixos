@@ -6,13 +6,27 @@
     enable = true;
     functions = {
       fish_greeting = "";
-      packfiles = # fish
+      packfiles = (
+        let
+          tre = "${pkgs.tre-command}/bin/tre";
+        in
+        # fish
         ''
           begin
             set -lx NIXPKGS_ALLOW_UNFREE 1
-            nix build "nixpkgs#$argv[1]" --impure --no-link --print-out-paths
+            set paths (nix build "nixpkgs#$argv[1]" --impure --no-link --print-out-paths)
+            if test (count $paths) -eq 1
+              ${tre} $paths[1]
+            else
+              set -l chosen (printf %s\n $paths | fzf --preview '${tre} --color=always {}')
+              if test -z $chosen
+                return 0
+              end
+              ${tre} $chosen
+            end
           end
-        '';
+        ''
+      );
       build = # fish
         ''
           begin
