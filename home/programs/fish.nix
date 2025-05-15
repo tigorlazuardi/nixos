@@ -55,6 +55,8 @@
     interactiveShellInit = # fish
       ''
         set --universal hydro_multiline true
+        set --universal fish_prompt_pwd_dir_length 30
+        set --universal hydro_symbol_start (set_color normal; echo "[")(set_color yellow; echo "$(whoami)")(set_color normal; echo "@")(set_color green; echo "$(hostname)")(set_color normal; echo "]")\ 
       '';
     plugins = with pkgs.fishPlugins; [
       {
