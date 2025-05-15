@@ -39,7 +39,7 @@
         (map "<leader>sB" "<cmd>lua Snacks.picker.grep_buffer()<cr>" {
           desc = "Find Text in Open Buffers";
         })
-        (map "<cr>" "<cmd>lua Snacks.picker.grep()<cr>" { desc = "Find Text"; })
+        # (map "<cr>" "<cmd>lua Snacks.picker.grep()<cr>" { desc = "Find Text"; })
         (map "*" "<cmd>lua Snacks.picker.grep_word()<cr>" { desc = "Grep word under cursor"; })
         (map "<leader>sk" "<cmd>lua Snacks.picker.keymaps()<cr>" { desc = "Keymaps"; })
         (map "<F1>" "<cmd>lua Snacks.picker.help()<cr>" { desc = "Help"; })
