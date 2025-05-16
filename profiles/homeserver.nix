@@ -57,7 +57,7 @@
       caddy.enable = false;
       immich.enable = true;
       nginx.enable = true;
-      cockpit.enable = true;
+      cockpit.enable = false;
       forgejo.enable = true;
       kavita.enable = true;
       samba.enable = true;
