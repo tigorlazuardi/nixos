@@ -59,22 +59,11 @@ in
 
   services.mpris-proxy.enable = config.profile.mpris-proxy.enable;
 
-  sops.secrets =
-    let
-      sopsFile = ../secrets/ssh.yaml;
-    in
-    {
-      "ssh/id_ed25519/public" = {
-        inherit sopsFile;
-        path = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
-        mode = "0444";
-      };
-      "ssh/id_ed25519/private" = {
-        inherit sopsFile;
-        path = "${config.home.homeDirectory}/.ssh/id_ed25519";
-        mode = "0400";
-      };
-    };
+  sops.secrets."ssh/authorized_keys" = {
+    path = "${config.home.homeDirectory}/.ssh/authorized_keys";
+    mode = "0444";
+    sopsFile = ../secrets/ssh.yaml;
+  };
 
   home.sessionVariables = {
     XDG_CONFIG_HOME = "/home/${user.name}/.config";
