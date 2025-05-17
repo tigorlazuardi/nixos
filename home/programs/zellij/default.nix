@@ -78,6 +78,28 @@ in
         ''
     );
 
+    programs.fish.shellInit =
+      lib.mkOrder 10
+        # fish
+        ''
+          status is-interactive; and begin
+            if test -n "$SSH_CLIENT"; and test -z "$ZELLIJ"
+              set -l active_sessions (zellij list-sessions --no-formatting --reverse | grep -v "EXITED")
+              if test (count $active_sessions) -eq 0
+                zellij --new-session-with-layout base
+              else
+                set -l selected (echo $active_sessions | ${pkgs.skim}/bin/sk --preview "zellij list-sessions --no-formatting --reverse" | awk '{print $1}')
+                if test -n "$selected"
+                  zellij attach "$selected"
+                else
+                  zellij --new-session-with-layout base
+                end
+              end
+              kill $fish_pid
+            end
+          end
+        '';
+
     home.file.".config/zellij/config.kdl".text =
       let
         mod = cfg.mod;
