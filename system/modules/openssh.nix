@@ -11,6 +11,22 @@ in
   config = lib.mkIf cfg.enable {
     networking.firewall = {
       allowedTCPPorts = lib.mkAfter [ 22 ];
+      extraCommands =
+        let
+          # repeat offenders.
+          blocked_ips = [
+            "218.92.0.148" # Some chinese ip
+            "45.140.17.124" # some russian ip
+            "182.53.220.26" # Some thai ip
+            "78.187.21.105" # Some turkish ip
+            "103.186.1.120" # Some bandung IP
+            "106.75.191.225"
+          ];
+        in
+        # Block repeat offenders
+        lib.strings.concatMapStringsSep "\n" (
+          ip: "iptables -I INPUT -s ${ip} -p tcp --dport ssh -j DROP"
+        ) blocked_ips;
     };
     services.openssh = {
       enable = true;
