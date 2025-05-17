@@ -10,6 +10,12 @@ in
             alias ssh="kitty +kitten ssh"
         fi
       '';
+    programs.fish.interactiveShellInit = # fish
+      ''
+        if $TERM == "xterm-kitty"
+          abbr --add ssh "kitty +kitten ssh"
+        end
+      '';
     programs.kitty = {
       enable = true;
       settings = {
