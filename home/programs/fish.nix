@@ -2,6 +2,7 @@
 {
 
   home.packages = with pkgs; [ grc ];
+  programs.carapace.enable = true;
   programs.fish = {
     enable = true;
     functions = {
