@@ -12,7 +12,7 @@ in
       '';
     programs.fish.interactiveShellInit = # fish
       ''
-        if $TERM == "xterm-kitty"
+        if [ "$TERM" = "xterm-kitty" ]
           abbr --add ssh "kitty +kitten ssh"
         end
       '';
