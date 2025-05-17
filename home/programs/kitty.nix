@@ -13,7 +13,7 @@ in
     programs.fish.interactiveShellInit = # fish
       ''
         if test "$TERM" = "xterm-kitty"
-          abbr --add ssh "kitty +kitten ssh"
+          alias ssh "kitty +kitten ssh"
         end
       '';
     programs.kitty = {
