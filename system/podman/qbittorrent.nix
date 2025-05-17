@@ -16,12 +16,27 @@ let
   image = "lscr.io/linuxserver/qbittorrent:latest";
   volume = "/nas/torrents";
   user = config.profile.user;
-  uid = toString user.uid;
-  gid = toString user.gid;
+  serviceAccount = "qbittorrent";
+  uid = toString config.users.users."${serviceAccount}".uid;
+  gid = toString config.users.groups."${serviceAccount}".gid;
 in
 {
   config = mkIf qbittorrent.enable {
     profile.services.ntfy-sh.client.settings.subscribe = [ { topic = "qbittorrent"; } ];
+    users = {
+      groups.${serviceAccount} = { };
+      users = {
+        ${user.name}.extraGroups = [ serviceAccount ];
+        ${serviceAccount} = {
+          isSystemUser = true;
+          description = "Unpriviledged system account for qbittorrent service";
+          group = serviceAccount;
+        };
+        jellyfin = lib.mkIf config.services.jellyfin.enable {
+          extraGroups = [ serviceAccount ];
+        };
+      };
+    };
     services.nginx.virtualHosts =
       let
         opts = {

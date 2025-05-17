@@ -101,6 +101,7 @@ in
           [
             "@@||stats.grafana.org^" # Allow Grafana to collect stats of my Grafana instance.
             "192.168.100.5 vpn.tigor.web.id"
+            "127.0.0.1 fulminare.top" # Malicious domain infecting qbittorrent
           ]
           ++ lib.attrsets.mapAttrsToList (
             name: _: "192.168.100.5 ${lib.strings.removePrefix "https://" name}"
