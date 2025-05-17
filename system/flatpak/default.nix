@@ -12,10 +12,7 @@ in
         enable = true;
         onCalendar = "weekly"; # Default value
       };
-      packages =
-        [ ]
-        ++ optional cfg.zen-browser.enable "io.github.zen_browser.zen"
-        ++ optional cfg.redisinsight.enable "com.redis.RedisInsight";
+      packages = [ ] ++ optional cfg.redisinsight.enable "com.redis.RedisInsight";
     };
   };
 }

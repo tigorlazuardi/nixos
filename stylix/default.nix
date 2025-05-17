@@ -35,6 +35,6 @@
     };
   };
   imports = [
-    inputs.stylix.homeManagerModules.stylix
+    inputs.stylix.homeModules.stylix
   ];
 }
