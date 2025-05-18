@@ -35,6 +35,10 @@
             nix build --impure --expr "with import <nixpkgs> {}; callPackage $argv[1] {}"
           end
         '';
+      pod-ips = # fish
+        ''
+          sudo podman inspect --format '{{.Name}} - {{.NetworkSettings.IPAddress}}' $(sudo podman ps -q) | sort -t . -k 3,4
+        '';
     };
     shellAliases = {
       ls = "${pkgs.eza}/bin/eza -lah";
