@@ -30,7 +30,7 @@
       pihole.enable = false;
       ytptube.enable = true;
       redmage.enable = true;
-      redmage-demo.enable = true;
+      redmage-demo.enable = false;
       qbittorrent.enable = true;
       servarr.enable = true;
       servarr.recyclarr.enable = true;
