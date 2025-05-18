@@ -119,12 +119,24 @@ in
             name = "AdAway Default Blocklist";
             id = 2;
           }
-          # {
-          #   enabled = true;
-          #   url = "https://raw.githubusercontent.com/bebasid/bebasdns/main/dev/resources/hosts/custom-filtering-rules-blocklist";
-          #   name = "BebasDNS Custom Filtering Rules";
-          #   id = 3;
-          # }
+          {
+            enabled = true;
+            url = "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_7_Japanese/filter.txt";
+            name = "AdGuard Japanese filter";
+            id = 3;
+          }
+          {
+            enabled = true;
+            url = "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_11_Mobile/filter.txt";
+            name = "AdGuard Mobile Ads filter";
+            id = 4;
+          }
+          {
+            enabled = true;
+            url = "https://raw.githubusercontent.com/blocklistproject/Lists/refs/heads/master/adguard/gambling-ags.txt";
+            name = "Block List Project - Gambling Sites";
+            id = 5;
+          }
         ];
         filtering = {
           filtering_enabled = true;
