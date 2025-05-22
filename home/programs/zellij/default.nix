@@ -88,7 +88,7 @@ in
               if test (count $active_sessions) -eq 0
                 zellij --new-session-with-layout base
               else
-                set -l selected (echo $active_sessions | ${pkgs.skim}/bin/sk --preview "zellij list-sessions --no-formatting --reverse" | awk '{print $1}')
+                set -l selected (printf %s\n $active_sessions | ${pkgs.skim}/bin/sk --preview "zellij list-sessions --no-formatting --reverse" | awk '{print $1}')
                 if test -n "$selected"
                   zellij attach "$selected"
                 else
@@ -107,6 +107,8 @@ in
       # kdl
       ''
         theme "catppuccin-mocha";
+
+        show_startup_tips false
 
         plugins {
             zj-quit location="file:${plugins.zj-quit}";
