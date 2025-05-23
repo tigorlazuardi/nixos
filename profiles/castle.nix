@@ -123,7 +123,7 @@ in
       java.enable = true;
       nemo.enable = true;
       neocal.enable = false;
-      ghostty.enable = false;
+      ghostty.enable = true;
       dolphin.enable = false;
     };
 
