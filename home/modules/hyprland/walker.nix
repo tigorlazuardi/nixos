@@ -47,7 +47,7 @@ in
                 "${pactl} -f json list sinks | ${jq} -r '.[].description'";
               cmd = # sh
                 ''
-                  ${pactl} -f json list sinks | ${jq} -r '.[] | select(.description == "%RESULT%") | .name' | xargs -I % ${pactl} set-default-sink %;
+                  ${pactl} -f json list sinks | ${jq} -r '.[] | select(.description == "%RESULT%") | .name' | xargs -0I{} ${pactl} set-default-sink {};
                 '';
             }
           )
