@@ -112,7 +112,7 @@ in
 
     home.programs = {
       cursor.enable = true;
-      bloomrpc.enable = true;
+      bloomrpc.enable = false;
       zathura.enable = true;
       bruno.enable = true;
       krita.enable = true;
