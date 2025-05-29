@@ -18,6 +18,8 @@ in
     valheim.enable = mkEnableOption "valheim";
     n8n.enable = mkEnableOption "n8n";
 
+    jdownloader.enable = mkEnableOption "jdownloader";
+
     servarr = {
       enable = mkEnableOption "servarr group";
       qbittorrent.enable = mkOption {

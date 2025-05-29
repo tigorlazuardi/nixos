@@ -43,6 +43,7 @@
       n8n.enable = true;
       soulseek.enable = true;
       valheim.enable = false;
+      jdownloader.enable = true;
     };
 
     home.programs.zellij = {
