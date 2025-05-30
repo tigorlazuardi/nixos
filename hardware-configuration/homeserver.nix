@@ -59,6 +59,10 @@ in
       device = "/dev/disk/by-label/WD_RED_4T_1";
       fsType = "ext4";
     };
+    fileSystems."/wolf" = {
+      device = "/dev/disk/by-label/WOLF_4T_1";
+      fsType = "ext4";
+    };
     fileSystems."/nas/public/Music" = {
       device = "/nas/Syncthing/Sync/Music";
       fsType = "auto";

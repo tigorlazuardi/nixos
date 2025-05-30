@@ -11,21 +11,24 @@ in
       openFirewall = true;
       settings = {
         global = {
-          "invalid users" = [ "root" ];
           workgroup = "WORKGROUP";
-          "server string" = "smbnix";
-          "netbios name" = "smbnix";
-          security = "user";
           "guest account" = user.name;
-          "passwd program" = "/run/wrappers/bin/passwd %u";
         };
         nas = {
           path = "/nas";
           browsable = "yes";
           "read only" = "no";
           "guest ok" = "yes";
-          "create mask" = "0777";
-          "directory mask" = "0777";
+          "create mask" = "0664";
+          "directory mask" = "0775";
+        };
+        wolf = {
+          path = "/wolf";
+          browsable = "yes";
+          "read only" = "no";
+          "guest ok" = "yes";
+          "create mask" = "0664";
+          "directory mask" = "0775";
         };
       };
     };
