@@ -38,6 +38,8 @@ in
         proxyWebsockets = true;
         extraConfig = ''
           auth_basic $auth_ip;
+          proxy_read_timeout 2h;
+          proxy_send_timeout 2h;
         '';
       };
     };
