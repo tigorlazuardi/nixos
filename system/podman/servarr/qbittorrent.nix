@@ -8,7 +8,7 @@ let
   root = "/nas/mediaserver/servarr";
   configVolume = "${root}/qbittorrent";
   mediaVolume = "${root}/data/torrents";
-  # domain = "${name}.tigor.web.id";
+  domain = "${name}.podman";
   user = config.profile.user;
   uid = toString user.uid;
   gid = toString user.gid;
@@ -16,14 +16,12 @@ let
 in
 {
   config = mkIf (podman.enable && qbittorrent.enable) {
-    # services.nginx.virtualHosts.${domain} = {
-    #   useACMEHost = "tigor.web.id";
-    #   forceSSL = true;
-    #   locations."/" = {
-    #     proxyPass = "http://${ip}:8080";
-    #     proxyWebsockets = true;
-    #   };
-    # };
+    services.nginx.virtualHosts.${domain} = {
+      locations."/" = {
+        proxyPass = "http://${ip}:8080";
+        proxyWebsockets = true;
+      };
+    };
 
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${configVolume} ${mediaVolume}

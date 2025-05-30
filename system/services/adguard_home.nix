@@ -104,7 +104,7 @@ in
             "127.0.0.1 fulminare.top" # Malicious domain infecting qbittorrent
           ]
           ++ lib.attrsets.mapAttrsToList (
-            name: _: "192.168.100.5 ${lib.strings.removePrefix "https://" name}"
+            name: _: "192.168.100.5 ${name}"
           ) config.services.nginx.virtualHosts;
         filters = [
           {

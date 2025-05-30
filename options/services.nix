@@ -43,7 +43,11 @@ in
       enable = mkEnableOption "flaresolverr";
       domain = mkOption {
         type = types.str;
-        default = "flaresolverr.tigor.web.id";
+        default = "flaresolverr.podman";
+      };
+      ip = mkOption {
+        type = types.str;
+        default = "10.88.100.100";
       };
     };
 

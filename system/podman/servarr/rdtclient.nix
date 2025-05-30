@@ -8,7 +8,7 @@ let
   root = "/nas/mediaserver/servarr";
   volumeConfig = "${root}/${name}";
   mediaVolume = "${root}/data/torrents";
-  domain = "${name}.tigor.web.id";
+  domain = "rdtclient.podman";
   user = config.profile.user;
   uid = toString user.uid;
   gid = toString user.gid;
@@ -17,8 +17,6 @@ in
 {
   config = mkIf (podman.enable && cfg.enable) {
     services.nginx.virtualHosts.${domain} = {
-      useACMEHost = "tigor.web.id";
-      forceSSL = true;
       locations."/" = {
         proxyPass = "http://${ip}:6500";
         proxyWebsockets = true;

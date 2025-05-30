@@ -47,7 +47,7 @@ in
           webUIFlavor = "WebUI";
 
           # Downloader
-          downloadAsCbz = true;
+          downloadAsCbz = false;
           autoDownloadNewChapters = true;
           excludeEntryWithUnreadChapters = false;
           autoDownloadNewChaptersLimit = 0;
@@ -68,7 +68,7 @@ in
           updateMangas = true;
 
           flareSolverrEnabled = true;
-          flareSolverrUrl = "https://${config.profile.services.flaresolverr.domain}";
+          flareSolverrUrl = "http://${config.profile.services.flaresolverr.domain}";
           flareSolverrTimeout = 60; # seconds.
           flareSolverrSessionName = "suwayomi";
           flareSolverrSessionTtl = 15; # minutes.

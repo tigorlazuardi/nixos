@@ -2,7 +2,6 @@
 let
   cfg = config.profile.services.flaresolverr;
   inherit (lib) mkIf;
-  ip = "10.88.100.100";
 in
 {
   config = mkIf cfg.enable {
@@ -15,7 +14,7 @@ in
         LOG_LEVEL = "debug";
       };
       extraOptions = [
-        "--ip=${ip}"
+        "--ip=${cfg.ip}"
         "--network=podman"
       ];
       labels = {
@@ -27,10 +26,8 @@ in
     };
 
     services.nginx.virtualHosts.${cfg.domain} = {
-      useACMEHost = "tigor.web.id";
-      forceSSL = true;
       locations."/" = {
-        proxyPass = "http://${ip}:8191";
+        proxyPass = "http://${cfg.ip}:8191";
         proxyWebsockets = true;
       };
     };
