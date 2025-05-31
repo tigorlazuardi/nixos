@@ -16,13 +16,15 @@ in
       useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations."/" = {
-        proxyPass = "http://${ip}:8080";
+        proxyPass = "http://unix:${config.services.anubis.instances.${name}.settings.BIND}";
         extraConfig = # nginx
           ''
             client_max_body_size 100M;
           '';
       };
     };
+
+    services.anubis.instances.${name}.settings.TARGET = "http://${ip}:8080";
 
     virtualisation.oci-containers.containers.${name} = {
       inherit image;

@@ -42,7 +42,7 @@ in
           useACMEHost = "tigor.web.id";
           forceSSL = true;
           locations."/" = {
-            proxyPass = "http://${ip}:8080";
+            proxyPass = "http://unix:${config.services.anubis.instances.${name}.settings.BIND}";
           };
         };
       in
@@ -50,6 +50,8 @@ in
         "${domain}" = opts;
         "${altDomain}" = opts;
       };
+
+    services.anubis.instances.${name}.settings.TARGET = "http://${ip}:8080";
 
     system.activationScripts."podman-${name}" =
       let

@@ -269,9 +269,12 @@ in
       forceSSL = true;
       useACMEHost = "tigor.web.id";
       locations."/" = {
-        proxyPass = "http://0.0.0.0:${toString config.services.homepage-dashboard.listenPort}";
+        proxyPass = "http://unix:${config.services.anubis.instances.homepage-dashboard.settings.BIND}";
         proxyWebsockets = true;
       };
     };
+
+    services.anubis.instances.homepage-dashboard.settings.TARGET =
+      "http://0.0.0.0:${toString config.services.homepage-dashboard.listenPort}";
   };
 }
