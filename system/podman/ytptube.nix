@@ -13,62 +13,18 @@ let
   volume = "/wolf/mediaserver/${name}";
   domain = "${name}.tigor.web.id";
   user = config.profile.user;
-  # webhook = builtins.readFile (
-  #   (pkgs.formats.json { }).generate "webhooks.json" [
-  #     {
-  #       name = "NTFY Webhook Added";
-  #       on = [ "added" ];
-  #       request = {
-  #         url = "https://ntfy.tigor.web.id/ytptube?click=https%3A%2F%2F${domain}&tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20added.";
-  #         type = "json";
-  #         method = "POST";
-  #         headers = {
-  #           Authorization = ''Bearer ${config.sops.placeholder."ntfy/tokens/homeserver"}'';
-  #           X-Tags = "rocket";
-  #         };
-  #       };
-  #     }
-  #     {
-  #       name = "NTFY Webhook Completed";
-  #       on = [ "completed" ];
-  #       request = {
-  #         url = "https://ntfy.tigor.web.id/ytptube?click=https%3A%2F%2F${domain}&tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20%7B%7B%20.status%20%7D%7D";
-  #         type = "json";
-  #         method = "POST";
-  #         headers = {
-  #           Authorization = ''Bearer ${config.sops.placeholder."ntfy/tokens/homeserver"}'';
-  #           X-Tags = "heavy_check_mark";
-  #           X-Priority = "4";
-  #         };
-  #       };
-  #     }
-  #     {
-  #       name = "NTFY Webhook Error";
-  #       on = [ "error" ];
-  #       request = {
-  #         url = "https://ntfy.tigor.web.id/ytptube?click=https%3A%2F%2F${domain}&tpl=1&t=%7B%7B.title%7D%7D&m=%5B%7B%7B%20.folder%20%7D%7D%5D%20Download%20%7B%7B%20.status%20%7D%7D";
-  #         type = "json";
-  #         method = "POST";
-  #         headers = {
-  #           Authorization = ''Bearer ${config.sops.placeholder."ntfy/tokens/homeserver"}'';
-  #           X-Priority = "4";
-  #           X-Tags = "x";
-  #         };
-  #       };
-  #     }
-  #   ]
-  # );
 in
 {
   config = mkIf podman.${name}.enable {
     users = {
-      groups.${name} = { };
+      groups.${name}.gid = 972;
       users = {
         ${user.name}.extraGroups = [ name ];
         ${name} = {
           isSystemUser = true;
           description = "Unprivileged system account for ${name} service";
           group = name;
+          uid = 977;
         };
         jellyfin = lib.mkIf config.services.jellyfin.enable {
           extraGroups = [ name ];
@@ -168,19 +124,5 @@ in
           "io.containers.autoupdate" = "registry";
         };
       };
-
-    # profile.services.ntfy-sh.client.settings.subscribe =
-    #   let
-    #     vueIcon = pkgs.fetchurl {
-    #       url = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/120px-Vue.js_Logo_2.svg.png";
-    #       hash = "sha256-chQ5dFB22qfGpGnYJ9B6NsUWlbfAeIIoJL5bSyz2YEg=";
-    #     };
-    #   in
-    #   [
-    #     {
-    #       command = ''${pkgs.libnotify}/bin/notify-send --app-name="ytptube" --icon="${vueIcon}" --category=im.received --urgency=normal "$title" "$message"'';
-    #       topic = "ytptube";
-    #     }
-    #   ];
   };
 }

@@ -16,21 +16,20 @@ let
   image = "lscr.io/linuxserver/qbittorrent:latest";
   volume = "/nas/torrents";
   user = config.profile.user;
-  serviceAccount = "qbittorrent";
-  uid = toString config.users.users."${serviceAccount}".uid;
-  gid = toString config.users.groups."${serviceAccount}".gid;
+  serviceAccount = name;
 in
 {
   config = mkIf qbittorrent.enable {
     profile.services.ntfy-sh.client.settings.subscribe = [ { topic = "qbittorrent"; } ];
     users = {
-      groups.${serviceAccount} = { };
+      groups.${serviceAccount}.gid = 974;
       users = {
         ${user.name}.extraGroups = [ serviceAccount ];
         ${serviceAccount} = {
           isSystemUser = true;
           description = "Unpriviledged system account for qbittorrent service";
           group = serviceAccount;
+          uid = 979;
         };
         jellyfin = lib.mkIf config.services.jellyfin.enable {
           extraGroups = [ serviceAccount ];
@@ -52,10 +51,15 @@ in
         "${altDomain}" = opts;
       };
 
-    system.activationScripts."podman-${name}" = ''
-      mkdir -p ${volume}/{config,downloads,progress,watch}
-      chown ${uid}:${gid} ${volume} ${volume}/{config,downloads,progress,watch}
-    '';
+    system.activationScripts."podman-${name}" =
+      let
+        uid = toString config.users.users.${serviceAccount}.uid;
+        gid = toString config.users.groups.${serviceAccount}.gid;
+      in
+      ''
+        mkdir -p ${volume}/{config,downloads,progress,watch}
+        chown ${uid}:${gid} ${volume} ${volume}/{config,downloads,progress,watch}
+      '';
 
     sops = {
       secrets =
@@ -120,6 +124,8 @@ in
                 https://ntfy.tigor.web.id/qbittorrent
             ''
         );
+        uid = toString config.users.users.${serviceAccount}.uid;
+        gid = toString config.users.groups.${serviceAccount}.gid;
       in
       {
         inherit image;
