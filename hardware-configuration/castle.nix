@@ -84,6 +84,22 @@ in
     ];
   };
 
+  fileSystems."/wolf" = {
+    device = "//192.168.100.5/wolf";
+    fsType = "cifs";
+    options = [
+      "_netdev"
+      "x-systemd.automount"
+      "noauto"
+      "x-systemd.idle-timeout=60"
+      "x-systemd.device-timeout=5s"
+      "x-systemd.mount-timeout=5s"
+      "uid=${toString config.profile.user.uid}"
+      "gid=${toString config.profile.user.gid}"
+      "credentials=${config.sops.secrets."smb/secrets".path}"
+    ];
+  };
+
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/6a987bc7-1f00-4494-bcef-b0f8afc62b7b";
     fsType = "ext4";
