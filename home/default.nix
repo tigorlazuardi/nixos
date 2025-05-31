@@ -61,7 +61,7 @@ in
 
   sops.secrets."ssh/authorized_keys" = {
     path = "${config.home.homeDirectory}/.ssh/authorized_keys";
-    mode = "0444";
+    mode = "0644";
     sopsFile = ../secrets/ssh.yaml;
   };
 
