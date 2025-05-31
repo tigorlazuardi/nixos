@@ -7,13 +7,7 @@
   programs.nixvim.opts.smartindent = pkgs.lib.mkForce false;
   programs.nixvim.extraPlugins = [
     {
-      plugin = pkgs.vimUtils.buildVimPlugin {
-        pname = "treesitter-endwise";
-        src = inputs.nvim-treesitter-endwise;
-        version = inputs.nvim-treesitter-endwise.shortRev;
-        doCheck = false;
-        doInstallCheck = false;
-      };
+      plugin = pkgs.vimPlugins.nvim-treesitter-endwise;
     }
     {
       plugin = pkgs.vimPlugins.ultimate-autopair-nvim;
@@ -103,7 +97,6 @@
       settings = {
         highlight.enable = true;
         indent.enable = true;
-        endwise.enable = true;
         incremental_selection = {
           enable = true;
           keymaps = {
