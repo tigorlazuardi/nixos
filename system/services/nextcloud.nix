@@ -7,10 +7,16 @@
 let
   cfg = config.profile.services.nextcloud;
   domain = "nextcloud.tigor.web.id";
+  rootDir = "/wolf/services/nextcloud";
+  dataDir = "${rootDir}/data";
 in
 {
   config = lib.mkIf cfg.enable {
-    users.groups.nextcloud.members = [ config.profile.user.name ];
+    users.users.${config.profile.user.name}.extraGroups = [ "nextcloud" ];
+    system.activationScripts."nextcloud-data-dir" = ''
+      mkdir -p ${rootDir}
+      chown -R nextcloud:nextcloud ${rootDir}
+    '';
     environment.systemPackages = with pkgs; [
       exiftool
       perl
@@ -56,7 +62,7 @@ in
           ;
       };
       settings = {
-        datadirectory = lib.mkForce "/nas/services/nextcloud/data";
+        datadirectory = lib.mkForce dataDir;
         enable_previews = true;
         default_timezone = "Asia/Jakarta";
         "memcache.local" = "\\OC\\Memcache\\Redis";
