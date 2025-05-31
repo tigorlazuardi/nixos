@@ -10,7 +10,7 @@ let
   inherit (lib) mkIf;
   ip = "10.88.0.4";
   image = "ghcr.io/arabcoders/${name}:latest";
-  volume = "/nas/mediaserver/${name}";
+  volume = "/wolf/mediaserver/${name}";
   domain = "${name}.tigor.web.id";
   user = config.profile.user;
   uid = toString user.uid;
