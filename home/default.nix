@@ -59,12 +59,6 @@ in
 
   services.mpris-proxy.enable = config.profile.mpris-proxy.enable;
 
-  sops.secrets."ssh/authorized_keys" = {
-    path = "${config.home.homeDirectory}/.ssh/authorized_keys";
-    mode = "0644";
-    sopsFile = ../secrets/ssh.yaml;
-  };
-
   home.sessionVariables = {
     XDG_CONFIG_HOME = "/home/${user.name}/.config";
     NIXPKGS_ALLOW_UNFREE = "1";

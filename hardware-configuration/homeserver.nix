@@ -155,31 +155,43 @@ in
       ];
     };
 
-    services.nginx.virtualHosts."public.tigor.web.id" = {
-      useACMEHost = "tigor.web.id";
-      forceSSL = true;
-      locations."/" = {
-        root = "/nas/public";
-        tryFiles = "$uri $uri/ $uri.html =404";
-        extraConfig = ''
-          fancyindex on;
-          fancyindex_localtime on;
-        '';
-      };
-    };
+    users.users."${config.profile.user.name}".openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB1X6NS0rzXAt31RTKBQKH0Evo8NH7qJPyNEAefzc1Yw tigor@castle"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEExzLJott/tOrK02fXgaQwp/5Fd+sOsDt+g0foWCf7D termux@oppo-find-x8"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDWAaeNAJ/AY9X6W0bmcVcdB2rSt0AnzmKyyBqhrl5Nj tigor@windows"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOg+zjg+YqBA0OfLatp5okqytRxZPEeykeNE6hWXB4NT tigor@for"
+    ];
 
-    services.nginx.virtualHosts."public2.tigor.web.id" = {
-      useACMEHost = "tigor.web.id";
-      forceSSL = true;
-      locations."/" = {
-        root = "/nas/torrents/downloads/games/windows";
-        tryFiles = "$uri $uri/ $uri.html =404";
-        extraConfig = ''
-          fancyindex on;
-          fancyindex_localtime on;
-        '';
-      };
-    };
+    # services.nginx.virtualHosts."public.tigor.web.id" = {
+    #   useACMEHost = "tigor.web.id";
+    #   forceSSL = true;
+    #   locations."/".proxyPass = "http://unix:${config.services.anubis.instances.public.settings.BIND}";
+    # };
+    # services.nginx.virtualHosts."public.local" = {
+    #   listen = [ { addr = "unix:/run/nginx/public.sock"; } ];
+    #   locations."/" = {
+    #     root = "/nas/public";
+    #     tryFiles = "$uri $uri/ $uri.html =404";
+    #     extraConfig = ''
+    #       fancyindex on;
+    #       fancyindex_localtime on;
+    #     '';
+    #   };
+    # };
+    services.anubis.instances.public.settings.TARGET = "unix:/run/nginx/public.sock";
+    #
+    # services.nginx.virtualHosts."public2.tigor.web.id" = {
+    #   useACMEHost = "tigor.web.id";
+    #   forceSSL = true;
+    #   locations."/" = {
+    #     root = "/nas/torrents/downloads/games/windows";
+    #     tryFiles = "$uri $uri/ $uri.html =404";
+    #     extraConfig = ''
+    #       fancyindex on;
+    #       fancyindex_localtime on;
+    #     '';
+    #   };
+    # };
 
     security.acme.certs."tigor.web.id".extraDomainNames =
       let
