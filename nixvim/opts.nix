@@ -1,9 +1,7 @@
 {
   # https://www.lazyvim.org/configuration/general
   autowrite = true;
-  clipboard.__raw = ''
-    vim.env.SSH_TTY and "" or "unnamedplus"
-  '';
+  clipboard = "unnamedplus";
   # conceallevel = 2;
   confirm = true;
   cursorline = true;
