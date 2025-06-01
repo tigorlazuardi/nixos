@@ -178,7 +178,7 @@ in
     #     '';
     #   };
     # };
-    services.anubis.instances.public.settings.TARGET = "unix:/run/nginx/public.sock";
+    # services.anubis.instances.public.settings.TARGET = "unix:/run/nginx/public.sock";
     #
     # services.nginx.virtualHosts."public2.tigor.web.id" = {
     #   useACMEHost = "tigor.web.id";
