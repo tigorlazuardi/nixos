@@ -96,6 +96,10 @@
       url = "github:marlonrichert/zsh-autocomplete";
       flake = false;
     };
+    anubis = {
+      url = "github:TecharoHQ/anubis";
+      flake = false;
+    };
   };
 
   outputs =

@@ -42,6 +42,22 @@
         "url": "https://git.tigor.web.id/tigor/AGS"
       }
     },
+    "anubis": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1748724537,
+        "narHash": "sha256-QWq6Jca9ew64V1k5SCxf/Dt5nyFtDdDxcKoKQYT86EU=",
+        "owner": "TecharoHQ",
+        "repo": "anubis",
+        "rev": "0d9ebebff660b1db846982a1756074b2e6ae435b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "TecharoHQ",
+        "repo": "anubis",
+        "type": "github"
+      }
+    },
     "astal": {
       "inputs": {
         "nixpkgs": [
@@ -979,6 +995,7 @@
     "root": {
       "inputs": {
         "ags-agenda": "ags-agenda",
+        "anubis": "anubis",
         "catppuccin": "catppuccin",
         "gitsigns-nvim": "gitsigns-nvim",
         "home-manager": "home-manager",
