@@ -17,40 +17,34 @@
       require("lz.n").load {
         "nvim-aider",
         cmd = {
-          "AiderTerminalToggle",
-          "AiderHealth",
+          "Aider",
         },
         keys = {
-          { "<localleader>a", "<cmd>AiderTerminalToggle<cr>", desc = "Toggle Aider" },
+          { "<localleader>a", "<cmd>Aider toggle<cr>", desc = "Toggle Aider" },
           {
             "<localleader>A",
-            "<cmd>AiderTerminalSend<cr>",
+            "<cmd>Aider send<cr>",
             desc = "Send to Aider",
             mode = { "n", "v" },
           },
           {
             "<localleader>s",
-            "<cmd>AiderQuickAddFile<cr>",
+            "<cmd>Aider add<cr>",
             desc = "Add File to Aider",
           },
           {
             "<localleader>S",
-            "<cmd>AiderQuickDropFile<cr>",
+            "<cmd>Aider drop<cr>",
             desc = "Drop File from Aider",
           },
           {
-            "<localleader>e",
-            "<cmd>AiderQuickSendCommand<cr>",
-            desc = "Send Command To Aider",
-          },
-          {
             "<localleader>b",
-            "<cmd>AiderQuickSendBuffer<cr>",
+            "<cmd>Aider buffer<cr>",
             desc = "Send Buffer To Aider",
           },
           {
             "<localleader>r",
-            "<cmd>AiderQuickReadOnlyFile<cr>",
+            "<cmd>Aider add readonly<cr>",
             desc = "Add File as Read-Only",
           },
         },
@@ -60,7 +54,9 @@
               "--no-auto-commits",
               "--pretty",
               "--stream",
+              "--no-show-release-notes",
             },
+            auto_reload = true,
             win = {
               position = "right",
             },
