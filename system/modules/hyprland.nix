@@ -83,7 +83,10 @@ in
     services.dbus.enable = true;
     xdg.portal = {
       enable = true;
-      extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+      xdgOpenUsePortal = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-gtk
+      ];
     };
 
     programs.file-roller.enable = true;
@@ -118,8 +121,6 @@ in
           command = "Hyprland --config ${hyprlandConfig}";
         };
     };
-
-    xdg.portal.xdgOpenUsePortal = true;
 
     services.libinput.enable = true;
 

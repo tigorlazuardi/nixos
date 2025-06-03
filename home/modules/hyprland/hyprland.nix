@@ -21,6 +21,8 @@ in
     ];
     wayland.windowManager.hyprland = {
       enable = true;
+      package = null;
+      portalPackage = null;
       systemd.enable = false; # managed with uwsm
       # systemd.variables = [ "--all" ];
       settings = {
@@ -204,8 +206,8 @@ in
         '';
     };
 
-    home.file.".config/xdg-desktop-portal/hyprland-portals.conf".source =
-      (pkgs.formats.ini { }).generate "hyprland-portals.conf"
-        config.profile.hyprland.xdgPortal;
+    # home.file.".config/xdg-desktop-portal/hyprland-portals.conf".source =
+    #   (pkgs.formats.ini { }).generate "hyprland-portals.conf"
+    #     config.profile.hyprland.xdgPortal;
   };
 }
