@@ -184,13 +184,13 @@ in
                 };
               })
               ++ (optional config.profile.podman.qbittorrent.enable {
-                QBittorrent = rec {
+                QBittorrent = {
                   description = "Torrent client";
                   href = "https://qbittorrent.tigor.web.id";
                   icon = "qbittorrent.svg";
                   widget = {
                     type = "qbittorrent";
-                    url = href;
+                    url = "http://10.88.0.7:8080";
                     username = "{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}";
                     password = "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}";
                     enableLeechProgress = true;
