@@ -42,7 +42,7 @@
       morphos.enable = true;
       n8n.enable = true;
       soulseek.enable = true;
-      valheim.enable = false;
+      valheim.enable = true;
       jdownloader.enable = true;
     };
 
