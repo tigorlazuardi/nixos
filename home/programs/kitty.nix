@@ -37,6 +37,7 @@ in
         # Clipboard
         copy_on_select = true;
         strip_trailing_spaces = "smart";
+        clipboard_control = "write-clipboard write-primary read-clipboard read-primary";
       };
       keybindings =
         {

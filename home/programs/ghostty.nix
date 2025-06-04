@@ -19,6 +19,8 @@ in
         linux-cgroup = "always";
         background-opacity = 0.8;
         clipboard-trim-trailing-spaces = true;
+        clipboard-read = "allow";
+        clipboard-write = "allow";
         keybind = [
           "ctrl+a>t=new_tab"
           "ctrl+a>enter=new_split:right"
