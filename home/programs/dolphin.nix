@@ -16,13 +16,15 @@ in
       libappimage
       icoutils
       taglib
-      ffmpegthumbs
+      kdePackages.ffmpegthumbs
       resvg
       kdePackages.ark
       kdePackages.kio-admin
       kdePackages.kio-gdrive
       kdePackages.kio-extras
       kdePackages.konsole
+      kdePackages.kio-fuse
+      kdePackages.qtsvg
     ];
   };
 }

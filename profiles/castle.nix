@@ -124,7 +124,7 @@ in
       nemo.enable = true;
       neocal.enable = false;
       ghostty.enable = true;
-      dolphin.enable = false;
+      dolphin.enable = true;
     };
 
     programs.mongodb-compass.enable = true;
