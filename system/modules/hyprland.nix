@@ -66,6 +66,10 @@ in
 
     programs.kdeconnect.enable = true;
 
+    # Fix unpopulated MIME menus in dolphin
+    environment.etc."/xdg/menus/applications.menu".source =
+      "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
+
     fonts.packages = with pkgs; [
       meslo-lgs-nf
       font-awesome
@@ -86,6 +90,7 @@ in
       xdgOpenUsePortal = true;
       extraPortals = with pkgs; [
         xdg-desktop-portal-gtk
+        kdePackages.xdg-desktop-portal-kde
       ];
     };
 

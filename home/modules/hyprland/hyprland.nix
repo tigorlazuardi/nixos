@@ -80,7 +80,7 @@ in
         bind = [
           # Programs
           ''$mod, RETURN, exec, kitty''
-          "$mod, E, exec, nemo"
+          "$mod, E, exec, dolphin"
           "$mod, B, exec, vivaldi"
           "$mod, BackSpace, exec, wlogout"
           "$mod, Y, exec, foot ssh homeserver@vpn.tigor.web.id"
@@ -206,8 +206,8 @@ in
         '';
     };
 
-    # home.file.".config/xdg-desktop-portal/hyprland-portals.conf".source =
-    #   (pkgs.formats.ini { }).generate "hyprland-portals.conf"
-    #     config.profile.hyprland.xdgPortal;
+    home.file.".config/xdg-desktop-portal/hyprland-portals.conf".source =
+      (pkgs.formats.ini { }).generate "hyprland-portals.conf"
+        config.profile.hyprland.xdgPortal;
   };
 }

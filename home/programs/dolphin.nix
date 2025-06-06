@@ -9,6 +9,7 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
+    profile.hyprland.xdgPortal.preferred."org.freedesktop.impl.portal.FileChooser" = "kde";
     home.packages = with pkgs; [
       kdePackages.dolphin
       kdePackages.dolphin-plugins
@@ -25,6 +26,9 @@ in
       kdePackages.konsole
       kdePackages.kio-fuse
       kdePackages.qtsvg
+      kdePackages.wayland
+      kdePackages.wayland-protocols
+      kdePackages.plasma-workspace
     ];
   };
 }
