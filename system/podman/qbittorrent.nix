@@ -133,6 +133,7 @@ in
         inherit image;
         hostname = name;
         autoStart = true;
+        user = "${uid}:${gid}";
         environment = {
           PUID = uid;
           PGID = gid;
