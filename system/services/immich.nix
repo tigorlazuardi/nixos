@@ -11,8 +11,10 @@ in
   config = lib.mkIf cfg.enable {
     services.immich = {
       enable = true;
-      mediaLocation = "/nas/services/immich";
+      host = "0.0.0.0";
+      mediaLocation = "/wolf/services/immich";
       settings.server.externalDomain = "https://photos.tigor.web.id";
+      accelerationDevices = [ "/dev/dri/renderD128" ];
     };
     services.nginx.virtualHosts."${domain}" = {
       useACMEHost = "tigor.web.id";
@@ -24,6 +26,10 @@ in
         {
           proxyPass = "http://${srv.host}:${toString srv.port}";
           proxyWebsockets = true;
+          extraConfig = # nginx
+            ''
+              client_max_body_size 4G;
+            '';
         };
     };
   };
