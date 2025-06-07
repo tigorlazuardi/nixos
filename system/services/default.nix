@@ -21,6 +21,7 @@
     ./ntfy-sh.nix
     ./openvpn.nix
     ./photoprism.nix
+    ./postgres.nix
     ./rust-motd.nix
     ./samba.nix
     ./stubby.nix
