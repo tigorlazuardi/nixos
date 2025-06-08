@@ -103,6 +103,7 @@
       elisa.enable = true;
       obsidian.enable = true;
       zoom.enable = true;
+      dolphin.enable = true;
     };
 
     home.environments = {
