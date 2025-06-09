@@ -6,21 +6,73 @@
 }:
 let
   cfg = config.profile.services.nginx;
-  inherit (lib)
-    mkIf
-    attrsets
-    strings
-    lists
-    ;
+  inherit (lib) mkIf;
   domain = "tigor.web.id";
+  vhostOptions =
+    { config, ... }:
+    {
+      options = {
+        enableAuthelia = lib.mkEnableOption "Enable authelia location";
+      };
+      config = lib.mkIf config.enableAuthelia {
+        locations = {
+          "/authelia".extraConfig =
+            # nginx
+            ''
+              # Virtual endpoint created by nginx to forward auth requests.
+              location /authelia {
+                internal;
+                set $upstream_authelia http://127.0.0.1:9091/api/verify;
+                proxy_pass_request_body off;
+                proxy_pass $upstream_authelia;    
+                proxy_set_header Content-Length "";
+
+                # Timeout if the real server is dead
+                proxy_next_upstream error timeout invalid_header http_500 http_502 http_503;
+
+                # [REQUIRED] Needed by Authelia to check authorizations of the resource.
+                # Provide either X-Original-URL and X-Forwarded-Proto or
+                # X-Forwarded-Proto, X-Forwarded-Host and X-Forwarded-Uri or both.
+                # Those headers will be used by Authelia to deduce the target url of the     user.
+                # Basic Proxy Config
+                client_body_buffer_size 128k;
+                proxy_set_header Host $host;
+                proxy_set_header X-Original-URL $scheme://$http_host$request_uri;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $remote_addr; 
+                proxy_set_header X-Forwarded-Proto $scheme;
+                proxy_set_header X-Forwarded-Host $http_host;
+                proxy_set_header X-Forwarded-Uri $request_uri;
+                proxy_set_header X-Forwarded-Ssl on;
+                proxy_redirect  http://  $scheme://;
+                proxy_http_version 1.1;
+                proxy_set_header Connection "";
+                proxy_cache_bypass $cookie_session;
+                proxy_no_cache $cookie_session;
+                proxy_buffers 4 32k;
+
+                # Advanced Proxy Config
+                send_timeout 5m;
+                proxy_read_timeout 240;
+                proxy_send_timeout 240;
+                proxy_connect_timeout 240;
+              }
+            '';
+        };
+      };
+    };
 in
 {
+  options.services.nginx.virtualHosts = lib.mkOption {
+    type = lib.types.attrsOf (lib.types.submodule vhostOptions);
+  };
   config = mkIf cfg.enable {
     services.nginx = {
       enable = true;
       package = pkgs.nginxQuic;
-      additionalModules = [
-        pkgs.nginxModules.fancyindex
+      additionalModules = with pkgs.nginxModules; [
+        fancyindex
+        echo
       ];
       recommendedTlsSettings = true;
       recommendedGzipSettings = true;
@@ -30,17 +82,108 @@ in
       recommendedBrotliSettings = true;
     };
 
-    users.users.nginx.extraGroups = [ "acme" ];
+    services.nginx.virtualHosts."auth.${domain}" = {
+      forceSSL = true;
+      useACMEHost = domain;
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:9091";
+        proxyWebsockets = true;
+        extraConfig =
+          #nginx
+          ''
+            client_body_buffer_size 128k;
+
+            #Timeout if the real server is dead
+            proxy_next_upstream error timeout invalid_header http_500 http_502 http_503;
+
+            # Advanced Proxy Config
+            send_timeout 5m;
+            proxy_read_timeout 360;
+            proxy_send_timeout 360;
+            proxy_connect_timeout 360;
+            proxy_set_header Connection "";
+            proxy_cache_bypass $cookie_session;
+            proxy_no_cache $cookie_session;
+            proxy_buffers 64 256k;
+          '';
+      };
+    };
+
+    sops.secrets =
+      let
+        autheliaOpts = {
+          sopsFile = ../../secrets/authelia.yaml;
+          owner = config.services.authelia.instances.nginx.user;
+        };
+      in
+      {
+        "nginx/htpasswd" = {
+          sopsFile = ../../secrets/nginx.yaml;
+          owner = "nginx";
+        };
+        "authelia/nginx/jwt" = autheliaOpts;
+        "authelia/nginx/session" = autheliaOpts;
+        "authelia/nginx/storage" = autheliaOpts;
+        "authelia/nginx/users.yaml" = autheliaOpts;
+      };
+
+    services.authelia.instances.nginx = {
+      enable = true;
+      secrets = {
+        jwtSecretFile = config.sops.secrets."authelia/nginx/jwt".path;
+        storageEncryptionKeyFile = config.sops.secrets."authelia/nginx/storage".path;
+        sessionSecretFile = config.sops.secrets."authelia/nginx/session".path;
+      };
+      settings = {
+        theme = "light";
+        default_redirection_url = "https://${domain}";
+        log.level = "debug";
+        totp = {
+          issuer = "auth.${domain}";
+          period = 30;
+          skew = 1;
+        };
+        storage.local.path = "/var/lib/authelia-nginx/data.db";
+        authentication_backend = {
+          disable_reset_password = true;
+          refresh_interval = "5m";
+          file = {
+            path = config.sops.secrets."authelia/nginx/users.yaml".path;
+            password = {
+              algorithm = "argon2id";
+              iterations = 1;
+              key_length = 32;
+              salt_length = 16;
+              memory = 1024;
+              parallelism = 8;
+            };
+          };
+        };
+        access_control = {
+          default_policy = "deny";
+          rules = [
+            {
+              # Allow access to the authelia authentication portal.
+              domain = "auth.${domain}";
+              policy = "bypass";
+            }
+            {
+              domain = "*.${domain}";
+              policy = "one_factor";
+            }
+          ];
+        };
+      };
+    };
+
+    users.users.nginx.extraGroups = [
+      "acme"
+      config.services.authelia.instances.nginx.group
+    ];
 
     security.acme = {
       acceptTerms = true;
       defaults.email = "tigor.hutasuhut@gmail.com";
-    };
-
-    # Enable Basic Authentication via PAM
-    security.pam.services.nginx.setEnvironment = false;
-    systemd.services.nginx.serviceConfig = {
-      SupplementaryGroups = [ "shadow" ];
     };
 
     # Disable ACME re-triggers every time the configuration changes
@@ -50,65 +193,11 @@ in
       Wants = lib.mkForce [ ];
     };
 
-    # environment.etc."nginx/static/${domain}/index.html" = {
-    #   text =
-    #     let
-    #       domains = attrsets.mapAttrsToList (
-    #         name: _: strings.removePrefix "https://" name
-    #       ) config.services.nginx.virtualHosts;
-    #       sortedDomains = lists.sort (a: b: a < b) domains;
-    #       list = map (
-    #         domain: # html
-    #         ''
-    #           <div class="col-12 col-sm-6 col-md-4 col-lg-3 text-center align-middle">
-    #               <a href="https://${domain}">${domain}</a>
-    #           </div>
-    #         '') sortedDomains;
-    #       items = strings.concatStringsSep "\n" list;
-    #     in
-    #     # html
-    #     ''
-    #       <!DOCTYPE html>
-    #       <html>
-    #           <head>
-    #               <title>Hosted Sites</title>
-    #               <link
-    #                 rel="stylesheet"
-    #                 href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    #                 integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-    #                 crossorigin="anonymous">
-    #           </head>
-    #           <body class="container">
-    #               <h1 class="text-center">Hosted Sites</h1>
-    #               <div class="row g-4">
-    #                   ${items}
-    #               </div>
-    #           </body>
-    #       </html>
-    #     '';
-    #   user = "nginx";
-    #   group = "nginx";
-    # };
-    #
-    # services.nginx.virtualHosts."${domain}" = {
-    #   useACMEHost = domain;
-    #   forceSSL = true;
-    #   locations."/" = {
-    #     root = "/etc/nginx/static/${domain}";
-    #     tryFiles = "$uri $uri/ $uri.html =404";
-    #   };
-    # };
-
     systemd.timers."acme-${domain}".timerConfig.OnCalendar = lib.mkForce "*-*-1,15 04:00:00";
 
     security.acme.certs."${domain}" = {
       webroot = "/var/lib/acme/acme-challenge";
       group = "nginx";
-    };
-
-    sops.secrets."nginx/htpasswd" = {
-      sopsFile = ../../secrets/nginx.yaml;
-      owner = "nginx";
     };
 
     services.nginx.appendHttpConfig =

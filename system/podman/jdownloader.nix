@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -12,6 +13,8 @@ let
   volume = "/nas/podman/jdownloader";
   domain = "${name}.tigor.web.id";
   serviceAccount = name;
+  socketAddress = "/run/podman/${name}.sock";
+
 in
 {
   config = mkIf cfg.enable {
@@ -33,14 +36,36 @@ in
     services.nginx.virtualHosts.${domain} = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://${ip}:5800";
-        proxyWebsockets = true;
-        extraConfig = ''
-          auth_basic $auth_ip;
-          proxy_read_timeout 2h;
-          proxy_send_timeout 2h;
-        '';
+      enableAuthelia = false;
+      locations = {
+        "/" = {
+          proxyPass = "http://unix:${socketAddress}";
+          proxyWebsockets = true;
+          extraConfig =
+            # nginx
+            ''
+              auth_basic $auth_ip;
+              # auth_request /authelia;
+              # auth_request_set $target_url https://$http_host$request_uri;
+              # auth_request_set $user $upstream_http_remote_user;
+              # auth_request_set $email $upstream_http_remote_email;
+              # auth_request_set $groups $upstream_http_remote_groups;
+              # proxy_set_header Remote-User $user;
+              # proxy_set_header Remote-Email $email;
+              # proxy_set_header Remote-Groups $groups;
+
+              proxy_read_timeout 2h;
+              proxy_send_timeout 2h;
+              error_page 502 = @handle_502;
+            '';
+        };
+        # loop back to Nginx until the container is started.
+        "@handle_502".extraConfig = # nginx
+          ''
+            echo_sleep 1;
+            echo_exec @loop;
+          '';
+        "@loop".proxyPass = "http://localhost:80";
       };
     };
 
@@ -50,10 +75,34 @@ in
     '';
 
     # sops.secrets."jdownloader/env".sopsFile = ../../secrets/jdownloader.yaml;
-    systemd.services."podman-${name}".serviceConfig = {
-      CPUWeight = 10;
-      CPUQuota = "25%";
-      IOWeight = 50;
+    systemd.services."podman-${name}" = {
+      serviceConfig = {
+        CPUWeight = 10;
+        CPUQuota = "25%";
+        IOWeight = 50;
+      };
+      unitConfig.StopWhenUnneeded = true;
+    };
+
+    systemd.sockets."podman-${name}-proxy" = {
+      listenStreams = [ socketAddress ];
+      wantedBy = [ "sockets.target" ];
+    };
+
+    systemd.services."podman-${name}-proxy" = {
+      unitConfig = {
+        Requires = [
+          "podman-${name}.service"
+          "podman-${name}-proxy.socket"
+        ];
+        After = [
+          "podman-${name}.service"
+          "podman-${name}-proxy.socket"
+        ];
+      };
+      serviceConfig = {
+        ExecStart = "${pkgs.systemd}/lib/systemd/systemd-socket-proxyd --exit-idle-time=8h ${ip}:5800";
+      };
     };
 
     virtualisation.oci-containers.containers.${name} =
@@ -65,7 +114,7 @@ in
         inherit image;
         user = "${uid}:${gid}";
         hostname = name;
-        autoStart = true;
+        autoStart = false;
         environment = {
           UMASK = "0002";
           TZ = "Asia/Jakarta";
