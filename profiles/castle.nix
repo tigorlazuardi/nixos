@@ -111,7 +111,7 @@ in
     nextcloud.enable = false;
 
     home.programs = {
-      cursor.enable = true;
+      cursor.enable = false;
       bloomrpc.enable = false;
       zathura.enable = true;
       bruno.enable = true;
