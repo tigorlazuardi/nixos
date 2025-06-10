@@ -193,6 +193,9 @@ in
           ''center,class:^(lazygit)$''
           ''size 90% 90%,class:^(lazygit)$''
           ''stayfocused,class:^(lazygit)$''
+          # Disable blur for context menus
+          "noblur,class:^()$,title:^()$"
+          "opaque,class:^()$,title:^()$"
         ];
 
         exec-once = [
