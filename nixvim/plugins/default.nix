@@ -13,6 +13,7 @@
     ./grug-far.nix
     ./lualine.nix
     ./mini.nix
+    ./neo-tree.nix
     ./noice.nix
     ./persistence.nix
     ./protobuf.nix

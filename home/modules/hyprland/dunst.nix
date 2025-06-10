@@ -11,7 +11,7 @@ let
   playNotificationSoundScript = pkgs.writeShellScriptBin "play-notification-sound" ''
     appname="$1"
 
-    if [[ "$appname" =~ ^(discord|TelegramDesktop|Slack|Signal|Element|fcitx5)$ ]]; then
+    if [[ "$appname" =~ ^(discord|TelegramDesktop|Slack|Signal|Element|fcitx5|spotify)$ ]]; then
       exit 0
     fi
 

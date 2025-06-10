@@ -23,7 +23,7 @@
           };
       in
       [
-        (map "<leader>e" "<cmd>lua Snacks.explorer()<cr>" { desc = "(Snacks) Open Explorer"; })
+        # (map "<leader>e" "<cmd>lua Snacks.explorer()<cr>" { desc = "(Snacks) Open Explorer"; })
         (map "<leader><leader>" "<cmd>lua Snacks.picker.files()<cr>" { desc = "(Snacks) Find Files"; })
         (map "<leader>bd" "<cmd>lua Snacks.bufdelete()<cr>" { desc = "(Snacks) Buffer Delete"; })
         (map "<leader>bo" "<cmd>lua Snacks.bufdelete.other()<cr>" {
@@ -104,7 +104,7 @@
           enabled = false;
         };
         explorer = {
-          enabled = true;
+          enabled = false;
         };
         indent = {
           enabled = true;
