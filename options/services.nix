@@ -39,6 +39,7 @@ in
     suwayomi.enable = mkEnableOption "suwayomi";
     github-runner.enable = mkEnableOption "github-runner";
     homepage-dashboard.enable = mkEnableOption "homepage-dashboard";
+    authelia.enable = mkEnableOption "authelia";
     flaresolverr = {
       enable = mkEnableOption "flaresolverr";
       domain = mkOption {

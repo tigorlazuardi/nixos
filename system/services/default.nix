@@ -5,6 +5,7 @@
 
     ./adguard_home.nix
     ./anubis.nix
+    ./authelia.nix
     ./caddy.nix
     ./cockpit.nix
     ./couchdb.nix
