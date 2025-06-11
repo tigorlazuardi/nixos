@@ -20,6 +20,7 @@
     ./snacks.nix
     ./telescope.nix
     ./tiny-inline-diagnostics.nix
+    ./toggleterm.nix
     ./treesitter.nix
     ./trouble.nix
     ./ufo.nix

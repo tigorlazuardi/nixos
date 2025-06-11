@@ -65,11 +65,11 @@
         (map "<leader>sd" "<cmd>lua Snacks.picker.diagnostics()<cr>" { desc = "Diagnostics"; })
 
         ### Others
-        (map "<F5>" "<cmd>lua Snacks.terminal()<cr>" { desc = "Toggle Terminal"; })
-        (map "<F5>" "<cmd>close<cr>" {
-          desc = "Hide Terminal";
-          mode = [ "t" ];
-        })
+        # (map "<F5>" "<cmd>lua Snacks.terminal()<cr>" { desc = "Toggle Terminal"; })
+        # (map "<F5>" "<cmd>close<cr>" {
+        #   desc = "Hide Terminal";
+        #   mode = [ "t" ];
+        # })
         (map "<F3>" "<cmd>lua Snacks.picker()<cr>" { desc = "Picker"; })
         (map "<leader>B" "<cmd>lua Snacks.gitbrowse()<cr>" { desc = "Gitbrowse"; })
       ];
