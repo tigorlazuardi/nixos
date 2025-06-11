@@ -105,7 +105,7 @@ in
       forceSSL = true;
       useACMEHost = domain;
       locations."/" = {
-        proxyPass = "http://127.0.0.1:9091";
+        proxyPass = "http://unix:${config.services.anubis.instances.${name}.settings.BIND}";
         proxyWebsockets = true;
         extraConfig =
           #nginx
@@ -131,6 +131,8 @@ in
     users.users.nginx.extraGroups = [
       config.services.authelia.instances.main.group
     ];
+
+    services.anubis.instances.${name}.settings.TARGET = "http://127.0.0.1:9091";
 
     services.authelia.instances.main = {
       enable = true;
