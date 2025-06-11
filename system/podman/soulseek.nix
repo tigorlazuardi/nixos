@@ -22,12 +22,11 @@ in
     services.nginx.virtualHosts.${domain} = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;
+      enableAuthelia = true;
+      autheliaLocations = [ "/" ];
       locations."/" = {
         proxyPass = "http://${ip}:6080";
         proxyWebsockets = true;
-        extraConfig = ''
-          auth_basic $auth_ip;
-        '';
       };
     };
 
