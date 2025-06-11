@@ -1,5 +1,27 @@
+{ pkgs, ... }:
 {
   programs.nixvim = {
+    extraPlugins = [
+      {
+        plugin = pkgs.vimUtils.buildVimPlugin {
+          pname = "nvim-window-picker";
+          src = pkgs.fetchFromGitHub {
+            owner = "s1n7ax";
+            repo = "nvim-window-picker";
+            rev = "v2.4.0";
+            hash = "sha256-ZavIPpQXLSRpJXJVJZp3N6QWHoTKRvVrFAw7jekNmX4=";
+          };
+          version = "2.4.0";
+          doCheck = false;
+          doInstallCheck = false;
+        };
+      }
+    ];
+    extraConfigLua = ''
+      do
+        require("window-picker").setup()
+      end
+    '';
     plugins.neo-tree = {
       enable = true;
       extraOptions = {
@@ -20,7 +42,7 @@
         };
         window.mappings = {
           "<space>" = false;
-          "]b" = "next_source";
+          "b" = "next_source";
           "[b" = "prev_source";
           o = "open";
           l = "open";
