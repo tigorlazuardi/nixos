@@ -6,9 +6,9 @@
 }:
 {
   programs.nixvim = {
-    extraPackages = with pkgs; [
-      lazygit
-    ];
+    # extraPackages = with pkgs; [
+    #   lazygit
+    # ];
     keymaps =
       let
         map =
@@ -29,7 +29,7 @@
         (map "<leader>bo" "<cmd>lua Snacks.bufdelete.other()<cr>" {
           desc = "(Snacks) Buffer Delete Others";
         })
-        (map "<leader>z" "<cmd>lua Snacks.lazygit()<cr>" { desc = "(Snacks) Open Lazygit"; })
+        # (map "<leader>z" "<cmd>lua Snacks.lazygit()<cr>" { desc = "(Snacks) Open Lazygit"; })
         ### Searches
         (map "<leader>ff" "<cmd>lua Snacks.picker.files()<cr>" { desc = "(Snacks) Find Files"; })
         (map "<leader>:" "<cmd>lua Snacks.picker.command_history()<cr>" { desc = "Command History"; })
