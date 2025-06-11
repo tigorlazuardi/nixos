@@ -25,23 +25,23 @@ in
     services.nginx.virtualHosts.${domain} = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://unix:${config.services.anubis.instances.suwayomi-server.settings.BIND}";
-        proxyWebsockets = true;
-      };
+      enableAuthelia = true;
+      autheliaLocations = [ "/" ];
+      locations."/" =
+        let
+          server = config.services.suwayomi-server.settings.server;
+        in
+        {
+          proxyPass = "http://${server.ip}:${toString server.port}";
+          proxyWebsockets = true;
+        };
     };
-
-    services.anubis.instances.suwayomi-server.settings.TARGET =
-      let
-        server = config.services.suwayomi-server.settings.server;
-      in
-      "http://${server.ip}:${toString server.port}";
 
     services.suwayomi-server = {
       enable = true;
       settings = {
         server = {
-          ip = "0.0.0.0";
+          ip = "127.0.0.1";
           port = 4567;
           initialOpenInBrowserEnabled = false;
           webUIEnabled = true;
