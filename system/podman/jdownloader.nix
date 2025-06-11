@@ -37,6 +37,7 @@ in
       useACMEHost = "tigor.web.id";
       forceSSL = true;
       enableAuthelia = true;
+      autheliaLocations = [ "/" ];
       locations = {
         "/" = {
           proxyPass = "http://unix:${socketAddress}";
@@ -44,26 +45,6 @@ in
           extraConfig =
             # nginx
             ''
-              auth_request /authelia;
-
-              ## Save the upstream metadata response headers from Authelia to variables.
-              auth_request_set $user $upstream_http_remote_user;
-              auth_request_set $groups $upstream_http_remote_groups;
-              auth_request_set $name $upstream_http_remote_name;
-              auth_request_set $email $upstream_http_remote_email;
-
-              ## Inject the metadata response headers from the variables into the request made to the backend.
-              proxy_set_header Remote-User $user;
-              proxy_set_header Remote-Groups $groups;
-              proxy_set_header Remote-Email $email;
-              proxy_set_header Remote-Name $name;
-              ## Modern Method: Set the $redirection_url to the Location header of the response to the Authz endpoint.
-              auth_request_set $redirection_url $upstream_http_location;
-              ## Modern Method: When there is a 401 response code from the authz endpoint redirect to the $redirection_url.
-              error_page 401 =302 $redirection_url;            
-
-              proxy_read_timeout 2h;
-              proxy_send_timeout 2h;
               error_page 502 = @handle_502;
             '';
         };
