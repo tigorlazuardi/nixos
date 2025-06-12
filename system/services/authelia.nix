@@ -180,7 +180,7 @@ in
             }
             {
               domain = "*.${domain}";
-              policy = "one_factor";
+              policy = "two_factor";
             }
           ];
         };
