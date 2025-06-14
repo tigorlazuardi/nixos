@@ -6,9 +6,9 @@
 }:
 {
   programs.nixvim = {
-    # extraPackages = with pkgs; [
-    #   lazygit
-    # ];
+    extraPackages = with pkgs; [
+      lazygit
+    ];
     keymaps =
       let
         map =
@@ -29,7 +29,7 @@
         (map "<leader>bo" "<cmd>lua Snacks.bufdelete.other()<cr>" {
           desc = "(Snacks) Buffer Delete Others";
         })
-        # (map "<leader>z" "<cmd>lua Snacks.lazygit()<cr>" { desc = "(Snacks) Open Lazyeit"; })
+        (map "<leader>z" "<cmd>lua Snacks.lazygit()<cr>" { desc = "(Snacks) Open Lazyeit"; })
         ### Searches
         (map "<leader>ff" "<cmd>lua Snacks.picker.files()<cr>" { desc = "(Snacks) Find Files"; })
         (map "<leader>:" "<cmd>lua Snacks.picker.command_history()<cr>" { desc = "Command History"; })
@@ -65,11 +65,11 @@
         (map "<leader>sd" "<cmd>lua Snacks.picker.diagnostics()<cr>" { desc = "Diagnostics"; })
 
         ### Others
-        # (map "<F5>" "<cmd>lua Snacks.terminal()<cr>" { desc = "Toggle Terminal"; })
-        # (map "<F5>" "<cmd>close<cr>" {
-        #   desc = "Hide Terminal";
-        #   mode = [ "t" ];
-        # })
+        (map "<F5>" "<cmd>lua Snacks.terminal()<cr>" { desc = "Toggle Terminal"; })
+        (map "<F5>" "<cmd>close<cr>" {
+          desc = "Hide Terminal";
+          mode = [ "t" ];
+        })
         (map "<F3>" "<cmd>lua Snacks.picker()<cr>" { desc = "Picker"; })
         (map "<leader>B" "<cmd>lua Snacks.gitbrowse()<cr>" { desc = "Gitbrowse"; })
       ];
