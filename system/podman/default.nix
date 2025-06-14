@@ -46,6 +46,7 @@ in
   # 10.88.0.4 -> ytptube
   # 10.88.1.1 -> Pihole
   imports = [
+    ./cctv-ivms4200.nix
     ./jdownloader.nix
     ./memos.nix
     ./minecraft.nix

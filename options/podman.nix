@@ -17,6 +17,7 @@ in
     soulseek.enable = mkEnableOption "soulseek podman";
     valheim.enable = mkEnableOption "valheim";
     n8n.enable = mkEnableOption "n8n";
+    cctv-ivms4200.enable = mkEnableOption "cctv-ivms4200 podman";
 
     jdownloader.enable = mkEnableOption "jdownloader";
 
