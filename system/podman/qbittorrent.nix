@@ -40,9 +40,12 @@ in
       let
         opts = {
           useACMEHost = "tigor.web.id";
+          enableAuthelia = true;
+          autheliaLocations = [ "/" ];
           forceSSL = true;
           locations."/" = {
-            proxyPass = "http://unix:${config.services.anubis.instances.${name}.settings.BIND}";
+            proxyPass = "http://${ip}:8080";
+            proxyWebsockets = true;
           };
         };
       in
@@ -50,8 +53,6 @@ in
         "${domain}" = opts;
         "${altDomain}" = opts;
       };
-
-    services.anubis.instances.${name}.settings.TARGET = "http://${ip}:8080";
 
     system.activationScripts."podman-${name}" =
       let
