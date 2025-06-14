@@ -137,7 +137,7 @@ in
                       "__path__" = "/var/log/nginx/access.log",
                   },
               ]
-              sync_period = "30s"
+              sync_period = "5s"
           }   
 
           loki.source.file "nginx_access_log" {
