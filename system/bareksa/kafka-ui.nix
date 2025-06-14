@@ -6,8 +6,8 @@
 }:
 let
   ip = "10.88.244.1";
-  socketAddress = "127.0.0.1:48901";
   name = "bareksa-kafka";
+  socketAddress = "/run/podman/${name}.sock";
   domain = "kafka.bareksa.local";
   settings = {
     kafka = {
@@ -99,7 +99,10 @@ in
       listenStreams = [ socketAddress ];
       wantedBy = [ "sockets.target" ];
     };
-    systemd.services."podman-${name}".unitConfig.StopWhenUnneeded = true;
+    systemd.services."podman-${name}" = {
+      unitConfig.StopWhenUnneeded = true;
+      serviceConfig.ExecStartPost = [ "${pkgs.waitport}/bin/waitport ${ip} 8080" ];
+    };
     systemd.services."podman-${name}-proxy" = {
       unitConfig = {
         Requires = [
@@ -118,19 +121,8 @@ in
 
     services.nginx.virtualHosts."${domain}".locations = {
       "/" = {
-        proxyPass = "http://${socketAddress}";
-        extraConfig = # nginx
-          ''
-            error_page 502 = @handle_502;
-          '';
+        proxyPass = "http://unix:${socketAddress}";
       };
-      # loop back to Nginx until the container is started.
-      "@handle_502".extraConfig = # nginx
-        ''
-          echo_sleep 1;
-          echo_exec @loop;
-        '';
-      "@loop".proxyPass = "http://localhost:80";
     };
 
     # 127.0.0.1 ${domain} will force browsers to resolve kafka.bareksa.local to
