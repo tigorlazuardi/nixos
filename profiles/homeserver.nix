@@ -40,10 +40,11 @@
       minecraft.enable = false;
       memos.enable = true;
       morphos.enable = true;
-      n8n.enable = true;
+      n8n.enable = false;
       soulseek.enable = true;
       valheim.enable = true;
       jdownloader.enable = true;
+      cctv-ivms4200.enable = true;
     };
 
     home.programs.zellij = {
