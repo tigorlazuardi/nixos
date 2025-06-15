@@ -7,20 +7,30 @@
 let
   inherit (lib)
     mkOption
-    mkEnableOption
     mkIf
     types
     ;
   socketActivationType = types.submodule (
-    { config, ... }:
+    { name, ... }:
+    let
+      cfg = config.systemd.socketActivations."${name}";
+    in
     {
-      options.socketActivation = {
-        enable = mkEnableOption "socket activation";
+      options = {
+        name = mkOption {
+          type = types.str;
+          default = name;
+        };
+        enable = mkOption {
+          type = types.bool;
+          default = true;
+          description = "Enable socket activation for this service. This will create a systemd socket unit that listens on the specified host and port, and starts the service when a connection is made.";
+        };
         host = mkOption { type = types.str; };
         port = mkOption { type = types.ints.u16; };
         socketAddress = mkOption {
           type = types.str;
-          default = "/run/socket-activation.${config.name}.sock";
+          default = "/run/socket-activation.${cfg.name}.sock";
           description = "The socket address for the socket activation service. Simple string so other services can use this config option directly, e.g. nginx reverse proxy";
         };
         stopWhenUnneeded = mkOption {
@@ -41,75 +51,81 @@ let
           };
           command = mkOption {
             type = types.str;
-            default = "${pkgs.waitport}/bin/waitport ${config.socketActivation.host} ${toString config.socketActivation.port}";
+            default = "${pkgs.waitport}/bin/waitport ${cfg.host} ${toString cfg.port}";
             description = "The command to use to wait for the service to be ready. This can be used to customize the waiting behavior, e.g. to use a different tool or command.";
           };
         };
       };
-      # config = mkIf config.enable {
-      #   unitConfig.StopWhenUnneeded = mkIf config.socketActivation.stopWhenUnneeded true; # Only shows in the .service file if enabled
-      #   serviceConfig.ExecStartPost = mkIf config.wait.enable [
-      #     config.socketActivation.wait.command
-      #   ];
-      # };
     }
   );
-  socketActivatedServices = lib.filterAttrs (
-    _: conf: conf.socketActivation.enable
-  ) config.systemd.services;
+  socketActivatedServices = lib.filterAttrs (_: conf: conf.enable) config.systemd.socketActivations;
   names = lib.attrsets.mapAttrsToList (name: _: name) socketActivatedServices;
-  proxyNames = lib.attrsets.mapAttrsToList (name: _: "${name}-proxy") socketActivatedServices;
 in
 {
-  options.systemd.services = mkOption {
-    type = types.attrsOf socketActivationType;
+  options.systemd.socketActivations = mkOption {
+    type = types.lazyAttrsOf socketActivationType;
+    default = { };
   };
   config = {
     systemd.services =
-      lib.attrsets.genAttrs proxyNames (
-        proxyName:
-        (
+      builtins.listToAttrs (
+        map (
+          name:
           let
-            name = lib.strings.removeSuffix "-proxy" proxyName;
-            cfg = config.systemd.services.${name}.socketActivation;
+            cfg = config.systemd.socketActivations."${name}";
           in
           {
-            unitConfig = {
-              Requires = [
-                "${name}.service"
-                "${proxyName}.socket"
+            inherit name;
+            value = {
+              unitConfig.StopWhenUnneeded = mkIf cfg.stopWhenUnneeded true;
+              serviceConfig.ExecStartPost = mkIf cfg.wait.enable [
+                cfg.wait.command
               ];
-              After = [
-                "${name}.service"
-                "${proxyName}.socket"
-              ];
+              wantedBy = lib.mkForce [ ];
             };
-            serviceConfig.ExecStart = "${pkgs.systemd}/lib/systemd/systemd-socket-proxyd --exit-idle-time=${cfg.idleTimeout} ${cfg.host}:${toString cfg.port}";
           }
-        )
+        ) names
       )
-      // lib.attrsets.getAttrs names (name: {
-        serviceConfig = {
-          ExecStartPost = mkIf config.systemd.services.${name}.socketActivation.wait.enable [
-            config.systemd.services.${name}.socketActivation.wait.command
-          ];
-        };
-        unitConfig = {
-          StopWhenUnneeded = mkIf config.systemd.services.${name}.socketActivation.stopWhenUnneeded true;
-        };
-      });
-    systemd.sockets = lib.attrsets.genAttrs proxyNames (
-      proxyName:
-      (
+      // builtins.listToAttrs (
+        map (
+          name:
+          let
+            cfg = config.systemd.socketActivations."${name}";
+            proxy = "${name}-proxy";
+          in
+          {
+            name = proxy;
+            value = {
+              unitConfig = {
+                Requires = [
+                  "${name}.service"
+                  "${proxy}.socket"
+                ];
+                After = [
+                  "${name}.service"
+                  "${proxy}.socket"
+                ];
+              };
+              serviceConfig.ExecStart = ''${pkgs.systemd}/lib/systemd/systemd-socket-proxyd --exit-idle-time=${cfg.idleTimeout} ${cfg.host}:${toString cfg.port}'';
+            };
+          }
+        ) names
+      );
+    systemd.sockets = builtins.listToAttrs (
+      map (
+        name:
         let
-          name = lib.strings.removeSuffix "-proxy" proxyName;
-          cfg = config.systemd.services.${name}.socketActivation;
+          cfg = config.systemd.socketActivations."${name}";
+          proxy = "${name}-proxy";
         in
         {
-          listenStreams = [ cfg.socketAddress ];
-          wantedBy = [ "sockets.target" ];
+          name = proxy;
+          value = {
+            listenStreams = [ cfg.socketAddress ];
+            wantedBy = [ "sockets.target" ];
+          };
         }
-      )
+      ) names
     );
   };
 }

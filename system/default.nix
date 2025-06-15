@@ -18,7 +18,7 @@
     ./user.nix
     ./keyboard.nix
     ./bareksa
-    # ./systemd.nix
+    ./systemd.nix
 
     inputs.sops-nix.nixosModules.sops
     inputs.nur.modules.nixos.default
