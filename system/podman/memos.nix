@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   name = "memos";
   podman = config.profile.podman;
@@ -8,6 +13,7 @@ let
   rootVolume = "/wolf/podman/memos";
   domain = "${name}.tigor.web.id";
   user = config.profile.user;
+  socketAddress = "/run/podman/${name}.sock";
 in
 {
   config = mkIf (podman.enable && podman.${name}.enable) {
@@ -30,7 +36,38 @@ in
     services.nginx.virtualHosts.${domain} = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;
-      locations."/".proxyPass = "http://unix:${config.services.anubis.instances.memos.settings.BIND}";
+      locations."^~ /memos.api" = {
+        proxyPass = "http://unix:${socketAddress}";
+        proxyWebsockets = true;
+      };
+      locations."/" = {
+        proxyPass = "http://unix:${config.services.anubis.instances.memos.settings.BIND}";
+        proxyWebsockets = true;
+      };
+    };
+
+    systemd.services."podman-${name}" = {
+      unitConfig.StopWhenUnneeded = true;
+      serviceConfig.ExecStartPost = [ "${pkgs.waitport}/bin/waitport ${ip} 5230" ];
+    };
+    systemd.services."podman-${name}-proxy" = {
+      unitConfig = {
+        Requires = [
+          "podman-${name}.service"
+          "podman-${name}-proxy.socket"
+        ];
+        After = [
+          "podman-${name}.service"
+          "podman-${name}-proxy.socket"
+        ];
+      };
+      serviceConfig = {
+        ExecStart = "${pkgs.systemd}/lib/systemd/systemd-socket-proxyd --exit-idle-time=5m ${ip}:5230";
+      };
+    };
+    systemd.sockets."podman-${name}-proxy" = {
+      listenStreams = [ socketAddress ];
+      wantedBy = [ "sockets.target" ];
     };
 
     system.activationScripts."podman-${name}" =
@@ -44,7 +81,8 @@ in
       '';
 
     services.anubis.instances.memos = {
-      settings.TARGET = "http://${ip}:5230";
+      # settings.TARGET = "http://${ip}:5230";
+      settings.TARGET = "unix://${socketAddress}";
       botPolicy = [
         {
           name = "allow-apis";
