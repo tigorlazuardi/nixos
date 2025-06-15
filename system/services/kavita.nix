@@ -27,10 +27,15 @@ in
       forceSSL = true;
       locations = {
         "/" = {
-          proxyPass = "http://0.0.0.0:${toString config.services.kavita.settings.Port}";
+          proxyPass = "http://unix:${config.systemd.socketActivations."kavita".socketAddress}";
           proxyWebsockets = true;
         };
       };
+    };
+
+    systemd.socketActivations."kavita" = {
+      host = "0.0.0.0";
+      port = 40001;
     };
 
     services.kavita = {
