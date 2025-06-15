@@ -120,7 +120,7 @@ in
       {
         inherit image;
         hostname = name;
-        autoStart = true;
+        autoStart = false;
         user = "${uid}:${gid}";
         environment = {
           TZ = "Asia/Jakarta";
