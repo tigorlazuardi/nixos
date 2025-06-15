@@ -19,6 +19,7 @@ in
           anubisSettings = config.services.anubis.instances.forgejo.settings;
         in
         {
+          "/api".proxyPass = "http://unix:/run/forgejo/forgejo.sock"; # bypass API endpoints from anubis
           "= /" = {
             extraConfig =
               #nginx
