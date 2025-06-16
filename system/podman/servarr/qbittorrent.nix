@@ -8,18 +8,29 @@ let
   root = "/nas/mediaserver/servarr";
   configVolume = "${root}/qbittorrent";
   mediaVolume = "${root}/data/torrents";
-  domain = "${name}.local";
+  domain = "qbittorrent-servarr.tigor.web.id";
   user = config.profile.user;
   inherit (lib) mkIf;
 in
 {
   config = mkIf (podman.enable && qbittorrent.enable) {
-    services.nginx.virtualHosts."qbittorrent.servarr.local" = {
-      locations."/" = {
-        proxyPass = "http://${ip}:10001";
-        proxyWebsockets = true;
+    services.nginx.virtualHosts =
+      let
+        opts = {
+          proxyPass = "http://${ip}:8080";
+          proxyWebsockets = true;
+        };
+      in
+      {
+        "${domain}" = {
+          useACMEHost = "tigor.web.id";
+          enableAuthelia = true;
+          autheliaLocations = [ "/" ];
+          forceSSL = true;
+          locations."/" = opts;
+        };
+        "qbittorrent.servarr.local".locations."/" = opts;
       };
-    };
 
     users = {
       groups.${name}.gid = 902;
@@ -69,7 +80,6 @@ in
           PUID = uid;
           PGID = gid;
           TZ = "Asia/Jakarta";
-          WEBUI_PORT = "10001";
           TORRENTING_PORT = "6882";
         };
         volumes = [
@@ -79,7 +89,6 @@ in
         ports = [
           "6882:6882"
           "6882:6882/udp"
-          "10001:10001"
         ];
         extraOptions = [
           "--ip=${ip}"

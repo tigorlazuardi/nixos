@@ -16,14 +16,23 @@ in
 {
   config = mkIf (podman.enable && prowlarr.enable) {
     profile.services.flaresolverr.enable = lib.mkForce true;
-    services.nginx.virtualHosts.${domain} = {
-      useACMEHost = "tigor.web.id";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://${ip}:9696";
-        proxyWebsockets = true;
+    services.nginx.virtualHosts =
+      let
+        opts = {
+          proxyPass = "http://${ip}:9696";
+          proxyWebsockets = true;
+        };
+      in
+      {
+        "${domain}" = {
+          useACMEHost = "tigor.web.id";
+          forceSSL = true;
+          enableAuthelia = true;
+          autheliaLocations = [ "/" ];
+          locations."/" = opts;
+        };
+        "prowlarr.local".locations."/" = opts;
       };
-    };
 
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${configVolume}

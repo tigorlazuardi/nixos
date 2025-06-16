@@ -20,23 +20,35 @@ let
 in
 {
   config = mkIf (podman.enable && sonarr.enable) {
-    services.nginx.virtualHosts.${domain} = {
-      useACMEHost = "tigor.web.id";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://${ip}:8989";
-        proxyWebsockets = true;
+    services.nginx.virtualHosts =
+      let
+        opts = {
+          proxyPass = "http://${ip}:8989";
+          proxyWebsockets = true;
+        };
+        opts-anime = {
+          proxyPass = "http://${ip-anime}:8989";
+          proxyWebsockets = true;
+        };
+      in
+      {
+        "${domain}" = {
+          useACMEHost = "tigor.web.id";
+          enableAuthelia = true;
+          autheliaLocations = [ "/" ];
+          forceSSL = true;
+          locations."/" = opts;
+        };
+        "${domain-anime}" = {
+          useACMEHost = "tigor.web.id";
+          enableAuthelia = true;
+          autheliaLocations = [ "/" ];
+          forceSSL = true;
+          locations."/" = opts-anime;
+        };
+        "sonarr.local".locations."/" = opts;
+        "sonarr-anime.local".locations."/" = opts-anime;
       };
-    };
-
-    services.nginx.virtualHosts.${domain-anime} = {
-      useACMEHost = "tigor.web.id";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://${ip-anime}:8989";
-        proxyWebsockets = true;
-      };
-    };
 
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${configVolume} ${mediaVolume} ${configVolumeAnime}
