@@ -39,7 +39,7 @@ in
       enableAuthelia = true;
       autheliaLocations = [ "/" ];
       locations."/" = {
-        proxyPass = "http://${ip}:8081";
+        proxyPass = "http://unix:${config.systemd.socketActivations."podman-${name}".socketAddress}:";
         proxyWebsockets = true;
       };
     };
@@ -53,6 +53,12 @@ in
         mkdir -p ${volume}
         chown -R ${uid}:${gid} ${volume} /etc/podman/${name} 
       '';
+
+    systemd.socketActivations."podman-${name}" = {
+      host = ip;
+      port = 8081;
+      idleTimeout = "3h";
+    };
 
     # systemd.services."podman-${name}".restartTriggers = [ webhook ];
 
@@ -103,7 +109,7 @@ in
       {
         inherit image;
         hostname = name;
-        autoStart = true;
+        autoStart = false;
         user = "${uid}:${gid}";
         environment = {
           TZ = "Asia/Jakarta";
