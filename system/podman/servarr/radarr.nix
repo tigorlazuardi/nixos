@@ -16,14 +16,23 @@ let
 in
 {
   config = mkIf (podman.enable && radarr.enable) {
-    services.nginx.virtualHosts.${domain} = {
-      useACMEHost = "tigor.web.id";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://${ip}:7878";
-        proxyWebsockets = true;
+    services.nginx.virtualHosts =
+      let
+        opts = {
+          proxyPass = "http://${ip}:7878";
+          proxyWebsockets = true;
+        };
+      in
+      {
+        "${domain}" = {
+          useACMEHost = "tigor.web.id";
+          enableAuthelia = true;
+          autheliaLocations = [ "/" ];
+          forceSSL = true;
+          locations."/" = opts;
+        };
+        "radarr.local".locations."/" = opts;
       };
-    };
 
     system.activationScripts."podman-${name}" = ''
       mkdir -p ${configVolume} ${mediaVolume}
