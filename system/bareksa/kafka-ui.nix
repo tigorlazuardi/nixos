@@ -7,7 +7,6 @@
 let
   ip = "10.88.244.1";
   name = "bareksa-kafka";
-  socketAddress = "/run/podman/${name}.sock";
   domain = "kafka.bareksa.local";
   settings = {
     kafka = {
@@ -94,34 +93,14 @@ in
         "${config.sops.secrets."aiven.keystore.jks".path}:/aiven.keystore.jks"
       ];
     };
-
-    systemd.sockets."podman-${name}-proxy" = {
-      listenStreams = [ socketAddress ];
-      wantedBy = [ "sockets.target" ];
-    };
-    systemd.services."podman-${name}" = {
-      unitConfig.StopWhenUnneeded = true;
-      serviceConfig.ExecStartPost = [ "${pkgs.waitport}/bin/waitport ${ip} 8080" ];
-    };
-    systemd.services."podman-${name}-proxy" = {
-      unitConfig = {
-        Requires = [
-          "podman-${name}.service"
-          "podman-${name}-proxy.socket"
-        ];
-        After = [
-          "podman-${name}.service"
-          "podman-${name}-proxy.socket"
-        ];
-      };
-      serviceConfig = {
-        ExecStart = "${pkgs.systemd}/lib/systemd/systemd-socket-proxyd --exit-idle-time=15m ${ip}:8080";
-      };
+    systemd.socketActivations."podman-${name}" = {
+      host = ip;
+      port = 8080;
     };
 
     services.nginx.virtualHosts."${domain}".locations = {
       "/" = {
-        proxyPass = "http://unix:${socketAddress}";
+        proxyPass = "http://unix:${config.systemd.socketActivations."podman-${name}".socketAddress}";
       };
     };
 
