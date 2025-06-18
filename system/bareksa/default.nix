@@ -4,6 +4,7 @@
     ./kafka-ui.nix
     # ./mongo.nix
     ./nginx.nix
+    ./db-gate.nix
   ];
 
   sops.secrets."bareksa/openvpn".sopsFile = ../../secrets/bareksa.yaml;

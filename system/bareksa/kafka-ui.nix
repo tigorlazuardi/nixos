@@ -71,7 +71,7 @@ in
     };
 
     virtualisation.oci-containers.containers."${name}" = {
-      image = "provectuslabs/kafka-ui:latest";
+      image = "docker.io/provectuslabs/kafka-ui:latest";
       user = "${uid}:${gid}";
       hostname = name;
       # this will be activated on demand via systemd-socket-activation.
@@ -92,6 +92,9 @@ in
         "${config.sops.secrets."aiven.bareksa.p12".path}:/aiven.bareksa.p12"
         "${config.sops.secrets."aiven.keystore.jks".path}:/aiven.keystore.jks"
       ];
+      labels = {
+        "io.containers.autoupdate" = "registry";
+      };
     };
     systemd.socketActivations."podman-${name}" = {
       host = ip;
