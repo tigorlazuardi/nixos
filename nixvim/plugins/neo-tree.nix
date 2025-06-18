@@ -1,7 +1,12 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 {
   programs.nixvim = {
-    extraPlugins = [
+    extraPlugins = lib.mkIf config.programs.nixvim.plugins.neo-tree.enable [
       {
         plugin = pkgs.vimUtils.buildVimPlugin {
           pname = "nvim-window-picker";
@@ -17,13 +22,13 @@
         };
       }
     ];
-    extraConfigLua = ''
+    extraConfigLua = lib.mkIf config.programs.nixvim.plugins.neo-tree.enable ''
       do
         require("window-picker").setup()
       end
     '';
     plugins.neo-tree = {
-      enable = true;
+      enable = false;
       extraOptions = {
         filesystem = {
           filtered_items = {
@@ -50,7 +55,7 @@
         };
       };
     };
-    keymaps = [
+    keymaps = lib.mkIf config.programs.nixvim.plugins.neo-tree.enable [
       {
         action = "<cmd>Neotree toggle reveal focus<cr>";
         key = "<leader>e";
