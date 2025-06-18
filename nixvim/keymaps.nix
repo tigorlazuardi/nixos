@@ -204,7 +204,7 @@
             end
           '';
         } { desc = "Previous Diagnostic (Error/Warning)"; })
-        (map [ "n" ] "<leader><tab>" "<cmd>b#<cr>" {
+        (map [ "n" ] "<tab>" "<cmd>b#<cr>" {
           desc = "Switch to Last Buffer";
         })
       ];
