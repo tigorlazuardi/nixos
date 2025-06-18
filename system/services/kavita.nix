@@ -26,12 +26,20 @@ in
       useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations = {
+        # Bypass anubis for Kavita API endpoints
+        "/api" = {
+          proxyPass = "http://unix:${config.systemd.socketActivations.kavita.socketAddress}";
+          proxyWebsockets = true;
+        };
         "/" = {
-          proxyPass = "http://unix:${config.systemd.socketActivations."kavita".socketAddress}";
+          proxyPass = "http://unix:${config.services.anubis.instances.kavita.settings.BIND}";
           proxyWebsockets = true;
         };
       };
     };
+
+    services.anubis.instances.kavita.settings.TARGET =
+      "unix://${config.systemd.socketActivations.kavita.socketAddress}";
 
     systemd.socketActivations."kavita" = {
       host = "0.0.0.0";
