@@ -195,14 +195,6 @@
       enable = true;
       extraOptions.enable_autocmd = false;
     };
-    vim-matchup = {
-      enable = true;
-      settings = {
-        matchparen_offscreen = {
-          method = "popup";
-        };
-      };
-    };
     mini.modules.comment.options.custom_commentstring.__raw = ''
       function()
         return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
