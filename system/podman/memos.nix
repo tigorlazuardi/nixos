@@ -13,7 +13,6 @@ let
   rootVolume = "/wolf/podman/memos";
   domain = "${name}.tigor.web.id";
   user = config.profile.user;
-  socketAddress = "/run/podman/${name}.sock";
 in
 {
   config = mkIf (podman.enable && podman.${name}.enable) {
@@ -37,7 +36,7 @@ in
       useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations."^~ /memos.api" = {
-        proxyPass = "http://unix:${socketAddress}";
+        proxyPass = "http://unix:${config.systemd.socketActivations."podman-${name}".socketAddress}";
         proxyWebsockets = true;
       };
       locations."/" = {
@@ -46,30 +45,10 @@ in
       };
     };
 
-    systemd.services."podman-${name}" = {
-      unitConfig.StopWhenUnneeded = true;
-      serviceConfig.ExecStartPost = [ "${pkgs.waitport}/bin/waitport ${ip} 5230" ];
+    systemd.socketActivations."podman-${name}" = {
+      host = ip;
+      port = 5230;
     };
-    systemd.services."podman-${name}-proxy" = {
-      unitConfig = {
-        Requires = [
-          "podman-${name}.service"
-          "podman-${name}-proxy.socket"
-        ];
-        After = [
-          "podman-${name}.service"
-          "podman-${name}-proxy.socket"
-        ];
-      };
-      serviceConfig = {
-        ExecStart = "${pkgs.systemd}/lib/systemd/systemd-socket-proxyd --exit-idle-time=5m ${ip}:5230";
-      };
-    };
-    systemd.sockets."podman-${name}-proxy" = {
-      listenStreams = [ socketAddress ];
-      wantedBy = [ "sockets.target" ];
-    };
-
     system.activationScripts."podman-${name}" =
       let
         uid = toString config.users.users.${name}.uid;
@@ -80,37 +59,9 @@ in
         chown -R ${uid}:${gid} ${rootVolume}
       '';
 
-    services.anubis.instances.memos = {
-      # settings.TARGET = "http://${ip}:5230";
-      settings.TARGET = "unix://${socketAddress}";
-      botPolicy = [
-        {
-          name = "allow-apis";
-          path_regex = ''^/memos\.api.*$'';
-          action = "ALLOW";
-        }
-        {
-          name = "well-known";
-          path_regex = ''^/.well-known/.*$'';
-          action = "ALLOW";
-        }
-        {
-          name = "favicon";
-          path_regex = ''^/favicon.ico$'';
-          action = "ALLOW";
-        }
-        {
-          name = "robots-txt";
-          path_regex = ''^/robots.txt$'';
-          action = "ALLOW";
-        }
-        {
-          name = "catch-all-challenge-browsers";
-          path_regex = "Mozilla";
-          action = "CHALLENGE";
-        }
-      ];
-    };
+    services.anubis.instances.memos.settings.TARGET = "unix://${
+      config.systemd.socketActivations."podman-${name}".socketAddress
+    }";
 
     virtualisation.oci-containers.containers.${name} =
       let
@@ -137,5 +88,4 @@ in
         };
       };
   };
-
 }
