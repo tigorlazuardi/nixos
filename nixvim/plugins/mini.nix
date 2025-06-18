@@ -22,6 +22,7 @@
       callback = function(args)
         local mf = require "mini.files"
         local buf_id = args.data.buf_id
+        vim.b[buf_id].completion = false -- Disable completion in MiniFiles buffer
         -- Tweak keys to your liking
         map_split(buf_id, "gs", "belowright horizontal")
         map_split(buf_id, "gv", "belowright vertical")
