@@ -80,6 +80,7 @@
       suwayomi.enable = true;
       github-runner.enable = true;
       homepage-dashboard.enable = true;
+      stirling-pdf.enable = true;
     };
   };
 }

@@ -27,6 +27,7 @@ in
     stubby.enable = mkEnableOption "stubby";
     immich.enable = mkEnableOption "immich";
     jellyfin.enable = mkEnableOption "jellyfin";
+    stirling-pdf.enable = mkEnableOption "stirling-pdf";
     jellyfin.jellyseerr.enable = mkOption {
       type = types.bool;
       default = config.profile.services.jellyfin.enable;

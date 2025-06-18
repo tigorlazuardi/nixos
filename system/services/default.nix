@@ -25,6 +25,7 @@
     ./postgres.nix
     ./rust-motd.nix
     ./samba.nix
+    ./stirling-pdf.nix
     ./stubby.nix
     ./syncthing.nix
     ./suwayomi.nix
