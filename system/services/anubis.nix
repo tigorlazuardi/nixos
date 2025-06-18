@@ -18,12 +18,9 @@ in
 
     environment.systemPackages = lib.mkIf hasInstances [
       (pkgs.writeShellScriptBin "restart-anubis" ''
-        set -e
+        set -ex
         units=$(systemctl list-units --output json | ${pkgs.jq}/bin/jq -r '.[] | select(.unit | startswith("anubis-")) | .unit')
-        for unit in $units; do
-          echo "Restarting $unit"
-          systemctl restart "$unit"
-        done
+        systemctl restart $unit[@]
       '')
     ];
   };
