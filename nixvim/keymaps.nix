@@ -203,8 +203,10 @@
               end
             end
           '';
-
         } { desc = "Previous Diagnostic (Error/Warning)"; })
+        (map [ "n" ] "<leader><tab>" "<cmd>b#<cr>" {
+          desc = "Switch to Last Buffer";
+        })
       ];
   };
 }
