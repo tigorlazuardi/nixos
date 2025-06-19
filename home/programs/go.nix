@@ -25,7 +25,7 @@ in
       goPrivate = [ "gitlab.bareksa.com" ];
     };
     home.packages = with pkgs; [
-      gotools
+      # gotools
 
       ###### Golang development tools ######
       gomodifytags
