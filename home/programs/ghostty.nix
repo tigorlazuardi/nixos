@@ -1,11 +1,49 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
   inherit (lib) mkIf;
   cfg = config.profile.home.programs.ghostty;
+  # This css file reduces the size of the tab bar and header bar
+  #
+  # Source: https://github.com/ghostty-org/ghostty/discussions/3983
+  cssFile =
+    pkgs.writeText "ghostty.css"
+      # css
+      ''
+        headerbar {
+          margin: 0;
+          padding: 0;
+          min-height: 20px;
+        }
+
+        tabbar tabbox {
+          margin: 0;
+          padding: 0;
+          min-height: 10px;
+          background-color: #1a1a1a;
+          font-family: monospace;
+        }
+
+        tabbar tabbox tab {
+          margin: 0;
+          padding: 0;
+          color: #9ca3af;
+          border-right: 1px solid #374151;
+        }
+
+        tabbar tabbox tab:selected {
+          background-color: #2d2d2d;
+          color: #ffffff;
+        }
+
+        tabbar tabbox tab label {
+          font-size: 13px;
+        }
+      '';
 in
 {
   config = mkIf cfg.enable {
@@ -18,9 +56,12 @@ in
         window-decoration = false;
         linux-cgroup = "always";
         background-opacity = 0.8;
+        unfocused-split-opacity = 0.9;
         clipboard-trim-trailing-spaces = true;
         clipboard-read = "allow";
         clipboard-write = "allow";
+        app-notifications = "no-clipboard-copy";
+        gtk-custom-css = "${cssFile}";
         keybind = [
           "ctrl+a>t=new_tab"
           "ctrl+a>enter=new_split:right"
