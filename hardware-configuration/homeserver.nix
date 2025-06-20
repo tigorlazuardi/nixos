@@ -20,10 +20,10 @@ in
     in
     [
       (modulesPath + "/installer/scan/not-detected.nix")
-      hardware.common-cpu-amd
+      hardware.common-cpu-intel
       # hardware.common-cpu-amd-zenpower
-      hardware.common-cpu-amd-pstate
-      hardware.common-gpu-intel
+      # hardware.common-cpu-amd-pstate
+      # hardware.common-gpu-intel
     ];
   config = {
     boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -137,7 +137,7 @@ in
     # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
     networking.useDHCP = lib.mkDefault true;
     networking.defaultGateway = "192.168.100.1";
-    networking.interfaces.enp9s0 = {
+    networking.interfaces.enp3s0 = {
       useDHCP = false;
       ipv4.addresses = [
         {
@@ -214,16 +214,12 @@ in
 
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
     hardware.enableAllFirmware = true;
-    hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     hardware.enableRedistributableFirmware = true;
     hardware.graphics.enable = true;
     hardware.graphics.extraPackages = with pkgs; [
       intel-media-driver
-      intel-vaapi-driver
       libvdpau-va-gl
-      libva-vdpau-driver
-      vaapi-intel-hybrid
-      intel-media-sdk
     ];
     environment.sessionVariables = {
       LIBVA_DRIVER_NAME = "iHD";
