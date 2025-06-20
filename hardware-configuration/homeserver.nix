@@ -83,51 +83,51 @@ in
         "bind"
       ];
     };
-    fileSystems = {
-      "${config.services.grafana.dataDir}" = lib.mkIf config.profile.services.telemetry.grafana.enable {
-        device = "/nas/services/grafana";
-        fsType = "auto";
-        options = [
-          "defaults"
-          "nofail"
-          "nobootwait"
-          "bind"
-        ];
-      };
-
-      "${config.services.loki.dataDir}" = lib.mkIf config.profile.services.telemetry.loki.enable {
-        device = "/nas/services/loki";
-        fsType = "auto";
-        options = [
-          "defaults"
-          "nofail"
-          "nobootwait"
-          "bind"
-        ];
-      };
-
-      "/var/lib/private/tempo" = lib.mkIf config.profile.services.telemetry.tempo.enable {
-        device = "/nas/services/tempo";
-        fsType = "auto";
-        options = [
-          "defaults"
-          "nofail"
-          "nobootwait"
-          "bind"
-        ];
-      };
-
-      "/var/lib/private/mimir" = lib.mkIf config.profile.services.telemetry.mimir.enable {
-        device = "/nas/services/mimir";
-        fsType = "auto";
-        options = [
-          "defaults"
-          "nofail"
-          "nobootwait"
-          "bind"
-        ];
-      };
-    };
+    # fileSystems = {
+    #   "${config.services.grafana.dataDir}" = lib.mkIf config.profile.services.telemetry.grafana.enable {
+    #     device = "/nas/services/grafana";
+    #     fsType = "auto";
+    #     options = [
+    #       "defaults"
+    #       "nofail"
+    #       "nobootwait"
+    #       "bind"
+    #     ];
+    #   };
+    #
+    #   "${config.services.loki.dataDir}" = lib.mkIf config.profile.services.telemetry.loki.enable {
+    #     device = "/nas/services/loki";
+    #     fsType = "auto";
+    #     options = [
+    #       "defaults"
+    #       "nofail"
+    #       "nobootwait"
+    #       "bind"
+    #     ];
+    #   };
+    #
+    #   "/var/lib/private/tempo" = lib.mkIf config.profile.services.telemetry.tempo.enable {
+    #     device = "/nas/services/tempo";
+    #     fsType = "auto";
+    #     options = [
+    #       "defaults"
+    #       "nofail"
+    #       "nobootwait"
+    #       "bind"
+    #     ];
+    #   };
+    #
+    #   "/var/lib/private/mimir" = lib.mkIf config.profile.services.telemetry.mimir.enable {
+    #     device = "/nas/services/mimir";
+    #     fsType = "auto";
+    #     options = [
+    #       "defaults"
+    #       "nofail"
+    #       "nobootwait"
+    #       "bind"
+    #     ];
+    #   };
+    # };
 
     swapDevices = [ ];
 
