@@ -3,31 +3,24 @@ let
   cfg = config.profile.services.telemetry.mimir;
   inherit (lib) mkIf;
   baseDir = "/var/lib/mimir";
-  domain = "mimir.tigor.web.id";
 in
 {
   config = mkIf cfg.enable {
-    services.caddy.virtualHosts.${domain}.extraConfig =
+    services.nginx.virtualHosts =
       let
-        mimirServerConfig = config.services.mimir.configuration.server;
-        hostAddress = "${mimirServerConfig.http_listen_address}:${toString mimirServerConfig.http_listen_port}";
+        inherit (config.services.mimir.configuration.server) http_listen_address http_listen_port;
       in
-      ''
-        @require_auth not remote_ip private_ranges
-
-        basic_auth @require_auth {
-          {$AUTH_USERNAME} {$AUTH_PASSWORD}
-        }
-
-        reverse_proxy ${hostAddress}
-      '';
+      {
+        "mimir.local".locations."/".proxyPass =
+          "http://${http_listen_address}:${toString http_listen_port}";
+      };
 
     services.mimir = {
       enable = true;
       configuration = {
         multitenancy_enabled = false;
         server = {
-          http_listen_address = "0.0.0.0";
+          http_listen_address = "127.0.0.1";
           http_listen_port = 9009;
           grpc_listen_port = 4401;
         };
@@ -79,24 +72,20 @@ in
       };
     };
 
-    services.grafana.provision.datasources.settings.datasources =
-      let
-        server = config.services.mimir.configuration.server;
-      in
-      [
-        {
-          name = "Mimir";
-          type = "prometheus";
-          uid = "mimir";
-          access = "proxy";
-          url = "http://${server.http_listen_address}:${toString server.http_listen_port}/prometheus";
-          basicAuth = false;
-          jsonData = {
-            httpMethod = "POST";
-            prometheusType = "Mimir";
-            timeout = 30;
-          };
-        }
-      ];
+    services.grafana.provision.datasources.settings.datasources = [
+      {
+        name = "Mimir";
+        type = "prometheus";
+        uid = "mimir";
+        access = "proxy";
+        url = "http://mimir.local/prometheus";
+        basicAuth = false;
+        jsonData = {
+          httpMethod = "POST";
+          prometheusType = "Mimir";
+          timeout = 30;
+        };
+      }
+    ];
   };
 }

@@ -3,22 +3,19 @@ let
   cfg = config.profile.services.telemetry.loki;
   inherit (lib) mkIf;
   inherit (lib.lists) optional;
-  lokiDomain = "loki.tigor.web.id";
-  server = config.services.loki.configuration.server;
 in
 {
   config = mkIf cfg.enable {
-    services.caddy.virtualHosts.${lokiDomain}.extraConfig = # caddy
-      ''
-        basic_auth {
-          {$AUTH_USERNAME} {$AUTH_PASSWORD}
-        }
-        reverse_proxy ${server.http_listen_address}:${toString server.http_listen_port}
-      '';
-
+    services.nginx.virtualHosts =
+      let
+        inherit (config.services.loki.configuration.server) http_listen_address http_listen_port;
+      in
+      {
+        "loki.local".locations."/".proxyPass = "http://${http_listen_address}:${toString http_listen_port}";
+      };
     services.loki =
       let
-        dataDir = config.services.loki.dataDir;
+        inherit (config.services.loki) dataDir;
       in
       {
         enable = true;
@@ -26,7 +23,7 @@ in
           # https://grafana.com/docs/loki/latest/configure/examples/configuration-examples/
           auth_enabled = false;
           server = {
-            http_listen_address = "0.0.0.0";
+            http_listen_address = "127.0.0.1";
             http_listen_port = 3100;
             grpc_listen_port = 9095;
           };
@@ -73,9 +70,7 @@ in
           };
 
           limits_config = {
-            retention_period = "90d";
-            ingestion_burst_size_mb = 64;
-            ingestion_rate_mb = 32;
+            retention_period = "30d";
           };
 
           storage_config = {
@@ -92,7 +87,7 @@ in
         type = "loki";
         uid = "loki";
         access = "proxy";
-        url = "http://${server.http_listen_address}:${toString server.http_listen_port}";
+        url = "http://loki.local";
         basicAuth = false;
         jsonData = {
           timeout = 60;

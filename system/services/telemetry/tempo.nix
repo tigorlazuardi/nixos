@@ -2,20 +2,14 @@
 let
   cfg = config.profile.services.telemetry.tempo;
   inherit (lib) mkIf;
-  domain = "tempo.tigor.web.id";
   server = config.services.tempo.settings.server;
 in
 {
   config = mkIf cfg.enable {
-    services.caddy.virtualHosts.${domain}.extraConfig = ''
-      @require_auth not remote_ip private_ranges 
-
-      basic_auth @require_auth {
-          {$AUTH_USERNAME} {$AUTH_PASSWORD}
-      }
-
-      reverse_proxy ${server.http_listen_address}:3200
-    '';
+    services.nginx.virtualHosts = {
+      "tempo.local".locations."/".proxyPass =
+        "http://${server.http_listen_address}:${toString server.http_listen_port}";
+    };
 
     services.tempo = rec {
       enable = true;

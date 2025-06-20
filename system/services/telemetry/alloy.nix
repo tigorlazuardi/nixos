@@ -34,7 +34,6 @@ in
       let
         lokiConfig = config.services.loki.configuration;
         tempoProtocols = config.services.tempo.settings.distributor.receivers.otlp.protocols;
-        mimirServer = config.services.mimir.configuration.server;
       in
       # hocon
       ''
@@ -151,7 +150,7 @@ in
 
         prometheus.remote_write "mimir" {
             endpoint {
-                url = "http://${mimirServer.http_listen_address}:${toString mimirServer.http_listen_port}/api/v1/push"
+                url = "http://mimir.local/api/v1/push"
             }
         }
       '';
