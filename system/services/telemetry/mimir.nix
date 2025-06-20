@@ -2,7 +2,7 @@
 let
   cfg = config.profile.services.telemetry.mimir;
   inherit (lib) mkIf;
-  baseDir = "/var/lib/mimir";
+  baseDir = "/var/lib/private/mimir";
 in
 {
   config = mkIf cfg.enable {
@@ -45,7 +45,9 @@ in
         };
 
         limits = {
-          compactor_blocks_retention_period = "90d";
+          compactor_blocks_retention_period = "30d";
+          max_label_name_length = 1024;
+          max_label_value_length = 2048;
         };
 
         distributor = {
@@ -72,20 +74,24 @@ in
       };
     };
 
-    services.grafana.provision.datasources.settings.datasources = [
-      {
-        name = "Mimir";
-        type = "prometheus";
-        uid = "mimir";
-        access = "proxy";
-        url = "http://mimir.local/prometheus";
-        basicAuth = false;
-        jsonData = {
-          httpMethod = "POST";
-          prometheusType = "Mimir";
-          timeout = 30;
-        };
-      }
-    ];
+    services.grafana.provision.datasources.settings.datasources =
+      let
+        inherit (config.services.mimir.configuration.server) http_listen_address http_listen_port;
+      in
+      [
+        {
+          name = "Mimir";
+          type = "prometheus";
+          uid = "mimir";
+          access = "proxy";
+          url = "http://${http_listen_address}:${toString http_listen_port}/prometheus";
+          basicAuth = false;
+          jsonData = {
+            httpMethod = "POST";
+            prometheusType = "Mimir";
+            timeout = 30;
+          };
+        }
+      ];
   };
 }

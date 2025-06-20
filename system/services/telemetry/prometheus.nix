@@ -10,8 +10,8 @@ let
   procConfig = (pkgs.formats.yaml { }).generate "config.yml" {
     process_names = [
       {
-        name = "{{.Username}} | {{.Comm}} | {{.Matches.Cmdline}}";
-        cmdline = [ "(?P<Cmdline>.+)" ];
+        name = "{{.Username}} | {{.Comm}}";
+        cmdline = [ ".+" ];
       }
     ];
   };

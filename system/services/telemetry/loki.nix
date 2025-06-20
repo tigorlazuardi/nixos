@@ -81,35 +81,39 @@ in
         };
       };
     # https://grafana.com/docs/grafana/latest/datasources/loki/
-    services.grafana.provision.datasources.settings.datasources = [
-      {
-        name = "Loki";
-        type = "loki";
-        uid = "loki";
-        access = "proxy";
-        url = "http://loki.local";
-        basicAuth = false;
-        jsonData = {
-          timeout = 60;
-          maxLines = 1000;
-          derivedFields =
-            [ ]
-            ++ (optional config.services.tempo.enable {
-              datasourceUid = "tempo";
-              matcherRegex = ''trace_?[Ii][Dd]=(\w+)'';
-              name = "Log Trace";
-              url = "$\${__value.raw}";
-              urlDisplayLabel = "Trace";
-            })
-            ++ (optional config.services.tempo.enable {
-              datasourceUid = "tempo";
-              matcherRegex = ''"trace_?[Ii][Dd]":"(\w+)"'';
-              name = "Trace";
-              url = "$\${__value.raw}";
-              urlDisplayLabel = "Trace";
-            });
-        };
-      }
-    ];
+    services.grafana.provision.datasources.settings.datasources =
+      let
+        inherit (config.services.loki.configuration.server) http_listen_address http_listen_port;
+      in
+      [
+        {
+          name = "Loki";
+          type = "loki";
+          uid = "loki";
+          access = "proxy";
+          url = "http://${http_listen_address}:${toString http_listen_port}";
+          basicAuth = false;
+          jsonData = {
+            timeout = 60;
+            maxLines = 1000;
+            derivedFields =
+              [ ]
+              ++ (optional config.services.tempo.enable {
+                datasourceUid = "tempo";
+                matcherRegex = ''trace_?[Ii][Dd]=(\w+)'';
+                name = "Log Trace";
+                url = "$\${__value.raw}";
+                urlDisplayLabel = "Trace";
+              })
+              ++ (optional config.services.tempo.enable {
+                datasourceUid = "tempo";
+                matcherRegex = ''"trace_?[Ii][Dd]":"(\w+)"'';
+                name = "Trace";
+                url = "$\${__value.raw}";
+                urlDisplayLabel = "Trace";
+              });
+          };
+        }
+      ];
   };
 }
