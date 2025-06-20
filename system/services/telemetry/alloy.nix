@@ -5,7 +5,7 @@
 }:
 let
   cfg = config.profile.services.telemetry.alloy;
-  webguiListenAddress = "0.0.0.0:5319";
+  webguiListenAddress = "127.0.0.1:5319";
   otelcolHTTPListenAddress = "192.168.100.5:4318";
   otelcolGRPCListenAddress = "192.168.100.5:4317";
 in
@@ -15,6 +15,16 @@ in
       enable = true;
       extraFlags = [ ''--server.http.listen-addr=${webguiListenAddress}'' ];
     };
+
+    services.nginx.virtualHosts."alloy.tigor.web.id" = {
+      useACMEHost = "tigor.web.id";
+      forceSSL = true;
+      enableAuthelia = true;
+      autheliaLocations = [ "/" ];
+      locations."/".proxyPass = "http://${webguiListenAddress}";
+    };
+
+    services.nginx.virtualHosts."alloy.local".locations."/".proxyPass = "http://${webguiListenAddress}";
 
     systemd.services.alloy.serviceConfig = {
       User = "root";
