@@ -141,13 +141,13 @@ in
                 };
               })
               ++ (optional config.profile.podman.servarr.prowlarr.enable {
-                Prowlarr = rec {
+                Prowlarr = {
                   description = "Torrent Indexer for movies, tv shows, and other media types";
                   href = "https://prowlarr.tigor.web.id";
                   icon = "prowlarr.svg";
                   widget = {
                     type = "prowlarr";
-                    url = href;
+                    url = "http://prowlarr.local";
                     key = "{{HOMEPAGE_VAR_PROWLARR_API_KEY}}";
                   };
                 };
