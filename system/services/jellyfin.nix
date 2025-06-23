@@ -45,10 +45,11 @@ in
       useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations."/" = {
-        proxyPass = "http://0.0.0.0:5055";
+        proxyPass = "http://unix:${config.services.anubis.instances.jellyseerr.settings.BIND}";
         proxyWebsockets = true;
       };
     };
+    services.anubis.instances.jellyseerr.settings.TARGET = "http://0.0.0.0:5055";
     services.jellyfin = {
       enable = true;
       inherit dataDir;
