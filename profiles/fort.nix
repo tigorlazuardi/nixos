@@ -95,6 +95,7 @@
 
     home.programs = {
       cursor.enable = true;
+      ghostty.enable = true;
       bloomrpc.enable = false;
       foot.enable = true;
       foot.font = "Hack Nerd Font Mono:size=8";
