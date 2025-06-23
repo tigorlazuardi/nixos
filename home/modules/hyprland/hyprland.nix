@@ -79,7 +79,7 @@ in
         # https://wiki.hyprland.org/Configuring/Binds
         bind = [
           # Programs
-          ''$mod, RETURN, exec, kitty''
+          ''$mod, RETURN, exec, ghostty''
           "$mod, E, exec, dolphin"
           "$mod, B, exec, vivaldi"
           "$mod, BackSpace, exec, wlogout"
