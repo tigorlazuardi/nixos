@@ -25,13 +25,10 @@ in
       forceSSL = true;
       locations = {
         "= /metrics" = {
-          proxyPass = "http://0.0.0.0:8096";
           extraConfig =
             #nginx
             ''
-              if ($auth_ip != off) {
-                  return 403;
-              }
+              return 403;
             '';
         };
         "/" = {
@@ -39,6 +36,12 @@ in
           proxyWebsockets = true;
         };
       };
+    };
+
+    services.jellyfin = {
+      enable = true;
+      inherit dataDir;
+      openFirewall = true;
     };
 
     services.nginx.virtualHosts."${domain-jellyseerr}" = mkIf cfg.jellyseerr.enable {
@@ -49,14 +52,14 @@ in
         proxyWebsockets = true;
       };
     };
-    services.anubis.instances.jellyseerr.settings.TARGET = "http://0.0.0.0:5055";
-    services.jellyfin = {
-      enable = true;
-      inherit dataDir;
-      openFirewall = true;
-    };
+    services.anubis.instances.jellyseerr.settings.TARGET =
+      "unix://${config.systemd.socketActivations.jellyseerr.socketAddress}";
 
     services.jellyseerr = mkIf cfg.jellyseerr.enable { enable = true; };
+    systemd.socketActivations.jellyseerr = {
+      host = "0.0.0.0";
+      port = 5055;
+    };
 
     environment.etc."alloy/config.alloy".text = # hocon
       ''
