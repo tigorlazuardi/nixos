@@ -20,7 +20,9 @@ in
       (pkgs.writeShellScriptBin "restart-anubis" ''
         set -ex
         units=$(systemctl list-units --output json | ${pkgs.jq}/bin/jq -r '.[] | select(.unit | startswith("anubis-")) | .unit')
-        systemctl restart $unit[@]
+        systemctl stop $unit[@]
+        sleep 1
+        systemctl start $unit[@]
       '')
     ];
   };
