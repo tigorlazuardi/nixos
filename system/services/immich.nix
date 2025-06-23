@@ -1,13 +1,11 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 let
   cfg = config.profile.services.immich;
   domain = "photos.tigor.web.id";
-  socketAddress = "/run/immich.sock";
 in
 {
   config = lib.mkIf cfg.enable {
@@ -18,55 +16,42 @@ in
       settings.server.externalDomain = "https://photos.tigor.web.id";
       accelerationDevices = [ "/dev/dri/renderD128" ];
     };
-    systemd.services.immich-server = {
-      unitConfig.StopWhenUnneeded = true;
-      serviceConfig.ExecStartPost =
-        let
-          srv = config.services.immich;
-        in
-        "${pkgs.waitport}/bin/waitport ${srv.host} ${toString srv.port}";
-    };
-    systemd.sockets.immich-server-proxy = {
-      listenStreams = [ socketAddress ];
-      wantedBy = [ "sockets.target" ];
-    };
-    systemd.services.immich-server-proxy =
+    systemd.socketActivations.immich-server =
       let
-        srv = config.services.immich;
+        inherit (config.services.immich) host port;
       in
       {
-        unitConfig = {
-          Requires = [
-            "immich-server.service"
-            "immich-server-proxy.socket"
-          ];
-          After = [
-            "immich-server.service"
-            "immich-server-proxy.socket"
-          ];
-        };
-        serviceConfig.ExecStart = "${pkgs.systemd}/lib/systemd/systemd-socket-proxyd --exit-idle-time=1h ${srv.host}:${toString srv.port}";
+        inherit host port;
       };
     services.nginx.virtualHosts."${domain}" = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;
-      enableAuthelia = true;
-      autheliaLocations = [ "/" ];
       locations =
         let
-          opts = {
-            proxyPass = "http://unix:${socketAddress}";
-            proxyWebsockets = true;
-            extraConfig = # nginx
-              ''
-                client_max_body_size 4G;
-              '';
-          };
+          inherit (config.systemd.socketActivations.immich-server) socketAddress;
+          inherit (config.services.anubis.instances.immich.settings) BIND;
         in
         {
-          "/api" = opts;
-          "/" = opts;
+          "/api" = {
+            proxyPass = "http://unix:${socketAddress}";
+            proxyWebsockets = true;
+            extraConfig = ''
+              client_max_body_size 4G;
+            '';
+          };
+          "/" = {
+            proxyPass = "http://unix:${BIND}";
+            proxyWebsockets = true;
+            extraConfig = ''
+              client_max_body_size 4G;
+            '';
+          };
         };
     };
+    services.anubis.instances.immich.settings.TARGET =
+      let
+        inherit (config.systemd.socketActivations.immich-server) socketAddress;
+      in
+      "unix://${socketAddress}";
   };
 }
