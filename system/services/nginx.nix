@@ -108,7 +108,7 @@ in
         log_format json_combined escape=json '{'
             '"time_local":"$time_local",'
             '"body_bytes_sent":"$body_bytes_sent",'
-            '"bytes_sent": "$bytes_sent",
+            '"bytes_sent": "$bytes_sent",'
             '"host":"$host",'
             '"http_referer":"$http_referer",'
             '"http_user_agent":"$http_user_agent",'
@@ -137,13 +137,9 @@ in
       # hocon
       ''
           local.file_match "nginx_access_log" {
-              path_targets = [
-                  {
-                      "__path__" = "/var/log/nginx/access.log",
-                  },
-              ]
+              path_targets = [{"__path__" = "/var/log/nginx/access.log"}]
               sync_period = "5s"
-          }   
+          }
 
           loki.source.file "nginx_access_log" {
             targets = local.file_match.nginx_access_log.targets
@@ -172,31 +168,16 @@ in
                   }
               }
 
-              stage.match {
-                # We cannot use labels because loki only supports equality, not ordering when dealing with labels.
-                #
-                # This filters logs that have status of less than 400 (OK and Redirects)
-                selector = "{} | json status=\"status\" | status < 400"
-
-                stage.static_labels {
-                  values = { level = "info" }
-                }
-              }
-
-              stage.match {
-                # We cannot use labels because loki only supports equality, not ordering when dealing with labels.
-                #
-                # This filters logs that have status of 400 or more (errors)
-                selector = "{} | json status=\"status\" | status >= 400"
-
-                stage.static_labels {
-                  values = { level = "error" }
-                }
-              }
-
               stage.timestamp {
                   source = "time"
                   format = "_2/Jan/2006:15:04:05 -0700"
+              }
+
+              stage.static_labels {
+                  values = {
+                    source = "nginx_access_log",
+                    job = "nginx",
+                  }
               }
         }
       '';
