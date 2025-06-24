@@ -107,16 +107,21 @@ in
 
         log_format json_combined escape=json '{'
             '"time_local":"$time_local",'
-            '"host":"$host",'
-            '"remote_addr":"$remote_addr",'
-            '"remote_user":"$remote_user",'
-            '"request":"$request",'
-            '"status":$status,'
             '"body_bytes_sent":"$body_bytes_sent",'
+            '"bytes_sent": "$bytes_sent",
+            '"host":"$host",'
             '"http_referer":"$http_referer",'
             '"http_user_agent":"$http_user_agent",'
             '"http_x_forwarded_for":"$http_x_forwarded_for",'
+            '"remote_addr":"$remote_addr",'
+            '"remote_user":"$remote_user",'
+            '"request":"$request",'
             '"request_time":"$request_time",'
+            '"server_name":"$server_name",'
+            '"server_protocol":"$server_protocol",'
+            '"ssl_protocol": "$ssl_protocol",'
+            '"ssl_cipher": "$ssl_cipher",'
+            '"status":$status,'
             '"upstream_addr":"$upstream_addr",'
             '"upstream_response_time":"$upstream_response_time",'
             '"upstream_status":"$upstream_status"'
@@ -150,27 +155,44 @@ in
 
               stage.json {
                   expressions = {
-                      time = "time_local",
-                      host = "",
-                      request = "",
-                      status = "",
+                    time = "time_local",
+                    host = "",
+                    status = "",
+                    server_name = "",
+                    upstream_addr = "",
                   }
               }
 
               stage.labels {
                   values = {
-                      host = "",
-                      request = "",
-                      status = "",
+                    host = "",
+                    status = "",
+                    server_name = "",
+                    upstream_addr = "",
                   }
               }
 
-              stage.static_labels {
-                  values = {
-                      level = "info",
-                      job = "nginx_access_log",
-                  }
-              } 
+              stage.match {
+                # We cannot use labels because loki only supports equality, not ordering when dealing with labels.
+                #
+                # This filters logs that have status of less than 400 (OK and Redirects)
+                selector = "{} | json status=\"status\" | status < 400"
+
+                stage.static_labels {
+                  values = { level = "info" }
+                }
+              }
+
+              stage.match {
+                # We cannot use labels because loki only supports equality, not ordering when dealing with labels.
+                #
+                # This filters logs that have status of 400 or more (errors)
+                selector = "{} | json status=\"status\" | status >= 400"
+
+                stage.static_labels {
+                  values = { level = "error" }
+                }
+              }
 
               stage.timestamp {
                   source = "time"
