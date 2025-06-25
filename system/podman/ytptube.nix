@@ -57,7 +57,7 @@ in
     systemd.socketActivations."podman-${name}" = {
       host = ip;
       port = 8081;
-      idleTimeout = "3h";
+      idleTimeout = "30m";
     };
 
     # systemd.services."podman-${name}".restartTriggers = [ webhook ];
