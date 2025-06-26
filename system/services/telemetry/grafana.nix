@@ -25,23 +25,26 @@ in
         "grafana/secret_key" = opts;
       };
 
-    services.caddy.virtualHosts.${grafanaDomain}.extraConfig = ''
-      reverse_proxy ${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}
-    '';
-
     services.nginx.virtualHosts.${grafanaDomain} = {
       useACMEHost = "tigor.web.id";
       forceSSL = true;
       locations."/" = {
-        proxyPass =
-          let
-            server = config.services.grafana.settings.server;
-          in
-          "http://${server.http_addr}:${toString server.http_port}";
-        # "http://unix:${config.services.anubis.instances.grafana.settings.BIND}";
+        proxyPass = "http://unix:${config.services.anubis.instances.grafana.settings.BIND}";
         proxyWebsockets = true;
       };
     };
+
+    services.anubis.instances.grafana.settings.TARGET =
+      "unix://${config.systemd.socketActivations.grafana.socketAddress}";
+
+    systemd.socketActivations.grafana =
+      let
+        inherit (config.services.grafana.settings.server) http_addr http_port;
+      in
+      {
+        host = http_addr;
+        port = http_port;
+      };
 
     services.grafana = {
       enable = true;
@@ -49,8 +52,8 @@ in
       settings = {
         # https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/
         server = {
-          protocol = "http"; # served behind caddy
-          http_addr = "0.0.0.0";
+          protocol = "http";
+          http_addr = "127.0.0.1";
           http_port = 44518;
           root_url = "https://${grafanaDomain}";
           enable_gzip = true;
