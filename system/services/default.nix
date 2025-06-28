@@ -25,6 +25,7 @@
     ./openvpn.nix
     ./photoprism.nix
     ./postgres.nix
+    ./redis.nix
     ./rust-motd.nix
     ./samba.nix
     ./stirling-pdf.nix
