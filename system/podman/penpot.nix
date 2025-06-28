@@ -33,6 +33,11 @@ in
         proxyPass = "http://${ip}:8080";
         # proxyPass = "http://unix:${config.systemd.socketActivations."podman-penpot-backend".socketAddress}";
         proxyWebsockets = true;
+        extraConfig =
+          #nginx
+          ''
+            client_max_body_size 512M;
+          '';
       };
     };
     system.activationScripts.penpot = ''
