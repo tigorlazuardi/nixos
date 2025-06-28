@@ -9,6 +9,7 @@
     ./caddy.nix
     ./cockpit.nix
     ./couchdb.nix
+    ./db-gate.nix
     ./flaresolverr.nix
     ./forgejo.nix
     ./github-runner.nix

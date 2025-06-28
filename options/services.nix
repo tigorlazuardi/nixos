@@ -14,6 +14,7 @@ in
       type = types.nullOr types.str;
       default = null;
     };
+    db-gate.enable = mkEnableOption "db-gate";
     adguardhome.enable = mkEnableOption "adguardhome";
     mailcatcher.enable = mkEnableOption "mailcatcher";
     caddy.enable = mkEnableOption "caddy";

@@ -82,6 +82,7 @@
       homepage-dashboard.enable = true;
       stirling-pdf.enable = true;
       mailcatcher.enable = true;
+      db-gate.enable = true;
     };
   };
 }
