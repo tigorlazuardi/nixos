@@ -15,6 +15,7 @@ in
       default = null;
     };
     adguardhome.enable = mkEnableOption "adguardhome";
+    mailcatcher.enable = mkEnableOption "mailcatcher";
     caddy.enable = mkEnableOption "caddy";
     nginx.enable = mkEnableOption "nginx";
     cockpit.enable = mkEnableOption "cockpit";

@@ -81,6 +81,7 @@
       github-runner.enable = true;
       homepage-dashboard.enable = true;
       stirling-pdf.enable = true;
+      mailcatcher.enable = true;
     };
   };
 }

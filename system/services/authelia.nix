@@ -88,6 +88,7 @@ in
     type = lib.types.attrsOf (lib.types.submodule vhostOptions);
   };
   config = lib.mkIf config.profile.services.authelia.enable {
+    profile.services.mailcatcher.enable = lib.mkForce true;
     sops.secrets =
       let
         autheliaOpts = {
@@ -168,7 +169,19 @@ in
         };
         notifier = {
           disable_startup_check = true;
-          filesystem.filename = "/var/lib/authelia-main/notification.txt";
+          smtp = {
+            address =
+              let
+                inherit (config.services.mailcatcher.smtp) ip port;
+              in
+              "smtp://${ip}:${toString port}";
+            # We don't need TLS since it's loopback to the mailcatcher service.
+            disable_require_tls = true;
+            disable_starttls = true;
+            sender = "Authelia <authelia@${domain}>";
+            identifier = "Authelia";
+          };
+          # filesystem.filename = "/var/lib/authelia-main/notification.txt";
         };
         access_control = {
           default_policy = "deny";

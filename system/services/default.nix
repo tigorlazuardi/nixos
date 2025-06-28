@@ -16,6 +16,7 @@
     ./immich.nix
     ./jellyfin.nix
     ./kavita.nix
+    ./mailcatcher.nix
     ./navidrome.nix
     ./nextcloud.nix
     ./nginx.nix
