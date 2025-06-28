@@ -43,6 +43,7 @@ in
     github-runner.enable = mkEnableOption "github-runner";
     homepage-dashboard.enable = mkEnableOption "homepage-dashboard";
     authelia.enable = mkEnableOption "authelia";
+    penpot.enable = mkEnableOption "penpot";
     flaresolverr = {
       enable = mkEnableOption "flaresolverr";
       domain = mkOption {

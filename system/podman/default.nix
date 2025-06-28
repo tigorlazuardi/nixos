@@ -61,6 +61,7 @@ in
     ./ytptube.nix
     ./valheim.nix
 
+    ./penpot.nix
     ./metrics.nix
     ./n8n.nix
   ];
