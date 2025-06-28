@@ -24,7 +24,6 @@ in
     virtualisation.oci-containers.containers."${name}" = {
       image = "docker.io/dbgate/dbgate:latest";
       hostname = name;
-      autoStart = true;
       volumes = [
         "${data}:/root/.dbgate"
         "/run/postgresql:/var/run/postgresql"
@@ -35,17 +34,26 @@ in
         "io.containers.autoupdate" = "registry";
       };
     };
-    services.nginx.virtualHosts = {
-      "${domain}" = {
-        useACMEHost = "tigor.web.id";
-        forceSSL = true;
-        enableAuthelia = true;
-        autheliaLocations = [ "/" ];
-        locations."/".proxyPass = "http://${ip}:3000";
-      };
-      "db.local" = {
-        locations."/".proxyPass = "http://${ip}:3000";
-      };
+    systemd.socketActivations."podman-${name}" = {
+      host = ip;
+      port = 3000;
     };
+    services.nginx.virtualHosts =
+      let
+        inherit (config.systemd.socketActivations."podman-${name}") socketAddress;
+        pp = "http://unix:${socketAddress}";
+      in
+      {
+        "${domain}" = {
+          useACMEHost = "tigor.web.id";
+          forceSSL = true;
+          enableAuthelia = true;
+          autheliaLocations = [ "/" ];
+          locations."/".proxyPass = pp;
+        };
+        "db.local" = {
+          locations."/".proxyPass = pp;
+        };
+      };
   };
 }
