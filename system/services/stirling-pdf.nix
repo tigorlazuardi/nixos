@@ -13,7 +13,7 @@ in
     systemd.socketActivations.stirling-pdf = with config.services.stirling-pdf.environment; {
       host = SERVER_ADDRESS;
       port = SERVER_PORT;
-      idleTimeout = "5m";
+      idleTimeout = "5min";
     };
     services.nginx.virtualHosts =
       let
