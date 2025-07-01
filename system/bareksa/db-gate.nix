@@ -11,6 +11,7 @@ let
 in
 {
   config = lib.mkIf config.profile.environment.bareksa.enable {
+    sops.secrets."bareksa/db-gate/env".sopsFile = ../../secrets/bareksa.yaml;
     system.activationScripts."podman-${name}" = # sh
       ''
         mkdir -p ${volume}
@@ -19,9 +20,12 @@ in
       image = "docker.io/dbgate/dbgate:latest";
       hostname = name;
       volumes = [ "${volume}:/root/.dbgate" ];
+      networks = [ "podman" ];
       extraOptions = [
-        "--network=podman"
         "--ip=${ip}"
+      ];
+      environmentFiles = [
+        "${config.sops.secrets."bareksa/db-gate/env".path}"
       ];
       labels = {
         "io.containers.autoupdate" = "registry";
