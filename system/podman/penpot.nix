@@ -95,6 +95,9 @@ in
           labels = {
             "io.containers.autoupdate" = "registry";
           };
+          extraOptions = [
+            "--ip=10.88.9.5"
+          ];
         };
         penpot-exporter = {
           hostname = "penpot-exporter";
@@ -107,6 +110,9 @@ in
           labels = {
             "io.containers.autoupdate" = "registry";
           };
+          extraOptions = [
+            "--ip=10.88.9.2"
+          ];
         };
         penpot-postgres = {
           hostname = "penpot-postgres";
@@ -127,6 +133,7 @@ in
             ''--health-startup-cmd=pg_isready -U penpot''
             ''--health-startup-interval=100ms''
             ''--health-startup-retries=300'' # 30 second maximum wait.
+            "--ip=10.88.9.4"
           ];
         };
         penpot-valkey = {
@@ -139,6 +146,7 @@ in
             ''--health-startup-cmd=valkey-cli ping | grep PONG''
             ''--health-startup-interval=100ms''
             ''--health-startup-retries=300'' # 30 second maximum wait.
+            "--ip=10.88.9.3"
           ];
           labels = {
             "io.containers.autoupdate" = "registry";
