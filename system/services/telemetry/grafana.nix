@@ -44,6 +44,7 @@ in
       {
         host = http_addr;
         port = http_port;
+        idleTimeout = "30s";
       };
 
     services.grafana = {
