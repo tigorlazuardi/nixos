@@ -7,7 +7,7 @@ in
   config = lib.mkIf cfg.enable {
     services.stirling-pdf.enable = true;
     services.stirling-pdf.environment = {
-      SERVER_PORT = 40002;
+      SERVER_PORT = 39999;
       SERVER_ADDRESS = "127.0.0.1";
     };
     systemd.socketActivations.stirling-pdf = with config.services.stirling-pdf.environment; {
