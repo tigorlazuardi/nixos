@@ -103,9 +103,8 @@ in
           PUID = uid;
           PGID = gid;
         };
+        networks = [ "host" ];
         extraOptions = [
-          "--network=podman"
-          "--ip=${ip}"
           "--cap-add=sys_nice"
           "--stop-signal=SIGINT"
           "--stop-timeout=30"
@@ -116,7 +115,7 @@ in
         };
       };
     systemd.sockets."podman-${name}-proxy" = {
-      listenDatagrams = [ "0.0.0.0:2456" ];
+      listenDatagrams = [ "0.0.0.0:2457" ];
       wantedBy = [ "sockets.target" ];
     };
     systemd.services."podman-${name}-proxy" = {
@@ -131,7 +130,7 @@ in
         ];
       };
       serviceConfig = {
-        ExecStart = "${pkgs.nodejs_latest}/bin/node ${valproxy}/index.js ${ip} 2546";
+        ExecStart = "${pkgs.nodejs_latest}/bin/node ${valproxy}/index.js 127.0.0.1 2546";
       };
     };
   };
